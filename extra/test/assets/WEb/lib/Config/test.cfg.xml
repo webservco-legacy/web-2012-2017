@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id$ -->
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<unit>
+		<!-- Main Paths. All paths must have trailing slash. -->
+		<path>
+			<!-- Full path to engine directory. Defaults to "./WEb/". -->
+			<core>
+				/home/radu/Documents/workspace/wsWEb/src/WEb/
+			</core>
+			<!-- Full path to application directory. Defaults to "./". -->
+			<app>
+				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/app/
+			</app>
+			<!-- Full path to application web accessible directory. Defaults to "./". -->
+			<www>
+				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/
+			</www>
+		</path>
+
+		<url>
+			<!-- Application URL. Defaults to current hostname. -->
+			<app>
+				http://web.dev/
+			</app>
+		</url>
+
+		<dir>
+			<core>
+				<int>int</int>
+				<i18n>i18n</i18n>
+			</core>
+			<app>
+				<ctrl>ctrl</ctrl>
+				<i18n>i18n</i18n>
+				<mod>mod</mod>
+				<var>var</var>
+			</app>
+		</dir>
+
+		<log>
+			<level>debug</level>
+			<extension>.log</extension>
+			<dateformat>Y-m-d H:i:s:u</dateformat>
+		</log>
+
+		<database>
+			<type>MySQL</type>
+			<host>localhost</host>
+			<port>3306</port>
+			<user>web</user>
+			<password>REDACTED</password>
+			<name>web_sandbox</name>
+		</database>
+
+		<seo>
+			<full>1</full>
+			<extension>.html</extension>
+		</seo>
+
+	</unit>
+	<!-- Test Environment -->
+	<test>
+		<setting1>
+			value1
+		</setting1>
+		<setting2>
+			<subsetting2>
+				subvalue2
+			</subsetting2>
+		</setting2>
+		<setting3>
+			value3
+		</setting3>
+	</test>
+	<!-- Production Environment -->
+	<prod></prod>
+</config>

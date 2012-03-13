@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--#if expr="$Request_URI == '/'"-->
+	<title>WEb Documentation</title>
+
+	<!--#elif expr="$Request_URI == /CHMdefaultConverter\/?/"-->
+	<title>phpDoc :: CHM</title>
+
+	<!--#elif expr="$Request_URI == /HTMLframesConverter\/?/"-->
+	<title>phpDoc :: HTML Frames</title>
+
+	<!--#elif expr="$Request_URI == /HTMLSmartyConverter\/?/"-->
+	<title>phpDoc :: HTML Smarty</title>
+
+	<!--#elif expr="$Request_URI == /PDFdefaultConverter\/?/"-->
+	<title>phpDoc :: PDF</title>
+
+	<!--#elif expr="$Request_URI == /XMLDocBookpeardoc2Converter\/?/"-->
+	<title>phpDoc :: XML DocBook</title>
+	
+	<!--#elif expr="$Request_URI == /phpdoc\/?/"-->
+	<title>phpDoc</title>
+	
+	<!--#else -->
+		<title><!--#echo var="Request_URI" --></title>
+	<!--#endif -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="/i/style.css" />
+	<link rel="shortcut icon" href="/i/images/favicon.ico" />
+
+</head>
+
+<body>
+<div id="wrap">
+<div id="main">
+	<!--#if expr="$Request_URI == '/'"-->
+	<h1>WEb Documentation</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+	
+	<!--#elif expr="$Request_URI == /CHMdefaultConverter\/?/"-->
+	<h1>phpDoc :: CHM</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+	
+	<!--#elif expr="$Request_URI == /HTMLframesConverter\/?/"-->
+	<h1>phpDoc :: HTML Frames</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+
+	<!--#elif expr="$Request_URI == /HTMLSmartyConverter\/?/"-->
+	<h1>phpDoc :: HTML Smarty</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+
+	<!--#elif expr="$Request_URI == /PDFdefaultConverter\/?/"-->
+	<h1>phpDoc :: PDF</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+
+	<!--#elif expr="$Request_URI == /XMLDocBookpeardoc2Converter\/?/"-->
+	<h1>phpDoc :: XML DocBook</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+	
+	<!--#elif expr="$Request_URI == /phpdoc\/?/"-->
+	<h1>phpDoc</h1>
+	<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+	
+	<!--#else -->
+		<h1><!--#echo var="Request_URI" --></h1>
+		<h3 class="location">Location: <!--#echo var="Request_URI" --></h3>
+	<!--#endif -->

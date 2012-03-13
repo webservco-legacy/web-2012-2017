@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id$ -->
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<dev>
+		<!-- User object settings -->
+		<user>
+			<login>
+				<!-- Failed logins timeout (minutes) -->
+				<timeout>5</timeout>
+				<!-- Maximum failed login attempts permitted -->
+				<attempts>10</attempts>
+			</login>
+			
+		</user>
+	</dev>
+	<!-- Test Environment -->
+	<test></test>
+	<!-- Production Environment -->
+	<prod></prod>
+</config>

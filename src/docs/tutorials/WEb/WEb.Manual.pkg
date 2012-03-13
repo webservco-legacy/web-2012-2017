@@ -1,0 +1,58 @@
+<!-- $Id$ -->
+
+<refentry id="{@id}">
+  <refnamediv>
+    <refname>Web Engine Business Documentation</refname>
+    <refpurpose>Lorem Ipsum Dolor</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <author>
+      Radu Maier
+      <authorblurb>
+      {@link mailto:radu@webserv.co radu@webserv.co}
+      </authorblurb>
+    </author>
+  </refsynopsisdiv>
+  {@toc}
+  <refsect1 id="{@id intro}">
+    <title>Intro</title>
+      <para>
+        Some text.
+      </para>
+  </refsect1>
+  <refsect1 id="{@id test}">
+    <title>Test</title>
+    <refsect2 id="{@id tester}">
+      <title>Tester</title>
+      <para>
+        Tester text.
+      </para>
+      <para>
+        <para>
+        Here's a list:
+        </para>
+        <itemizedlist>
+          <listitem><para>item 1</para></listitem>
+          <listitem><para>item 2</para></listitem>
+          <listitem><para>item 3</para></listitem>
+        </itemizedlist>
+        <para>
+        And here's some php code:
+        </para>
+        <programlisting role="php">
+             <![CDATA[
+<?php
+/**
+ * Comment
+ */
+echo 'Hello World!';
+?>
+             ]]>
+        </programlisting>
+        <para>
+        Now a link to another tutorial: {@tutorial WEb.Manual.User.pkg}
+        </para>
+      </para>
+    </refsect2>
+  </refsect1>
+</refentry>

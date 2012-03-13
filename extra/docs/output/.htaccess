@@ -1,0 +1,64 @@
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+ order allow,deny
+ deny from all
+</Files>
+
+Options +Indexes +Includes
+
+<IfModule mod_autoindex.c>
+IndexOptions IgnoreCase FancyIndexing FoldersFirst NameWidth=* DescriptionWidth=* XHTML HTMLtable SuppressHTMLPreamble SuppressRules SuppressDescription SuppressLastModified SuppressSize IconHeight=16 IconWidth=16 IconsAreLinks
+IndexOrderDefault Ascending Name
+HeaderName /i/header.shtml
+ReadmeName /i/footer.shtml
+IndexIgnore header.shtml footer.shtml i images cgi-bin favicon.ico .htaccess .ftpquota .DS_Store icons *.log *,v *,t .??* *~ *#
+
+DefaultIcon /i/images/icons/resultset_next.png
+AddIcon /i/images/icons/folder.png ^^DIRECTORY^^
+AddIcon /i/images/icons/arrow_undo.png ..
+# Directory Icons
+AddIcon /i/images/client-icons/aol.png AOL
+AddIcon /i/images/client-icons/apple.png Apple
+AddIcon /i/images/client-icons/cisco.png Cisco
+AddIcon /i/images/client-icons/dell.png Dell
+AddIcon /i/images/client-icons/ea.png EA
+AddIcon /i/images/client-icons/google.png Google
+AddIcon /i/images/client-icons/ibm.png IBM
+AddIcon /i/images/client-icons/logitech.png Logitech
+AddIcon /i/images/client-icons/microsoft.png Microsoft
+#
+AddIcon /location/to/graphic.png FILE-NAME
+#
+AddIcon /i/images/icons/book_open.png .pdf
+AddIcon /i/images/icons/page_white_word.png .txt .doc .rtf .log .asc
+AddIcon /i/images/icons/picture.png .jpg .jpeg .jpe .png .gif .mpg .ico .psd
+AddIcon /i/images/icons/music.png .mp3 .wav .vox .wma .ra .ram .ogg .vqf .aac
+AddIcon /i/images/icons/film.png .mov .avi .wmv .mpeg
+AddIcon /i/images/icons/html.png .html .htm .shtm .shtml
+AddIcon /i/images/icons/xhtml.png .xhtml
+AddIcon /i/images/icons/css.png .css
+AddIcon /i/images/icons/script.png .php
+AddIcon /i/images/icons/script.png .asp .js .xml
+AddIcon /i/images/icons/page_white_actionscript.png .swf .fla .as
+AddIcon /i/images/icons/page_white_zip.png .zip .rar .gz .bz2
+AddIcon /i/images/icons/drive_web.png .iso .rpm
+AddIcon /i/images/icons/application_lightning.png .torrent
+#
+AddDescription &quot;<span class='description'>Music/Sound File</span>&quot; .mp3
+AddDescription &quot;<span class='description'>GZIP compressed TAR archive</span>&quot; .tgz .tar.gz
+AddDescription &quot;<span class='description'>GZIP compressed archive</span>&quot; .Z .z .gz .zip
+#
+AddDescription &quot;[<span class='description'>Go Back..</span>]&quot; ..
+AddDescription &quot;[<span class='description'>American Online, LLC.</span>]&quot; AOL
+AddDescription &quot;[<span class='description'>Apple Inc.</span>]&quot; Apple
+AddDescription &quot;[<span class='description'>Cisco Systems, Inc.</span>]&quot; Cisco
+AddDescription &quot;[<span class='description'>Dell Inc.</span>]&quot; Dell
+AddDescription &quot;[<span class='description'>Electronic Arts, Inc.</span>]&quot; EA
+AddDescription &quot;[<span class='description'>Google, Inc.</span>]&quot; Google
+AddDescription &quot;[<span class='description'>IBM, Inc.</span>]&quot; IBM
+AddDescription &quot;[<span class='description'>Logitech, Inc.</span>]&quot; Logitech
+AddDescription &quot;[<span class='description'>Microsoft, Inc.</span>]&quot; Microsoft
+#
+AddDescription &quot;<span class='description'>no info</span>&quot; *
+
+
+</IfModule>

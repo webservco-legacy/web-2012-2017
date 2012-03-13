@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id$ -->
+
+<phpunit>
+    <php>
+        <ini name="include_path" value=".:/usr/share/pear:/usr/share/php:/home/radu/Documents/workspace/wsWEb/src:/home/radu/Documents/workspace/wsWEb/extra/test/assets"/>
+    </php>
+
+ 	<testsuites>
+	    <testsuite name="WEb Libraries">
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Config</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Core</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Library</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Error</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/I18n</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Log</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/App</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Database</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/String</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Security</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Router</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Module</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Object</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Controller</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Output</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Session</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Acl</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Geo</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Form</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Captcha</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Mail</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Browser</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Iceget</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Smtp</directory>
+	    </testsuite>
+	    <testsuite name="WEb Objects">
+	    	<directory suffix=".obj.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/obj/User</directory>
+	    </testsuite>
+	    <testsuite name="WEb Misc">
+	        <directory suffix=".php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/misc</directory>
+	    </testsuite>
+    </testsuites>
+
+    <logging>
+        <log type="coverage-html" target="/home/radu/Documents/workspace/wsWEb/extra/test/results/" charset="UTF-8"
+             yui="true" highlight="false"
+             lowUpperBound="35" highLowerBound="70"/>
+		<log type="junit" target="/home/radu/Documents/workspace/wsWEb/extra/test/results/logfile.xml" logIncompleteSkipped="false"/>
+		<log type="testdox-html" target="/home/radu/Documents/workspace/wsWEb/extra/test/results/testdox.html"/>
+  		<log type="testdox-text" target="/home/radu/Documents/workspace/wsWEb/extra/test/results/testdox.txt"/>
+    </logging>
+</phpunit>
