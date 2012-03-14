@@ -11,7 +11,7 @@
 			<template>layout</template>
 			<extension>.tpl.php</extension>
 			<smarty>
-				<path>/home/rudisoft/www/libs/</path>
+				<path>/home/radu/www/libs/</path>
 				<dir>Smarty/Smarty-2.6.26/libs</dir>
 				<file>Smarty.class.php</file>
 				<class>Smarty</class>

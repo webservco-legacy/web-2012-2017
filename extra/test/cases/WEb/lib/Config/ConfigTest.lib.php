@@ -122,7 +122,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsFalseWhenDataIsInvalidPath()
 	{
-		$this->assertFalse( $this->_mObject->Set( '/home/rudisoft' ) );
+		$this->assertFalse( $this->_mObject->Set( '/home/radu' ) );
 	}
 
 	/**

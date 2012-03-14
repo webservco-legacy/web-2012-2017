@@ -11,7 +11,7 @@
 			<template>layout</template>
 			<extension>.xhtml</extension>
 			<phptal>
-				<path>/home/rudisoft/www/libs/</path>
+				<path>/home/radu/www/libs/</path>
 				<dir>PHPTAL/PHPTAL-1.2.1</dir>
 				<file>PHPTAL.php</file>
 				<class>PHPTAL</class>
