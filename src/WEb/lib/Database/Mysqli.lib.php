@@ -485,7 +485,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		$this->_mDbStmt->close();
 
 		if (empty($results)) {
-			return FALSE;
+			return array();
 		}
 
 		return $results;
