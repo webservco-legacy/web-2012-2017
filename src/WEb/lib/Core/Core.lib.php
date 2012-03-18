@@ -784,19 +784,22 @@ class Core
 					require_once $base_path . $class_utils_path;
 				}
 
-				if ( !empty( self::$_msConfigObject ) && !empty( self::$_msErrorObject ) &&
-				( TRUE !== self::$_msLicenseChecked ) )
-				{
+				/**
+				 * License check disabled! XXX
+				 */
+				//if ( !empty( self::$_msConfigObject ) && !empty( self::$_msErrorObject ) &&
+				//( TRUE !== self::$_msLicenseChecked ) )
+				//{
 					/**
 					 * Set license checked.
 					 */
-					self::$_msLicenseChecked = TRUE;
+					//self::$_msLicenseChecked = TRUE;
 
 					/**
 					 * Check license.
 					 */
-					self::_LicCheck();
-				}
+					//self::_LicCheck();
+				//}
 
 				/**
 				 * Stop.

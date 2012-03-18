@@ -168,5 +168,14 @@ interface Interface_Database {
 	 * @param array $options
 	 */
 	public function GetNext($field, $table, $options = array());
+	
+	/**
+	 * Get the maximum value of a field.
+	 * 
+	 * @param string $field
+	 * @param string $table
+	 * @param array $options
+	 */
+	public function GetMax($field, $table, $options = array());
 }
 ?>

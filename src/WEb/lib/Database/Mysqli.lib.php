@@ -164,9 +164,9 @@ class Database_Mysqli extends Database implements Interface_Database {
 		$this->Connect();
 
 		$result = $this->_mDbLink->query($query);
-		
+
 		Core::Log()->Write($query, 'debug');
-		
+
 		return $result;
 	}
 
@@ -741,6 +741,25 @@ class Database_Mysqli extends Database implements Interface_Database {
 		$result = $this->RetrieveOne($field, $table, $options);
 
 		return (!empty($result['next_item'])) ? $result['next_item'] : 1;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Interface_Database::GetMax()
+	 */
+	public function GetMax($field, $table, $options = array()) {
+
+		/**
+		 * @var string
+		 */
+		$field = "MAX({$field}):max_item";
+
+		/**
+		 * @var mixed
+		 */
+		$result = $this->RetrieveOne($field, $table, $options);
+
+		return (!empty($result['max_item'])) ? $result['max_item'] : NULL;
 	}
 
 	/**
