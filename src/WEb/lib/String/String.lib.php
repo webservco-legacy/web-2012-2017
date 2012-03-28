@@ -39,7 +39,7 @@ class String extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -63,9 +63,9 @@ class String extends Library {
 	 */
 	public function StartsWith($needle, $haystack, $ignoreCase = TRUE) {
 		if (FALSE !== $ignoreCase) {
-			$f_strpos = ( function_exists('mb_stripos')) ? 'mb_stripos' : 'stripos';
+			$f_strpos = (function_exists('mb_stripos')) ? 'mb_stripos' : 'stripos';
 		} else {
-			$f_strpos = ( function_exists('mb_strpos')) ? 'mb_strpos' : 'strpos';
+			$f_strpos = (function_exists('mb_strpos')) ? 'mb_strpos' : 'strpos';
 		}
 
 		return 0 === $f_strpos($haystack, $needle);
@@ -85,19 +85,19 @@ class String extends Library {
 		 *
 		 * @var string
 		 */
-		$f_substr = ( function_exists('mb_substr')) ? 'mb_substr' : 'substr';
+		$f_substr = (function_exists('mb_substr')) ? 'mb_substr' : 'substr';
 
 		/**
 		 * Check if multybyte function is available.
 		 *
 		 * @var string
 		 */
-		$f_strlen = ( function_exists('mb_strlen')) ? 'mb_strlen' : 'strlen';
+		$f_strlen = (function_exists('mb_strlen')) ? 'mb_strlen' : 'strlen';
 
 		/**
 		 * @var string
 		 */
-		$check = $f_substr($haystack, $f_strlen($haystack) - ( $f_strlen($needle)));
+		$check = $f_substr($haystack, $f_strlen($haystack) - ($f_strlen($needle)));
 
 		return $check == $needle;
 	}
@@ -301,7 +301,7 @@ class String extends Library {
 		 *
 		 * Return result.
 		 */
-		return ( preg_match($match, $string)) ? TRUE : FALSE;
+		return (preg_match($match, $string)) ? TRUE : FALSE;
 	}
 
 	/**
@@ -312,7 +312,7 @@ class String extends Library {
 	 * @return bool
 	 */
 	public function IsValidEmail($string) {
-		return ( filter_var($string, FILTER_VALIDATE_EMAIL)) ? TRUE : FALSE;
+		return (filter_var($string, FILTER_VALIDATE_EMAIL)) ? TRUE : FALSE;
 	}
 
 	/**

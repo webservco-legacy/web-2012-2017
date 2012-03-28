@@ -45,7 +45,7 @@ class FormTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Form::GetInstance() );
+		$this->assertInternalType('object', Form::GetInstance());
 	}
 }
 ?>

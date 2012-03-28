@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -40,7 +40,7 @@ class Module_Helloworld extends Module
 {
 	public function Hello()
 	{
-		return __( 'Hello' );
+		return __('Hello');
 	}
 
 }

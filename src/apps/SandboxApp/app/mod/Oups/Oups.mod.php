@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.

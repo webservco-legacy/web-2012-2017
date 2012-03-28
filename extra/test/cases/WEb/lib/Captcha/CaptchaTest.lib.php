@@ -45,7 +45,7 @@ class CaptchaTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Captcha::GetInstance() );
+		$this->assertInternalType('object', Captcha::GetInstance());
 	}
 }
 ?>

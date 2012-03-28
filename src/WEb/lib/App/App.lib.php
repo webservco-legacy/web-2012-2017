@@ -46,7 +46,7 @@ class App extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -166,7 +166,7 @@ class App extends Library {
 			Core::Log()->Write(__('Application: Booting complete.', 'WEb'), 'debug');
 
 			return TRUE;
-		} catch ( ErrorException $e ) {
+		} catch (ErrorException $e) {
 			Core::Error()->Report($e);
 		}
 
@@ -203,7 +203,7 @@ class App extends Library {
 
 			/**
 			 * PHP < 5.3 compatibility.
-			 * $module_object = $module_name::GetInstance( $module_name );
+			 * $module_object = $module_name::GetInstance($module_name);
 			 *
 			 * @var object
 			 */
@@ -228,7 +228,7 @@ class App extends Library {
 
 			/**
 			 * PHP < 5.3 compatibility.
-			 * $ctrl_object = $ctrl_name::GetInstance( $ctrl_name );
+			 * $ctrl_object = $ctrl_name::GetInstance($ctrl_name);
 			 *
 			 * @var object
 			 */
@@ -264,7 +264,7 @@ class App extends Library {
 			Core::Log()->Write($dispatch_msg, 'debug');
 
 			return call_user_func(array($ctrl_object, $action_name));
-		} catch ( ErrorException $e ) {
+		} catch (ErrorException $e) {
 			Core::Error()->Report($e);
 		}
 
@@ -341,7 +341,7 @@ class App extends Library {
 
 		/**
 		 * PHP < 5.3 compatibility.
-		 * $ctrl_object = $ctrl_name::GetInstance( $ctrl_name );
+		 * $ctrl_object = $ctrl_name::GetInstance($ctrl_name);
 		 *
 		 * @var object
 		 */

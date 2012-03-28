@@ -177,7 +177,7 @@ class Output_Phptal extends Output implements Interface_Output {
 			if (FALSE !== $outDisplay) {
 				try {
 					return $this->_mEngineObject->echoExecute();
-				} catch ( PHPTAL_ConfigurationException $e ) {
+				} catch (PHPTAL_ConfigurationException $e) {
 					throw new ErrorException($e->GetMessage(), 0, $e->GetCode(), $e->getFile(), $e->getLine());
 
 					return FALSE;
@@ -185,11 +185,11 @@ class Output_Phptal extends Output implements Interface_Output {
 			} else {
 				return $this->_mEngineObject->execute();
 			}
-		} catch ( PHPTAL_IOException $e ) {
+		} catch (PHPTAL_IOException $e) {
 			throw new ErrorException($e->GetMessage(), 0, $e->GetCode(), $e->getFile(), $e->getLine());
 
 			return FALSE;
-		} catch ( PHPTAL_ParserException $e ) {
+		} catch (PHPTAL_ParserException $e) {
 			throw new ErrorException($e->GetMessage(), 0, $e->GetCode(), $e->getFile(), $e->getLine());
 
 			return FALSE;

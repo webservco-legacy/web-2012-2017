@@ -78,7 +78,7 @@ class Database_Pdo extends Database implements Interface_Database {
 		 */
 		try {
 			$db_link = new PDO("{$db_type}:host={$this->_mDbHost};dbname={$this->_mDbDatabase};port={$this->_mDbPort}", $this->_mDbUser, $this->_mDbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-		} catch( PDOException $e ) {
+		} catch(PDOException $e) {
 			throw new ErrorException($e->GetMessage(), 0, $e->GetCode(), $e->getFile(), $e->getLine());
 
 			return FALSE;

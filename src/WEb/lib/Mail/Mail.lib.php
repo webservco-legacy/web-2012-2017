@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -146,18 +146,18 @@ class Mail extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -170,32 +170,32 @@ class Mail extends Library
 		/**
 		 * @var array
 		 */
-		$config = Core::Config()->Get( 'mail' );
+		$config = Core::Config()->Get('mail');
 
 		/**
 		 * @var string
 		 */
-		$this->_mContentType = !empty( $config['content_type'] ) ? $config['content_type'] : 'plain';
+		$this->_mContentType = !empty($config['content_type']) ? $config['content_type'] : 'plain';
 
 		/**
 		 * @var string
 		 */
-		$this->_mEncoding = !empty( $config['encoding'] ) ? $config['encoding'] : '7bit';
+		$this->_mEncoding = !empty($config['encoding']) ? $config['encoding'] : '7bit';
 
 		/**
 		 * @var string
 		 */
-		$this->_mCharset = !empty( $config['charset'] ) ? $config['charset'] : 'utf-8';
+		$this->_mCharset = !empty($config['charset']) ? $config['charset'] : 'utf-8';
 
 		/**
 		 * @var string
 		 */
-		$this->_mEnvelope = ( 1 == $config['envelope'] ) ? TRUE : FALSE;
+		$this->_mEnvelope = (1 == $config['envelope']) ? TRUE : FALSE;
 
 		/**
 		 * @var string
 		 */
-		$this->_mSmtp = ( 1 == $config['smtp'] ) ? TRUE : FALSE;
+		$this->_mSmtp = (1 == $config['smtp']) ? TRUE : FALSE;
 
 		/**
 		 * @var array
@@ -227,7 +227,7 @@ class Mail extends Library
 		/**
 		 * @var array
 		 */
-		$this->_mAttachAllowed = explode( ',', $config['attach'] );
+		$this->_mAttachAllowed = explode(',', $config['attach']);
 
 		/**
 		 * @var string
@@ -246,21 +246,21 @@ class Mail extends Library
 	 *
 	 * @return
 	 */
-	public function AddAddress( $addEmail, $addType = 'to', $addName = NULL )
+	public function AddAddress($addEmail, $addType = 'to', $addName = NULL)
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
 
-		if ( FALSE === ( $addEmail = filter_var( $addEmail, FILTER_VALIDATE_EMAIL ) ) )
+		if (FALSE === ($addEmail = filter_var($addEmail, FILTER_VALIDATE_EMAIL)))
 		{
 			/**
 			 * @var string
 			 */
-			$msg = sprintf( __( 'Mail Library: Error adding address "%s". Invalid format.', 'WEb' ), $addEmail );
+			$msg = sprintf(__('Mail Library: Error adding address "%s". Invalid format.', 'WEb'), $addEmail);
 
-			Core::Log()->Write( $msg, 'error' );
+			Core::Log()->Write($msg, 'error');
 
 			return FALSE;
 		}
@@ -268,11 +268,11 @@ class Mail extends Library
 		/**
 		 * @var string
 		 */
-		$msg = sprintf( __( 'Mail Library: Adding address of type "%s".', 'WEb' ), $addType );
+		$msg = sprintf(__('Mail Library: Adding address of type "%s".', 'WEb'), $addType);
 
-		Core::Log()->Write( $msg, 'debug' );
+		Core::Log()->Write($msg, 'debug');
 
-		switch ( $addType )
+		switch ($addType)
 		{
 			case 'from' :
 				/**
@@ -280,7 +280,7 @@ class Mail extends Library
 				 *
 				 * @var array
 				 */
-				$this->_mMailFrom = array( $addEmail => $addName );
+				$this->_mMailFrom = array($addEmail => $addName);
 
 				break;
 
@@ -290,7 +290,7 @@ class Mail extends Library
 				 *
 				 * @var array
 				 */
-				$this->_mMailReplyTo = array( $addEmail => $addName );
+				$this->_mMailReplyTo = array($addEmail => $addName);
 
 				break;
 
@@ -332,21 +332,21 @@ class Mail extends Library
 	 *
 	 * @return bool
 	 */
-	public function AddAttachment( $attachPath, $attachType = NULL, $attachName = NULL )
+	public function AddAttachment($attachPath, $attachType = NULL, $attachName = NULL)
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
 
-		if ( !is_readable( $attachPath ) )
+		if (!is_readable($attachPath))
 		{
 			/**
 			 * @var string
 			 */
-			$msg = sprintf( __( 'Mail Library: Error adding attachment "%s". File not found.', 'WEb' ), $attachPath );
+			$msg = sprintf(__('Mail Library: Error adding attachment "%s". File not found.', 'WEb'), $attachPath);
 
-			Core::Log()->Write( $msg, 'error' );
+			Core::Log()->Write($msg, 'error');
 
 			return FALSE;
 		}
@@ -354,19 +354,19 @@ class Mail extends Library
 		/**
 		 * @var string
 		 */
-		$attach_type = ( !empty( $attachType ) ) ? $attachType : 'bin';
+		$attach_type = (!empty($attachType)) ? $attachType : 'bin';
 
 		/**
 		 * Check if attachment type is allowed.
 		 */
-		if ( !in_array( $attach_type, $this->_mAttachAllowed ) )
+		if (!in_array($attach_type, $this->_mAttachAllowed))
 		{
 			/**
 			 * @var string
 			 */
-			$msg = sprintf( __( 'Mail Library: Error adding attachment "%s". Format not allowed.', 'WEb' ), $attachPath );
+			$msg = sprintf(__('Mail Library: Error adding attachment "%s". Format not allowed.', 'WEb'), $attachPath);
 
-			Core::Log()->Write( $msg, 'error' );
+			Core::Log()->Write($msg, 'error');
 
 			return FALSE;
 		}
@@ -374,14 +374,14 @@ class Mail extends Library
 		/**
 		 * Check if attachment type is known.
 		 */
-		if( !array_key_exists( $attach_type, $this->_mAttachKnown ) )
+		if(!array_key_exists($attach_type, $this->_mAttachKnown))
 		{
 			/**
 			 * @var string
 			 */
-			$msg = sprintf( __( 'Mail Library: Error adding attachment "%s". Unknown format.', 'WEb' ), $attachPath );
+			$msg = sprintf(__('Mail Library: Error adding attachment "%s". Unknown format.', 'WEb'), $attachPath);
 
-			Core::Log()->Write( $msg, 'error' );
+			Core::Log()->Write($msg, 'error');
 
 			return FALSE;
 		}
@@ -389,19 +389,19 @@ class Mail extends Library
 		/**
 		 * @var string
 		 */
-		$attach_name = ( !empty( $attachName ) ) ? $attachName : basename( $attachPath );
+		$attach_name = (!empty($attachName)) ? $attachName : basename($attachPath);
 
 		/**
 		 * @var array
 		 */
-		$this->_mAttachments[$attachPath] = array( $attach_type, $attach_name );
+		$this->_mAttachments[$attachPath] = array($attach_type, $attach_name);
 
 		/**
 		 * @var string
 		 */
-		$msg = sprintf( __( 'Mail Library: Added attachment "%s".', 'WEb' ), $attachPath );
+		$msg = sprintf(__('Mail Library: Added attachment "%s".', 'WEb'), $attachPath);
 
-		Core::Log()->Write( $msg, 'debug' );
+		Core::Log()->Write($msg, 'debug');
 
 		return TRUE;
 	}
@@ -414,9 +414,9 @@ class Mail extends Library
 	 *
 	 * @return bool
 	 */
-	public function AddHeader( $headerName, $headerValue )
+	public function AddHeader($headerName, $headerValue)
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
@@ -429,16 +429,16 @@ class Mail extends Library
 		return TRUE;
 	}
 
-	public function Send( $msgSubject, $msgBody )
+	public function Send($msgSubject, $msgBody)
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
 
-		if ( TRUE !== $this->_CheckAddreses() )
+		if (TRUE !== $this->_CheckAddreses())
 		{
-			Core::Log()->Write( __( 'Mail Library: Error sending mail. One or more required addresses are missing.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('Mail Library: Error sending mail. One or more required addresses are missing.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -446,78 +446,78 @@ class Mail extends Library
 		/**
 		 * Add MIME header.
 		 */
-		$this->AddHeader( 'MIME-Version', '1.0' );
+		$this->AddHeader('MIME-Version', '1.0');
 
 		/**
 		 * @var string
 		 */
-		$msg_body = $this->_GetMessageBody( $msgBody );
+		$msg_body = $this->_GetMessageBody($msgBody);
 
 		/**
 		 * @var string
 		 */
-		$msg_to = $this->_GetAddress( 'to' );
+		$msg_to = $this->_GetAddress('to');
 
 		/**
 		 * @var string
 		 */
-		$msg_from = $this->_GetAddress( 'from' );
+		$msg_from = $this->_GetAddress('from');
 
 		/**
 		 * We don't need the value, just make sure the header is set.
 		 */
-		$this->_GetAddress( 'replyto' );
+		$this->_GetAddress('replyto');
 
 		/**
 		 * Check if we have Cc.
 		 */
-		if ( !empty( $this->_mMailCc ) )
+		if (!empty($this->_mMailCc))
 		{
 			/**
 			 * We don't need the value, just make sure the header is set.
 			 */
-			$this->_GetAddress( 'cc' );
+			$this->_GetAddress('cc');
 		}
 
 		/**
 		 * Check if we have Bcc.
 		 */
-		if ( !empty( $this->_mMailBcc ) )
+		if (!empty($this->_mMailBcc))
 		{
 			/**
 			 * We don't need the value, just make sure the header is set.
 			 */
-			$this->_GetAddress( 'bcc' );
+			$this->_GetAddress('bcc');
 		}
 
 		/**
 		 * Add application fingerprint.
 		 */
-		$this->AddHeader( 'X-Mailer', 'WEb 5 (http://www.WebServ.Co)' );
+		$this->AddHeader('X-Mailer', 'WEb 5 (http://www.WebServ.Co)');
 
 		/**
 		 * @var string
 		 */
-		$msg_from_address = key( $this->_mMailFrom );
+		$msg_from_address = key($this->_mMailFrom);
 
 		/**
 		 * Check if we should use SMTP instead of regular mail.
 		 */
-		if ( FALSE !== $this->_mSmtp )
+		if (FALSE !== $this->_mSmtp)
 		{
 			/**
 			 * @var array
 			 */
-			$msg_recipients = array_merge( $this->_mMailTo, $this->_mMailCc, $this->_mMailBcc );
+			$msg_recipients = array_merge($this->_mMailTo, $this->_mMailCc, $this->_mMailBcc);
 
-			if ( TRUE !== Core::Smtp()->Send( $msg_recipients, $msg_from_address, $msgSubject, $msg_body, $this->_mHeaders ) )
+			if (TRUE !== Core::Smtp()->Send($msg_recipients, $msg_from_address, $msgSubject, $msg_body, $this->_mHeaders))
 			{
-				Core::Log()->Write( __( 'Mail Library: Error sending message.', 'WEb' ), 'error' );
+				Core::Log()->Write(__('Mail Library: Error sending message.', 'WEb'), 'error');
 
 				return FALSE;
 			}
 
-			Core::Log()->Write( __( 'Mail Library: Message sent successfully.', 'WEb' ), 'info' );
+			Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'info');
 
 			return TRUE;
 		}
@@ -525,7 +525,7 @@ class Mail extends Library
 		/**
 		 * Set sender.
 		 */
-		ini_set( 'sendmail_from', $msg_from_address );
+		ini_set('sendmail_from', $msg_from_address);
 
 		/**
 		 * @var string
@@ -535,16 +535,16 @@ class Mail extends Library
 		/**
 		 * @var string
 		 */
-		$envelope = ( FALSE !== $this->_mEnvelope ) ? "-r {$msg_from_address}" : NULL;
+		$envelope = (FALSE !== $this->_mEnvelope) ? "-r {$msg_from_address}" : NULL;
 
-		if ( TRUE !== mail( $msg_to, $msgSubject, $msg_body, $headers, $envelope ) )
+		if (TRUE !== mail($msg_to, $msgSubject, $msg_body, $headers, $envelope))
 		{
-			Core::Log()->Write( __( 'Mail Library: Error sending message.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('Mail Library: Error sending message.', 'WEb'), 'error');
 
 			return FALSE;
 		}
 
-		Core::Log()->Write( __( 'Mail Library: Message sent successfully.', 'WEb' ), 'info' );
+		Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'info');
 
 		return TRUE;
 	}
@@ -556,21 +556,21 @@ class Mail extends Library
 	 */
 	private function _CheckAddreses()
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
 
-		if ( empty( $this->_mMailTo ) )
+		if (empty($this->_mMailTo))
 		{
 			/**
 			 * @var array
 			 */
-			$recipient = Core::Config()->Get( 'recipient' );
+			$recipient = Core::Config()->Get('recipient');
 
-			if ( empty( $recipient['address'] ) )
+			if (empty($recipient['address']))
 			{
-				Core::Log()->Write( __( 'Mail Library: Error sending mail. You have to set at least one recipient.', 'WEb' ), 'error' );
+				Core::Log()->Write(__('Mail Library: Error sending mail. You have to set at least one recipient.', 'WEb'), 'error');
 
 				return FALSE;
 			}
@@ -578,19 +578,19 @@ class Mail extends Library
 			/**
 			 * Add default recipient.
 			 */
-			$this->AddAddress( $recipient['address'], 'to', $recipient['name'] );
+			$this->AddAddress($recipient['address'], 'to', $recipient['name']);
 		}
 
-		if ( empty( $this->_mMailFrom ) )
+		if (empty($this->_mMailFrom))
 		{
 			/**
 			 * @var array
 			 */
-			$sender = Core::Config()->Get( 'sender' );
+			$sender = Core::Config()->Get('sender');
 
-			if ( empty( $sender['address'] ) )
+			if (empty($sender['address']))
 			{
-				Core::Log()->Write( __( 'Mail Library: Error sending mail. You have to set sender.', 'WEb' ), 'error' );
+				Core::Log()->Write(__('Mail Library: Error sending mail. You have to set sender.', 'WEb'), 'error');
 
 				return FALSE;
 			}
@@ -598,17 +598,17 @@ class Mail extends Library
 			/**
 			 * Add default recipient.
 			 */
-			$this->AddAddress( $recipient['address'], 'from', $recipient['name'] );
+			$this->AddAddress($recipient['address'], 'from', $recipient['name']);
 		}
 
-		if ( empty( $this->_mMailReplyTo ) )
+		if (empty($this->_mMailReplyTo))
 		{
 			/**
 			 * @var string
 			 */
-			$reply_to_address = key( $this->_mMailFrom );
+			$reply_to_address = key($this->_mMailFrom);
 
-			$this->AddAddress( $reply_to_address, 'replyto',  $this->_mMailFrom[$reply_to_address] );
+			$this->AddAddress($reply_to_address, 'replyto',  $this->_mMailFrom[$reply_to_address]);
 		}
 
 		return  TRUE;
@@ -623,9 +623,9 @@ class Mail extends Library
 	 *
 	 * @return string
 	 */
-	private function _GetAddress( $addType = 'to' )
+	private function _GetAddress($addType = 'to')
 	{
-		switch ( $addType )
+		switch ($addType)
 		{
 			case 'from' :
 				/**
@@ -699,23 +699,23 @@ class Mail extends Library
 		 */
 		$data = array();
 
-		foreach ( $address_data as $to => $name )
+		foreach ($address_data as $to => $name)
 		{
 			/**
 			 * @var array
 			 */
-			$data[] = ( !empty( $name ) ) ? "{$name} <{$to}>" : $to;
+			$data[] = (!empty($name)) ? "{$name} <{$to}>" : $to;
 		}
 
 		/**
 		 * @var string
 		 */
-		$address = implode( ', ', $data );
+		$address = implode(', ', $data);
 
 		/**
 		 * Add header.
 		 */
-		$this->AddHeader( $header_type , $address );
+		$this->AddHeader($header_type , $address);
 
 		return $address;
 	}
@@ -729,29 +729,29 @@ class Mail extends Library
 	 *
 	 * @return string
 	 */
-	private function _GetMessageBody( $msgBody )
+	private function _GetMessageBody($msgBody)
 	{
 		/**
 		 * @var string
 		 */
-		$msg_pre = ( 'html' == $this->_mContentType ) ? "<html><body>{$this->_mEol}" : NULL;
+		$msg_pre = ('html' == $this->_mContentType) ? "<html><body>{$this->_mEol}" : NULL;
 
 		/**
 		 * @var string
 		 */
-		$msg_suf = ( 'html' == $this->_mContentType ) ? "{$this->_mEol}</body></html>" : NULL;
+		$msg_suf = ('html' == $this->_mContentType) ? "{$this->_mEol}</body></html>" : NULL;
 
 		/**
 		 * Check if we have attachments.
 		 */
-		if ( !empty( $this->_mAttachments ) )
+		if (!empty($this->_mAttachments))
 		{
 			/**
 			 * @var string
 			 */
-			$attach_boundary = md5( date( 'r', time() ) );
+			$attach_boundary = md5(date('r', time()));
 
-			$this->AddHeader( 'Content-type', "multipart/mixed; boundary=\"{$attach_boundary}\"" );
+			$this->AddHeader('Content-type', "multipart/mixed; boundary=\"{$attach_boundary}\"");
 
 			/**
 			 * @var string
@@ -762,17 +762,17 @@ class Mail extends Library
 						"Content-Transfer-Encoding: {$this->_mEncoding}{$this->_mEol}{$this->_mEol}" .
 						"{$msg_pre}{$msgBody}{$msg_suf}{$this->_mEol}{$this->_mEol}";
 
-			foreach ( $this->_mAttachments as $attach_path => $attach_info )
+			foreach ($this->_mAttachments as $attach_path => $attach_info)
 			{
 				/**
 				 * @var mixed
 				 */
-				$data = file_get_contents( $attach_path );
+				$data = file_get_contents($attach_path);
 
 				/**
 				 * @var string
 				 */
-				$attach_data = chunk_split( base64_encode( $data ) );
+				$attach_data = chunk_split(base64_encode($data));
 
 				/**
 				 * @var string
@@ -791,7 +791,7 @@ class Mail extends Library
 		}
 		else
 		{
-			$this->AddHeader( 'Content-type', "text/{$this->_mContentType}; charset={$this->_mCharset}" );
+			$this->AddHeader('Content-type', "text/{$this->_mContentType}; charset={$this->_mCharset}");
 
 			/**
 			 * @var string
@@ -809,7 +809,7 @@ class Mail extends Library
 	 */
 	private function _GetHeaders()
 	{
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
@@ -819,7 +819,7 @@ class Mail extends Library
 		 */
 		$headers = array();
 
-		foreach ( $this->_mHeaders as $header_name => $header_value )
+		foreach ($this->_mHeaders as $header_name => $header_value)
 		{
 			/**
 			 * @var array
@@ -827,7 +827,7 @@ class Mail extends Library
 			$headers[] = "{$header_name}: {$header_value}";
 		}
 
-		return implode( $this->_mEol, $headers ) . $this->_mEol;
+		return implode($this->_mEol, $headers) . $this->_mEol;
 	}
 }
 ?>

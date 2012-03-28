@@ -37,7 +37,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Core::Get( 'Object_User' );
+		$this->_mObject = Core::Get('Object_User');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Get( 'Object_User' ) );
+		$this->assertInternalType('object', Core::Get('Object_User'));
 	}
 }
 ?>

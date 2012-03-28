@@ -20,7 +20,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -45,14 +45,14 @@ class Controller_Helloworld_Hello extends Controller
 		/**
 		 * @var array
 		 */
-		$data['title'] = $this->Module()->Hello() . ' ' . __( 'World!' );
+		$data['title'] = $this->Module()->Hello() . ' ' . __('World!');
 
-		$this->Output()->Out( NULL, $data, NULL, NULL, TRUE );
+		$this->Output()->Out(NULL, $data, NULL, NULL, TRUE);
 	}
 
 	public function HelloWorld()
 	{
-		return __( 'Hello World!' );
+		return __('Hello World!');
 	}
 }
 ?>

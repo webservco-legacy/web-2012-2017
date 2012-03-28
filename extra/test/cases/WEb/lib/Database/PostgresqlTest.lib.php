@@ -37,7 +37,7 @@ class Database_PostgresqlTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Database_Postgresql::GetInstance( 'Database_Postgresql' );
+		$this->_mObject = Database_Postgresql::GetInstance('Database_Postgresql');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Database_PostgresqlTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Database_Postgresql::GetInstance( 'Database_Postgresql' ) );
+		$this->assertInternalType('object', Database_Postgresql::GetInstance('Database_Postgresql'));
 	}
 }
 ?>

@@ -50,7 +50,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Config::GetInstance() );
+		$this->assertInternalType('object', Config::GetInstance());
 	}
 
 	/**
@@ -58,7 +58,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetEnvReturnsFalseOnEmptyString()
 	{
-		$this->assertFalse( $this->_mObject->SetEnv() );
+		$this->assertFalse($this->_mObject->SetEnv());
 	}
 
 	/**
@@ -66,7 +66,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetEnvFailsOnEmptyArrayInput()
 	{
-		$this->assertFalse( $this->_mObject->SetEnv( array() ) );
+		$this->assertFalse($this->_mObject->SetEnv(array()));
 	}
 
 	/**
@@ -74,7 +74,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetEnvFailsOnAnyArrayInput()
 	{
-		$this->assertFalse( $this->_mObject->SetEnv( array( 'lorem'=>'ipsum' ) ) );
+		$this->assertFalse($this->_mObject->SetEnv(array('lorem'=>'ipsum')));
 	}
 
 	/**
@@ -82,7 +82,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetEnvReturnsTrueOnValidString()
 	{
-		$this->assertTrue( $this->_mObject->SetEnv('unit') );
+		$this->assertTrue($this->_mObject->SetEnv('unit'));
 	}
 
 	/**
@@ -90,7 +90,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetEnvActuallySetsEnv()
 	{
-		$this->assertEquals( 'unit', $this->_mObject->GetEnv() );
+		$this->assertEquals('unit', $this->_mObject->GetEnv());
 	}
 
 	/**
@@ -98,7 +98,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetEnvReturnsString()
 	{
-		$this->assertInternalType( 'string', $this->_mObject->GetEnv() );
+		$this->assertInternalType('string', $this->_mObject->GetEnv());
 	}
 
 	/**
@@ -106,7 +106,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsFalseWhenNoArguments()
 	{
-		$this->assertFalse( $this->_mObject->Set() );
+		$this->assertFalse($this->_mObject->Set());
 	}
 
 	/**
@@ -114,7 +114,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsFalseWhenDataIsStringAndSettingIsMissing()
 	{
-		$this->assertFalse( $this->_mObject->Set( 'dummy' ) );
+		$this->assertFalse($this->_mObject->Set('dummy'));
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsFalseWhenDataIsInvalidPath()
 	{
-		$this->assertFalse( $this->_mObject->Set( '/home/radu' ) );
+		$this->assertFalse($this->_mObject->Set('/home/radu'));
 	}
 
 	/**
@@ -130,7 +130,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsFalseWhenValidFilePathButInvalidXml()
 	{
-		$this->assertFalse( $this->_mObject->Set( _PU_ASSETS_PATH . 'WEb/lib/Config/blank.cfg.xml' ) );
+		$this->assertFalse($this->_mObject->Set(_PU_ASSETS_PATH . 'WEb/lib/Config/blank.cfg.xml'));
 	}
 
 	/**
@@ -138,7 +138,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsTrueWhenValidFileAndValidXml()
 	{
-		$this->assertTrue( $this->_mObject->Set( _PU_ASSETS_PATH . 'WEb/lib/Config/test.cfg.xml' ) );
+		$this->assertTrue($this->_mObject->Set(_PU_ASSETS_PATH . 'WEb/lib/Config/test.cfg.xml'));
 	}
 
 	/**
@@ -146,7 +146,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsTrueWhenValidDataSettingStringPairs()
 	{
-		$this->assertTrue( $this->_mObject->Set( 'bar', 'foo' ) );
+		$this->assertTrue($this->_mObject->Set('bar', 'foo'));
 	}
 
 	/**
@@ -154,7 +154,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetReturnsTrueWhenDataIsValidArray()
 	{
-		$this->assertTrue( $this->_mObject->Set( array( 'key', 'value') ) );
+		$this->assertTrue($this->_mObject->Set(array('key', 'value')));
 	}
 
 	/**
@@ -164,7 +164,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnSimpleQuery()
 	{
-		$this->assertEquals( 'bar', $this->_mObject->Get( 'foo' ) );
+		$this->assertEquals('bar', $this->_mObject->Get('foo'));
 	}
 
 	/**
@@ -180,7 +180,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 			'www' => '/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/',
 		);
 
-		$this->assertEquals( $values, $this->_mObject->Get( 'path' ) );
+		$this->assertEquals($values, $this->_mObject->Get('path'));
 	}
 
 	/**
@@ -190,7 +190,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnSpecialQuery()
 	{
-		$this->assertEquals( '/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get( 'path.core' ) );
+		$this->assertEquals('/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get('path.core'));
 	}
 
 	/**
@@ -200,7 +200,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnArrayInput()
 	{
-		$this->assertEquals( '/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get( array( 'path' , 'core' ) ) );
+		$this->assertEquals('/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get(array('path' , 'core')));
 	}
 
 	/**
@@ -210,7 +210,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnValidSimpleQueryButDifferentEnv()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'foo', 'test' ) );
+		$this->assertFalse($this->_mObject->Get('foo', 'test'));
 	}
 
 	/**
@@ -220,7 +220,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnValidSpecialQueryButDifferentEnv()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'path.core', 'test' ) );
+		$this->assertFalse($this->_mObject->Get('path.core', 'test'));
 	}
 
 	/**
@@ -230,7 +230,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsIfQueryIsEmptyArray()
 	{
-		$this->assertFalse( $this->_mObject->Get( array() ) );
+		$this->assertFalse($this->_mObject->Get(array()));
 	}
 
 	/**
@@ -240,7 +240,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetReturnsFullArrayConfigForCurrentEnvOnNoQuery()
 	{
-		$this->assertInternalType( 'array', $this->_mObject->Get() );
+		$this->assertInternalType('array', $this->_mObject->Get());
 	}
 
 	/**
@@ -250,7 +250,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnSimpleQueryFromAnotherEnv()
 	{
-		$this->assertEquals( 'value1', $this->_mObject->Get('setting1', 'test') );
+		$this->assertEquals('value1', $this->_mObject->Get('setting1', 'test'));
 	}
 
 	/**
@@ -261,7 +261,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnSpecialQueryFromAnotherEnv()
 	{
-		$this->assertEquals( 'subvalue2', $this->_mObject->Get('setting2.subsetting2', 'test') );
+		$this->assertEquals('subvalue2', $this->_mObject->Get('setting2.subsetting2', 'test'));
 	}
 
 	/**
@@ -272,9 +272,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetReturnsFullConfigForAnotherEnvOnNoQuery()
 	{
-		$count = count( $this->_mObject->Get( NULL, 'test' ) );
+		$count = count($this->_mObject->Get(NULL, 'test'));
 
-		$this->assertEquals( 3, $count );
+		$this->assertEquals(3, $count);
 	}
 
 	/**
@@ -284,7 +284,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnEmptyQueryForAnotherEnvThatHasNoData()
 	{
-		$this->assertFalse( $this->_mObject->Get( NULL, 'prod' ) );
+		$this->assertFalse($this->_mObject->Get(NULL, 'prod'));
 	}
 
 	/**
@@ -294,7 +294,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsIfValueIsEmptyArray()
 	{
-		$this->assertFalse( $this->_mObject->Get( NULL, 'prod' ) );
+		$this->assertFalse($this->_mObject->Get(NULL, 'prod'));
 	}
 
 	/**
@@ -304,7 +304,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidSimpleQuery()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'noexist' ) );
+		$this->assertFalse($this->_mObject->Get('noexist'));
 	}
 
 	/**
@@ -314,7 +314,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidSpecialQuery()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'no.exist' ) );
+		$this->assertFalse($this->_mObject->Get('no.exist'));
 	}
 
 	/**
@@ -324,7 +324,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidArrayQuerypartOne()
 	{
-		$this->assertFalse( $this->_mObject->Get( array( 'no', 'exist' ) ) );
+		$this->assertFalse($this->_mObject->Get(array('no', 'exist')));
 	}
 
 	/**
@@ -334,7 +334,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidArrayQueryPartTwo()
 	{
-		$this->assertFalse( $this->_mObject->Get( array( 'no'=>'exist' ) ) );
+		$this->assertFalse($this->_mObject->Get(array('no'=>'exist')));
 	}
 
 	/**
@@ -344,7 +344,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidSimpleQueryAnotherEnv()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'noexist', 'test' ) );
+		$this->assertFalse($this->_mObject->Get('noexist', 'test'));
 	}
 
 	/**
@@ -354,7 +354,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidSpecialQueryAnotherEnv()
 	{
-		$this->assertFalse( $this->_mObject->Get( 'no.exist', 'test' ) );
+		$this->assertFalse($this->_mObject->Get('no.exist', 'test'));
 	}
 
 	/**
@@ -364,7 +364,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFailsOnInvalidArrayQueryAnotherEnv()
 	{
-		$this->assertFalse( $this->_mObject->Get( array( 'no'=>'exist' ), 'test' ) );
+		$this->assertFalse($this->_mObject->Get(array('no'=>'exist'), 'test'));
 	}
 
 }

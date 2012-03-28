@@ -45,7 +45,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', App::GetInstance() );
+		$this->assertInternalType('object', App::GetInstance());
 	}
 }
 ?>

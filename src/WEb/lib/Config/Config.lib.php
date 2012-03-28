@@ -78,7 +78,7 @@ class Config extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -634,7 +634,7 @@ class Config extends Library {
 		 * If data is not an array, trim it.
 		 * Otherwise call the method recursively.
 		 */
-		return ( is_array($cfgData)) ? array_map(array($this, __FUNCTION__), $cfgData) : trim($cfgData);
+		return (is_array($cfgData)) ? array_map(array($this, __FUNCTION__), $cfgData) : trim($cfgData);
 	}
 
 	/**

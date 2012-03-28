@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -111,18 +111,18 @@ class Smtp extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -135,42 +135,42 @@ class Smtp extends Library
 		/**
 		 * @var array
 		 */
-		$config = Core::Config()->Get( 'smtp' );
+		$config = Core::Config()->Get('smtp');
 
 		/**
 		 * @var bool
 		 */
-		$this->_mSsl = ( 1 == $config['ssl'] ) ? TRUE: FALSE;
+		$this->_mSsl = (1 == $config['ssl']) ? TRUE: FALSE;
 
 		/**
 		 * @var string
 		 */
-		$this->_mServer = ( !empty( $config['server'] ) ) ? $config['server'] : 'localhost';
+		$this->_mServer = (!empty($config['server'])) ? $config['server'] : 'localhost';
 
 		/**
 		 * @var int
 		 */
-		$this->_mPort  = ( !empty( $config['port'] ) ) ? $config['port'] : 25;
+		$this->_mPort  = (!empty($config['port'])) ? $config['port'] : 25;
 
 		/**
 		 * @var int
 		 */
-		$this->_mTimeout = ( !empty( $config['timeout'] ) ) ? $config['timeout'] : 45;
+		$this->_mTimeout = (!empty($config['timeout'])) ? $config['timeout'] : 45;
 
 		/**
 		 * @var string
 		 */
-		$this->_mUser = ( !empty( $config['user'] ) ) ? $config['user'] : NULL;
+		$this->_mUser = (!empty($config['user'])) ? $config['user'] : NULL;
 
 		/**
 		 * @var string
 		 */
-		$this->_mPassword = ( !empty( $config['password'] ) ) ? $config['password'] : NULL;
+		$this->_mPassword = (!empty($config['password'])) ? $config['password'] : NULL;
 
 		/**
 		 * @var string
 		 */
-		$this->_mHost = ( !empty( $config['host'] ) ) ? $config['host'] : 'localhost';
+		$this->_mHost = (!empty($config['host'])) ? $config['host'] : 'localhost';
 
 		/**
 		 * @var string
@@ -180,7 +180,7 @@ class Smtp extends Library
 		/**
 		 * @var array
 		 */
-		$this->_mErrorCodes = array( 421, 450, 451, 452, 500, 501, 502, 503, 504, 521, 530, 550, 551, 552, 553, 554, 555 );
+		$this->_mErrorCodes = array(421, 450, 451, 452, 500, 501, 502, 503, 504, 521, 530, 550, 551, 552, 553, 554, 555);
 
 		return TRUE;
 	}
@@ -196,12 +196,12 @@ class Smtp extends Library
 	 *
 	 * @return bool
 	 */
-	public function Send( $msgTo, $msgFrom, $msgSubject, $msgBody, $msgHeaders )
+	public function Send($msgTo, $msgFrom, $msgSubject, $msgBody, $msgHeaders)
 	{
 		/**
 		 * Check if default data has been set.
 		 */
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
@@ -211,7 +211,7 @@ class Smtp extends Library
 		 *
 		 * We don't need to check again if it was opened successfully.
 		 */
-		if ( empty( $this->_mConnection ) )
+		if (empty($this->_mConnection))
 		{
 			$this->_Connect();
 		}
@@ -219,7 +219,7 @@ class Smtp extends Library
 		/**
 		 * Try to say hi to the server.
 		 */
-		if ( TRUE !== $this->_Talk( "EHLO {$this->_mHost}" ) )
+		if (TRUE !== $this->_Talk("EHLO {$this->_mHost}"))
 		{
 			return FALSE;
 		}
@@ -227,19 +227,19 @@ class Smtp extends Library
 		/**
 		 * Check if we should use authentication.
 		 */
-		if ( !empty( $this->_mUser ) && !empty( $this->_mPassword ) )
+		if (!empty($this->_mUser) && !empty($this->_mPassword))
 		{
-			if ( TRUE !== $this->_Talk( 'AUTH LOGIN' ) )
+			if (TRUE !== $this->_Talk('AUTH LOGIN'))
 			{
 				return FALSE;
 			}
 
-			if ( TRUE !== $this->_Talk( base64_encode( $this->_mUser ), __( 'username', 'WEb' ) ) )
+			if (TRUE !== $this->_Talk(base64_encode($this->_mUser), __('username', 'WEb')))
 			{
 				return FALSE;
 			}
 
-			if ( TRUE !== $this->_Talk( base64_encode( $this->_mPassword ), __( 'password', 'WEb' ) ) )
+			if (TRUE !== $this->_Talk(base64_encode($this->_mPassword), __('password', 'WEb')))
 			{
 				return FALSE;
 			}
@@ -248,7 +248,7 @@ class Smtp extends Library
 		/**
 		 * Send sender data.
 		 */
-		if ( TRUE !== $this->_Talk( "MAIL FROM: <{$msgFrom}>" ) )
+		if (TRUE !== $this->_Talk("MAIL FROM: <{$msgFrom}>"))
 		{
 			return FALSE;
 		}
@@ -256,24 +256,24 @@ class Smtp extends Library
 		/**
 		 * Check if we have only one recipient.
 		 */
-		if ( !is_array( $msgTo ) )
+		if (!is_array($msgTo))
 		{
 			/**
 			 * Send recipient data.
 			 */
-			if ( TRUE !== $this->_Talk( "RCPT TO: <{$msgTo}>" ) )
+			if (TRUE !== $this->_Talk("RCPT TO: <{$msgTo}>"))
 			{
 				return FALSE;
 			}
 		}
 		else
 		{
-			foreach ( $msgTo as $rcpt_address => $rcpt_name )
+			foreach ($msgTo as $rcpt_address => $rcpt_name)
 			{
 				/**
 				 * Send recipient data.
 				 */
-				if ( TRUE !== $this->_Talk( "RCPT TO: <{$rcpt_address}>" ) )
+				if (TRUE !== $this->_Talk("RCPT TO: <{$rcpt_address}>"))
 				{
 					return FALSE;
 				}
@@ -283,12 +283,12 @@ class Smtp extends Library
 		/**
 		 * @var string
 		 */
-		$msg_data = $this->_GetMessageData( $msgSubject, $msgBody, $msgHeaders );
+		$msg_data = $this->_GetMessageData($msgSubject, $msgBody, $msgHeaders);
 
 		/**
 		 * Send data start signal.
 		 */
-		if ( TRUE !== $this->_Talk( 'DATA' ) )
+		if (TRUE !== $this->_Talk('DATA'))
 		{
 			return FALSE;
 		}
@@ -296,7 +296,7 @@ class Smtp extends Library
 		/**
 		 * Send actual message data.
 		 */
-		if ( TRUE !== $this->_Talk( $msg_data ) )
+		if (TRUE !== $this->_Talk($msg_data))
 		{
 			return FALSE;
 		}
@@ -304,7 +304,7 @@ class Smtp extends Library
 		/**
 		 * Send reset command.
 		 */
-		if ( TRUE !== $this->_Talk( 'RSET' ) )
+		if (TRUE !== $this->_Talk('RSET'))
 		{
 			return FALSE;
 		}
@@ -324,7 +324,7 @@ class Smtp extends Library
 	 */
 	private function _Connect()
 	{
-		if ( !empty( $this->_mConnection ) )
+		if (!empty($this->_mConnection))
 		{
 			return FALSE;
 		}
@@ -332,14 +332,14 @@ class Smtp extends Library
 		/**
 		 * Check if default data has been set.
 		 */
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
 
-		if ( empty( $this->_mServer ) )
+		if (empty($this->_mServer))
 		{
-			Core::Log()->Write( __( 'SMTP Library: Can not connect to server. Empty settings.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('SMTP Library: Can not connect to server. Empty settings.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -347,9 +347,9 @@ class Smtp extends Library
 		/**
 		 * @var string
 		 */
-		$conn_prefix = ( FALSE !== $this->_mSsl ) ? 'ssl://' : NULL;
+		$conn_prefix = (FALSE !== $this->_mSsl) ? 'ssl://' : NULL;
 
-		Core::Log()->Write( sprintf( __( 'SMTP Library: Connecting to server "%s".', 'WEb' ), $this->_mServer ), 'debug' );
+		Core::Log()->Write(sprintf(__('SMTP Library: Connecting to server "%s".', 'WEb'), $this->_mServer), 'debug');
 
 		/**
 		 * @var int
@@ -361,23 +361,23 @@ class Smtp extends Library
 		 */
 		$err_str = NULL;
 
-		$this->_mConnection = fsockopen( $conn_prefix . $this->_mServer, $this->_mPort, $err_no, $err_str, $this->_mTimeout );
+		$this->_mConnection = fsockopen($conn_prefix . $this->_mServer, $this->_mPort, $err_no, $err_str, $this->_mTimeout);
 
-		if ( empty( $this->_mConnection ) )
+		if (empty($this->_mConnection))
 		{
 			/**
 			 * @var string
 			 */
-			$err_msg = sprintf( __( 'SMTP Library: Error connecting to server "%s".', 'WEb' ), $this->_mServer );
+			$err_msg = sprintf(__('SMTP Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
 
-			Core::Log()->Write( $err_msg, 'error' );
+			Core::Log()->Write($err_msg, 'error');
 
 			/**
 			 * @var string
 			 */
-			$dbg_msg = sprintf( __( 'SMTP Library: Error returned: %s %s.', 'WEb' ), $err_no, $err_str );
+			$dbg_msg = sprintf(__('SMTP Library: Error returned: %s %s.', 'WEb'), $err_no, $err_str);
 
-			Core::Log()->Write( $dbg_msg, 'debug' );
+			Core::Log()->Write($dbg_msg, 'debug');
 		}
 
 		/**
@@ -385,14 +385,14 @@ class Smtp extends Library
 		 */
 		$code = $this->_GetResponse();
 
-		if ( in_array( $code, $this->_mErrorCodes ) )
+		if (in_array($code, $this->_mErrorCodes))
 		{
 			/**
 			 * @var string
 			 */
-			$err_msg = sprintf( __( 'SMTP Library: Error connecting to server "%s".', 'WEb' ), $this->_mServer );
+			$err_msg = sprintf(__('SMTP Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
 
-			Core::Log()->Write( $err_msg, 'error' );
+			Core::Log()->Write($err_msg, 'error');
 
 			return FALSE;
 		}
@@ -400,7 +400,7 @@ class Smtp extends Library
 		/**
 		 * Set session connection timeout.
 		 */
-		stream_set_timeout( $this->_mConnection, $this->_mTimeout );
+		stream_set_timeout($this->_mConnection, $this->_mTimeout);
 
 		return TRUE;
 	}
@@ -412,16 +412,16 @@ class Smtp extends Library
 	 */
 	private function _Disconnect()
 	{
-		if ( empty( $this->_mConnection ) )
+		if (empty($this->_mConnection))
 		{
 			return FALSE;
 		}
 
-		$this->_Talk( 'QUIT' );
+		$this->_Talk('QUIT');
 
-		fclose( $this->_mConnection );
+		fclose($this->_mConnection);
 
-		Core::Log()->Write( __( 'SMTP Library: Closed server connection.', 'WEb' ), 'debug' );
+		Core::Log()->Write(__('SMTP Library: Closed server connection.', 'WEb'), 'debug');
 
 		return TRUE;
 	}
@@ -436,11 +436,11 @@ class Smtp extends Library
 	 *
 	 * @return bool
 	 */
-	private function _Talk( $command, $logMessage = NULL )
+	private function _Talk($command, $logMessage = NULL)
 	{
-		if ( empty( $this->_mConnection ) )
+		if (empty($this->_mConnection))
 		{
-			Core::Log()->Write( __( 'SMTP Library: Error communicating to server. No active connection.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('SMTP Library: Error communicating to server. No active connection.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -448,25 +448,25 @@ class Smtp extends Library
 		/**
 		 * @var string
 		 */
-		$log_message = ( !empty( $logMessage ) ) ? $logMessage : $command;
+		$log_message = (!empty($logMessage)) ? $logMessage : $command;
 
 		/**
 		 * Check if we have a multi-line command.
 		 */
-		if ( is_array( $command ) )
+		if (is_array($command))
 		{
-			foreach ( $command as $command_line )
+			foreach ($command as $command_line)
 			{
-				Core::Log()->Write( sprintf( __( 'SMTP Library: Sending "%s".', 'WEb' ), $command_line ), 'debug' );
+				Core::Log()->Write(sprintf(__('SMTP Library: Sending "%s".', 'WEb'), $command_line), 'debug');
 
-				fwrite( $this->_mConnection, $command_line . $this->_mEol );
+				fwrite($this->_mConnection, $command_line . $this->_mEol);
 			}
 		}
 		else
 		{
-			Core::Log()->Write( sprintf( __( 'SMTP Library: Sending "%s".', 'WEb' ), $log_message ), 'debug' );
+			Core::Log()->Write(sprintf(__('SMTP Library: Sending "%s".', 'WEb'), $log_message), 'debug');
 
-			fwrite( $this->_mConnection, $command . $this->_mEol );
+			fwrite($this->_mConnection, $command . $this->_mEol);
 		}
 
 		/**
@@ -474,9 +474,9 @@ class Smtp extends Library
 		 */
 		$code = $this->_GetResponse();
 
-		if ( in_array( $code, $this->_mErrorCodes ) )
+		if (in_array($code, $this->_mErrorCodes))
 		{
-			Core::Log()->Write( __( 'SMTP Library: Got error from server. Aborting transaction.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('SMTP Library: Got error from server. Aborting transaction.', 'WEb'), 'error');
 
 			/**
 			 * Close server connection.
@@ -494,9 +494,9 @@ class Smtp extends Library
 	 */
 	private function _GetResponse()
 	{
-		if ( empty( $this->_mConnection ) )
+		if (empty($this->_mConnection))
 		{
-			Core::Log()->Write( __( 'SMTP Library: Error getting server response. No active connection.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('SMTP Library: Error getting server response. No active connection.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -506,19 +506,19 @@ class Smtp extends Library
 		 */
 		$code = 0;
 
-		while ( FALSE !== ( $buffer = fgets( $this->_mConnection, 4096 ) ) )
+		while (FALSE !== ($buffer = fgets($this->_mConnection, 4096)))
 		{
-			Core::Log()->Write( rtrim( $buffer, $this->_mEol ), 'debug' );
+			Core::Log()->Write(rtrim($buffer, $this->_mEol), 'debug');
 
 			/**
 			 * Check if we are at the last (or only) line.
 			 */
-			if( substr( $buffer, 3, 1 ) == " ")
+			if(substr($buffer, 3, 1) == " ")
 			{
 				/**
 				 * @var int
 				 */
-				$code = substr( $buffer, 0, 3 );
+				$code = substr($buffer, 0, 3);
 
 				break;
 			}
@@ -536,12 +536,12 @@ class Smtp extends Library
 	 *
 	 * @return string
 	 */
-	private function _GetMessageData( $msgSubject, $msgBody, $msgHeaders )
+	private function _GetMessageData($msgSubject, $msgBody, $msgHeaders)
 	{
 		/**
 		 * Check if default data has been set.
 		 */
-		if ( empty( $this->_mEol ) )
+		if (empty($this->_mEol))
 		{
 			$this->SetDefaults();
 		}
@@ -551,7 +551,7 @@ class Smtp extends Library
 		 *
 		 * This should not appear in the message.
 		 */
-		unset( $msgHeaders['Bcc'] );
+		unset($msgHeaders['Bcc']);
 
 		/**
 		 * @var array
@@ -568,7 +568,7 @@ class Smtp extends Library
 		 */
 		$msg_data[] = "From: {$msgHeaders['From']}";
 
-		if ( !empty( $msgHeaders['Cc'] ) )
+		if (!empty($msgHeaders['Cc']))
 		{
 			/**
 			 * @var array
@@ -581,7 +581,7 @@ class Smtp extends Library
 		 */
 		$msg_data[] = "Subject: {$msgSubject}";
 
-		foreach ( $msgHeaders as $header_name => $header_value )
+		foreach ($msgHeaders as $header_name => $header_value)
 		{
 			/**
 			 * @var array
@@ -597,19 +597,19 @@ class Smtp extends Library
 		/**
 		 * @var string
 		 */
-		$msg_body = str_replace( "\r\n", "\n", $msgBody );
+		$msg_body = str_replace("\r\n", "\n", $msgBody);
 
 		/**
 		 * @var string
 		 */
-		$msg_body = str_replace( "\r", "\n", $msg_body );
+		$msg_body = str_replace("\r", "\n", $msg_body);
 
 		/**
 		 * @var array
 		 */
-		$msg_body_lines = explode( "\n", $msg_body );
+		$msg_body_lines = explode("\n", $msg_body);
 
-		foreach ( $msg_body_lines as $line )
+		foreach ($msg_body_lines as $line)
 		{
 			/**
 			 * @var array

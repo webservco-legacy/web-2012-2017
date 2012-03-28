@@ -37,7 +37,7 @@ class Database_MysqlTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Database_Mysql::GetInstance( 'Database_Mysql' );
+		$this->_mObject = Database_Mysql::GetInstance('Database_Mysql');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Database_MysqlTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Database_Mysql::GetInstance( 'Database_Mysql' ) );
+		$this->assertInternalType('object', Database_Mysql::GetInstance('Database_Mysql'));
 	}
 }
 ?>

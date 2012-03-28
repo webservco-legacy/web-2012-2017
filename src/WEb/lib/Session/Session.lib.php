@@ -48,12 +48,12 @@ class Session extends Library {
 	 *
 	 * @var array
 	 */
-	protected $_mTable = array('persistent' => 'acl_persistent');
+	protected $_mTable = array();
 
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -65,6 +65,16 @@ class Session extends Library {
 		 */
 		return parent::_GetInstance($className);
 	}
+	
+	private function _Init() {
+	
+		if (empty($this->_mTable)) {
+	
+			$app_prefix = Core::Config()->Get('app.prefix');
+			
+			$this->_mTable['persistent'] = "{$app_prefix}acl_persistent";
+		}
+	}
 
 	/**
 	 * Start session.
@@ -72,7 +82,10 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function Start() {
-		$this->_mProp = array('expire' => Core::Config()->Get('session.expire'), 'lifetime' => Core::Config()->Get('session.lifetime'), 'path' => Core::Config()->Get('session.path'), 'domain' => Core::Config()->Get('session.domain'), 'secure' => (1 == Core::Config()->Get('session.secure')) ? TRUE : FALSE, 'httponly' => (1 == Core::Config()->Get('session.httponly')) ? TRUE : FALSE, );
+		
+		$this->_Init();
+		
+		$this->_mProp = array('expire' => Core::Config()->Get('session.expire'), 'lifetime' => Core::Config()->Get('session.lifetime'), 'path' => Core::Config()->Get('session.path'), 'domain' => Core::Config()->Get('session.domain'), 'secure' => (1 == Core::Config()->Get('session.secure')) ? TRUE : FALSE, 'httponly' => (1 == Core::Config()->Get('session.httponly')) ? TRUE : FALSE,);
 
 		/**
 		 * Set cache limiter.
@@ -169,7 +182,11 @@ class Session extends Library {
 	 * @return mixed
 	 */
 	public function CheckPersistentSession() {
+		
+		$this->_Init();
+		
 		if (empty($this->_mProp)) {
+			
 			$this->Start();
 		}
 
@@ -233,7 +250,11 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function AddPersistentSession($userId, $persistentToken, $persistentExpire = NULL) {
+		
+		$this->_Init();
+		
 		if (empty($userId)) {
+			
 			return FALSE;
 		}
 
@@ -256,7 +277,7 @@ class Session extends Library {
 		/**
 		 * @var array
 		 */
-		$data = array('bin.user_id' => $userId, 'persistent_token' => $persistentToken, 'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire), );
+		$data = array('bin.user_id' => $userId, 'persistent_token' => $persistentToken, 'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire),);
 
 		if (FALSE !== Core::Database()->Create($data, $this->_mTable['persistent'])) {
 			/**
@@ -296,7 +317,11 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function RemovePersistentSession($userId = NULL, $persistentToken = NULL, $onlyOld = FALSE) {
+		
+		$this->_Init();
+		
 		if (empty($this->_mProp)) {
+			
 			$this->Start();
 		}
 
@@ -346,7 +371,7 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function RemoveCookie($cookieType = '.session') {
-		switch ( $cookieType ) {
+		switch ($cookieType) {
 			case '.session' :
 			/**
 			 * @var string

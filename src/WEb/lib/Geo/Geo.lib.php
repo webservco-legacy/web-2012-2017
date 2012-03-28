@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -41,18 +41,18 @@ class Geo extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -109,16 +109,16 @@ class Geo extends Library
 			'ZHTTP_CACHE_CONTROL',
 		);
 
-		foreach ( $check as $var )
+		foreach ($check as $var)
 		{
-			if ( !empty( $_SERVER[$var] ) )
+			if (!empty($_SERVER[$var]))
 			{
 				/**
 				 * @var string
 				 */
-				$ip = Core::String()->GetFirstItem( $_SERVER[$var], ',' );
+				$ip = Core::String()->GetFirstItem($_SERVER[$var], ',');
 
-				if ( $this->IsValidIp( $ip ) )
+				if ($this->IsValidIp($ip))
 				{
 					return $ip;
 				}
@@ -136,26 +136,26 @@ class Geo extends Library
 	 *
 	 * @return bool
 	 */
-	public function IsValidIp( $ip = NULL, $checkWan = TRUE )
+	public function IsValidIp($ip = NULL, $checkWan = TRUE)
 	{
-		if ( empty( $ip ) )
+		if (empty($ip))
 		{
 			return FALSE;
 		}
 
-		$ip_num = ip2long( $ip );
+		$ip_num = ip2long($ip);
 
-		if ( ( $ip_num !== -1 ) && ( FALSE !== $ip_num ) && ( long2ip( $ip_num ) === $ip ) )
+		if (($ip_num !== -1) && (FALSE !== $ip_num) && (long2ip($ip_num) === $ip))
 		{
-			if ( FALSE === $checkWan )
+			if (FALSE === $checkWan)
 			{
 				return TRUE;
 			}
 
 			if (
-			( $ip_num < 167772160 || $ip_num > 184549375 ) && // Not in 10.0.0.0/8
-			( $ip_num < -1408237568 || $ip_num > -1407188993 ) && // Not in 172.16.0.0/12
-			( $ip_num < -1062731776 || $ip_num > -1062666241 ) // Not in 192.168.0.0/16
+			($ip_num < 167772160 || $ip_num > 184549375) && // Not in 10.0.0.0/8
+			($ip_num < -1408237568 || $ip_num > -1407188993) && // Not in 172.16.0.0/12
+			($ip_num < -1062731776 || $ip_num > -1062666241) // Not in 192.168.0.0/16
 			)
 			{
 				return TRUE;

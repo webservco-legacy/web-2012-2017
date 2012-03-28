@@ -45,7 +45,7 @@ class SmtpTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Smtp::GetInstance() );
+		$this->assertInternalType('object', Smtp::GetInstance());
 	}
 }
 ?>

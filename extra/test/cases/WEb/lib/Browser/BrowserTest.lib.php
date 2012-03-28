@@ -45,7 +45,7 @@ class BrowserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Browser::GetInstance() );
+		$this->assertInternalType('object', Browser::GetInstance());
 	}
 }
 ?>

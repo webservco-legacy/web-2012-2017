@@ -30,7 +30,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function ConfigReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Config() );
+		$this->assertInternalType('object', Core::Config());
 	}
 
 	/**
@@ -38,7 +38,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function ErrorReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Error() );
+		$this->assertInternalType('object', Core::Error());
 	}
 
 	/**
@@ -46,7 +46,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function I18nReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::I18n() );
+		$this->assertInternalType('object', Core::I18n());
 	}
 
 	/**
@@ -54,7 +54,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function LogReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Log() );
+		$this->assertInternalType('object', Core::Log());
 	}
 
 	/**
@@ -62,7 +62,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AppReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::App() );
+		$this->assertInternalType('object', Core::App());
 	}
 
 	/**
@@ -70,7 +70,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function CustomConfigSetDatabaseTypeRetrunsTrue()
 	{
-		$this->assertTrue( Core::Config()->Set( 'database.type', 'MySQL' ) );
+		$this->assertTrue(Core::Config()->Set('database.type', 'MySQL'));
 	}
 
 	/**
@@ -80,7 +80,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function DbReturnsObjectForMysql()
 	{
-		$this->assertInternalType( 'object', Core::Database() );
+		$this->assertInternalType('object', Core::Database());
 	}
 
 	/**
@@ -88,7 +88,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function StringReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::String() );
+		$this->assertInternalType('object', Core::String());
 	}
 
 	/**
@@ -96,7 +96,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SecurityReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Security() );
+		$this->assertInternalType('object', Core::Security());
 	}
 
 	/**
@@ -104,7 +104,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function RouterReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Router() );
+		$this->assertInternalType('object', Core::Router());
 	}
 
 	/**
@@ -112,7 +112,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AclReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Acl() );
+		$this->assertInternalType('object', Core::Acl());
 	}
 
 	/**
@@ -120,7 +120,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function UserReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::User() );
+		$this->assertInternalType('object', Core::User());
 	}
 
 	/**
@@ -128,7 +128,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SessionReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Session() );
+		$this->assertInternalType('object', Core::Session());
 	}
 
 	/**
@@ -136,7 +136,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GeoReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Geo() );
+		$this->assertInternalType('object', Core::Geo());
 	}
 
 	/**
@@ -144,7 +144,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function FormReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Form() );
+		$this->assertInternalType('object', Core::Form());
 	}
 
 	/**
@@ -152,7 +152,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function CaptchaReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Captcha() );
+		$this->assertInternalType('object', Core::Captcha());
 	}
 
 	/**
@@ -160,7 +160,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function MailReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Mail() );
+		$this->assertInternalType('object', Core::Mail());
 	}
 
 	/**
@@ -168,7 +168,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function BrowserReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Browser() );
+		$this->assertInternalType('object', Core::Browser());
 	}
 
 	/**
@@ -176,7 +176,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SmtpReturnsObject()
 	{
-		$this->assertInternalType( 'object', Core::Smtp() );
+		$this->assertInternalType('object', Core::Smtp());
 	}
 }
 ?>

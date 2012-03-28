@@ -45,7 +45,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Log::GetInstance() );
+		$this->assertInternalType('object', Log::GetInstance());
 	}
 
 	/**
@@ -53,7 +53,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetTypeReturnsTrue()
 	{
-		$this->assertTrue( $this->_mObject->SetType( 'test' ) );
+		$this->assertTrue($this->_mObject->SetType('test'));
 	}
 
 	/**
@@ -61,7 +61,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetPathReturnsTrue()
 	{
-		$this->assertTrue( $this->_mObject->SetPath( _PU_ASSETS_PATH . 'WEb/var/log/' ) );
+		$this->assertTrue($this->_mObject->SetPath(_PU_ASSETS_PATH . 'WEb/var/log/'));
 	}
 
 	/**
@@ -69,7 +69,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetLevelReturnsFalseOnValid()
 	{
-		$this->assertFalse( $this->_mObject->SetLevel('noexist') );
+		$this->assertFalse($this->_mObject->SetLevel('noexist'));
 	}
 
 	/**
@@ -77,7 +77,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetLevelReturnsOneOnValidLevlNameInfo()
 	{
-		$this->assertEquals( 1, $this->_mObject->SetLevel('info') );
+		$this->assertEquals(1, $this->_mObject->SetLevel('info'));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function SetLevelReturnsZeroOnValidLevlNameDebug()
 	{
-		$this->assertEquals(0, $this->_mObject->SetLevel('debug') );
+		$this->assertEquals(0, $this->_mObject->SetLevel('debug'));
 	}
 
 	/**
@@ -93,7 +93,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFileReturnsFalseIfFileExistsButIsNotWritable()
 	{
-		$this->assertFalse( $this->_mObject->GetFile( 'readonly' ) );
+		$this->assertFalse($this->_mObject->GetFile('readonly'));
 	}
 
 	/**
@@ -101,7 +101,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFileReturnsStringOnValidTypeAndValidPath()
 	{
-		$this->assertInternalType( 'string', $this->_mObject->GetFile( 'test', _PU_ASSETS_PATH . 'WEb/var/log/' ) );
+		$this->assertInternalType('string', $this->_mObject->GetFile('test', _PU_ASSETS_PATH . 'WEb/var/log/'));
 	}
 
 	/**
@@ -109,7 +109,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetFileReturnsStringOnValidTypeAndAlreadySetPath()
 	{
-		$this->assertInternalType( 'string', $this->_mObject->GetFile( 'test' ) );
+		$this->assertInternalType('string', $this->_mObject->GetFile('test'));
 	}
 
 	/**
@@ -117,7 +117,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function ResetFailsOnReadonlyFile()
 	{
-		$this->assertFalse( $this->_mObject->Reset( 'readonly' ) );
+		$this->assertFalse($this->_mObject->Reset('readonly'));
 	}
 
 	/**
@@ -125,7 +125,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function ResetReturnsTrueOnSuccess()
 	{
-		$this->assertTrue( $this->_mObject->Reset( 'test' ) );
+		$this->assertTrue($this->_mObject->Reset('test'));
 	}
 
 	/**
@@ -133,7 +133,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function WriteReturnsFalseOnInvalidLevel()
 	{
-		$this->assertFalse( $this->_mObject->Write( 'unit testing', 'dummy', 'test' ) );
+		$this->assertFalse($this->_mObject->Write('unit testing', 'dummy', 'test'));
 	}
 
 	/**
@@ -141,7 +141,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function WriteReturnsFalseOnReadonlyFile()
 	{
-		$this->assertFalse( $this->_mObject->Write( 'unit testing', 'notice', 'readonly' ) );
+		$this->assertFalse($this->_mObject->Write('unit testing', 'notice', 'readonly'));
 	}
 
 	/**
@@ -149,7 +149,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	 */
 	public function WriteReturnsTrueOnValidType()
 	{
-		$this->assertTrue( $this->_mObject->Write( 'unit testing', NULL, 'test' ) );
+		$this->assertTrue($this->_mObject->Write('unit testing', NULL, 'test'));
 	}
 
 	/**
@@ -159,7 +159,7 @@ class LogTest extends PHPUnit_Framework_TestCase
 	{
 		$this->_mObject->SetLevel('error');
 
-		$this->assertFalse( $this->_mObject->Write( 'unit testing', 'info', 'test' ) );
+		$this->assertFalse($this->_mObject->Write('unit testing', 'info', 'test'));
 	}
 
 }

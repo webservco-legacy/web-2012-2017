@@ -45,7 +45,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Database::GetInstance() );
+		$this->assertInternalType('object', Database::GetInstance());
 	}
 }
 ?>

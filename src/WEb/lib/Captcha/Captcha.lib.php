@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -49,18 +49,18 @@ class Captcha extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -71,9 +71,9 @@ class Captcha extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetDimensions( $width, $height )
+	public function SetDimensions($width, $height)
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -99,9 +99,9 @@ class Captcha extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetColor( $hexColor, $colorType = 'background' )
+	public function SetColor($hexColor, $colorType = 'background')
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -109,14 +109,14 @@ class Captcha extends Library
 		/**
 		 * @var array
 		 */
-		$color = str_split( $hexColor, 2 );
+		$color = str_split($hexColor, 2);
 
 		/**
 		 * @var array
 		 */
-		$color = array_map( 'hexdec', $color );
+		$color = array_map('hexdec', $color);
 
-		switch ( $colorType )
+		switch ($colorType)
 		{
 			case 'foreground' :
 				/**
@@ -147,9 +147,9 @@ class Captcha extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetFont( $font )
+	public function SetFont($font)
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -169,9 +169,9 @@ class Captcha extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetSize( $size )
+	public function SetSize($size)
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -194,7 +194,7 @@ class Captcha extends Library
 		/**
 		 * @var array
 		 */
-		$defaults = Core::Config()->Get( 'captcha' );
+		$defaults = Core::Config()->Get('captcha');
 
 		/**
 		 * @var array
@@ -214,17 +214,17 @@ class Captcha extends Library
 		/**
 		 * Set backgound color.
 		 */
-		$this->SetColor( $defaults['background'], 'background' );
+		$this->SetColor($defaults['background'], 'background');
 
 		/**
 		 * Set foreground color.
 		 */
-		$this->SetColor( $defaults['foreground'], 'foreground' );
+		$this->SetColor($defaults['foreground'], 'foreground');
 
 		/**
 		 * @var array
 		 */
-		$this->_mProp['transparent'] = ( 1 == $defaults['transparent'] ) ? TRUE : FALSE;
+		$this->_mProp['transparent'] = (1 == $defaults['transparent']) ? TRUE : FALSE;
 
 		/**
 		 * @var array
@@ -249,9 +249,9 @@ class Captcha extends Library
 		/**
 		 * @var string
 		 */
-		$token = strtoupper( strrev( substr( sha1( uniqid( rand(), TRUE ) ), 17, 5 ) ) );
+		$token = strtoupper(strrev(substr(sha1(uniqid(rand(), TRUE)), 17, 5)));
 
-		if ( !empty( $_SESSION ) )
+		if (!empty($_SESSION))
 		{
 			$_SESSION[__CLASS__]['token'] = $token;
 		}
@@ -267,7 +267,7 @@ class Captcha extends Library
 	 */
 	public function GetToken()
 	{
-		if ( !empty( $_SESSION[__CLASS__]['token'] ) )
+		if (!empty($_SESSION[__CLASS__]['token']))
 		{
 			return $_SESSION[__CLASS__]['token'];
 		}
@@ -282,9 +282,9 @@ class Captcha extends Library
 	 *
 	 * @return mixed
 	 */
-	public function GetImage( $outputImage = TRUE )
+	public function GetImage($outputImage = TRUE)
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -299,31 +299,31 @@ class Captcha extends Library
 		 *
 		 * @var array
 		 */
-		$captcha = str_split( $this->GetToken(), 1 );
+		$captcha = str_split($this->GetToken(), 1);
 
 		/**
 		 * Initialize image.
 		 *
 		 * @var resource
 		 */
-		$image = imagecreatetruecolor( $this->_mProp['width'], $this->_mProp['height'] );
+		$image = imagecreatetruecolor($this->_mProp['width'], $this->_mProp['height']);
 
 		/**
 		 * Set background color.
 		 *
 		 * @var resource
 		 */
-		$background = imagecolorallocate( $image, $this->_mProp['background'][0], $this->_mProp['background'][1], $this->_mProp['background'][2]);
+		$background = imagecolorallocate($image, $this->_mProp['background'][0], $this->_mProp['background'][1], $this->_mProp['background'][2]);
 
 		/**
 		 * Check if we have transparency enabled.
 		 */
-		if ( FALSE !== $this->_mProp['transparent'] )
+		if (FALSE !== $this->_mProp['transparent'])
 		{
 			/**
 			 * Set transparent background.
 			 */
-			imagecolortransparent( $image, $background );
+			imagecolortransparent($image, $background);
 		}
 
 		/**
@@ -331,54 +331,54 @@ class Captcha extends Library
 		 *
 		 * @var resource
 		 */
-		$foreground = imagecolorallocate( $image, $this->_mProp['foreground'][0], $this->_mProp['foreground'][1], $this->_mProp['foreground'][2] );
+		$foreground = imagecolorallocate($image, $this->_mProp['foreground'][0], $this->_mProp['foreground'][1], $this->_mProp['foreground'][2]);
 
 		/**
 		 * Fill image with background color.
 		 */
-		imagefill( $image, 0, 0, $background );
+		imagefill($image, 0, 0, $background);
 
 		/**
 		 * @var string
 		 */
-		$font_path = Core::Config()->Get( 'path.app' ) . Core::Config()->Get( 'dir.app.opt' ) . '/fonts/' . $this->_mProp['font'];
+		$font_path = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.opt') . '/fonts/' . $this->_mProp['font'];
 
 		/**
 		 * Write to image (1).
 		 */
-		imagettftext( $image, $this->_mProp['size'], 10, 3, 16, $foreground, $font_path, $captcha['0'] );
+		imagettftext($image, $this->_mProp['size'], 10, 3, 16, $foreground, $font_path, $captcha['0']);
 
 		/**
 		 * Write to image (2).
 		 */
-		imagettftext( $image, $this->_mProp['size'], -30, 13, 12, $foreground, $font_path, $captcha['1'] );
+		imagettftext($image, $this->_mProp['size'], -30, 13, 12, $foreground, $font_path, $captcha['1']);
 
 		/**
 		 * Write to image (3).
 		 */
-		imagettftext( $image, $this->_mProp['size'], 10, 30, 16, $foreground, $font_path, $captcha['2'] );
+		imagettftext($image, $this->_mProp['size'], 10, 30, 16, $foreground, $font_path, $captcha['2']);
 
 		/**
 		 * Write to image (4).
 		 */
-		imagettftext( $image, $this->_mProp['size'], -10, 40, 14, $foreground, $font_path, $captcha['3'] );
+		imagettftext($image, $this->_mProp['size'], -10, 40, 14, $foreground, $font_path, $captcha['3']);
 
 		/**
 		 * Write to image (5).
 		 */
-		imagettftext( $image, $this->_mProp['size'], 10, 58, 16, $foreground, $font_path, $captcha['4'] );
+		imagettftext($image, $this->_mProp['size'], 10, 58, 16, $foreground, $font_path, $captcha['4']);
 
 		/**
 		 * Check image type
 		 */
-		switch ( $this->_mProp['type'] )
+		switch ($this->_mProp['type'])
 		{
 			case 'png' :
 			default :
 				/**
 				 * Output png image.
 				 */
-				imagepng( $image );
+				imagepng($image);
 
 				/**
 				 * Set png image header.
@@ -406,14 +406,14 @@ class Captcha extends Library
 		/**
 		 * Delete image from memory.
 		 */
-		imagedestroy( $image );
+		imagedestroy($image);
 
 		/**
 		 * Erase the output buffer and turn off output buffering.
 		 */
 		ob_end_clean();
 
-		return ( $outputImage ) ? $data : base64_encode( $data );
+		return ($outputImage) ? $data : base64_encode($data);
 	}
 }
 ?>

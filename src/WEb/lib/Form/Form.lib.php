@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -103,18 +103,18 @@ class Form extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -124,12 +124,12 @@ class Form extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetMethod( $method = 'post' )
+	public function SetMethod($method = 'post')
 	{
 		/**
 		 * Checkif we have a valid method.s
 		 */
-		if ( !in_array( $method, array( 'post', 'get' ) ) )
+		if (!in_array($method, array('post', 'get')))
 		{
 			return FALSE;
 		}
@@ -149,19 +149,19 @@ class Form extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetData( $formData = array() )
+	public function SetData($formData = array())
 	{
 		/**
 		 * Iterate form data.
 		 */
-		foreach ( $formData as $field => $data )
+		foreach ($formData as $field => $data)
 		{
 			/**
 			 * Set main data.
 			 *
 			 * @var array
 			 */
-			$this->_mData[$field] = ( !empty( $data['content'] ) ) ? $data['content'] : NULL;
+			$this->_mData[$field] = (!empty($data['content'])) ? $data['content'] : NULL;
 
 			/**
 			 * Set meta type.
@@ -170,40 +170,40 @@ class Form extends Library
 			 *
 			 * @var array
 			 */
-			$this->_mMeta[$field]['type'] = ( !empty( $data['type'] ) ) ? $data['type'] : 'text';
+			$this->_mMeta[$field]['type'] = (!empty($data['type'])) ? $data['type'] : 'text';
 
 			/**
 			 * Set meta title
 			 *
 			 * @var array
 			 */
-			$this->_mMeta[$field]['title'] = ( !empty( $data['title'] ) ) ? $data['title'] : NULL;
+			$this->_mMeta[$field]['title'] = (!empty($data['title'])) ? $data['title'] : NULL;
 
 			/**
 			 * Set meta description
 			 *
 			 * @var array
 			 */
-			$this->_mMeta[$field]['description'] = ( !empty( $data['description'] ) ) ? $data['description'] : NULL;
+			$this->_mMeta[$field]['description'] = (!empty($data['description'])) ? $data['description'] : NULL;
 
 			/**
 			 * Set meta required
 			 *
 			 * @var array
 			 */
-			$this->_mMeta[$field]['required'] = ( !empty( $data['required'] ) ) ? (bool) $data['required'] : FALSE;
+			$this->_mMeta[$field]['required'] = (!empty($data['required'])) ? (bool) $data['required'] : FALSE;
 
 			/**
 			 * Set meta ignore
 			 *
 			 * @var array
 			 */
-			$this->_mMeta[$field]['ignore'] = ( !empty( $data['ignore'] ) ) ? (bool) $data['ignore'] : FALSE;
+			$this->_mMeta[$field]['ignore'] = (!empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
 
 			/**
 			 * Check if filters are present.
 			 */
-			if ( !empty( $data['filters'] ) )
+			if (!empty($data['filters']))
 			{
 				/**
 				 * Set filters.
@@ -216,7 +216,7 @@ class Form extends Library
 			/**
 			 * Check if conditions are present.
 			 */
-			if ( !empty( $data['conditions'] ) )
+			if (!empty($data['conditions']))
 			{
 				/**
 				 * Set conditions
@@ -285,41 +285,41 @@ class Form extends Library
 		/**
 		 * Iterate filtered form data.
 		 */
-		foreach ( $this->_mDataFiltered as $field => $data )
+		foreach ($this->_mDataFiltered as $field => $data)
 		{
 			/**
 			 * Check if field is required.
 			 */
-			if ( !empty( $this->_mMeta[$field]['required'] ) && FALSE !== $this->_mMeta[$field]['required'] )
+			if (!empty($this->_mMeta[$field]['required']) && FALSE !== $this->_mMeta[$field]['required'])
 			{
 				/**
 				 * Check for empty data.
 				 */
-				if ( empty( $data ) )
+				if (empty($data))
 				{
 					/**
 					 * @var array
 					 */
-					$this->_mErrors[$field][] = sprintf( Core::Config()->Get( 'form.error.required.text' ), $this->_mMeta[$field]['title'] );
+					$this->_mErrors[$field][] = sprintf(Core::Config()->Get('form.error.required.text'), $this->_mMeta[$field]['title']);
 				}
 			}
 
 			/**
 			 * Check if we have conditions for current field.
 			 */
-			if ( !empty( $this->_mConditions[$field] ) && !empty( $data ) )
+			if (!empty($this->_mConditions[$field]) && !empty($data))
 			{
 				/**
 				 * Get conditions.
 				 *
 				 * @var array
 				 */
-				$conditions = array_diff( explode( '|', $this->_mConditions[$field] ), array( '' ) );
+				$conditions = array_diff(explode('|', $this->_mConditions[$field]), array(''));
 
 				/**
 				 * Iterate conditions.
 				 */
-				foreach ( $conditions as $condition )
+				foreach ($conditions as $condition)
 				{
 					/**
 					 * @var string
@@ -334,7 +334,7 @@ class Form extends Library
 					/**
 					 * Check if condition contains a parameter.
 					 */
-					if ( preg_match( "/(.*?)\[(.*?)\]/", $condition, $match ) )
+					if (preg_match("/(.*?)\[(.*?)\]/", $condition, $match))
 					{
 						/**
 						 * @var string
@@ -350,40 +350,40 @@ class Form extends Library
 					/**
 					 * Check if condition method exists in string library.
 					 */
-					if ( method_exists( Core::String(), $condition_function ) )
+					if (method_exists(Core::String(), $condition_function))
 					{
 						/**
 						 * Perform actual validation.
 						 *
 						 * @var bool
 						 */
-						$validation = Core::String()->$condition_function( $data, $condition_parameter );
+						$validation = Core::String()->$condition_function($data, $condition_parameter);
 
-						if ( FALSE === $validation )
+						if (FALSE === $validation)
 						{
 							/**
 							 * @var string
 							 */
-							$condition_index = strtolower( $condition_function );
+							$condition_index = strtolower($condition_function);
 
 							/**
 							 * @var string
 							 */
-							$error_message = Core::Config()->Get( "form.error.{$condition_index}.text" );
+							$error_message = Core::Config()->Get("form.error.{$condition_index}.text");
 
-							if ( FALSE !== $error_message )
+							if (FALSE !== $error_message)
 							{
 								/**
 								 * @var array
 								 */
-								$this->_mErrors[$field][] = sprintf( $error_message, $this->_mMeta[$field]['title'], $condition_parameter );
+								$this->_mErrors[$field][] = sprintf($error_message, $this->_mMeta[$field]['title'], $condition_parameter);
 							}
 							else
 							{
 								/**
 								 * @var array
 								 */
-								$this->_mErrors[$field][] = sprintf( Core::Config()->Get( "form.error.default.text" ), $this->_mMeta[$field]['title'] );
+								$this->_mErrors[$field][] = sprintf(Core::Config()->Get("form.error.default.text"), $this->_mMeta[$field]['title']);
 							}
 						}
 					}
@@ -392,9 +392,9 @@ class Form extends Library
 						/**
 						 * @var string
 						 */
-						$err_msg = sprintf( __( 'Form Library: Validation method "%s" not found.', 'WEb' ), $condition_function );
+						$err_msg = sprintf(__('Form Library: Validation method "%s" not found.', 'WEb'), $condition_function);
 
-						trigger_error( $err_msg );
+						trigger_error($err_msg);
 					}
 				}
 			}
@@ -403,7 +403,7 @@ class Form extends Library
 		/**
 		 * Return result depending on whether or not we have errors.
 		 */
-		return empty( $this->_mErrors ) ? TRUE : FALSE;
+		return empty($this->_mErrors) ? TRUE : FALSE;
 	}
 
 	/**
@@ -421,14 +421,14 @@ class Form extends Library
 		/**
 		 * Iterate form data.
 		 */
-		foreach ( $this->_mData as $field => $data )
+		foreach ($this->_mData as $field => $data)
 		{
 			/**
 			 * Check if we have request.
 			 */
-			if ( isset( $request[$field] ) )
+			if (isset($request[$field]))
 			{
-				if ( 'checkbox' == $this->_mMeta[$field]['type'] )
+				if ('checkbox' == $this->_mMeta[$field]['type'])
 				{
 					/**
 					 * @var array
@@ -459,26 +459,26 @@ class Form extends Library
 		/**
 		 * Iterate form data
 		 */
-		foreach ( $this->_mData as $field => $data )
+		foreach ($this->_mData as $field => $data)
 		{
-			if ( !empty( $this->_mFilters[$field] ) )
+			if (!empty($this->_mFilters[$field]))
 			{
 				/**
 				 * Get filters.
 				 *
 				 * @var array
 				 */
-				$filters = array_diff( explode( '|', $this->_mFilters[$field] ), array( '' ) );
+				$filters = array_diff(explode('|', $this->_mFilters[$field]), array(''));
 
 				/**
 				 * Iterate filters
 				 */
-				foreach ( $filters as $filter )
+				foreach ($filters as $filter)
 				{
 					/**
 					 * Check if filter is a built in function.
 					 */
-					if ( function_exists( $filter ) )
+					if (function_exists($filter))
 					{
 						/**
 						 * Filter data using a built in function.
@@ -486,28 +486,28 @@ class Form extends Library
 						 * @var array
 						 */
 						$this->_mDataFiltered[$field] = ${
-							$filter}( $data );
+							$filter}($data);
 					}
 					/**
 					 * Check if filter is a string method
 					 */
-					else if ( method_exists( Core::String(), $filter ) )
+					else if (method_exists(Core::String(), $filter))
 					{
 						/**
 						 * Filter data using custom string method.
 						 *
 						 * @var array
 						 */
-						$this->_mDataFiltered[$field] = call_user_func( array( Core::String(), $filter ), $data );
+						$this->_mDataFiltered[$field] = call_user_func(array(Core::String(), $filter), $data);
 					}
 					else
 					{
 						/**
 						 * @var string
 						 */
-						$err_msg = sprintf( __( 'Form Library: Filter method "%s" not found.', 'WEb' ), $filter );
+						$err_msg = sprintf(__('Form Library: Filter method "%s" not found.', 'WEb'), $filter);
 
-						trigger_error( $err_msg );
+						trigger_error($err_msg);
 					}
 				}
 			}

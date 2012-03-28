@@ -18,12 +18,12 @@
 /**
  * Security token.
  */
-define( '_WEB', TRUE );
+define('_WEB', TRUE);
 
 /**
  * Set timezone.
  */
-date_default_timezone_set( 'Europe/Bucharest' );
+date_default_timezone_set('Europe/Bucharest');
 
 /**
  * Load all required files
@@ -95,6 +95,6 @@ require_once 'WEb/obj/User/User.obj.php';
 /**
  * Assets path.
  */
-define ('_PU_ASSETS_PATH', '/home/radu/Documents/workspace/wsWEb/extra/test/assets/' );
+define ('_PU_ASSETS_PATH', '/home/radu/Documents/workspace/wsWEb/extra/test/assets/');
 
 ?>

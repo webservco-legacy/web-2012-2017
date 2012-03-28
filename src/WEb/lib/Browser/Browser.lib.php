@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -57,18 +57,18 @@ class Browser extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
 	/**
@@ -78,9 +78,9 @@ class Browser extends Library
 	 *
 	 * @return mixed
 	 */
-	public function Open( $url )
+	public function Open($url)
 	{
-		if ( empty( $this->_mProp ) )
+		if (empty($this->_mProp))
 		{
 			$this->_SetDefaults();
 		}
@@ -110,7 +110,7 @@ class Browser extends Library
 		/**
 		 * Parse url.
 		 */
-		preg_match( "~([a-z]*://)?([^:^/]*)(:([0-9]{1,5}))?(/.*)?~i", $url, $url_parts );
+		preg_match("~([a-z]*://)?([^:^/]*)(:([0-9]{1,5}))?(/.*)?~i", $url, $url_parts);
 
 		/**
 		 * @var string
@@ -125,22 +125,22 @@ class Browser extends Library
 		/**
 		 * @var string
 		 */
-		$port = ( '' != $url_parts[4] ) ? $url_parts[4] : '80';
+		$port = ('' != $url_parts[4]) ? $url_parts[4] : '80';
 
 		/**
 		 * @var string
 		 */
-		$path = ( '' != $url_parts[5] ) ? $url_parts[5] : '/';
+		$path = ('' != $url_parts[5]) ? $url_parts[5] : '/';
 
 		/**
 		 * Open socket.
 		 */
-		$socket = fsockopen( $server, $port );
+		$socket = fsockopen($server, $port);
 
 		/**
 		 * Check if socket was opened successfully.
 		 */
-		if ( !$socket )
+		if (!$socket)
 		{
 			/**
 			 * Return result.
@@ -156,12 +156,12 @@ class Browser extends Library
 		/**
 		 * Set request.
 		 */
-		$request = ( !empty( $this->_mPostData ) ) ? "POST $path HTTP/1.0\r\n" : "GET $path HTTP/1.0\r\n";
+		$request = (!empty($this->_mPostData)) ? "POST $path HTTP/1.0\r\n" : "GET $path HTTP/1.0\r\n";
 
 		/**
 		 * Send request.
 		 */
-		fwrite( $socket, $request );
+		fwrite($socket, $request);
 
 		/**
 		 * Init post string.
@@ -173,7 +173,7 @@ class Browser extends Library
 		/**
 		 * Check if we have post data.
 		 */
-		if ( !empty( $this->_mPostData ) )
+		if (!empty($this->_mPostData))
 		{
 			/**
 			 * Init post data.
@@ -185,7 +185,7 @@ class Browser extends Library
 			/**
 			 * Iterate post data.
 			 */
-			foreach ( $this->_mPostData as $post_key => $post_value )
+			foreach ($this->_mPostData as $post_key => $post_value)
 			{
 				/**
 				 * @var array
@@ -198,7 +198,7 @@ class Browser extends Library
 			 *
 			 * @var string
 			 */
-			$post_string = implode( '&', $post_data );
+			$post_string = implode('&', $post_data);
 
 			/**
 			 * Set content type header.
@@ -212,54 +212,54 @@ class Browser extends Library
 			 *
 			 * @var array
 			 */
-			$headers['Content-Length'] = strlen( $post_string );
+			$headers['Content-Length'] = strlen($post_string);
 		}
 
 		/**
 		 * Iterate headers.
 		 */
-		foreach ( $headers as $header_key => $header_value )
+		foreach ($headers as $header_key => $header_value)
 		{
 			/**
 			 * Send headers.
 			 */
-			fwrite( $socket, "{$header_key}: {$header_value}\r\n" );
+			fwrite($socket, "{$header_key}: {$header_value}\r\n");
 		}
 
 		/**
 		 * Send newline.
 		 */
-		fwrite( $socket, "\r\n" );
+		fwrite($socket, "\r\n");
 
 		/**
 		 * Check if we have post data.
 		 */
-		if ( !empty( $post_string ) )
+		if (!empty($post_string))
 		{
 			/**
 			 * Send post request string.
 			 */
-			fwrite( $socket, $post_string."\r\n" );
+			fwrite($socket, $post_string."\r\n");
 		}
 
 		/**
 		 * Get first line of response.
 		 */
-		$response = fgets( $socket, 1000 );
+		$response = fgets($socket, 1000);
 
 		/**
 		 * Get status.
 		 */
-		$status = substr( $response, 9, 3);
+		$status = substr($response, 9, 3);
 
-		while ( trim( $line = fgets( $socket, 1000 ) ) != '' )
+		while (trim($line = fgets($socket, 1000)) != '')
 		{
-			if ( '401' == $status && ( 0 === strpos( $line, "WWW-Authenticate: Basic realm=\"" ) ) )
+			if ('401' == $status && (0 === strpos($line, "WWW-Authenticate: Basic realm=\"")))
 			{
 				/**
 				 * Close socket
 				 */
-				fclose( $socket );
+				fclose($socket);
 
 				/**
 				 * Return result.
@@ -284,7 +284,7 @@ class Browser extends Library
 		/**
 		 * @var array
 		 */
-		$defaults = Core::Config()->Get( 'browser' );
+		$defaults = Core::Config()->Get('browser');
 
 		/**
 		 * @var array
@@ -294,7 +294,7 @@ class Browser extends Library
 		/**
 		 * @var array
 		 */
-		$this->_mProp['referer'] = !empty( $defaults['referer'] ) ? $defaults['referer'] : Core::Config()->Get( 'url.app' );
+		$this->_mProp['referer'] = !empty($defaults['referer']) ? $defaults['referer'] : Core::Config()->Get('url.app');
 
 		/**
 		 * @var array

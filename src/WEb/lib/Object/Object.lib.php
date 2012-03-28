@@ -20,7 +20,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -68,7 +68,7 @@ class Object extends Library
 	 *
 	 * @var array
 	 */
-	public $mProp = array( 'list' => NULL, 'store' => NULL, 'i18n' => NULL );
+	public $mProp = array('list' => NULL, 'store' => NULL, 'i18n' => NULL);
 
 	/**
 	 * Object tables.
@@ -78,7 +78,7 @@ class Object extends Library
 	 *
 	 * @var array
 	 */
-	protected $_mTable = array( 'list' => NULL, 'store' => NULL, 'i18n' => NULL );
+	protected $_mTable = array('list' => NULL, 'store' => NULL, 'i18n' => NULL);
 
 	/**
 	 * Primary key
@@ -90,18 +90,22 @@ class Object extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
+	}
+	
+	protected function _Init() {
+		
 	}
 
 	/**
@@ -113,30 +117,30 @@ class Object extends Library
 	 *
 	 * @return bool
 	 */
-	protected  function _LoadConfig( $className )
+	protected  function _LoadConfig($className)
 	{
-		if ( !isset( $this->_mTable['list'] ) )
+		if (!isset($this->_mTable['list']))
 		{
 			/**
 			 * @var array
 			 */
-			$this->_mTable['list'] = Core::Config()->Get( 'app.prefix' ) . 'object_' . strtolower( $className );
+			$this->_mTable['list'] = Core::Config()->Get('app.prefix') . 'object_' . strtolower($className);
 		}
 
-		if ( !isset( $this->_mTable['i18n'] ) )
+		if (!isset($this->_mTable['i18n']))
 		{
 			/**
 			 * @var array
 			 */
-			$this->_mTable['i18n'] = Core::Config()->Get( 'app.prefix' ) . 'i18n';
+			$this->_mTable['i18n'] = Core::Config()->Get('app.prefix') . 'i18n';
 		}
 
 		/**
 		 * @var string
 		 */
-		$this->_mKey = strtolower( $className ) . '_id';
+		$this->_mKey = strtolower($className) . '_id';
 
-		if ( 1 == Core::Config()->Get( 'database.binkey' ) )
+		if (1 == Core::Config()->Get('database.binkey'))
 		{
 			/**
 			 * @var string
@@ -147,57 +151,57 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$parts = explode( '_', $className );
+		$parts = explode('_', $className);
 
 		/**
 		 * @var string
 		 */
-		$object_name = array_key_exists( 1, $parts ) ? strtolower( $parts[1] ) : strtolower( $parts[0] );
+		$object_name = array_key_exists(1, $parts) ? strtolower($parts[1]) : strtolower($parts[0]);
 
 		/**
 		 * @var string
 		 */
-		$path_app = Core::Config()->Get( 'path.app' );
+		$path_app = Core::Config()->Get('path.app');
 
 		/**
 		 * @var string
 		 */
-		$cfg_file =  $path_app . 'etc/' . Core::Config()->Get( 'dir.app.obj' ) . '/' . $object_name . '.cfg.xml';
+		$cfg_file =  $path_app . 'etc/' . Core::Config()->Get('dir.app.obj') . '/' . $object_name . '.cfg.xml';
 
-		if ( !is_readable( $cfg_file ) )
+		if (!is_readable($cfg_file))
 		{
-			if ( function_exists( '__' ) )
+			if (function_exists('__'))
 			{
 				/**
 				 * @var string
 				 */
 				$config_msg = sprintf(
-				__( '%s object: Skipping configuration file "%s" (not found).', 'WEb' ),
+				__('%s object: Skipping configuration file "%s" (not found).', 'WEb'),
 				$className,
 				$object_name
 				);
 
-				Core::Log()->Write( $config_msg, 'debug' );
+				Core::Log()->Write($config_msg, 'debug');
 			}
 
 			return FALSE;
 		}
 
-		if ( function_exists( '__' ) )
+		if (function_exists('__'))
 		{
 			/**
 			 * @var string
 			 */
 			$config_msg = sprintf(
-			__( '%s object: Loading configuration file "%s".', 'WEb' ),
+			__('%s object: Loading configuration file "%s".', 'WEb'),
 			$className,
 			$object_name
 			);
 
-			Core::Log()->Write( $config_msg, 'debug' );
+			Core::Log()->Write($config_msg, 'debug');
 		}
 
-		return Core::Config()->Set( $cfg_file );
+		return Core::Config()->Set($cfg_file);
 	}
 
 	/**
@@ -207,22 +211,24 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Get( $id )
-	{
+	public function Get($id) {
+		
+		$this->_Init();
+		
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( $this->_mKey, $id );
+		$options['conditions'][] = array ($this->_mKey, $id);
 
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( !empty( $this->mProp['i18n'] ) )
+		if (!empty($this->mProp['i18n']))
 		{
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ( 'i18n_locale', $this->mI18nLocale );
+			$options['conditions'][] = array ('i18n_locale', $this->mI18nLocale);
 		}
 
 		/**
@@ -230,12 +236,12 @@ class Object extends Library
 		 *
 		 * @var mixed
 		 */
-		$data = Core::Database()->RetrieveOne( array_keys( $this->mProp['list'] ), $this->_mTable['list'], $options );
+		$data = Core::Database()->RetrieveOne(array_keys($this->mProp['list']), $this->_mTable['list'], $options);
 
 		/**
 		 * Check if we have data.
 		 */
-		if ( empty( $data ) )
+		if (empty($data))
 		{
 			return FALSE;
 		}
@@ -260,12 +266,12 @@ class Object extends Library
 		/**
 		 * Check if we have an empty store table.
 		 */
-		if ( !empty( $this->_mTable['store'] ) )
+		if (!empty($this->_mTable['store']))
 		{
 			/**
 			 * Get store data.
 			 */
-			$this->GetStoreData( $this->_mId );
+			$this->GetStoreData($this->_mId);
 		}
 
 		return TRUE;
@@ -278,50 +284,52 @@ class Object extends Library
 	 *
 	 * @return mixed
 	 */
-	public function GetStoreData( $id )
-	{
+	public function GetStoreData($id) {
+		
+		$this->_Init();
+		
 		/**
 		 * Set table to use.
 		 *
 		 * @var string
 		 */
-		$table = ( empty( $this->_mTable['store'] ) ) ? 'list' : 'store';
+		$table = (empty($this->_mTable['store'])) ? 'list' : 'store';
 
 		/**
 		 * Set properties to use.
 		 *
 		 * @var string
 		 */
-		$prop = ( empty( $this->mProp['store'] ) ) ? 'list' : 'store';
+		$prop = (empty($this->mProp['store'])) ? 'list' : 'store';
 
 		/**
 		 * Get fields list.
 		 *
 		 * @var array
 		 */
-		$fields = array_keys( $this->mProp[$prop] );
+		$fields = array_keys($this->mProp[$prop]);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( $this->_mKey, $id );
+		$options['conditions'][] = array ($this->_mKey, $id);
 
 		/**
 		 * Get data.
 		 *
 		 * @var mixed
 		 */
-		$data = Core::Database()->RetrieveOne( $fields, $this->_mTable[$table], $options );
+		$data = Core::Database()->RetrieveOne($fields, $this->_mTable[$table], $options);
 
 		/**
 		 * Check if we have data.
 		 */
-		if ( !empty( $data ) )
+		if (!empty($data))
 		{
 			/**
 			 * @var array
 			 */
-			$this->mProp[$prop] = array_merge( $this->mProp[$prop], $data );
+			$this->mProp[$prop] = array_merge($this->mProp[$prop], $data);
 		}
 
 		return TRUE;
@@ -334,12 +342,14 @@ class Object extends Library
 	 *
 	 * @return mixed
 	 */
-	public function GetLocaleData( $i18nLocale = NULL )
-	{
+	public function GetLocaleData($i18nLocale = NULL) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( empty( $this->mProp['i18n'] ) )
+		if (empty($this->mProp['i18n']))
 		{
 			return FALSE;
 		}
@@ -347,7 +357,7 @@ class Object extends Library
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -355,7 +365,7 @@ class Object extends Library
 		/**
 		 * Check locale
 		 */
-		if ( empty( $i18nLocale ) )
+		if (empty($i18nLocale))
 		{
 			/**
 			 * @var string
@@ -366,23 +376,23 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array ( 'bin.object_id', $this->_mId );
+		$options['conditions'][0] = array ('bin.object_id', $this->_mId);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][1] = array ( 'i18n_locale', $this->mI18nLocale );
+		$options['conditions'][1] = array ('i18n_locale', $this->mI18nLocale);
 
-		foreach ( $this->mProp['i18n'] as $prop_key => $prop_value )
+		foreach ($this->mProp['i18n'] as $prop_key => $prop_value)
 		{
-			$options['conditions'][2] = array ( 'i18n_key', $prop_key );
+			$options['conditions'][2] = array ('i18n_key', $prop_key);
 
 			/**
 			 * @var array
 			 */
 			$options['limit'] = 1;
 
-			$data = Core::Database()->RetrieveOne( 'i18n_value', $this->_mTable['i18n'], $options );
+			$data = Core::Database()->RetrieveOne('i18n_value', $this->_mTable['i18n'], $options);
 
 			$this->mProp['i18n'][$prop_key] = $data['i18n_value'];
 		}
@@ -401,8 +411,10 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Add()
-	{
+	public function Add() {
+		
+		$this->_Init();
+		
 		/**
 		 * Add store data.
 		 */
@@ -416,7 +428,7 @@ class Object extends Library
 		/**
 		 * Update object.
 		 */
-		$this->Get( $this->_mId );
+		$this->Get($this->_mId);
 
 		return TRUE;
 	}
@@ -431,21 +443,23 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function AddStoreData()
-	{
+	public function AddStoreData() {
+		
+		$this->_Init();
+		
 		/**
 		 * Set table to use.
 		 *
 		 * @var string
 		 */
-		$table = ( empty( $this->_mTable['store'] ) ) ? 'list' : 'store';
+		$table = (empty($this->_mTable['store'])) ? 'list' : 'store';
 
 		/**
 		 * Set properties to use.
 		 *
 		 * @var string
 		 */
-		$prop = ( empty( $this->mProp['store'] ) ) ? 'list' : 'store';
+		$prop = (empty($this->mProp['store'])) ? 'list' : 'store';
 
 		/**
 		 * Set the new data Id
@@ -459,7 +473,7 @@ class Object extends Library
 		 *
 		 * @var array
 		 */
-		$data = array_merge( $data, $this->mProp[$prop] );
+		$data = array_merge($data, $this->mProp[$prop]);
 
 		/**
 		 * Set the new data owner.
@@ -471,7 +485,7 @@ class Object extends Library
 		/**
 		 * Add data to database.
 		 */
-		if ( FALSE !== Core::Database()->Create( $data, $this->_mTable[$table] ) )
+		if (FALSE !== Core::Database()->Create($data, $this->_mTable[$table]))
 		{
 			/**
 			 * Set the object id.
@@ -498,12 +512,14 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function AddLocaleData( $i18nLocale = NULL )
-	{
+	public function AddLocaleData($i18nLocale = NULL) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( empty( $this->mProp['i18n'] ) )
+		if (empty($this->mProp['i18n']))
 		{
 			return FALSE;
 		}
@@ -511,7 +527,7 @@ class Object extends Library
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -519,7 +535,7 @@ class Object extends Library
 		/**
 		 * Check locale
 		 */
-		if ( empty( $i18nLocale ) )
+		if (empty($i18nLocale))
 		{
 			/**
 			 * @var string
@@ -527,7 +543,7 @@ class Object extends Library
 			$i18nLocale = $this->mI18nLocale;
 		}
 
-		foreach ( $this->mProp['i18n'] as $data_key => $data_value )
+		foreach ($this->mProp['i18n'] as $data_key => $data_value)
 		{
 			/**
 			 * Set data.
@@ -542,7 +558,7 @@ class Object extends Library
 				'bin.owner_id' => $this->mUserId,
 			);
 
-			Core::Database()->Create( $data_insert, $this->_mTable['i18n'] );
+			Core::Database()->Create($data_insert, $this->_mTable['i18n']);
 		}
 
 		return TRUE;
@@ -558,8 +574,10 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Save()
-	{
+	public function Save() {
+		
+		$this->_Init();
+		
 		/**
 		 * Add store data.
 		 */
@@ -585,12 +603,14 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function SaveStoreData()
-	{
+	public function SaveStoreData() {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -600,25 +620,25 @@ class Object extends Library
 		 *
 		 * @var string
 		 */
-		$table = ( empty( $this->_mTable['store'] ) ) ? 'list' : 'store';
+		$table = (empty($this->_mTable['store'])) ? 'list' : 'store';
 
 		/**
 		 * Set properties to use.
 		 *
 		 * @var string
 		 */
-		$prop = ( empty( $this->mProp['store'] ) ) ? 'list' : 'store';
+		$prop = (empty($this->mProp['store'])) ? 'list' : 'store';
 
 		/**
 		 * Filter out main key.
 		 *
 		 * @var unknown_type
 		 */
-		$data = array_diff_key( $this->mProp[$prop], array( $this->_mKey => NULL ) );
+		$data = array_diff_key($this->mProp[$prop], array($this->_mKey => NULL));
 
-		$options = array( 'conditions' => array ( $this->_mKey, $this->_mId ), 'limit' => 1 );
+		$options = array('conditions' => array ($this->_mKey, $this->_mId), 'limit' => 1);
 
-		Core::Database()->Update( $data, $this->_mTable[$table], $options );
+		Core::Database()->Update($data, $this->_mTable[$table], $options);
 
 		return TRUE;
 	}
@@ -632,12 +652,14 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function SaveLocaleData( $i18nLocale = NULL )
-	{
+	public function SaveLocaleData($i18nLocale = NULL) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( empty( $this->mProp['i18n'] ) )
+		if (empty($this->mProp['i18n']))
 		{
 			return FALSE;
 		}
@@ -645,7 +667,7 @@ class Object extends Library
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -653,7 +675,7 @@ class Object extends Library
 		/**
 		 * Check locale
 		 */
-		if ( empty( $i18nLocale ) )
+		if (empty($i18nLocale))
 		{
 			/**
 			 * @var string
@@ -664,33 +686,33 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array( 'bin.object_id', $this->_mId );
+		$options['conditions'][0] = array('bin.object_id', $this->_mId);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][1] = array ( 'i18n_locale', $i18nLocale );
+		$options['conditions'][1] = array ('i18n_locale', $i18nLocale);
 
 		/**
 		 * @var array
 		 */
 		$options['limit'] = 1;
 
-		foreach ( $this->mProp['i18n'] as $data_key => $data_value )
+		foreach ($this->mProp['i18n'] as $data_key => $data_value)
 		{
 			/**
 			 * Set data.
 			 *
 			 * @var array
 			 */
-			$data_save = array(	'i18n_value' => $data_value );
+			$data_save = array(	'i18n_value' => $data_value);
 
 			/**
 			 * @var array
 			 */
-			$options['conditions'][2] = array ( 'i18n_key', $data_key );
+			$options['conditions'][2] = array ('i18n_key', $data_key);
 
-			Core::Database()->Update( $data_save, $this->_mTable['i18n'], $options );
+			Core::Database()->Update($data_save, $this->_mTable['i18n'], $options);
 		}
 
 		return TRUE;
@@ -705,14 +727,16 @@ class Object extends Library
 	 *
 	 * @return bool
 	 */
-	public function SaveOne( $propType, $propName, $i18nLocale = NULL )
-	{
-		if ( 'i18n' == $propType )
+	public function SaveOne($propType, $propName, $i18nLocale = NULL) {
+		
+		$this->_Init();
+		
+		if ('i18n' == $propType)
 		{
-			return $this->SaveOneLocaleData( $propType, $propName, $i18nLocale );
+			return $this->SaveOneLocaleData($propType, $propName, $i18nLocale);
 		}
 
-		return $this->SaveOneStoreData( $propType, $propName );
+		return $this->SaveOneStoreData($propType, $propName);
 	}
 
 	/**
@@ -723,12 +747,14 @@ class Object extends Library
 	 *
 	 * @return bool
 	 */
-	public function SaveOneStoreData( $propType, $propName )
-	{
+	public function SaveOneStoreData($propType, $propName) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -738,25 +764,25 @@ class Object extends Library
 		 *
 		 * @var string
 		 */
-		$table = ( empty( $this->_mTable['store'] ) ) ? 'list' : 'store';
+		$table = (empty($this->_mTable['store'])) ? 'list' : 'store';
 
 		/**
 		 * Set properties to use.
 		 *
 		 * @var string
 		 */
-		$prop = ( empty( $this->mProp['store'] ) ) ? 'list' : 'store';
+		$prop = (empty($this->mProp['store'])) ? 'list' : 'store';
 
 		/**
 		 * Filter out main key.
 		 *
 		 * @var unknown_type
 		 */
-		$data = array( $propName, $this->mProp[$prop][$propName] );
+		$data = array($propName, $this->mProp[$prop][$propName]);
 
-		$options = array( 'conditions' => array ( $this->_mKey, $this->_mId ), 'limit' => 1 );
+		$options = array('conditions' => array ($this->_mKey, $this->_mId), 'limit' => 1);
 
-		Core::Database()->Update( $data, $this->_mTable[$table], $options );
+		Core::Database()->Update($data, $this->_mTable[$table], $options);
 
 		return TRUE;
 	}
@@ -770,12 +796,14 @@ class Object extends Library
 	 *
 	 * @return bool
 	 */
-	public function SaveOneLocaleData( $propType, $propName, $i18nLocale = NULL )
-	{
+	public function SaveOneLocaleData($propType, $propName, $i18nLocale = NULL) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -783,7 +811,7 @@ class Object extends Library
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( empty( $this->mProp['i18n'] ) )
+		if (empty($this->mProp['i18n']))
 		{
 			return FALSE;
 		}
@@ -791,7 +819,7 @@ class Object extends Library
 		/**
 		 * Check locale
 		 */
-		if ( empty( $i18nLocale ) )
+		if (empty($i18nLocale))
 		{
 			/**
 			 * @var string
@@ -802,12 +830,12 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array( 'bin.object_id', $this->_mId );
+		$options['conditions'][0] = array('bin.object_id', $this->_mId);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][1] = array ( 'i18n_locale', $i18nLocale );
+		$options['conditions'][1] = array ('i18n_locale', $i18nLocale);
 
 		/**
 		 * @var array
@@ -819,14 +847,14 @@ class Object extends Library
 		 *
 		 * @var array
 		 */
-		$data_save = array(	'i18n_value' => $this->mProp['i18n'][$propName] );
+		$data_save = array(	'i18n_value' => $this->mProp['i18n'][$propName]);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][2] = array ( 'i18n_key', $propName );
+		$options['conditions'][2] = array ('i18n_key', $propName);
 
-		Core::Database()->Update( $data_save, $this->_mTable['i18n'], $options );
+		Core::Database()->Update($data_save, $this->_mTable['i18n'], $options);
 
 		return TRUE;
 	}
@@ -839,8 +867,10 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Remove()
-	{
+	public function Remove() {
+		
+		$this->_Init();
+		
 		/**
 		 * Add store data.
 		 */
@@ -864,13 +894,14 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function RemoveStoreData()
-	{
+	public function RemoveStoreData() {
+		
+		$this->_Init();
 
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -880,11 +911,11 @@ class Object extends Library
 		 *
 		 * @var string
 		 */
-		$table = ( empty( $this->_mTable['store'] ) ) ? 'list' : 'store';
+		$table = (empty($this->_mTable['store'])) ? 'list' : 'store';
 
-		$options = array( 'conditions' => array ( $this->_mKey, $this->_mId ), 'limit' => 1 );
+		$options = array('conditions' => array ($this->_mKey, $this->_mId), 'limit' => 1);
 
-		Core::Database()->Delete( $this->_mTable[$table], $options );
+		Core::Database()->Delete($this->_mTable[$table], $options);
 
 		return TRUE;
 	}
@@ -894,12 +925,14 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function RemoveLocaleData( $i18nLocale = NULL )
-	{
+	public function RemoveLocaleData($i18nLocale = NULL) {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have locale properties.
 		 */
-		if ( empty( $this->mProp['i18n'] ) )
+		if (empty($this->mProp['i18n']))
 		{
 			return FALSE;
 		}
@@ -907,7 +940,7 @@ class Object extends Library
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
@@ -915,17 +948,17 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array( 'bin.object_id', $this->_mId );
+		$options['conditions'][] = array('bin.object_id', $this->_mId);
 
-		if ( !empty( $i18nLocale ) )
+		if (!empty($i18nLocale))
 		{
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ( 'i18n_locale', $i18nLocale );
+			$options['conditions'][] = array ('i18n_locale', $i18nLocale);
 		}
 
-		Core::Database()->Delete( $this->_mTable['i18n'], $options );
+		Core::Database()->Delete($this->_mTable['i18n'], $options);
 
 		return TRUE;
 	}
@@ -939,17 +972,19 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Refresh()
-	{
+	public function Refresh() {
+		
+		$this->_Init();
+		
 		/**
 		 * Check if we have a valid object.
 		 */
-		if ( empty( $this->_mId ) )
+		if (empty($this->_mId))
 		{
 			return FALSE;
 		}
 
-		$this->Get( $this->_mId );
+		$this->Get($this->_mId);
 
 		return TRUE;
 	}
@@ -959,8 +994,10 @@ class Object extends Library
 	 *
 	 * @return boolean
 	 */
-	public function Reset()
-	{
+	public function Reset() {
+		
+		$this->_Init();
+		
 		/**
 		 * Unset object Id.
 		 */
@@ -971,16 +1008,16 @@ class Object extends Library
 		 */
 		$newProp = array();
 
-		foreach ( $this->mProp as $prop_key => $prop_value )
+		foreach ($this->mProp as $prop_key => $prop_value)
 		{
 			/**
 			 * @var array
 			 */
 			$newProp[$prop_key] = array();
 
-			if ( is_array( $prop_value ) && !empty( $prop_value ) )
+			if (is_array($prop_value) && !empty($prop_value))
 			{
-				foreach ( $prop_value as $prop_value_key => $prop_value_data )
+				foreach ($prop_value as $prop_value_key => $prop_value_data)
 				{
 					/**
 					 * @var array

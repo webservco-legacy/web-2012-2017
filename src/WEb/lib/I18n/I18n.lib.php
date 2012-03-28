@@ -61,7 +61,7 @@ class I18n extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -248,7 +248,7 @@ class I18n extends Library {
 		/**
 		 * @var string
 		 */
-		$domain_name = ( array_key_exists(1, $parts)) ? $parts[1] : $parts[0];
+		$domain_name = (array_key_exists(1, $parts)) ? $parts[1] : $parts[0];
 
 		textdomain($domain_name);
 
@@ -336,7 +336,7 @@ class I18n extends Library {
 		/**
 		 * Check domain type.
 		 */
-		switch ( $type ) {
+		switch ($type) {
 			case 'Core' :
 			/**
 			 * @var string

@@ -45,7 +45,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Router::GetInstance() );
+		$this->assertInternalType('object', Router::GetInstance());
 	}
 
 	/**
@@ -53,7 +53,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	 */
 	public function RemoveFakeExtensionWorks()
 	{
-		$this->assertEquals( 'lorem_ipsum', $this->_mObject->RemoveFakeExtension( 'lorem_ipsum.html' ) );
+		$this->assertEquals('lorem_ipsum', $this->_mObject->RemoveFakeExtension('lorem_ipsum.html'));
 	}
 }
 ?>

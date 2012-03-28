@@ -67,7 +67,7 @@ class Database_Sqlite3 extends Database implements Interface_Database {
 		 */
 		try {
 			$db_link = new SQLite3($db_path);
-		} catch ( Exception $e ) {
+		} catch (Exception $e) {
 			/**
 			 * @var string
 			 */

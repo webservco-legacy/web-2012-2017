@@ -62,7 +62,7 @@ class Controller extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -112,7 +112,7 @@ class Controller extends Library {
 
 			/**
 			 * PHP < 5.3 compatibility.
-			 * $this->_mModuleObject = $module_name::GetInstance( $module_name );
+			 * $this->_mModuleObject = $module_name::GetInstance($module_name);
 			 *
 			 * @var object
 			 */
@@ -150,7 +150,7 @@ class Controller extends Library {
 
 			/**
 			 * PHP < 5.3 compatibility.
-			 * $this->_mOutputObject = $engine_class::GetInstance( $engine_class );
+			 * $this->_mOutputObject = $engine_class::GetInstance($engine_class);
 			 *
 			 * @var object
 			 */

@@ -45,7 +45,7 @@ class SecurityTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Security::GetInstance() );
+		$this->assertInternalType('object', Security::GetInstance());
 	}
 }
 ?>

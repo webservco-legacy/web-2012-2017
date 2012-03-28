@@ -39,7 +39,7 @@ class Error extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -100,7 +100,7 @@ class Error extends Library {
 		/**
 		 * @var array
 		 */
-		$err = array('code' => $errObject->GetCode(), 'severity' => $errObject->GetSeverity(), 'message' => $errObject->GetMessage(), 'file' => $errObject->GetFile(), 'line' => $errObject->GetLine(), 'trace' => $errObject->GetTraceAsString(), );
+		$err = array('code' => $errObject->GetCode(), 'severity' => $errObject->GetSeverity(), 'message' => $errObject->GetMessage(), 'file' => $errObject->GetFile(), 'line' => $errObject->GetLine(), 'trace' => $errObject->GetTraceAsString(),);
 
 		/**
 		 * @var array

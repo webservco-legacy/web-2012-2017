@@ -45,7 +45,7 @@ class ErrorTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Error::GetInstance() );
+		$this->assertInternalType('object', Error::GetInstance());
 	}
 
 	/**
@@ -53,7 +53,7 @@ class ErrorTest extends PHPUnit_Framework_TestCase
 	 */
 	public function LoadReturnsTrue()
 	{
-		$this->assertTrue( $this->_mObject->Load() );
+		$this->assertTrue($this->_mObject->Load());
 	}
 
 	/**
@@ -62,7 +62,7 @@ class ErrorTest extends PHPUnit_Framework_TestCase
 	 */
 	public function HandleThrowsException()
 	{
-		$this->_mObject->Handle( 256, 'Hello World', 'foo/bar', 10 );
+		$this->_mObject->Handle(256, 'Hello World', 'foo/bar', 10);
 	}
 
 	/**
@@ -70,7 +70,7 @@ class ErrorTest extends PHPUnit_Framework_TestCase
 	 */
 	public function UnloadReturnsTrue()
 	{
-		$this->assertTrue( $this->_mObject->Unload() );
+		$this->assertTrue($this->_mObject->Unload());
 	}
 }
 ?>

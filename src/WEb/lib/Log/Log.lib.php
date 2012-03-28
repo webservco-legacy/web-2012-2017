@@ -59,12 +59,12 @@ class Log extends Library {
 	 */
 	private $_mLogLevel = 4;
 
-	private $_mLogLevels = array('debug' => 0, 'info' => 1, 'notice' => 2, 'warning' => 3, 'error' => 4, 'crit' => 5, 'alert' => 6, 'emerg' => 7, );
+	private $_mLogLevels = array('debug' => 0, 'info' => 1, 'notice' => 2, 'warning' => 3, 'error' => 4, 'crit' => 5, 'alert' => 6, 'emerg' => 7,);
 
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -224,8 +224,8 @@ class Log extends Library {
 		 * Reset log file.
 		 *
 		 * Deprecated:
-		 * $log_handle = fopen( $log_file, "wb" );
-		 * fclose( $log_handle );
+		 * $log_handle = fopen($log_file, "wb");
+		 * fclose($log_handle);
 		 */
 		file_put_contents($log_file, NULL);
 

@@ -85,7 +85,7 @@ class Output extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
@@ -218,12 +218,12 @@ class Output extends Library {
 			/**
 			 * @var array
 			 */
-			$engine_paths = array('Core' => Core::Config()->Get('path.core') . Core::Config()->Get('dir.core.opt') . '/', 'App' => Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.opt') . '/', );
+			$engine_paths = array('Core' => Core::Config()->Get('path.core') . Core::Config()->Get('dir.core.opt') . '/', 'App' => Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.opt') . '/',);
 		} else {
 			/**
 			 * @var array
 			 */
-			$engine_paths = array('External' => $engine_config['path'], );
+			$engine_paths = array('External' => $engine_config['path'],);
 		}
 
 		foreach ($engine_paths as $type => $path) {

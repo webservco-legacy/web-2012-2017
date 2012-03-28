@@ -48,14 +48,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 	 *
 	 * @var array
 	 */
-	private $_mCompOperators = array('eq' => '=', 'not' => '!=', 'lt' => '<', 'gt' => '>', 'lte' => '<=', 'gte' => '>=', );
+	private $_mCompOperators = array('eq' => '=', 'not' => '!=', 'lt' => '<', 'gt' => '>', 'lte' => '<=', 'gte' => '>=',);
 
 	/**
 	 * Order by.
 	 *
 	 * @var array
 	 */
-	private $_mOrderBy = array('asc' => 'ASC', 'desc' => 'DESC', );
+	private $_mOrderBy = array('asc' => 'ASC', 'desc' => 'DESC',);
 
 	/**
 	 * Setup database connection.
@@ -180,7 +180,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 */
 		$this->Connect();
 
-		$result = $this->_mDbLink->query("SELECT REPLACE( UUID(), '-', '' )");
+		$result = $this->_mDbLink->query("SELECT REPLACE(UUID(), '-', '')");
 
 		/**
 		 * @var array
@@ -262,7 +262,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 					/**
 					 * @var array
 					 */
-					$values[] = "UNHEX('{$this->EscapeString( $value )}')";
+					$values[] = "UNHEX('{$this->EscapeString($value)}')";
 				} else {
 					/**
 					 * @var array
@@ -271,7 +271,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 					/**
 					 * @var array
 					 */
-					$values[] = "'{$this->EscapeString( $value )}'";
+					$values[] = "'{$this->EscapeString($value)}'";
 				}
 			}
 		}
@@ -655,7 +655,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 */
 		$result = $this->Retrieve($data, $table, $options);
 
-		return ( empty($result)) ? FALSE : $result[0];
+		return (empty($result)) ? FALSE : $result[0];
 	}
 
 	/**
@@ -671,7 +671,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		/**
 		 * @var string
 		 */
-		$data = "COUNT( {$data} ):total";
+		$data = "COUNT({$data}):total";
 
 		/**
 		 * Get result.
@@ -680,7 +680,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 */
 		$result = $this->Retrieve($data, $table, $options);
 
-		return ( empty($result)) ? FALSE : $result[0];
+		return (empty($result)) ? FALSE : $result[0];
 	}
 
 	/**
@@ -1021,7 +1021,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 				/**
 				 * @var string
 				 */
-				$qf_limit .= ( array_key_exists(1, $options['limit'])) ? "{$options['limit'][1]}, {$options['limit'][0]}" : "{$options['limit'][0]}";
+				$qf_limit .= (array_key_exists(1, $options['limit'])) ? "{$options['limit'][1]}, {$options['limit'][0]}" : "{$options['limit'][0]}";
 			} else {
 				/**
 				 * @var string

@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -179,7 +179,7 @@ class Core
 	 */
 	final public static function Acl()
 	{
-		if ( NULL == self::$_msAclObject )
+		if (NULL == self::$_msAclObject)
 		{
 			/**
 			 * @var object
@@ -197,7 +197,7 @@ class Core
 	 */
 	final public static function App()
 	{
-		if ( NULL == self::$_msAppObject )
+		if (NULL == self::$_msAppObject)
 		{
 			/**
 			 * @var object
@@ -215,7 +215,7 @@ class Core
 	 */
 	final public static function Browser()
 	{
-		if ( NULL == self::$_msBrowserObject )
+		if (NULL == self::$_msBrowserObject)
 		{
 			/**
 			 * @var object
@@ -233,7 +233,7 @@ class Core
 	 */
 	final public static function Captcha()
 	{
-		if ( NULL == self::$_msCaptchaObject )
+		if (NULL == self::$_msCaptchaObject)
 		{
 			/**
 			 * @var object
@@ -251,7 +251,7 @@ class Core
 	 */
 	final public static function Config()
 	{
-		if ( NULL == self::$_msConfigObject )
+		if (NULL == self::$_msConfigObject)
 		{
 			/**
 			 * @var object
@@ -272,25 +272,25 @@ class Core
 		/**
 		 * @var string
 		 */
-		$db_type = self::Config()->Get( 'database.type' );
+		$db_type = self::Config()->Get('database.type');
 
 		/**
 		 * If we have no database type,
 		 * database connection will not be available.
 		 */
-		if ( FALSE === $db_type )
+		if (FALSE === $db_type)
 		{
 			return FALSE;
 		}
 
-		if ( NULL == self::$_msDatabaseObject )
+		if (NULL == self::$_msDatabaseObject)
 		{
-			if ( FALSE !== strpos( $db_type, '_' ) )
+			if (FALSE !== strpos($db_type, '_'))
 			{
 				/**
 				 * @var array
 				 */
-				$parts = explode( '_', $db_type );
+				$parts = explode('_', $db_type);
 
 				/**
 				 * @var string
@@ -301,24 +301,24 @@ class Core
 			/**
 			 * @var string
 			 */
-			$db_class = 'Database_' . ucfirst( strtolower( $db_type ) );
+			$db_class = 'Database_' . ucfirst(strtolower($db_type));
 
 			/**
 			 * Load the appropriate database library.
 			 *
 			 * PHP < 5.3 compatibility.
-			 * self::$_msDatabaseObject = $db_class::GetInstance( $db_class );
+			 * self::$_msDatabaseObject = $db_class::GetInstance($db_class);
 			 *
 			 * @var object
 			 */
-			self::$_msDatabaseObject = call_user_func( array( $db_class, 'GetInstance' ), $db_class );
+			self::$_msDatabaseObject = call_user_func(array($db_class, 'GetInstance'), $db_class);
 
 			/**
 			 * @var string
 			 */
-			$out_msg = sprintf( __( 'Core library: Database library "%s" loading.', 'WEb' ) , $db_class );
+			$out_msg = sprintf(__('Core library: Database library "%s" loading.', 'WEb') , $db_class);
 
-			self::Log()->Write( $out_msg, 'debug' );
+			self::Log()->Write($out_msg, 'debug');
 		}
 
 		return self::$_msDatabaseObject;
@@ -331,7 +331,7 @@ class Core
 	 */
 	final public static function Error()
 	{
-		if ( NULL == self::$_msErrorObject )
+		if (NULL == self::$_msErrorObject)
 		{
 			/**
 			 * @var object
@@ -349,7 +349,7 @@ class Core
 	 */
 	final public static function Form()
 	{
-		if ( NULL == self::$_msFormObject )
+		if (NULL == self::$_msFormObject)
 		{
 			/**
 			 * @var object
@@ -367,7 +367,7 @@ class Core
 	 */
 	final public static function Geo()
 	{
-		if ( NULL == self::$_msGeoObject )
+		if (NULL == self::$_msGeoObject)
 		{
 			/**
 			 * @var object
@@ -385,7 +385,7 @@ class Core
 	 */
 	final public static function I18n()
 	{
-		if ( NULL == self::$_msI18nObject )
+		if (NULL == self::$_msI18nObject)
 		{
 			/**
 			 * @var object
@@ -403,7 +403,7 @@ class Core
 	 */
 	final public static function Log()
 	{
-		if ( NULL == self::$_msLogObject )
+		if (NULL == self::$_msLogObject)
 		{
 			/**
 			 * @var object
@@ -421,7 +421,7 @@ class Core
 	 */
 	final public static function Mail()
 	{
-		if ( NULL == self::$_msMailObject )
+		if (NULL == self::$_msMailObject)
 		{
 			/**
 			 * @var object
@@ -439,7 +439,7 @@ class Core
 	 */
 	final public static function Router()
 	{
-		if ( NULL == self::$_msRouterObject )
+		if (NULL == self::$_msRouterObject)
 		{
 			/**
 			 * @var object
@@ -457,7 +457,7 @@ class Core
 	 */
 	final public static function Security()
 	{
-		if ( NULL == self::$_msSecurityObject )
+		if (NULL == self::$_msSecurityObject)
 		{
 			/**
 			 * @var object
@@ -475,7 +475,7 @@ class Core
 	 */
 	final public static function Session()
 	{
-		if ( NULL == self::$_msSessionObject )
+		if (NULL == self::$_msSessionObject)
 		{
 			/**
 			 * @var object
@@ -493,7 +493,7 @@ class Core
 	 */
 	final public static function Smtp()
 	{
-		if ( NULL == self::$_msSmtpObject )
+		if (NULL == self::$_msSmtpObject)
 		{
 			/**
 			 * @var object
@@ -511,7 +511,7 @@ class Core
 	 */
 	final public static function String()
 	{
-		if ( NULL == self::$_msStringObject )
+		if (NULL == self::$_msStringObject)
 		{
 			/**
 			 * @var object
@@ -529,12 +529,12 @@ class Core
 	 */
 	final public static function User()
 	{
-		if ( NULL == self::$_msUserObject )
+		if (NULL == self::$_msUserObject)
 		{
 			/**
 			 * @var object
 			 */
-			self::$_msUserObject = self::Get( 'Object_User' );
+			self::$_msUserObject = self::Get('Object_User');
 		}
 
 		return self::$_msUserObject;
@@ -545,14 +545,14 @@ class Core
 	 *
 	 * @param string $ClassName full class name
 	 */
-	final public static function Load( $className )
+	final public static function Load($className)
 	{
 		/**
 		 * Base search paths.
 		 *
 		 * @var array
 		 */
-		$base = array ( self::Config()->Get( 'path.core' ), self::Config()->Get( 'path.app' ) );
+		$base = array (self::Config()->Get('path.core'), self::Config()->Get('path.app'));
 
 		/**
 		 * Class path.
@@ -566,7 +566,7 @@ class Core
 		 *
 		 * @var array
 		 */
-		$parts = explode( '_', $className );
+		$parts = explode('_', $className);
 
 		/**
 		 * Class name.
@@ -592,7 +592,7 @@ class Core
 		/**
 		 * Check if we have at leat 2 parts.
 		 */
-		if ( array_key_exists( 1, $parts ) )
+		if (array_key_exists(1, $parts))
 		{
 			/**
 			 * @var string
@@ -602,17 +602,17 @@ class Core
 			/**
 			 * First part must contain class type.
 			 */
-			switch ( $parts[0] )
+			switch ($parts[0])
 			{
 				case 'Interface' :
 					/**
 					 * @var array
 					 */
-					$base = array (	self::Config()->Get( 'path.core' ) );
+					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
 					 */
-					$path = self::Config()->Get( 'dir.core.int' ) . '/';
+					$path = self::Config()->Get('dir.core.int') . '/';
 					/**
 					 * @var string
 					 */
@@ -628,7 +628,7 @@ class Core
 					/**
 					 * @var array
 					 */
-					$base = array (	self::Config()->Get( 'path.core' ) );
+					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
 					 */
@@ -648,11 +648,11 @@ class Core
 					/**
 					 * @var array
 					 */
-					$base = array (	self::Config()->Get( 'path.app' ) );
+					$base = array (	self::Config()->Get('path.app'));
 					/**
 					 * @var string
 					 */
-					$path = self::Config()->Get( 'dir.app.mod' ) . '/';
+					$path = self::Config()->Get('dir.app.mod') . '/';
 					/**
 					 * @var string
 					 */
@@ -669,8 +669,8 @@ class Core
 					 * @var array
 					 */
 					$base = array (
-					self::Config()->Get( 'path.app' ) . self::Config()->Get( 'dir.app.obj' ),
-					self::Config()->Get( 'path.core' ) . self::Config()->Get( 'dir.core.obj' ),
+					self::Config()->Get('path.app') . self::Config()->Get('dir.app.obj'),
+					self::Config()->Get('path.core') . self::Config()->Get('dir.core.obj'),
 					);
 					/**
 					 * @var string
@@ -691,7 +691,7 @@ class Core
 					/**
 					 * We must have a third part in the raw name.
 					 */
-					if ( !array_key_exists( 1, $parts ) )
+					if (!array_key_exists(1, $parts))
 					{
 						break;
 					}
@@ -702,11 +702,11 @@ class Core
 					/**
 					 * @var array
 					 */
-					$base = array (	self::Config()->Get( 'path.app' ) );
+					$base = array (	self::Config()->Get('path.app'));
 					/**
 					 * @var string
 					 */
-					$path = self::Config()->Get( 'dir.app.ctrl' ) . '/';
+					$path = self::Config()->Get('dir.app.ctrl') . '/';
 					/**
 					 * @var string
 					 */
@@ -722,7 +722,7 @@ class Core
 					/**
 					 * @var array
 					 */
-					$base = array (	self::Config()->Get( 'path.core' ) );
+					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
 					 */
@@ -765,12 +765,12 @@ class Core
 		/**
 		 * Iterate through base search paths.
 		 */
-		foreach ( $base as $base_path )
+		foreach ($base as $base_path)
 		{
 			/**
 			 * Check if class file is readable.
 			 */
-			if ( is_readable( $base_path . $class_path ) )
+			if (is_readable($base_path . $class_path))
 			{
 				require_once $base_path . $class_path;
 
@@ -779,7 +779,7 @@ class Core
 				 *
 				 * We only load it if the class file was loaded successfully.
 				 */
-				if ( is_readable( $base_path . $class_utils_path ) )
+				if (is_readable($base_path . $class_utils_path))
 				{
 					require_once $base_path . $class_utils_path;
 				}
@@ -787,8 +787,8 @@ class Core
 				/**
 				 * License check disabled! XXX
 				 */
-				//if ( !empty( self::$_msConfigObject ) && !empty( self::$_msErrorObject ) &&
-				//( TRUE !== self::$_msLicenseChecked ) )
+				//if (!empty(self::$_msConfigObject) && !empty(self::$_msErrorObject) &&
+				//(TRUE !== self::$_msLicenseChecked))
 				//{
 					/**
 					 * Set license checked.
@@ -821,33 +821,33 @@ class Core
 	 *
 	 * @return mixed
 	 */
-	final public static function Get( $libraryName )
+	final public static function Get($libraryName)
 	{
-		self::Load( $libraryName );
+		self::Load($libraryName);
 
 		/**
 		 * @var array
 		 */
-		$parts = explode( '_', $libraryName );
+		$parts = explode('_', $libraryName);
 
 		/**
 		 * @var string
 		 */
-		$library_name = end( $parts );
+		$library_name = end($parts);
 
-		if( !class_exists( $library_name ) )
+		if(!class_exists($library_name))
 		{
 			/**
 			 * @var string
 			 */
-			$err_msg = sprintf( __( 'Core Library: Class "%s" not found.', 'WEb' ), $library_name );
+			$err_msg = sprintf(__('Core Library: Class "%s" not found.', 'WEb'), $library_name);
 
-			trigger_error( $err_msg );
+			trigger_error($err_msg);
 
 			exit();
 		}
 
-		return call_user_func( array( $library_name, 'GetInstance' ), $library_name );
+		return call_user_func(array($library_name, 'GetInstance'), $library_name);
 	}
 
 	/**
@@ -858,7 +858,7 @@ class Core
 	 *
 	 * @return mixed
 	 */
-	final private static function _Wget( $url, $postData=array() )
+	final private static function _Wget($url, $postData=array())
 	{
 		/**
 		 * Initialize headers.
@@ -875,7 +875,7 @@ class Core
 		/**
 		 * @var unknown_type
 		 */
-		$headers['Referer'] = self::Config()->Get( 'url.app' );
+		$headers['Referer'] = self::Config()->Get('url.app');
 
 		/**
 		 * @var unknown_type
@@ -885,7 +885,7 @@ class Core
 		/**
 		 * Parse url.
 		 */
-		preg_match( "~([a-z]*://)?([^:^/]*)(:([0-9]{1,5}))?(/.*)?~i", $url, $url_parts );
+		preg_match("~([a-z]*://)?([^:^/]*)(:([0-9]{1,5}))?(/.*)?~i", $url, $url_parts);
 
 		/**
 		 * @var string
@@ -900,22 +900,22 @@ class Core
 		/**
 		 * @var string
 		 */
-		$port = ( '' != $url_parts[4] ) ? $url_parts[4] : '80';
+		$port = ('' != $url_parts[4]) ? $url_parts[4] : '80';
 
 		/**
 		 * @var string
 		 */
-		$path = ( '' != $url_parts[5] ) ? $url_parts[5] : '/';
+		$path = ('' != $url_parts[5]) ? $url_parts[5] : '/';
 
 		/**
 		 * Open socket.
 		 */
-		$socket = fsockopen( $server, $port );
+		$socket = fsockopen($server, $port);
 
 		/**
 		 * Check if socket was opened successfully.
 		 */
-		if ( !$socket )
+		if (!$socket)
 		{
 			/**
 			 * Return result.
@@ -931,12 +931,12 @@ class Core
 		/**
 		 * Set request.
 		 */
-		$request = ( !empty( $postData ) ) ? "POST $path HTTP/1.0\r\n" : "GET $path HTTP/1.0\r\n";
+		$request = (!empty($postData)) ? "POST $path HTTP/1.0\r\n" : "GET $path HTTP/1.0\r\n";
 
 		/**
 		 * Send request.
 		 */
-		fwrite( $socket, $request );
+		fwrite($socket, $request);
 
 		/**
 		 * Init post string.
@@ -948,7 +948,7 @@ class Core
 		/**
 		 * Check if we have post data.
 		 */
-		if ( !empty( $postData ) )
+		if (!empty($postData))
 		{
 			/**
 			 * Init post data.
@@ -960,7 +960,7 @@ class Core
 			/**
 			 * Iterate post data.
 			 */
-			foreach ( $postData as $post_key => $post_value )
+			foreach ($postData as $post_key => $post_value)
 			{
 				/**
 				 * @var array
@@ -973,7 +973,7 @@ class Core
 			 *
 			 * @var string
 			 */
-			$post_string = implode( '&', $post_data );
+			$post_string = implode('&', $post_data);
 
 			/**
 			 * Set content type header.
@@ -987,54 +987,54 @@ class Core
 			 *
 			 * @var array
 			 */
-			$headers['Content-Length'] = strlen( $post_string );
+			$headers['Content-Length'] = strlen($post_string);
 		}
 
 		/**
 		 * Iterate headers.
 		 */
-		foreach ( $headers as $header_key => $header_value )
+		foreach ($headers as $header_key => $header_value)
 		{
 			/**
 			 * Send headers.
 			 */
-			fwrite( $socket, "{$header_key}: {$header_value}\r\n" );
+			fwrite($socket, "{$header_key}: {$header_value}\r\n");
 		}
 
 		/**
 		 * Send newline.
 		 */
-		fwrite( $socket, "\r\n" );
+		fwrite($socket, "\r\n");
 
 		/**
 		 * Check if we have post data.
 		 */
-		if ( !empty( $post_string ) )
+		if (!empty($post_string))
 		{
 			/**
 			 * Send post request string.
 			 */
-			fwrite( $socket, $post_string."\r\n" );
+			fwrite($socket, $post_string."\r\n");
 		}
 
 		/**
 		 * Get first line of response.
 		 */
-		$response = fgets( $socket, 1000 );
+		$response = fgets($socket, 1000);
 
 		/**
 		 * Get status.
 		 */
-		$status = substr( $response, 9, 3);
+		$status = substr($response, 9, 3);
 
-		while ( trim( $line = fgets( $socket, 1000 ) ) != '' )
+		while (trim($line = fgets($socket, 1000)) != '')
 		{
-			if ( '401' == $status && ( 0 === strpos( $line, "WWW-Authenticate: Basic realm=\"" ) ) )
+			if ('401' == $status && (0 === strpos($line, "WWW-Authenticate: Basic realm=\"")))
 			{
 				/**
 				 * Close socket
 				 */
-				fclose( $socket );
+				fclose($socket);
 
 				/**
 				 * Return result.
@@ -1066,33 +1066,33 @@ class Core
 		/**
 		 * @var string
 		 */
-		$license_name = rtrim( str_replace( array( 'http://', 'www.' ), '', self::Config()->Get( 'url.app' ) ), '/' );
+		$license_name = rtrim(str_replace(array('http://', 'www.'), '', self::Config()->Get('url.app')), '/');
 
 		/**
 		 * Set license CN
 		 *
 		 * @var array
 		 */
-		$license['cn'] = strtr( $license_name, '/.', '-_' );
+		$license['cn'] = strtr($license_name, '/.', '-_');
 
 		/**
 		 * Set licence key.
 		 *
 		 * @var array
 		 */
-		$license['key'] = substr( md5( $license['cn'] ), 0, 26 );
+		$license['key'] = substr(md5($license['cn']), 0, 26);
 
 		/**
 		 * Init license directory.
 		 *
 		 * @var string
 		 */
-		$dir = Core::Config()->Get( 'path.app' ) . Core::Config()->Get( 'dir.app.tmp' ) . '/';
+		$dir = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.tmp') . '/';
 
 		/**
 		 * Set license directory.
 		 */
-		$license['dir'] = ( FALSE !== strpos( $dir, ';' ) ) ? rtrim( substr( $dir, strpos( $dir, ';' ) + 1 ), '/' ) : rtrim( $dir, '/' );
+		$license['dir'] = (FALSE !== strpos($dir, ';')) ? rtrim(substr($dir, strpos($dir, ';') + 1), '/') : rtrim($dir, '/');
 
 		/**
 		 * Set license path.
@@ -1110,32 +1110,32 @@ class Core
 	 *
 	 * @return string
 	 */
-	final private static function _LicGet( $license, $request )
+	final private static function _LicGet($license, $request)
 	{
 		/**
 		 * @var string
 		 */
-		$key_path = self::_LicGetKeyPath( $license );
+		$key_path = self::_LicGetKeyPath($license);
 
 		/**
 		 * Get private key.
 		 */
-		$private_key = openssl_pkey_get_private( file_get_contents( $key_path ) );
+		$private_key = openssl_pkey_get_private(file_get_contents($key_path));
 
 		/**
 		 * Generate signature.
 		 */
-		openssl_sign( $license['cn'], $signature, $private_key, OPENSSL_ALGO_SHA1 );
+		openssl_sign($license['cn'], $signature, $private_key, OPENSSL_ALGO_SHA1);
 
 		/**
 		 * Set signature post data.
 		 */
-		$post_data['s'] = rawurlencode( base64_encode( $signature ) );
+		$post_data['s'] = rawurlencode(base64_encode($signature));
 
 		/**
 		 * Release private key.
 		 */
-		openssl_free_key( $private_key );
+		openssl_free_key($private_key);
 
 		/**
 		 * Set request post data.
@@ -1150,19 +1150,19 @@ class Core
 		/**
 		 * Open encrypted license file handle.
 		 */
-		$license_file = self::_Wget( 'http://clients.webserv.co/', $post_data );
+		$license_file = self::_Wget('http://clients.webserv.co/', $post_data);
 
 		/**
 		 * Get encrypted license string.
 		 */
-		$license_string = fgets( $license_file, 1024 );
+		$license_string = fgets($license_file, 1024);
 
 		/**
 		 * Close encrypted file handle.
 		 */
-		fclose( $license_file );
+		fclose($license_file);
 
-		return trim( $license_string );
+		return trim($license_string);
 	}
 
 	/**
@@ -1172,31 +1172,31 @@ class Core
 	 *
 	 * @return void
 	 */
-	final private static function _LicUpdate( $license )
+	final private static function _LicUpdate($license)
 	{
 		/**
 		 * Get encrypted license string.
 		 *
 		 * @var string
 		 */
-		$license_string = self::_LicGet( $license, 'a8ee21598ca7cefa744e25f401aae48130b99afd' );
+		$license_string = self::_LicGet($license, 'a8ee21598ca7cefa744e25f401aae48130b99afd');
 
 		/**
 		 * Get encrypted license key.
 		 *
 		 * @var string
 		 */
-		$license_key = self::_LicGet( $license, '170f27a90290081cdedf11e3c87e3abe90592e49' );
+		$license_key = self::_LicGet($license, '170f27a90290081cdedf11e3c87e3abe90592e49');
 
 		/**
 		 * @var string
 		 */
-		$key_path = self::_LicGetKeyPath( $license );
+		$key_path = self::_LicGetKeyPath($license);
 
 		/**
 		 * Get private key.
 		 */
-		$private_key = openssl_pkey_get_private( "file://{$key_path}" );
+		$private_key = openssl_pkey_get_private("file://{$key_path}");
 
 		/**
 		 * Init decrypted license.
@@ -1206,46 +1206,46 @@ class Core
 		/**
 		 * Decrypt license info.
 		 */
-		openssl_open( base64_decode( $license_string ), $license_object, base64_decode( $license_key ), $private_key ) or die( openssl_error_string() );
+		openssl_open(base64_decode($license_string), $license_object, base64_decode($license_key), $private_key) or die(openssl_error_string());
 
 		/**
 		 * Release private key.
 		 */
-		openssl_free_key( $private_key );
+		openssl_free_key($private_key);
 
 		/**
 		 * Parse license data.
 		 */
-		$license_data = simplexml_load_string( $license_object );
+		$license_data = simplexml_load_string($license_object);
 
 		/**
 		 * Get license status.
 		 */
-		$license_status  = ( $license_data ) ? (string) $license_data->license[0]->status[0] : NULL;
+		$license_status  = ($license_data) ? (string) $license_data->license[0]->status[0] : NULL;
 
-		if ( 'ok' != $license_status )
+		if ('ok' != $license_status)
 		{
 			/**
 			 * Trigger license error.
 			 */
-			return self::_LicTriggerError( $license, $license_status );
+			return self::_LicTriggerError($license, $license_status);
 		}
 
 		/**
 		 * Check if license status file exists.
 		 */
-		if ( is_readable( $license['path'] ) )
+		if (is_readable($license['path']))
 		{
 			/**
 			 * Delete license status file.
 			 */
-			unlink( $license['path'] );
+			unlink($license['path']);
 		}
 
 		/**
 		 * Redirect to application root.
 		 */
-		header( 'Location: ' . self::Config()->Get( 'url.app' ) );
+		header('Location: ' . self::Config()->Get('url.app'));
 
 		exit();
 	}
@@ -1259,28 +1259,28 @@ class Core
 	 *
 	 * @return void
 	 */
-	final private static function _LicTriggerError( $license, $status, $errorMessage = NULL )
+	final private static function _LicTriggerError($license, $status, $errorMessage = NULL)
 	{
 		/**
 		 * @var string
 		 */
-		$error_message = ( !empty( $errorMessage ) ) ?
+		$error_message = (!empty($errorMessage)) ?
 		$errorMessage :
-		__( 'License Error: Your license key is invalid or expired.', 'WEb' );
+		__('License Error: Your license key is invalid or expired.', 'WEb');
 
 		/**
 		 * Create license status file with dummy content.
 		 */
-		file_put_contents( $license['path'], "{$license['key']} {$status}" );
+		file_put_contents($license['path'], "{$license['key']} {$status}");
 
 		/**
 		 * Change file mode.
 		 */
-		@chmod( $license['path'], 0600 );
+		@chmod($license['path'], 0600);
 
-		self::Log()->Write( sprintf( __( 'License Status: %s.', 'WEb' ), $status ), 'info' );
+		self::Log()->Write(sprintf(__('License Status: %s.', 'WEb'), $status), 'info');
 
-		trigger_error( $error_message, 512 );
+		trigger_error($error_message, 512);
 
 		exit();
 	}
@@ -1294,21 +1294,21 @@ class Core
 	 *
 	 * @return mixed
 	 */
-	final private static function _LicGetKeyPath( $license )
+	final private static function _LicGetKeyPath($license)
 	{
 		/**
 		 * @var string
 		 */
-		$key_path = self::Config()->Get( 'path.app' ) . 'etc/pki/private/' . $license['cn'] . '.key';
+		$key_path = self::Config()->Get('path.app') . 'etc/pki/private/' . $license['cn'] . '.key';
 
-		if ( !is_readable( $key_path ) )
+		if (!is_readable($key_path))
 		{
 			/**
 			 * @var string
 			 */
-			$error_message = __( 'License Error: Your license key is missing.', 'WEb' );
+			$error_message = __('License Error: Your license key is missing.', 'WEb');
 
-			return self::_LicTriggerError( $license, 'missing', $error_message );
+			return self::_LicTriggerError($license, 'missing', $error_message);
 		}
 
 		return $key_path;
@@ -1332,12 +1332,12 @@ class Core
 		self::_LicGetKeyPath($license);
 
 		/**
-		 * Check if the licensepath isreadable, or if a license check request ( 'licenseCheck' ) is present.
+		 * Check if the licensepath isreadable, or if a license check request ('licenseCheck') is present.
 		 */
-		if ( is_readable( $license['path'] ) ||
-		( !empty( $_POST['r'] ) && '88096f65d8ce832d4f0a0edac045f7b9160a064d' == $_POST['r'] ) )
+		if (is_readable($license['path']) ||
+		(!empty($_POST['r']) && '88096f65d8ce832d4f0a0edac045f7b9160a064d' == $_POST['r']))
 		{
-			return self::_LicUpdate( $license );
+			return self::_LicUpdate($license);
 		}
 
 		return TRUE;

@@ -37,7 +37,7 @@ class Output_WebTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Output_Web::GetInstance( 'Output_Web' );
+		$this->_mObject = Output_Web::GetInstance('Output_Web');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Output_WebTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Output_Web::GetInstance( 'Output_Web' ) );
+		$this->assertInternalType('object', Output_Web::GetInstance('Output_Web'));
 	}
 }
 ?>

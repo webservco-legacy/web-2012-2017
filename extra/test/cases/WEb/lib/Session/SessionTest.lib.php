@@ -45,7 +45,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Session::GetInstance() );
+		$this->assertInternalType('object', Session::GetInstance());
 	}
 }
 ?>

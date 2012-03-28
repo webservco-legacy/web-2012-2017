@@ -45,7 +45,7 @@ class MailTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Mail::GetInstance() );
+		$this->assertInternalType('object', Mail::GetInstance());
 	}
 }
 ?>

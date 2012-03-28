@@ -45,7 +45,7 @@ class GeoTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Geo::GetInstance() );
+		$this->assertInternalType('object', Geo::GetInstance());
 	}
 }
 ?>

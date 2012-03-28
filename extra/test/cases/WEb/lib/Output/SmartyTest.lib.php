@@ -37,7 +37,7 @@ class Output_SmartyTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Output_Smarty::GetInstance( 'Output_Smarty' );
+		$this->_mObject = Output_Smarty::GetInstance('Output_Smarty');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Output_SmartyTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Output_Smarty::GetInstance( 'Output_Smarty' ) );
+		$this->assertInternalType('object', Output_Smarty::GetInstance('Output_Smarty'));
 	}
 }
 ?>

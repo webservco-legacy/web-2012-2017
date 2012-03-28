@@ -18,12 +18,12 @@
 /**
  * Check if basic configurtion file is accessible.
  */
-if ( !is_readable( './etc/settings.cfg.xml' ) )
+if (!is_readable('./etc/settings.cfg.xml'))
 {
 	/**
 	 * Trigger fatal error.
 	 */
-	die( 'Fatal: Configuration file is missing.' );
+	die('Fatal: Configuration file is missing.');
 }
 
 /**
@@ -34,22 +34,22 @@ $settings = simplexml_load_file('./etc/settings.cfg.xml');
 /**
  * @var string
  */
-$cfg['env'] = ($settings->env) ? trim( $settings->env ) : 'dev';
+$cfg['env'] = ($settings->env) ? trim($settings->env) : 'dev';
 
 /**
  * @var string
  */
-$cfg['path_core'] = ($settings->$cfg['env']->path->core) ? trim( $settings->$cfg['env']->path->core ) : './WEb/';
+$cfg['path_core'] = ($settings->$cfg['env']->path->core) ? trim($settings->$cfg['env']->path->core) : './WEb/';
 
 /**
  * Security token.
  */
-define( '_WEB', TRUE );
+define('_WEB', TRUE);
 
 /**
  * Check if PHP version is less than 5.3
  */
-if ( FALSE != version_compare( PHP_VERSION, '5.3.0', '<' ) )
+if (FALSE != version_compare(PHP_VERSION, '5.3.0', '<'))
 {
 	/**
 	 * Load compatibility library.
@@ -67,17 +67,17 @@ require $cfg['path_core'] . 'lib/Config/Config.lib.php';
 /**
  * Set environment.
  */
-Core::Config()->SetEnv( $cfg['env'] );
+Core::Config()->SetEnv($cfg['env']);
 
 /**
  * Set paths.
  */
-Core::Config()->Set( $settings );
+Core::Config()->Set($settings);
 
 /**
  * Register class autoload method.
  */
-spl_autoload_register( array( 'Core', 'Load' ) );
+spl_autoload_register(array('Core', 'Load'));
 
 /**
  * Boot application.

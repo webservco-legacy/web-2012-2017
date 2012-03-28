@@ -45,7 +45,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', I18n::GetInstance() );
+		$this->assertInternalType('object', I18n::GetInstance());
 	}
 
 	/**
@@ -53,7 +53,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function InitReturnsTrueOnSuccessWithoutDefaultDomain()
 	{
-		$this->assertTrue( $this->_mObject->Init( 'ro_RO' )  );
+		$this->assertTrue($this->_mObject->Init('ro_RO') );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function InitReturnsTrueOnSuccessWithoutLocale()
 	{
-		$this->assertTrue( $this->_mObject->Init( NULL, 'WEb' )  );
+		$this->assertTrue($this->_mObject->Init(NULL, 'WEb') );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function InitReturnsTrueOnSuccessWithoutParams()
 	{
-		$this->assertTrue( $this->_mObject->Init()  );
+		$this->assertTrue($this->_mObject->Init() );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function InitReturnsTrueOnSuccess()
 	{
-		$this->assertTrue( $this->_mObject->Init( 'ro_RO', 'WEb' )  );
+		$this->assertTrue($this->_mObject->Init('ro_RO', 'WEb') );
 	}
 
 	/**
@@ -85,7 +85,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AddUsesCoreOnOnInvalidDir()
 	{
-		$this->assertTrue( $this->_mObject->Add( 'NoExist_WEb' ) );
+		$this->assertTrue($this->_mObject->Add('NoExist_WEb'));
 	}
 
 	/**
@@ -93,7 +93,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AddReturnsTrueOnSuccessWithTypeSpecified()
 	{
-		$this->assertTrue( $this->_mObject->Add( 'Core_WEb' ) );
+		$this->assertTrue($this->_mObject->Add('Core_WEb'));
 	}
 
 	/**
@@ -101,7 +101,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AddReturnsTrueOnSuccessWithoutTypeSpecified()
 	{
-		$this->assertTrue($this->_mObject->Add( 'WEb' ) );
+		$this->assertTrue($this->_mObject->Add('WEb'));
 	}
 
 	/**
@@ -109,7 +109,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function AddReturnsTrueOnSuccessWithoutArguments()
 	{
-		$this->assertTrue($this->_mObject->Add() );
+		$this->assertTrue($this->_mObject->Add());
 	}
 
 	/**
@@ -117,7 +117,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function LoadReturnsTrueOnSuccess()
 	{
-		$this->assertTrue( $this->_mObject->Load( 'WEb' ) );
+		$this->assertTrue($this->_mObject->Load('WEb'));
 	}
 
 	/**
@@ -125,7 +125,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function LoadReturnsTrueOnSuccessWithoutArgument()
 	{
-		$this->assertTrue( $this->_mObject->Load() );
+		$this->assertTrue($this->_mObject->Load());
 	}
 
 	/**
@@ -133,7 +133,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function I18nSimpleTest()
 	{
-		$this->assertEquals( 'Salut Lume!', _('Hello World!') );
+		$this->assertEquals('Salut Lume!', _('Hello World!'));
 	}
 
 	/**
@@ -141,7 +141,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GettextWrapperTestDefaultDomain()
 	{
-		$this->assertEquals( 'Salut Lume!', __( 'Hello World!' ) );
+		$this->assertEquals('Salut Lume!', __('Hello World!'));
 	}
 
 	/**
@@ -149,7 +149,7 @@ class I18nTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GettextWrapperTestSpecifiedDomain()
 	{
-		$this->assertEquals( 'Salut Lume!', __( 'Hello World!', 'WEb' ) );
+		$this->assertEquals('Salut Lume!', __('Hello World!', 'WEb'));
 	}
 }
 ?>

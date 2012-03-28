@@ -45,7 +45,7 @@ class AclTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Acl::GetInstance() );
+		$this->assertInternalType('object', Acl::GetInstance());
 	}
 }
 ?>

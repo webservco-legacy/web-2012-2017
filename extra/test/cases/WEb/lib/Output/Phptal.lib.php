@@ -37,7 +37,7 @@ class Output_PhptalTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_mObject = Output_Phptal::GetInstance( 'Output_Phptal' );
+		$this->_mObject = Output_Phptal::GetInstance('Output_Phptal');
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Output_PhptalTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Output_Phptal::GetInstance( 'Output_Phptal' ) );
+		$this->assertInternalType('object', Output_Phptal::GetInstance('Output_Phptal'));
 	}
 }
 ?>

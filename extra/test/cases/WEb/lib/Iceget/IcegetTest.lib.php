@@ -45,7 +45,7 @@ class IcegetTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', Iceget::GetInstance() );
+		$this->assertInternalType('object', Iceget::GetInstance());
 	}
 }
 ?>

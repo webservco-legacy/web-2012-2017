@@ -20,7 +20,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -64,21 +64,21 @@ class Iceget extends Library
 	/**
 	 * Implement GetInstance() method.
 	 *
-	 * This is required for PHP < 5.3 compatibility ( no late static binding )
+	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
 	 */
-	public static function GetInstance( $className = __CLASS__ )
+	public static function GetInstance($className = __CLASS__)
 	{
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance( $className );
+		return parent::_GetInstance($className);
 	}
 
-	public function SetUrl( $url )
+	public function SetUrl($url)
 	{
 		$this->_mUrl = $url;
 
@@ -92,24 +92,24 @@ class Iceget extends Library
 	 *
 	 * @return array
 	 */
-	public function Get( $station = NULL )
+	public function Get($station = NULL)
 	{
-		if ( empty( $this->_mData ) && ( TRUE !== $this->_mServerDown ) )
+		if (empty($this->_mData) && (TRUE !== $this->_mServerDown))
 		{
 			$this->_Fetch();
 		}
 
-		if ( empty( $station ) )
+		if (empty($station))
 		{
 			return $this->_mData;
 		}
 
-		if ( array_key_exists( $station, $this->_mData ) )
+		if (array_key_exists($station, $this->_mData))
 		{
 			return $this->_mData[$station];
 		}
 
-		Core::Log()->Write( sprintf( __( 'Iceget Library: Station "%s" is not broadcasting.', 'WEb' ), $station ), 'warning' );
+		Core::Log()->Write(sprintf(__('Iceget Library: Station "%s" is not broadcasting.', 'WEb'), $station), 'warning');
 
 		return array();
 	}
@@ -121,9 +121,9 @@ class Iceget extends Library
 	 */
 	private function _Fetch()
 	{
-		if ( empty( $this->_mUrl ) )
+		if (empty($this->_mUrl))
 		{
-			Core::Log()->Write( __( 'Iceget Library: No Icecast stats URL set.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('Iceget Library: No Icecast stats URL set.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -131,11 +131,11 @@ class Iceget extends Library
 		/**
 		 * @var mixed
 		 */
-		$stats_handle = Core::Browser()->Open( $this->_mUrl );
+		$stats_handle = Core::Browser()->Open($this->_mUrl);
 
-		if ( FALSE === $stats_handle )
+		if (FALSE === $stats_handle)
 		{
-			Core::Log()->Write( __( 'Iceget Library: Error opening Icecast stats URL.', 'WEb' ), 'error' );
+			Core::Log()->Write(__('Iceget Library: Error opening Icecast stats URL.', 'WEb'), 'error');
 
 			return FALSE;
 		}
@@ -143,19 +143,19 @@ class Iceget extends Library
 		/**
 		 * @var string
 		 */
-		$stats_string = stream_get_contents( $stats_handle );
+		$stats_string = stream_get_contents($stats_handle);
 
 		/**
 		 * @var object
 		 */
-		$stats_object = simplexml_load_string( $stats_string );
+		$stats_object = simplexml_load_string($stats_string);
 
 		/**
 		 * Raw stats data.
 		 *
 		 * @var array
 		 */
-		$stats_raw = Core::Config()->Process( $stats_object );
+		$stats_raw = Core::Config()->Process($stats_object);
 
 		/**
 		 * Initialize actual stats data.
@@ -164,28 +164,28 @@ class Iceget extends Library
 		 */
 		$stats_data = array();
 
-		if ( array_key_exists( 'station', $stats_raw ) )
+		if (array_key_exists('station', $stats_raw))
 		{
-			if ( array_key_exists( 0, $stats_raw['station'] ) )
+			if (array_key_exists(0, $stats_raw['station']))
 			{
-				foreach ( $stats_raw['station'] as $id => $station )
+				foreach ($stats_raw['station'] as $id => $station)
 				{
 					/**
 					 * @var string
 					 */
-					$index = ltrim( $station['mount'], '/' );
+					$index = ltrim($station['mount'], '/');
 
 					/**
 					 * @var array
 					 */
 					$stats_data[$index] = $station;
 
-					if( !empty( $stats_data[$index]['title'] ) )
+					if(!empty($stats_data[$index]['title']))
 					{
 						/**
 						 * @var array
 						 */
-						$stats_data[$index]['title'] = rtrim( $stats_data[$index]['title'], ' -' );
+						$stats_data[$index]['title'] = rtrim($stats_data[$index]['title'], ' -');
 					}
 				}
 			}
@@ -194,24 +194,24 @@ class Iceget extends Library
 				/**
 				 * @var string
 				 */
-				$index = ltrim( $stats_raw['station']['mount'], '/' );
+				$index = ltrim($stats_raw['station']['mount'], '/');
 
 				/**
 				 * @var array
 				 */
 				$stats_data[$index] = $stats_raw['station'];
 
-				if( !empty( $stats_data[$index]['title'] ) )
+				if(!empty($stats_data[$index]['title']))
 				{
 					/**
 					 * @var array
 					 */
-					$stats_data[$index]['title'] = rtrim( $stats_data[$index]['title'], ' -' );
+					$stats_data[$index]['title'] = rtrim($stats_data[$index]['title'], ' -');
 				}
 			}
 		}
 
-		if ( !empty( $stats_data ) )
+		if (!empty($stats_data))
 		{
 			/**
 			 * @var aray
@@ -221,14 +221,14 @@ class Iceget extends Library
 			/**
 			 * @var int
 			 */
-			$stations = count( $stats_data );
+			$stations = count($stats_data);
 
 			/**
 			 * @var string
 			 */
-			$msg = sprintf(	___( 'Iceget Library: %s station is broadcasting.', 'Iceget Library: %s stations are broadcasting.', $stations, 'WEb' ), $stations );
+			$msg = sprintf(	___('Iceget Library: %s station is broadcasting.', 'Iceget Library: %s stations are broadcasting.', $stations, 'WEb'), $stations);
 
-			Core::Log()->Write( $msg, 'info' );
+			Core::Log()->Write($msg, 'info');
 
 			return TRUE;
 		}
@@ -238,7 +238,7 @@ class Iceget extends Library
 		 */
 		$this->_mServerDown = TRUE;
 
-		Core::Log()->Write( __( 'Iceget Library: No station is broadcasting.', 'WEb' ), 'warning' );
+		Core::Log()->Write(__('Iceget Library: No station is broadcasting.', 'WEb'), 'warning');
 
 		return FALSE;
 	}

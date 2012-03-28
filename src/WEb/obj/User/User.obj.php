@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if ( !defined( '_WEB' ) )
+if (!defined('_WEB'))
 {
 	/**
 	 * Stop script execution.
@@ -51,12 +51,23 @@ class User extends Object
 	),
 	);
 
-	/**
-	 * Object tables.
-	 *
-	 * @var array
-	 */
-	protected $_mTable = array( 'list' => 'acl_users', 'store' => 'acl_object_user', 'logins' => 'acl_logins' );
+	protected $_mSet;
+
+	protected function _Init() {
+
+		if (empty($this->_mSet)) {
+
+			$app_prefix = Core::Config()->Get('app.prefix');
+
+			$this->_mTable['list'] = "{$app_prefix}acl_users";
+
+			$this->_mTable['store'] = "{$app_prefix}acl_object_user";
+
+			$this->_mTable['logins'] = "{$app_prefix}acl_logins";
+
+			$this->_mSet = TRUE;
+		}
+	}
 
 	/**
 	 * Initialize the object.
@@ -65,10 +76,12 @@ class User extends Object
 	 */
 	public function Init()
 	{
+		$this->_Init();
+
 		/**
 		 * Check if user is already logged in.
 		 */
-		if ( !empty( $_SESSION[__CLASS__]['Logged'] ) )
+		if (!empty($_SESSION[__CLASS__]['Logged']))
 		{
 			/**
 			 * Set user data.
@@ -79,10 +92,10 @@ class User extends Object
 		/**
 		 * This is not the first load of the page, so we don't check anything else.
 		 */
-		if ( !empty( $_SESSION[__CLASS__] ) )
+		if (!empty($_SESSION[__CLASS__]))
 		{
 			$_SESSION[__CLASS__]['InitialVisit'] = FALSE;
-			
+
 			return TRUE;
 		}
 
@@ -92,12 +105,12 @@ class User extends Object
 		 * @var array
 		 */
 		$_SESSION[__CLASS__]['StatsCurrent'] = array(
-				'time'	=> date( 'Y-m-d H:i:s' ),
+				'time'	=> date('Y-m-d H:i:s'),
 				'ip'	=> Core::Geo()->GetIp(),
-				'agent'	=> ( !empty( $_SERVER['HTTP_USER_AGENT'] ) ) ? $_SERVER['HTTP_USER_AGENT'] : NULL,
+				'agent'	=> (!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : NULL,
 				'auto'	=> FALSE,
 		);
-		
+
 		$_SESSION[__CLASS__]['InitialVisit'] = TRUE;
 
 		/**
@@ -107,7 +120,7 @@ class User extends Object
 		 */
 		$returning_data = Core::Session()->CheckPersistentSession();
 
-		if ( !empty( $returning_data ) )
+		if (!empty($returning_data))
 		{
 			/**
 			 * @var string
@@ -131,7 +144,7 @@ class User extends Object
 			/**
 			 * Check if user is already logged in from another session.
 			 */
-			if ( $this->IsAlreadyLogged( $user_id ) )
+			if ($this->IsAlreadyLogged($user_id))
 			{
 				return FALSE;
 			}
@@ -139,38 +152,38 @@ class User extends Object
 			/**
 			 * Remove current persistent session.
 			 */
-			Core::Session()->RemovePersistentSession( $user_id, $persistent_token );
+			Core::Session()->RemovePersistentSession($user_id, $persistent_token);
 
 			/**
 			 * @var string
 			 */
-			$user_login = $this->GetLoginName( $user_id );
+			$user_login = $this->GetLoginName($user_id);
 
 			/**
 			 * @var string
 			 */
-			$user_salt = Core::Security()->GetSalt( $user_login );
+			$user_salt = Core::Security()->GetSalt($user_login);
 
 			/**
 			 * @var string
 			 */
-			$new_persistent_token = Core::Security()->GetToken( $user_salt );
+			$new_persistent_token = Core::Security()->GetToken($user_salt);
 
 			/**
 			 * Add new persistent session,
 			 * keeping current expire date.
 			 */
-			Core::Session()->AddPersistentSession( $user_id, $new_persistent_token, $persistent_expire );
+			Core::Session()->AddPersistentSession($user_id, $new_persistent_token, $persistent_expire);
 
 			/**
 			 * @var string
 			 */
-			$now = date( 'Y-m-d H:i:s' );
+			$now = date('Y-m-d H:i:s');
 
 			/**
 			 * Record auto login.
 			 */
-			$this->_RecordLogin( $user_id, NULL, $now );
+			$this->_RecordLogin($user_id, NULL, $now);
 
 			/**
 			 * Set updated stats time
@@ -196,16 +209,16 @@ class User extends Object
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ( 'bin.user_id', $user_id );
+			$options['conditions'][] = array ('bin.user_id', $user_id);
 
-			return $this->_SetUserData( $options );
+			return $this->_SetUserData($options);
 		}
 
 		return TRUE;
 	}
-	
+
 	public function InitialVisit() {
-		
+
 		return (!empty($_SESSION[__CLASS__]['InitialVisit'])) ? TRUE : FALSE;
 	}
 
@@ -216,7 +229,7 @@ class User extends Object
 	 */
 	public function IsLogged()
 	{
-		return ( !empty( $_SESSION[__CLASS__]['Logged'] ) ) ? $_SESSION[__CLASS__]['Logged'] : FALSE;
+		return (!empty($_SESSION[__CLASS__]['Logged'])) ? $_SESSION[__CLASS__]['Logged'] : FALSE;
 	}
 
 	/**
@@ -226,12 +239,12 @@ class User extends Object
 	 */
 	public function IsPersistent()
 	{
-		if ( empty( $_SESSION[__CLASS__]['Logged'] ) )
+		if (empty($_SESSION[__CLASS__]['Logged']))
 		{
 			return FALSE;
 		}
 
-		return  ( !empty( $_SESSION[__CLASS__]['Persistent'] ) ) ? $_SESSION[__CLASS__]['Persistent'] : FALSE;
+		return  (!empty($_SESSION[__CLASS__]['Persistent'])) ? $_SESSION[__CLASS__]['Persistent'] : FALSE;
 	}
 
 	/**
@@ -242,31 +255,33 @@ class User extends Object
 	 *
 	 * @return mixed
 	 */
-	public function IsAlreadyLogged( $userId )
-	{
+	public function IsAlreadyLogged($userId) {
+
+		$this->_Init();
+
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'bin.user_id', $userId );
+		$options['conditions'][] = array ('bin.user_id', $userId);
 
 		/**
 		 * Get timeout expression
 		 *
 		 * @var string
 		 */
-		$timeout = date( 'Y-m-d H:i:s', time() - Core::Config()->Get( 'user.login.time' ) * 60 );
+		$timeout = date('Y-m-d H:i:s', time() - Core::Config()->Get('user.login.time') * 60);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'login_date_add', $timeout, 'gte' );
+		$options['conditions'][] = array ('login_date_add', $timeout, 'gte');
 
 		/**
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne( array( 'login_date_add' ), $this->_mTable['logins'], $options );
+		$data = Core::Database()->RetrieveOne(array('login_date_add'), $this->_mTable['logins'], $options);
 
-		if ( empty( $data ) )
+		if (empty($data))
 		{
 			return FALSE;
 		}
@@ -283,9 +298,11 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	public function Login( $userLogin, $userPass, $userRemember = FALSE )
-	{
-		if ( empty( $_SESSION[__CLASS__] ) )
+	public function Login($userLogin, $userPass, $userRemember = FALSE)	{
+
+		$this->_Init();
+
+		if (empty($_SESSION[__CLASS__]))
 		{
 			$this->Init();
 		}
@@ -293,31 +310,31 @@ class User extends Object
 		/**
 		 * @var bool
 		 */
-		$login = $this->_LoginUser( $userLogin, $userPass );
+		$login = $this->_LoginUser($userLogin, $userPass);
 
-		$this->_RecordLogin( $this->_mId, $userLogin );
+		$this->_RecordLogin($this->_mId, $userLogin);
 
-		if ( TRUE !== $login )
+		if (TRUE !== $login)
 		{
 			return FALSE;
 		}
 
-		if ( FALSE !== $userRemember )
+		if (FALSE !== $userRemember)
 		{
 			/**
 			 * @var string
 			 */
-			$user_salt = Core::Security()->GetSalt( $userLogin );
+			$user_salt = Core::Security()->GetSalt($userLogin);
 
 			/**
 			 * @var string
 			 */
-			$persistent_token = Core::Security()->GetToken( $user_salt );
+			$persistent_token = Core::Security()->GetToken($user_salt);
 
 			/**
 			 * Add persistent session.
 			 */
-			Core::Session()->AddPersistentSession( $this->_mId, $persistent_token );
+			Core::Session()->AddPersistentSession($this->_mId, $persistent_token);
 		}
 
 		return TRUE;
@@ -328,20 +345,22 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	public function Logout()
-	{
+	public function Logout() {
+
+		$this->_Init();
+
 		/**
 		 * If multiple persistent sessions per user is activated,
 		 * we will only remove the current persistent session.
 		 *
 		 * @var string
 		 */
-		$persistent_token = ( 1 == Core::Config()->Get( 'session.multiple' ) ) ? $_SESSION[__CLASS__]['StatsCurrent']['auto'] : NULL;
+		$persistent_token = (1 == Core::Config()->Get('session.multiple')) ? $_SESSION[__CLASS__]['StatsCurrent']['auto'] : NULL;
 
 		/**
 		 * Delete all persistent sessions.
 		 */
-		Core::Session()->RemovePersistentSession( $this->_mId, $persistent_token );
+		Core::Session()->RemovePersistentSession($this->_mId, $persistent_token);
 
 		/**
 		 * Re-initialize session array.
@@ -356,12 +375,12 @@ class User extends Object
 		/**
 		 * Set a dummy session cookie.
 		 */
-		Core::Session()->RemoveCookie( '.session' );
+		Core::Session()->RemoveCookie('.session');
 
 		/**
 		 * Set a dummy persistence cookie.
 		 */
-		Core::Session()->RemoveCookie( '.persistence' );
+		Core::Session()->RemoveCookie('.persistence');
 
 		/**
 		 * @var array
@@ -394,19 +413,21 @@ class User extends Object
 	 *
 	 * @return mixed
 	 */
-	public function GetLoginName( $userId )
-	{
-		/**
-		 * @var array
-		 */
-		$options['conditions'][] = array ( 'bin.user_id', $userId );
+	public function GetLoginName($userId) {
+
+		$this->_Init();
 
 		/**
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne( array( 'user_login' ), $this->_mTable['list'], $options );
+		$options['conditions'][] = array ('bin.user_id', $userId);
 
-		if ( empty( $data ) )
+		/**
+		 * @var array
+		 */
+		$data = Core::Database()->RetrieveOne(array('user_login'), $this->_mTable['list'], $options);
+
+		if (empty($data))
 		{
 			return FALSE;
 		}
@@ -414,19 +435,21 @@ class User extends Object
 		return  $data['user_login'];
 	}
 
-	public function GetFailedLogins( $checkType = NULL, $checkAsset = NULL )
-	{
+	public function GetFailedLogins($checkType = NULL, $checkAsset = NULL) {
+
+		$this->_Init();
+
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'bin.user_id', '00' );
+		$options['conditions'][] = array ('bin.user_id', '00');
 
-		if ( !empty( $checkType ) && !empty( $checkAsset ) )
+		if (!empty($checkType) && !empty($checkAsset))
 		{
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ( $checkType, $checkAsset );
+			$options['conditions'][] = array ($checkType, $checkAsset);
 		}
 
 		/**
@@ -434,19 +457,19 @@ class User extends Object
 		 *
 		 * @var string
 		 */
-		$timeout = date( 'Y-m-d H:i:s', time() - Core::Config()->Get( 'user.login.timeout' ) * 60 );
+		$timeout = date('Y-m-d H:i:s', time() - Core::Config()->Get('user.login.timeout') * 60);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'login_date_add', $timeout, 'gte' );
+		$options['conditions'][] = array ('login_date_add', $timeout, 'gte');
 
 		/**
 		 * @var array
 		 */
-		$data = Core::Database()->Count( 'login_id', $this->_mTable['logins'], $options );
+		$data = Core::Database()->Count('login_id', $this->_mTable['logins'], $options);
 
-		return ( !empty( $data ) ) ? $data['total'] : FALSE;
+		return (!empty($data)) ? $data['total'] : FALSE;
 	}
 
 	/**
@@ -457,34 +480,36 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	private function _LoginUser( $userLogin, $userPass )
-	{
-		/**
-		 * @var string
-		 */
-		$user_salt = Core::Security()->GetSalt( $userLogin );
+	private function _LoginUser($userLogin, $userPass) {
+
+		$this->_Init();
 
 		/**
 		 * @var string
 		 */
-		$user_auth = Core::Security()->GetToken( $user_salt, $userPass );
+		$user_salt = Core::Security()->GetSalt($userLogin);
+
+		/**
+		 * @var string
+		 */
+		$user_auth = Core::Security()->GetToken($user_salt, $userPass);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'user_login', $userLogin );
+		$options['conditions'][] = array ('user_login', $userLogin);
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'user_auth', $user_auth );
+		$options['conditions'][] = array ('user_auth', $user_auth);
 
-		if ( FALSE !== $this->_SetUserData( $options ) )
+		if (FALSE !== $this->_SetUserData($options))
 		{
 			/**
 			 * Keep existing data but get a new session id.
 			 */
-			session_regenerate_id( TRUE );
+			session_regenerate_id(TRUE);
 
 			return TRUE;
 		}
@@ -499,16 +524,18 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	private function _SetUserData( $options = NULL )
-	{
-		if ( !empty( $_SESSION[__CLASS__]['Prop'] ) )
+	private function _SetUserData($options = NULL) {
+
+		$this->_Init();
+
+		if (!empty($_SESSION[__CLASS__]['Prop']))
 		{
 			/**
 			 * Set object data.
 			 *
 			 * @var array
 			 */
-			$this->mProp['list'] = array_merge( $this->mProp['list'], $_SESSION[__CLASS__]['Prop'] );
+			$this->mProp['list'] = array_merge($this->mProp['list'], $_SESSION[__CLASS__]['Prop']);
 
 			/**
 			 * Set object Id.
@@ -523,14 +550,14 @@ class User extends Object
 		/**
 		 * To go further we need to make sure we have options.
 		 */
-		if ( empty( $options ) )
+		if (empty($options))
 		{
 			return FALSE;
 		}
 
-		$data = Core::Database()->RetrieveOne( array( 'bin.user_id', 'user_login', 'user_status' ), $this->_mTable['list'], $options );
+		$data = Core::Database()->RetrieveOne(array('bin.user_id', 'user_login', 'user_status'), $this->_mTable['list'], $options);
 
-		if ( empty( $data ) )
+		if (empty($data))
 		{
 			return FALSE;
 		}
@@ -540,7 +567,7 @@ class User extends Object
 		 *
 		 * @var array
 		 */
-		$this->mProp['list'] = array_merge( $this->mProp['list'], $data );
+		$this->mProp['list'] = array_merge($this->mProp['list'], $data);
 
 		/**
 		 * Set object Id.
@@ -575,7 +602,7 @@ class User extends Object
 		 */
 		$_SESSION[__CLASS__]['Prop'] = $this->mProp['list'];
 
-		if ( empty( $_SESSION[__CLASS__]['StatsPrevious'] ) )
+		if (empty($_SESSION[__CLASS__]['StatsPrevious']))
 		{
 			/**
 			 * Set last visit stats
@@ -591,29 +618,31 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	private function _SetPreviousStats()
-	{
-		/**
-		 * @var array
-		 */
-		$options['conditions'][] = array ( 'bin.user_id', $this->_mId );
+	private function _SetPreviousStats() {
+
+		$this->_Init();
 
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ( 'login_date_add', $_SESSION[__CLASS__]['StatsCurrent']['time'], 'lt' );
+		$options['conditions'][] = array ('bin.user_id', $this->_mId);
 
 		/**
 		 * @var array
 		 */
-		$options['order'][] = array( 'login_date_add', 'desc' );
+		$options['conditions'][] = array ('login_date_add', $_SESSION[__CLASS__]['StatsCurrent']['time'], 'lt');
 
 		/**
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne( array( 'login_auto', 'user_ip', 'user_agent', 'login_date_add' ), $this->_mTable['logins'], $options );
+		$options['order'][] = array('login_date_add', 'desc');
 
-		if ( empty( $data ) )
+		/**
+		 * @var array
+		 */
+		$data = Core::Database()->RetrieveOne(array('login_auto', 'user_ip', 'user_agent', 'login_date_add'), $this->_mTable['logins'], $options);
+
+		if (empty($data))
 		{
 			/**
 			 * @var array
@@ -628,9 +657,9 @@ class User extends Object
 		 */
 		$_SESSION[__CLASS__]['StatsPrevious'] = array(
 			'time' => $data['login_date_add'],	
-			'ip' => long2ip( $data['user_ip'] ),
+			'ip' => long2ip($data['user_ip']),
 			'agent' => $data['user_agent'],
-			'auto' => ( 'true' == $data['login_auto'] ) ? TRUE : FALSE,
+			'auto' => ('true' == $data['login_auto']) ? TRUE : FALSE,
 		);
 
 		return TRUE;
@@ -646,17 +675,19 @@ class User extends Object
 	 *
 	 * @return bool
 	 */
-	private function _RecordLogin( $userId, $userLogin = NULL, $loginDate = NULL )
-	{
-		/**
-		 * @var string
-		 */
-		$user_id = ( !empty( $userId ) ) ? $userId : '00';
+	private function _RecordLogin($userId, $userLogin = NULL, $loginDate = NULL) {
+
+		$this->_Init();
 
 		/**
 		 * @var string
 		 */
-		$login_auto = ( empty( $userLogin ) ) ? 'true' : 'false';
+		$user_id = (!empty($userId)) ? $userId : '00';
+
+		/**
+		 * @var string
+		 */
+		$login_auto = (empty($userLogin)) ? 'true' : 'false';
 
 		/**
 		 * @var array
@@ -664,12 +695,12 @@ class User extends Object
 		$data = array(
 			'bin.user_id' => $user_id,
 			'user_login' => $userLogin,
-			'user_ip' => ip2long( $_SESSION[__CLASS__]['StatsCurrent']['ip'] ),
+			'user_ip' => ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip']),
 			'login_auto' => $login_auto,
 			'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent'],
 		);
 
-		if ( !empty( $loginDate ) )
+		if (!empty($loginDate))
 		{
 			/**
 			 * @var array
@@ -677,12 +708,12 @@ class User extends Object
 			$data['login_date_add'] = $loginDate;
 		}
 
-		if ( FALSE !== Core::Database()->Create( $data, 'acl_logins' ) )
+		if (FALSE !== Core::Database()->Create($data, $this->_mTable['logins']))
 		{
 			/**
 			 * Set new login time
 			 */
-			$_SESSION[__CLASS__]['StatsCurrent']['time'] = ( !empty( $loginDate ) ) ? $loginDate : date( 'Y-m-d H:i:s' );
+			$_SESSION[__CLASS__]['StatsCurrent']['time'] = (!empty($loginDate)) ? $loginDate : date('Y-m-d H:i:s');
 
 			return TRUE;
 		}

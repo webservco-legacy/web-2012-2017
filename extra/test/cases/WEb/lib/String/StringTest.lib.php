@@ -45,7 +45,7 @@ class StringTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetInstanceReturnsObject()
 	{
-		$this->assertInternalType( 'object', String::GetInstance() );
+		$this->assertInternalType('object', String::GetInstance());
 	}
 
 	/**
@@ -53,7 +53,7 @@ class StringTest extends PHPUnit_Framework_TestCase
 	 */
 	public function EndsWithRetrunsTrueOnSuccess()
 	{
-		$this->AssertTrue( $this->_mObject->EndsWith( 'Dolor', 'LoremIpsumDolor') );
+		$this->AssertTrue($this->_mObject->EndsWith('Dolor', 'LoremIpsumDolor'));
 	}
 
 	/**
@@ -61,7 +61,7 @@ class StringTest extends PHPUnit_Framework_TestCase
 	 */
 	public function EndsWithRetrunsFalseOnFailuer()
 	{
-		$this->AssertFalse( $this->_mObject->EndsWith( 'Dolor', 'LoremIpsum') );
+		$this->AssertFalse($this->_mObject->EndsWith('Dolor', 'LoremIpsum'));
 	}
 }
 ?>
