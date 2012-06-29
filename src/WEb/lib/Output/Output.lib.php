@@ -182,6 +182,14 @@ class Output extends Library {
 
 		return TRUE;
 	}
+	
+	/**
+	 * Get template name.
+	 */
+	public function GetTemplate() {
+		
+		return $this->_mTemplate;
+	}
 
 	/**
 	 * Get engine path.
