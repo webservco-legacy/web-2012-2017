@@ -771,6 +771,13 @@ class Database_Mysqli extends Database implements Interface_Database {
 		return !empty($result[$field]) ? TRUE: FALSE;
 		
 	}
+	
+	public function GetInsertId() {
+		
+		$this->Connect();
+		
+		return $this->_mDbLink->insert_id;
+	}
 
 	/**
 	 * PHP 5.3 fix call_user_func_array + mysqli bind_param
