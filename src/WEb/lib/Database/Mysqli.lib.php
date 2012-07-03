@@ -761,6 +761,16 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		return (!empty($result['max_item'])) ? $result['max_item'] : NULL;
 	}
+	
+	public function ValueExists($table, $field, $value) {
+		
+		$options['conditions'][] = array($field, $value);
+		
+		$result = $this->RetrieveOne($field, $table, $options);
+		
+		return !empty($result[$field]) ? TRUE: FALSE;
+		
+	}
 
 	/**
 	 * PHP 5.3 fix call_user_func_array + mysqli bind_param

@@ -86,6 +86,11 @@ class Object extends Library
 	 * @var string
 	 */
 	protected $_mKey;
+	
+	/**
+	 * Key prefix (use 'bin.' for binary key identification)
+	 */
+	protected $_mKeyPrefix = NULL;
 
 	/**
 	 * Implement GetInstance() method.
@@ -106,6 +111,7 @@ class Object extends Library
 	
 	protected function _Init() {
 		
+		$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
 	}
 
 	/**
@@ -138,15 +144,7 @@ class Object extends Library
 		/**
 		 * @var string
 		 */
-		$this->_mKey = strtolower($className) . '_id';
-
-		if (1 == Core::Config()->Get('database.binkey'))
-		{
-			/**
-			 * @var string
-			 */
-			$this->_mKey = 'bin.' . $this->_mKey;
-		}
+		$this->_mKey = $this->_mKeyPrefix . strtolower($className) . '_id';
 
 		/**
 		 * @var array
@@ -376,7 +374,7 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array ('bin.object_id', $this->_mId);
+		$options['conditions'][0] = array ($this->_mKeyPrefix . 'object_id', $this->_mId);
 
 		/**
 		 * @var array
@@ -480,7 +478,7 @@ class Object extends Library
 		 *
 		 * @var array
 		 */
-		$data['bin.owner_id'] = $this->mUserId;
+		$data[$this->_mKeyPrefix . 'owner_id'] = $this->mUserId;
 
 		/**
 		 * Add data to database.
@@ -551,11 +549,11 @@ class Object extends Library
 			 * @var array
 			 */
 			$data_insert = array(
-				'bin.object_id' => $this->_mId,
+				$this->_mKeyPrefix . 'object_id' => $this->_mId,
 				'i18n_locale' => $i18nLocale,
 				'i18n_key' => $data_key,
 				'i18n_value' => $data_value,
-				'bin.owner_id' => $this->mUserId,
+				$this->_mKeyPrefix . 'owner_id' => $this->mUserId,
 			);
 
 			Core::Database()->Create($data_insert, $this->_mTable['i18n']);
@@ -686,7 +684,7 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array('bin.object_id', $this->_mId);
+		$options['conditions'][0] = array($this->_mKeyPrefix . 'object_id', $this->_mId);
 
 		/**
 		 * @var array
@@ -830,7 +828,7 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][0] = array('bin.object_id', $this->_mId);
+		$options['conditions'][0] = array($this->_mKeyPrefix . 'object_id', $this->_mId);
 
 		/**
 		 * @var array
@@ -948,7 +946,7 @@ class Object extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array('bin.object_id', $this->_mId);
+		$options['conditions'][] = array($this->_mKeyPrefix . 'object_id', $this->_mId);
 
 		if (!empty($i18nLocale))
 		{

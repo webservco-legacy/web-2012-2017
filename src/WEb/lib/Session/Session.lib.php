@@ -49,6 +49,11 @@ class Session extends Library {
 	 * @var array
 	 */
 	protected $_mTable = array();
+	
+	/**
+	 * Key prefix (use 'bin.' for binary key identification)
+	 */
+	protected $_mKeyPrefix = NULL;
 
 	/**
 	 * Implement GetInstance() method.
@@ -67,6 +72,8 @@ class Session extends Library {
 	}
 	
 	private function _Init() {
+		
+		$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
 	
 		if (empty($this->_mTable)) {
 	
@@ -217,7 +224,7 @@ class Session extends Library {
 		/**
 		 * @var array
 		 */
-		$persistence_data = Core::Database()->RetrieveOne(array('bin.user_id', 'persistent_expire'), $this->_mTable['persistent'], $options);
+		$persistence_data = Core::Database()->RetrieveOne(array($this->_mKeyPrefix . 'user_id', 'persistent_expire'), $this->_mTable['persistent'], $options);
 
 		if (empty($persistence_data)) {
 			return FALSE;
@@ -226,7 +233,7 @@ class Session extends Library {
 		/**
 		 * @var string
 		 */
-		$user_id = $persistence_data['bin.user_id'];
+		$user_id = $persistence_data[$this->_mKeyPrefix . 'user_id'];
 
 		/**
 		 * @var string
@@ -277,7 +284,7 @@ class Session extends Library {
 		/**
 		 * @var array
 		 */
-		$data = array('bin.user_id' => $userId, 'persistent_token' => $persistentToken, 'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire),);
+		$data = array($this->_mKeyPrefix . 'user_id' => $userId, 'persistent_token' => $persistentToken, 'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire),);
 
 		if (FALSE !== Core::Database()->Create($data, $this->_mTable['persistent'])) {
 			/**
@@ -334,7 +341,7 @@ class Session extends Library {
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array('bin.user_id', $userId);
+			$options['conditions'][] = array($this->_mKeyPrefix . 'user_id', $userId);
 		}
 
 		if (!empty($persistentToken)) {

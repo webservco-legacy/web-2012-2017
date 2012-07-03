@@ -44,6 +44,11 @@ class Acl extends Library
 	 * @var array
 	 */
 	protected $_mTable = array();
+	
+	/**
+	 * Key prefix (use 'bin.' for binary key identification)
+	 */
+	protected $_mKeyPrefix = NULL;
 
 	/**
 	 * Implement GetInstance() method.
@@ -67,6 +72,8 @@ class Acl extends Library
 		if (empty($this->_mTable)) {
 
 			$app_prefix = Core::Config()->Get('app.prefix');
+			
+			$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
 
 			$this->_mTable['rules'] = "{$app_prefix}acl_rules";
 			$this->_mTable['groups'] = "{$app_prefix}acl_groups";
@@ -147,7 +154,7 @@ class Acl extends Library
 					/**
 					 * Check if we have a group rule for the asset.
 					 */
-					$check_group_asset = $this->CheckAcl($relation_data['bin.group_id'], $aclResource, 'group', $aclAsset);
+					$check_group_asset = $this->CheckAcl($relation_data[$this->_mKeyPrefix . 'group_id'], $aclResource, 'group', $aclAsset);
 
 					if (FALSE !== $check_group_asset)
 					{
@@ -161,7 +168,7 @@ class Acl extends Library
 				/**
 				 * Check if we have a group rule for the resource.
 				 */
-				$check_group_resource = $this->CheckAcl($relation_data['bin.group_id'], $aclResource, 'group');
+				$check_group_resource = $this->CheckAcl($relation_data[$this->_mKeyPrefix . 'group_id'], $aclResource, 'group');
 
 				if (FALSE !== $check_group_resource)
 				{
@@ -233,7 +240,7 @@ class Acl extends Library
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('bin.rule_value', $aclRequest);
+		$options['conditions'][] = array ($this->_mKeyPrefix . 'rule_value', $aclRequest);
 
 		/**
 		 * @var array
@@ -245,7 +252,7 @@ class Acl extends Library
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ('bin.rule_asset', $aclAsset);
+			$options['conditions'][] = array ($this->_mKeyPrefix . 'rule_asset', $aclAsset);
 		}
 
 		/**
@@ -273,7 +280,7 @@ class Acl extends Library
 		/**
 		 * @var array
 		 */
-		$values = array('bin.group_id', 'group_name' , 'group_level');
+		$values = array($this->_mKeyPrefix . 'group_id', 'group_name' , 'group_level');
 
 		/**
 		 * @var array
@@ -285,7 +292,7 @@ class Acl extends Library
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ('bin.user_id', $userId);
+			$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $userId);
 		}
 
 		/**
@@ -325,15 +332,7 @@ class Acl extends Library
 		/**
 		 * @var string
 		 */
-		$primary_key = Core::Database()->GetPrimaryKey($table);
-
-		if (1 == Core::Config()->Get('database.binkey'))
-		{
-			/**
-			 * @var string
-			 */
-			$primary_key = 'bin.' . $primary_key;
-		}
+		$primary_key = $this->_mKeyPrefix .  Core::Database()->GetPrimaryKey($table);
 
 		/**
 		 * @var array
@@ -346,14 +345,14 @@ class Acl extends Library
 		$options['limit'] = 1;
 
 
-		$data = Core::Database()->RetrieveOne('bin.owner_id', $table, $options);
+		$data = Core::Database()->RetrieveOne($this->_mKeyPrefix . 'owner_id', $table, $options);
 
 		if (empty($data))
 		{
 			return FALSE;
 		}
 
-		return $data['bin.owner_id'];
+		return $data[$this->_mKeyPrefix . 'owner_id'];
 	}
 }
 ?>

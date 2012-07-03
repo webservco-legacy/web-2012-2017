@@ -43,13 +43,7 @@ class User extends Object
 	 *
 	 * @var array
 	 */
-	public $mProp = array(
-		'list' => array(
-			'bin.user_id' => NULL,
-			'user_login' => NULL,
-			'user_status' => NULL,
-	),
-	);
+	public $mProp = array();
 
 	protected $_mSet;
 
@@ -66,6 +60,17 @@ class User extends Object
 			$this->_mTable['logins'] = "{$app_prefix}acl_logins";
 
 			$this->_mSet = TRUE;
+		}
+		
+		if (empty($this->mProp)) {
+			
+			$this->mProp = array(
+				'list' => array(
+					$this->_mKeyPrefix . 'user_id' => NULL,
+					'user_login' => NULL,
+					'user_status' => NULL,
+				),
+			);
 		}
 	}
 
@@ -209,7 +214,7 @@ class User extends Object
 			/**
 			 * @var array
 			 */
-			$options['conditions'][] = array ('bin.user_id', $user_id);
+			$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $user_id);
 
 			return $this->_SetUserData($options);
 		}
@@ -262,7 +267,7 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('bin.user_id', $userId);
+		$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $userId);
 
 		/**
 		 * Get timeout expression
@@ -387,7 +392,7 @@ class User extends Object
 		 */
 		$this->mProp = array(
 		'list' => array(
-			'bin.user_id' => NULL,
+			$this->_mKeyPrefix . 'user_id' => NULL,
 			'user_login' => NULL,
 			'user_status' => NULL,
 		),
@@ -420,7 +425,7 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('bin.user_id', $userId);
+		$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $userId);
 
 		/**
 		 * @var array
@@ -442,7 +447,7 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('bin.user_id', '00');
+		$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', '0');
 
 		if (!empty($checkType) && !empty($checkAsset))
 		{
@@ -555,7 +560,7 @@ class User extends Object
 			return FALSE;
 		}
 
-		$data = Core::Database()->RetrieveOne(array('bin.user_id', 'user_login', 'user_status'), $this->_mTable['list'], $options);
+		$data = Core::Database()->RetrieveOne(array($this->_mKeyPrefix . 'user_id', 'user_login', 'user_status'), $this->_mTable['list'], $options);
 
 		if (empty($data))
 		{
@@ -625,7 +630,7 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('bin.user_id', $this->_mId);
+		$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $this->_mId);
 
 		/**
 		 * @var array
@@ -668,7 +673,7 @@ class User extends Object
 	/**
 	 * Record login stats.
 	 *
-	 * If login is failed, the user_id will be 00
+	 * If login is failed, the user_id will be 0
 	 *
 	 * @param string $userId
 	 * @param string $userLogin
@@ -682,7 +687,7 @@ class User extends Object
 		/**
 		 * @var string
 		 */
-		$user_id = (!empty($userId)) ? $userId : '00';
+		$user_id = (!empty($userId)) ? $userId : '0';
 
 		/**
 		 * @var string
@@ -693,7 +698,7 @@ class User extends Object
 		 * @var array
 		 */
 		$data = array(
-			'bin.user_id' => $user_id,
+			$this->_mKeyPrefix . 'user_id' => $user_id,
 			'user_login' => $userLogin,
 			'user_ip' => ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip']),
 			'login_auto' => $login_auto,
