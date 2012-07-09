@@ -67,7 +67,8 @@ class User extends Object
 			$this->mProp = array(
 				'list' => array(
 					$this->_mKeyPrefix . 'user_id' => NULL,
-					'user_login' => NULL,
+					'user_email' => NULL,
+					'user_nickname' => NULL,
 					'user_status' => NULL,
 				),
 			);
@@ -162,12 +163,12 @@ class User extends Object
 			/**
 			 * @var string
 			 */
-			$user_login = $this->GetLoginName($user_id);
+			$user_email = $this->GetEmail($user_id);
 
 			/**
 			 * @var string
 			 */
-			$user_salt = Core::Security()->GetSalt($user_login);
+			$user_salt = Core::Security()->GetSalt($user_email);
 
 			/**
 			 * @var string
@@ -297,13 +298,13 @@ class User extends Object
 	/**
 	 * Login user.
 	 *
-	 * @param string $userLogin
+	 * @param string $userEmail
 	 * @param string $userPass
 	 * @param bool $userRemember
 	 *
 	 * @return bool
 	 */
-	public function Login($userLogin, $userPass, $userRemember = FALSE)	{
+	public function Login($userEmail, $userPass, $userRemember = FALSE)	{
 
 		$this->_Init();
 
@@ -315,9 +316,9 @@ class User extends Object
 		/**
 		 * @var bool
 		 */
-		$login = $this->_LoginUser($userLogin, $userPass);
+		$login = $this->_LoginUser($userEmail, $userPass);
 
-		$this->_RecordLogin($this->_mId, $userLogin);
+		$this->_RecordLogin($this->_mId, $userEmail);
 
 		if (TRUE !== $login)
 		{
@@ -329,7 +330,7 @@ class User extends Object
 			/**
 			 * @var string
 			 */
-			$user_salt = Core::Security()->GetSalt($userLogin);
+			$user_salt = Core::Security()->GetSalt($userEmail);
 
 			/**
 			 * @var string
@@ -393,7 +394,8 @@ class User extends Object
 		$this->mProp = array(
 		'list' => array(
 			$this->_mKeyPrefix . 'user_id' => NULL,
-			'user_login' => NULL,
+			'user_email' => NULL,
+			'user_nick' => NULL,
 			'user_status' => NULL,
 		),
 		);
@@ -412,13 +414,13 @@ class User extends Object
 	}
 
 	/**
-	 * Get user login name.
+	 * Get user email.
 	 *
 	 * @param string $userId
 	 *
 	 * @return mixed
 	 */
-	public function GetLoginName($userId) {
+	public function GetEmail($userId) {
 
 		$this->_Init();
 
@@ -430,14 +432,14 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne(array('user_login'), $this->_mTable['list'], $options);
+		$data = Core::Database()->RetrieveOne(array('user_email'), $this->_mTable['list'], $options);
 
 		if (empty($data))
 		{
 			return FALSE;
 		}
 
-		return  $data['user_login'];
+		return  $data['user_email'];
 	}
 
 	public function GetFailedLogins($checkType = NULL, $checkAsset = NULL) {
@@ -480,19 +482,19 @@ class User extends Object
 	/**
 	 * Check and login user.
 	 *
-	 * @param string $userLogin
+	 * @param string $userEmail
 	 * @param string $userPass
 	 *
 	 * @return bool
 	 */
-	private function _LoginUser($userLogin, $userPass) {
+	private function _LoginUser($userEmail, $userPass) {
 
 		$this->_Init();
 
 		/**
 		 * @var string
 		 */
-		$user_salt = Core::Security()->GetSalt($userLogin);
+		$user_salt = Core::Security()->GetSalt($userEmail);
 
 		/**
 		 * @var string
@@ -502,7 +504,7 @@ class User extends Object
 		/**
 		 * @var array
 		 */
-		$options['conditions'][] = array ('user_login', $userLogin);
+		$options['conditions'][] = array ('user_email', $userEmail);
 
 		/**
 		 * @var array
@@ -560,7 +562,7 @@ class User extends Object
 			return FALSE;
 		}
 
-		$data = Core::Database()->RetrieveOne(array($this->_mKeyPrefix . 'user_id', 'user_login', 'user_status'), $this->_mTable['list'], $options);
+		$data = Core::Database()->RetrieveOne(array($this->_mKeyPrefix . 'user_id', 'user_email', 'user_nickname', 'user_status'), $this->_mTable['list'], $options);
 
 		if (empty($data))
 		{
@@ -676,11 +678,11 @@ class User extends Object
 	 * If login is failed, the user_id will be 0
 	 *
 	 * @param string $userId
-	 * @param string $userLogin
+	 * @param string $userEmail
 	 *
 	 * @return bool
 	 */
-	private function _RecordLogin($userId, $userLogin = NULL, $loginDate = NULL) {
+	private function _RecordLogin($userId, $userEmail = NULL, $loginDate = NULL) {
 
 		$this->_Init();
 
@@ -692,14 +694,14 @@ class User extends Object
 		/**
 		 * @var string
 		 */
-		$login_auto = (empty($userLogin)) ? 'true' : 'false';
+		$login_auto = (empty($userEmail)) ? 'true' : 'false';
 
 		/**
 		 * @var array
 		 */
 		$data = array(
 			$this->_mKeyPrefix . 'user_id' => $user_id,
-			'user_login' => $userLogin,
+			'user_email' => $userEmail,
 			'user_ip' => ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip']),
 			'login_auto' => $login_auto,
 			'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent'],
