@@ -143,6 +143,23 @@ class String extends Library {
 		 */
 		return $string;
 	}
+	
+	/**
+	 * Get the youtube video id.
+	 * Should work with link, embed, etc.
+	 * 
+	 * @param string string
+	 * 
+	 * @return string
+	 */
+	public function GetYoutubeVideoId($string) {
+		
+		if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $string, $match)) {
+			return $match[1];
+		}
+		
+		return NULL;
+	}
 
 	/**
 	 * Strip tags from string.
