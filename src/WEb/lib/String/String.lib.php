@@ -376,9 +376,11 @@ class String extends Library {
 		 * @var string
 		 */
 		$url_string = base64_decode(strtr($string, '-_.', '+/='));
+		
+		return $url_string;
 
 		/**
-		 * Return decoded URL string only if valid.
+		 * XXX NO WORK Return decoded URL string only if valid.
 		 */
 		return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
 	}
