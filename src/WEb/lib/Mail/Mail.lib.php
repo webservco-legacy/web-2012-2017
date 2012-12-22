@@ -715,8 +715,11 @@ class Mail extends Library
 		/**
 		 * Add header.
 		 */
-		$this->AddHeader($header_type , $address);
-
+		if ('To' != $header_type) {
+			
+			$this->AddHeader($header_type , $address);
+		}
+		
 		return $address;
 	}
 
