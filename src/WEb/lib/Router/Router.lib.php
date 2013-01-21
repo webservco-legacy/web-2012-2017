@@ -169,11 +169,11 @@ class Router extends Library {
 
 		for ($position = 0; $position < $params; $position += 2) {
 			/**
-			 * If the data count is not even, set the last value to true.
+			 * If the data count is not even, set the last value to empty.
 			 *
 			 * @var array
 			 */
-			$query[$raw_query[$position]] = ($position == ($params - 1)) ? TRUE : $raw_query[$position + 1];
+			$query[$raw_query[$position]] = ($position == ($params - 1)) ? NULL : $raw_query[$position + 1];
 		}
 
 		Core::Log()->Write(__('Router library: Parsed request query.', 'WEb'), 'debug');
