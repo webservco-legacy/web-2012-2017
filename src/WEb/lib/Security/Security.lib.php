@@ -78,7 +78,7 @@ class Security extends Library {
 		 * Init GET request number.
 		 *
 		 * @var int
-		 */
+		*/
 		$this->_mNumGet = 0;
 
 		/**
@@ -90,7 +90,7 @@ class Security extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$get_message = sprintf(___('Security library: %s GET request sanitized.', 'Security library: %s GET requests sanitized.', $this->_mNumGet, 'WEb'), $this->_mNumGet);
 
 		Core::Log()->Write($get_message, 'debug');
@@ -99,7 +99,7 @@ class Security extends Library {
 		 * Init POST request number.
 		 *
 		 * @var int
-		 */
+		*/
 		$this->_mNumPost = 0;
 
 		/**
@@ -114,7 +114,7 @@ class Security extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$post_message = sprintf(___('Security library: %s POST request sanitized.', 'Security library: %s POST requests sanitized.', $this->_mNumPost, 'WEb'), $this->_mNumPost);
 
 		Core::Log()->Write($post_message, 'debug');
@@ -201,25 +201,32 @@ class Security extends Library {
 		 * if input is used in a database query.
 		 *
 		 * @var string
-		 */
+		*/
 		$input = str_replace($unwanted, '', $input);
 
 		/**
 		 * Check if the method is used to filter $_GET request.
-		 */
+		*/
 		if ((FALSE !== $filterRequest)) {
+				
+				
+			/**
+			 * Prevent spaces to be lost on GET requests
+			 */
+			$input = str_replace('+', ' ', $input);
+				
 			/**
 			 * Strip known bad characters.
 			 *
 			 * @var string
-			 */
+			*/
 			$input = Core::String()->RemoveBadChars($input);
 
 			/**
 			 * Remove tags
 			 *
 			 * @var string.
-			 */
+			*/
 			$input = Core::String()->StripTags($input);
 		}
 
