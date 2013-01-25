@@ -119,7 +119,7 @@ class Error extends Library {
 
 		/**
 		 * Severity 512 is reserved for sensitive operations,
-		 * so we show no information apartform the actual message.
+		 * so we show no information apart from the actual message.
 		 */
 		if (512 != $err['severity']) {
 			/**
@@ -135,12 +135,12 @@ class Error extends Library {
 			/**
 			 * @var array
 			 */
-			$msg[] = array(sprintf(__('File: %s', 'WEb'), $err['file']), 'debug');
+			$msg[] = array(sprintf(__('File: %s', 'WEb'), $err['file']), 'error');
 
 			/**
 			 * @var array
 			 */
-			$msg[] = array(sprintf(__('Line: %s', 'WEb'), $err['line']), 'debug');
+			$msg[] = array(sprintf(__('Line: %s', 'WEb'), $err['line']), 'error');
 
 			/**
 			 * Check if trace is enabled.
