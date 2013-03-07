@@ -79,6 +79,13 @@ class Core
 	 * @var mixed
 	 */
 	protected static $_msDatabaseObject;
+	
+	/**
+	 * Stores the date object.
+	 *
+	 * @var mixed
+	 */
+	protected static $_msDateObject;
 
 	/**
 	 * Stores the error handling object.
@@ -322,6 +329,24 @@ class Core
 		}
 
 		return self::$_msDatabaseObject;
+	}
+	
+	/**
+	 * Method to access the date object from everywhere.
+	 *
+	 * @return object
+	 */
+	final public static function Date()
+	{
+		if (NULL == self::$_msDateObject)
+		{
+			/**
+			 * @var object
+			 */
+			self::$_msDateObject = Date::GetInstance();
+		}
+	
+		return self::$_msDateObject;
 	}
 
 	/**

@@ -16,6 +16,7 @@
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Log</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/App</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Database</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Date</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/String</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Security</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Router</directory>

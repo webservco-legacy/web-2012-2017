@@ -73,7 +73,7 @@ class App extends Library {
 		/**
 		 * Set timezone.
 		 */
-		date_default_timezone_set(Core::Config()->Get('date.timezone'));
+		Core::Date()->SetTimeZone(Core::Config()->Get('date.timezone'));
 
 		/**
 		 * Initialize internationalization library.

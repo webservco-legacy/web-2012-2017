@@ -46,6 +46,8 @@ require_once 'WEb/lib/App/App.lib.php';
 
 require_once 'WEb/int/Database/Database.int.php';
 
+require_once 'WEb/int/Database/Date.int.php';
+
 require_once 'WEb/lib/Database/Database.lib.php';
 require_once 'WEb/lib/Database/Mysql.lib.php';
 require_once 'WEb/lib/Database/Mysqli.lib.php';
