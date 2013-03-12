@@ -47,13 +47,22 @@ class Form extends Library
 	private $_mMethod;
 
 	/**
+	 * Request query.
+	 *
+	 * Used to store form data for GET method.
+	 *
+	 * @var array
+	 */
+	private $_mRequestQuery = array();
+
+	/**
 	 * Actual form data.
 	 *
 	 * If validation is made, contains actual form data.
 	 * Otherwise it contains NULL values or default data.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mData = array();
 
 	/**
@@ -63,21 +72,21 @@ class Form extends Library
 	 * such as titles, description, required fields.
 	 *
 	 * @var string
-	 */
+	*/
 	private $_mMeta = array();
 
 	/**
 	 * Form filters.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mFilters = array();
 
 	/**
 	 * Form validation conditions.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mConditions = array();
 
 	/**
@@ -86,7 +95,7 @@ class Form extends Library
 	 * Contains all form errors resulting from validation.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mErrors = array();
 
 	/**
@@ -97,7 +106,7 @@ class Form extends Library
 	 * after form validation.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mDataFiltered = array();
 
 	/**
@@ -108,7 +117,7 @@ class Form extends Library
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
-	 */
+	*/
 	public static function GetInstance($className = __CLASS__)
 	{
 		/**
@@ -124,7 +133,7 @@ class Form extends Library
 	 *
 	 * @return bool
 	 */
-	public function SetMethod($method = 'post')
+	public function SetMethod($method = 'post', $requestQuery = array())
 	{
 		/**
 		 * Checkif we have a valid method.s
@@ -138,6 +147,11 @@ class Form extends Library
 		 * @var string
 		 */
 		$this->_mMethod =  $method;
+
+		if ('get' == $this->_mMethod) {
+
+			$this->_mRequestQuery = $requestQuery;
+		}
 
 		return TRUE;
 	}
@@ -279,12 +293,12 @@ class Form extends Library
 
 		/**
 		 * Filter form data.
-		 */
+		*/
 		$this->_Filter();
 
 		/**
 		 * Iterate filtered form data.
-		 */
+		*/
 		foreach ($this->_mDataFiltered as $field => $data)
 		{
 			/**
@@ -318,7 +332,7 @@ class Form extends Library
 
 				/**
 				 * Iterate conditions.
-				 */
+				*/
 				foreach ($conditions as $condition)
 				{
 					/**
@@ -368,7 +382,7 @@ class Form extends Library
 
 							/**
 							 * @var string
-							 */
+							*/
 							$error_message = Core::Config()->Get("form.error.{$condition_index}.text");
 
 							if (FALSE !== $error_message)
@@ -416,7 +430,7 @@ class Form extends Library
 		/**
 		 * @var array
 		 */
-		$request = ('post' == $this->_mMethod) ? $_POST : $_GET;
+		$request = ('post' == $this->_mMethod) ? $_POST : $this->_mRequestQuery;
 
 		/**
 		 * Iterate form data.
@@ -442,6 +456,7 @@ class Form extends Library
 					 * @var array
 					 */
 					$this->_mData[$field] = $request[$field];
+
 				}
 			}
 		}
@@ -472,7 +487,7 @@ class Form extends Library
 
 				/**
 				 * Iterate filters
-				 */
+				*/
 				foreach ($filters as $filter)
 				{
 					/**
