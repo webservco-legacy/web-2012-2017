@@ -269,6 +269,7 @@ class Router extends Library {
 	 *
 	 * If the locationis NULL, a self redirect will be performed.
 	 * If the location is "/", a homepage redirect will be performed.
+	 * If the location starts with "http://" or "https://", an external redirect will be performed.
 	 *
 	 * @param string $newLocation
 	 *
@@ -290,11 +291,22 @@ class Router extends Library {
 			 */
 			$newLocation = NULL;
 		}
-
-		/**
-		 * @var string
-		 */
-		$url = Core::Config()->Get('url.app') . $newLocation;
+		
+		if (
+			Core::String()->StartsWith($newLocation, 'http://') 
+			|| Core::String()->StartsWith($newLocation, 'https://')
+		) {
+			/**
+			 * @var string
+			 */
+			$url = $newLocation;
+				
+		} else {
+			/**
+			 * @var string
+			 */
+			$url = Core::Config()->Get('url.app') . $newLocation;
+		}
 
 		/**
 		 * Perform redirect.
