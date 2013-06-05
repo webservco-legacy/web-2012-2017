@@ -145,6 +145,32 @@ class String extends Library {
 	}
 	
 	/**
+	 * Remove known bad characters from a string.
+	 *
+	 * @param string $string input string
+	 *
+	 * @return string
+	 */
+	public function RemoveNewlines($string) {
+		/**
+		 * Newline chars.
+		 *
+		 * @var array
+		 */
+		$nl = array("\n", "\r");
+		
+		/**
+		 * Remove bad chars.
+		*/
+		$string = str_replace($nl, '', $string);
+		
+		/**
+		 * Return result.
+		*/
+		return $string;
+	}
+	
+	/**
 	 * Get the youtube video id.
 	 * Should work with link, embed, etc.
 	 * 
