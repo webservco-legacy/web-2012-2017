@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Content $Id$\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-05 17:45+0100\n"
+"PO-Revision-Date: 2013-07-05 17:45+0100\n"
+"Last-Translator: Radu Maier <radu@webserv.co>\n"
+"Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;___:1,2;title;description;keywords;content\n"
+"X-Poedit-Basepath: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/mod/Users/\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users\n"
+"X-Poedit-SearchPath-2: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users\n"
+"X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users\n"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:20
+msgid "Account"
+msgstr "Account"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:28
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/register.tpl.php:44
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password_done.tpl.php:10
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:43
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:50
+msgid "Login"
+msgstr "Login"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:46
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:45
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:52
+msgid "Register"
+msgstr "Register"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:70
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:94
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:43
+msgid "Reset password"
+msgstr "Reset password"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:113
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:115
+msgid "Login error"
+msgstr "Login error"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:115
+msgid "Please make sure your credentials are correct."
+msgstr "Please make sure your credentials are correct."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/register.tpl.php:42
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password_done.tpl.php:3
+msgid "Thank you!"
+msgstr "Thank you!"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password_done.tpl.php:5
+msgid "Your password was reset successfully."
+msgstr "Your password was reset successfully."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password_done.tpl.php:7
+msgid "The new password was sent to the email address you provided."
+msgstr "The new password was sent to the email address you provided."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:3
+msgid "If you forgot your password simply enter the email address you used to register an account and we will send you a new password."
+msgstr "If you forgot your password simply enter the email address you used to register an account and we will send you a new password."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:41
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:48
+msgid "Other options"
+msgstr "Other options"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/account.tpl.php:5
+msgid "Welcome"
+msgstr "Welcome"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/account.tpl.php:8
+msgid "Logout"
+msgstr "Logout"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:17
+msgid "Captcha"
+msgstr "Captcha"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:41
+msgid "Did you forget your password?"
+msgstr "Did you forget your password?"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:13
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:49
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:87
+msgid "Email"
+msgstr "Email"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:14
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:50
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:88
+msgid "Email address asociated with your account"
+msgstr "Email address asociated with your account"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:21
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:57
+msgid "Password"
+msgstr "Password"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:22
+msgid "Your password"
+msgstr "Your password"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:28
+msgid "Security Code"
+msgstr "Security Code"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:29
+msgid "Enter the code you see in the picture"
+msgstr "Enter the code you see in the picture"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:36
+msgid "Remember me"
+msgstr "Remember me"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:37
+msgid "Check to stay logged in"
+msgstr "Check to stay logged in"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:58
+msgid "Choose a password"
+msgstr "Choose a password"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:64
+msgid "First name"
+msgstr "First name"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:65
+msgid "Your first name"
+msgstr "Your first name"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:72
+msgid "Last name"
+msgstr "Last name"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users/users.cfg.xml:73
+msgid "Your last name"
+msgstr "Your last name"
+

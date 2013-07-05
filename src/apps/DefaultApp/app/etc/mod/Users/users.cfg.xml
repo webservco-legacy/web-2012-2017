@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<dev>
+		<!-- Users module settings -->
+		<users>
+			<form>
+				<login>
+					<email>
+						<type>text</type>
+						<title>Email</title>
+						<description>Email address asociated with your account</description>
+						<required>1</required>
+						<filters>StripTags</filters>
+						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
+					</email>
+					<password>
+						<type>password</type>
+						<title>Password</title>
+						<description>Your password</description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password>
+					<captcha>
+						<type>text</type>
+						<title>Security Code</title>
+						<description>Enter the code you see in the picture</description>
+						<required>1</required>
+						<filters>RemoveBadChars</filters>
+						<conditions>MatchesCaptcha</conditions>
+					</captcha>
+					<remember>
+						<type>checkbox</type>
+						<title>Remember me</title>
+						<description>Check to stay logged in</description>
+						<required>0</required>
+					</remember>
+					<send>
+						<type>submit</type>
+						<title></title>
+						<content>Login</content>
+					</send>
+				</login>
+				<register>
+				    <email>
+				        <type>text</type>
+						<title>Email</title>
+						<description>Email address asociated with your account</description>
+						<required>1</required>
+						<filters>StripTags</filters>
+						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
+				    </email>
+				    <password>
+						<type>password</type>
+						<title>Password</title>
+						<description>Choose a password</description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password>
+					<name_first>
+				        <type>text</type>
+						<title>First name</title>
+						<description>Your first name</description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+				    </name_first>
+				    <name_last>
+				        <type>text</type>
+						<title>Last name</title>
+						<description>Your last name</description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+				    </name_last>
+					<send>
+						<type>submit</type>
+						<title></title>
+						<content>Register</content>
+					</send>
+				</register>
+				<resetpassword>
+				    <email>
+				        <type>text</type>
+						<title>Email</title>
+						<description>Email address asociated with your account</description>
+						<required>1</required>
+						<filters>StripTags</filters>
+						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
+				    </email>
+				    <send>
+						<type>submit</type>
+						<title></title>
+						<content>Reset password</content>
+					</send>
+				</resetpassword>
+			</form>
+		</users>
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
+	    
+	</prod>
+</config>
+<!-- $Id$ -->

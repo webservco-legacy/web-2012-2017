@@ -1,0 +1,284 @@
+<?php
+/**
+ * $Id$
+ *
+ * Users module.
+ *
+ * @author     Radu Maier <radu@webserv.co>
+ * @copyright  Copyright (c) 2008 - 2012, Radu Maier
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ * @package    DefaultApp
+ * @subpackage UsersModule
+ * @version    $Revision$
+ * @since      Version 5
+ * @access     public
+ * @filesource
+ */
+
+/**
+ * Security check.
+ */
+if (!defined('_WEB'))
+{
+	/**
+	 * Stop script execution.
+	 */
+	exit();
+}
+
+/**
+ * Module_Users
+ *
+ * Model class for Users module.
+ *
+ * @author     Radu Maier <radu@webserv.co>
+ * @package    RaduApp
+ * @subpackage UsersModule
+ *
+ */
+class Module_Users extends ModuleApp
+{
+	/**
+	 * Handles login functionality.
+	 *
+	 * @return mixed
+	 */
+	public function GetLoginForm()
+	{
+		Core::Form()->SetMethod('post');
+
+		Core::Form()->SetData(Core::Config()->Get('users.form.login'));
+
+		/**
+		 * @var array
+		*/
+		$form['meta'] = Core::Form()->GetMeta();
+
+		/**
+		 * @var array
+		*/
+		$form['errors'] = array();
+
+		if (!empty($_POST))
+		{
+			/**
+			 * @var bool
+			 */
+			$result_validation = Core::Form()->Validate();
+
+			if (FALSE !== $result_validation)
+			{
+				/**
+				 * @var array
+				 */
+				$form['data'] = Core::Form()->GetFilteredData();
+
+				/**
+				 * @var bool
+				*/
+				$result_login = Core::User()->Login($form['data']['email'], $form['data']['password'], (bool) $form['data']['remember']);
+
+				if (TRUE !== $result_login)
+				{
+					Core::Captcha()->GetNewToken();
+
+					Core::Router()->Redirect('Users/App/LoginError');
+
+					exit();
+				}
+				else
+				{
+					/**
+					 * perform any aditional user initialization.
+					 */
+
+					Core::Router()->Redirect('Users/App/Account');
+
+					exit();
+				}
+			}
+			else
+			{
+				Core::Captcha()->GetNewToken();
+
+				/**
+				 * @var array
+				*/
+				$form['data'] = Core::Form()->GetData();
+
+				/**
+				 * @var array
+				*/
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+		}
+		else
+		{
+			/**
+			 * @var array
+			 */
+			$form['data'] = Core::Form()->GetData();
+		}
+
+		return $form;
+	}
+
+	public function GetRegisterForm() {
+
+		Core::Form()->SetMethod('post');
+
+		Core::Form()->SetData(Core::Config()->Get('users.form.register'));
+
+		$form['meta'] = Core::Form()->GetMeta();
+
+		$form['errors'] = array();
+
+		if (!empty($_POST)) {
+
+			$result_validation = Core::Form()->Validate();
+
+			if (FALSE !== $result_validation) {
+
+				$form['data'] = Core::Form()->GetFilteredData();
+
+				$email_exists = Core::Database()->ValueExists('acl_users', 'user_email', $form['data']['email']);
+
+				if ($email_exists) {
+
+					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['email']['title']);
+				}
+
+				if (empty($form['errors'])) {
+
+					$user_salt = Core::Security()->GetSalt($form['data']['email']);
+
+					$user_auth = Core::Security()->GetToken($user_salt, $form['data']['password']);
+
+					$q = "INSERT INTO acl_users (user_email, user_auth, owner_id, user_date_add) VALUES
+					('{$form['data']['email']}', '{$user_auth}', 1, NOW())";
+
+					Core::Database()->Query($q);
+
+					$user_id = Core::Database()->GetInsertId();
+
+					$qc = "INSERT INTO acl_users_custom (user_id_key, user_name_first, user_name_last) VALUES
+					($user_id, '{$form['data']['name_first']}', '{$form['data']['name_last']}')";
+
+					Core::Database()->Query($qc);
+
+					if (empty($user_id)) {
+
+						/**
+						 * Registration error.
+						 */
+							
+						echo 'Registration error, please try again later.';
+
+						exit();
+					}
+
+					Core::User()->Login($form['data']['email'], $form['data']['password']);
+
+					$result_login = Core::User()->Login($form['data']['email'], $form['data']['password']);
+
+					if (TRUE !== $result_login)
+					{
+						/**
+						 * Autologin error.
+						 */
+							
+						echo 'Autologin error, please try again later.';
+
+						exit();
+					}
+
+					Core::Router()->Redirect('Users/App/Account');
+
+				} else {
+
+					$form['data'] = Core::Form()->GetData();
+				}
+
+			} else {
+
+				$form['data'] = Core::Form()->GetData();
+
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+		} else {
+
+			$form['data'] = Core::Form()->GetData();
+		}
+
+		return $form;
+
+	}
+
+	public function GetResetPasswordForm() {
+
+		Core::Form()->SetMethod('post');
+
+		Core::Form()->SetData(Core::Config()->Get('users.form.resetpassword'));
+
+		$form['meta'] = Core::Form()->GetMeta();
+
+		$form['errors'] = array();
+
+		if (!empty($_POST)) {
+
+			$result_validation = Core::Form()->Validate();
+
+			if (FALSE !== $result_validation) {
+
+				$form['data'] = Core::Form()->GetFilteredData();
+
+				$email_exists = Core::Database()->ValueExists('acl_users', 'user_email', $form['data']['email']);
+
+				if (!$email_exists) {
+
+					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.notregistered.text'), $form['meta']['email']['title']);
+				}
+
+				if (empty($form['errors'])) {
+
+					$new_pass = rand(11111, 32767);
+
+					$user_salt = Core::Security()->GetSalt($form['data']['email']);
+
+					$user_auth = Core::Security()->GetToken($user_salt, $new_pass);
+
+					$q = "UPDATE acl_users SET user_auth = '{$user_auth}' WHERE user_email = '{$form['data']['email']}' LIMIT 1";
+
+					Core::Database()->Query($q);
+
+					$app_name = __(Core :: Config()->Get('app.title'), 'App');
+
+					$mail_subject = "{$app_name}: Password reset";
+
+					$mail_message = "{$app_name} password reset.<br />You new password is <b>{$new_pass}</b>";
+
+					$this->SendMail($form['data']['email'], $mail_subject, $mail_message);
+
+					Core::Router()->Redirect('Users/App/ResetPasswordDone');
+
+				} else {
+
+					$form['data'] = Core::Form()->GetData();
+				}
+
+			} else {
+
+				$form['data'] = Core::Form()->GetData();
+
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+
+		} else {
+
+			$form['data'] = Core::Form()->GetData();
+		}
+
+		return $form;
+	}
+}
+?>

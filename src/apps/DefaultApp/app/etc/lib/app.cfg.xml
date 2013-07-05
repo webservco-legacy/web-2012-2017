@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<dev>
+		<!-- Application settings -->
+		<app>
+			<title>Default app</title>
+			<prefix></prefix>
+			<sessions>1</sessions>
+		</app>
+		<menu>
+		    <web>
+				<item>
+		            <title>Menu item</title>
+		            <link>local/link</link>
+		            <url>http</url>
+		        </item>
+		        <item>
+		            <title>Menu item</title>
+		            <link>local/link</link>
+		            <url>http</url>
+		        </item>
+		        <item>
+		            <title>Menu item</title>
+		            <link>local/link</link>
+		            <url>http</url>
+		        </item>
+		    </web>
+		    <mobile>
+		    </mobile>
+		</menu>
+		<!-- Database settings (general) -->
+		<database>
+			<type>MySQLi</type>
+			<binkey>0</binkey>
+		</database>
+		<!-- Output settings -->
+		<output>
+			<engine>Web</engine>
+		</output>
+		<!-- Date settings -->
+		<date>
+			<timezone>Europe/Rome</timezone>
+		</date>
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
+	</prod>
+</config>
+<!-- $Id$ -->

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<dev>
+		<path>
+			<core>/home/radu/Projects/Eclipse/ws_WEb/src/WEb/</core>
+			<app>/home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/</app>
+			<www>/home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
+		</path>
+		<url>
+			<app>http://192.168.1.80/default_app/</app>
+		</url>
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
+		<path>
+			<core>/var/www/app.italiamultimedia.com/libs/WEb/</core>
+			<app>/var/www/app.italiamultimedia.com/web/default_app/app/</app>
+			<www>/var/www/app.italiamultimedia.com/web/default_app/</www>
+		</path>
+		<url>
+			<app>http://app.italiamultimedia.com/default_app/</app>
+		</url>
+	</prod>
+</config>
+<!-- $Id$ -->
