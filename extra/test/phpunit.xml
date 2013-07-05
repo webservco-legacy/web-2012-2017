@@ -33,6 +33,7 @@
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Browser</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Iceget</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Smtp</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/Useragent</directory>
 	    </testsuite>
 	    <testsuite name="WEb Objects">
 	    	<directory suffix=".obj.php">/home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/obj/User</directory>
