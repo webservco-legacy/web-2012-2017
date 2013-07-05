@@ -79,7 +79,7 @@ class Core
 	 * @var mixed
 	 */
 	protected static $_msDatabaseObject;
-	
+
 	/**
 	 * Stores the date object.
 	 *
@@ -163,6 +163,13 @@ class Core
 	 * @var mixed
 	 */
 	protected static $_msStringObject;
+
+	/**
+	 * Stores the Useragent object.
+	 *
+	 * @var mixed
+	 */
+	protected static $_msUseragentObject;
 
 	/**
 	 * Stores the User object.
@@ -284,7 +291,7 @@ class Core
 		/**
 		 * If we have no database type,
 		 * database connection will not be available.
-		 */
+		*/
 		if (FALSE === $db_type)
 		{
 			return FALSE;
@@ -301,7 +308,7 @@ class Core
 
 				/**
 				 * @var string
-				 */
+				*/
 				$db_type = $parts[1];
 			}
 
@@ -317,12 +324,12 @@ class Core
 			 * self::$_msDatabaseObject = $db_class::GetInstance($db_class);
 			 *
 			 * @var object
-			 */
+			*/
 			self::$_msDatabaseObject = call_user_func(array($db_class, 'GetInstance'), $db_class);
 
 			/**
 			 * @var string
-			 */
+			*/
 			$out_msg = sprintf(__('Core library: Database library "%s" loading.', 'WEb') , $db_class);
 
 			self::Log()->Write($out_msg, 'debug');
@@ -330,7 +337,7 @@ class Core
 
 		return self::$_msDatabaseObject;
 	}
-	
+
 	/**
 	 * Method to access the date object from everywhere.
 	 *
@@ -345,7 +352,7 @@ class Core
 			 */
 			self::$_msDateObject = Date::GetInstance();
 		}
-	
+
 		return self::$_msDateObject;
 	}
 
@@ -548,6 +555,24 @@ class Core
 	}
 
 	/**
+	 * Method to access the Useragent object from everywhere.
+	 *
+	 * @return object
+	 */
+	final public static function Useragent()
+	{
+		if (NULL == self::$_msUseragentObject)
+		{
+			/**
+			 * @var object
+			 */
+			self::$_msUseragentObject = Useragent::GetInstance();
+		}
+
+		return self::$_msUseragentObject;
+	}
+
+	/**
 	 * Method to access the User object from anywhere.
 	 *
 	 * @return object
@@ -583,7 +608,7 @@ class Core
 		 * Class path.
 		 *
 		 * @var string
-		 */
+		*/
 		$path = 'lib/';
 
 		/**
@@ -597,7 +622,7 @@ class Core
 		 * Class name.
 		 *
 		 * @var string
-		 */
+		*/
 		$name = $parts[0];
 
 		/**
@@ -636,7 +661,7 @@ class Core
 					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
-					 */
+					*/
 					$path = self::Config()->Get('dir.core.int') . '/';
 					/**
 					 * @var string
@@ -656,7 +681,7 @@ class Core
 					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
-					 */
+					*/
 					$path = 'lib/';
 					/**
 					 * @var string
@@ -676,7 +701,7 @@ class Core
 					$base = array (	self::Config()->Get('path.app'));
 					/**
 					 * @var string
-					 */
+					*/
 					$path = self::Config()->Get('dir.app.mod') . '/';
 					/**
 					 * @var string
@@ -699,7 +724,7 @@ class Core
 					);
 					/**
 					 * @var string
-					 */
+					*/
 					$path = '/';
 					/**
 					 * @var string
@@ -730,7 +755,7 @@ class Core
 					$base = array (	self::Config()->Get('path.app'));
 					/**
 					 * @var string
-					 */
+					*/
 					$path = self::Config()->Get('dir.app.ctrl') . '/';
 					/**
 					 * @var string
@@ -750,7 +775,7 @@ class Core
 					$base = array (	self::Config()->Get('path.core'));
 					/**
 					 * @var string
-					 */
+					*/
 					$path = 'lib/';
 					/**
 					 * @var string
@@ -815,15 +840,15 @@ class Core
 				//if (!empty(self::$_msConfigObject) && !empty(self::$_msErrorObject) &&
 				//(TRUE !== self::$_msLicenseChecked))
 				//{
-					/**
-					 * Set license checked.
-					 */
-					//self::$_msLicenseChecked = TRUE;
+				/**
+				* Set license checked.
+				*/
+				//self::$_msLicenseChecked = TRUE;
 
-					/**
-					 * Check license.
-					 */
-					//self::_LicCheck();
+				/**
+				 * Check license.
+				 */
+				//self::_LicCheck();
 				//}
 
 				/**
@@ -852,12 +877,12 @@ class Core
 
 		/**
 		 * @var array
-		 */
+		*/
 		$parts = explode('_', $libraryName);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$library_name = end($parts);
 
 		if(!class_exists($library_name))
@@ -894,7 +919,7 @@ class Core
 
 		/**
 		 * @var unknown_type
-		 */
+		*/
 		$headers['User-Agent'] = 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2 GTB6 (.NET CLR 3.5.30729)';
 
 		/**
@@ -904,7 +929,7 @@ class Core
 
 		/**
 		 * @var unknown_type
-		 */
+		*/
 		$headers['Accept-Encoding'] = 'x-compress; x-zip';
 
 		/**
@@ -914,7 +939,7 @@ class Core
 
 		/**
 		 * @var string
-		 */
+		*/
 		$protocol = $url_parts[1];
 
 		/**
@@ -939,7 +964,7 @@ class Core
 
 		/**
 		 * Check if socket was opened successfully.
-		 */
+		*/
 		if (!$socket)
 		{
 			/**
@@ -967,7 +992,7 @@ class Core
 		 * Init post string.
 		 *
 		 * @var string
-		 */
+		*/
 		$post_string = NULL;
 
 		/**
@@ -984,7 +1009,7 @@ class Core
 
 			/**
 			 * Iterate post data.
-			 */
+			*/
 			foreach ($postData as $post_key => $post_value)
 			{
 				/**
@@ -1004,7 +1029,7 @@ class Core
 			 * Set content type header.
 			 *
 			 * @var array
-			 */
+			*/
 			$headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
 			/**
@@ -1033,7 +1058,7 @@ class Core
 
 		/**
 		 * Check if we have post data.
-		 */
+		*/
 		if (!empty($post_string))
 		{
 			/**
@@ -1049,7 +1074,7 @@ class Core
 
 		/**
 		 * Get status.
-		 */
+		*/
 		$status = substr($response, 9, 3);
 
 		while (trim($line = fgets($socket, 1000)) != '')
@@ -1063,7 +1088,7 @@ class Core
 
 				/**
 				 * Return result.
-				 */
+				*/
 				return FALSE;
 			}
 		}
@@ -1090,28 +1115,28 @@ class Core
 
 		/**
 		 * @var string
-		 */
+		*/
 		$license_name = rtrim(str_replace(array('http://', 'www.'), '', self::Config()->Get('url.app')), '/');
 
 		/**
 		 * Set license CN
 		 *
 		 * @var array
-		 */
+		*/
 		$license['cn'] = strtr($license_name, '/.', '-_');
 
 		/**
 		 * Set licence key.
 		 *
 		 * @var array
-		 */
+		*/
 		$license['key'] = substr(md5($license['cn']), 0, 26);
 
 		/**
 		 * Init license directory.
 		 *
 		 * @var string
-		 */
+		*/
 		$dir = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.tmp') . '/';
 
 		/**
@@ -1121,7 +1146,7 @@ class Core
 
 		/**
 		 * Set license path.
-		 */
+		*/
 		$license['path'] = "{$license['dir']}/sess_{$license['key']}";
 
 		return $license;
@@ -1144,27 +1169,27 @@ class Core
 
 		/**
 		 * Get private key.
-		 */
+		*/
 		$private_key = openssl_pkey_get_private(file_get_contents($key_path));
 
 		/**
 		 * Generate signature.
-		 */
+		*/
 		openssl_sign($license['cn'], $signature, $private_key, OPENSSL_ALGO_SHA1);
 
 		/**
 		 * Set signature post data.
-		 */
+		*/
 		$post_data['s'] = rawurlencode(base64_encode($signature));
 
 		/**
 		 * Release private key.
-		 */
+		*/
 		openssl_free_key($private_key);
 
 		/**
 		 * Set request post data.
-		 */
+		*/
 		$post_data['r'] = $request;
 
 		/**
@@ -1179,12 +1204,12 @@ class Core
 
 		/**
 		 * Get encrypted license string.
-		 */
+		*/
 		$license_string = fgets($license_file, 1024);
 
 		/**
 		 * Close encrypted file handle.
-		 */
+		*/
 		fclose($license_file);
 
 		return trim($license_string);
@@ -1210,22 +1235,22 @@ class Core
 		 * Get encrypted license key.
 		 *
 		 * @var string
-		 */
+		*/
 		$license_key = self::_LicGet($license, '170f27a90290081cdedf11e3c87e3abe90592e49');
 
 		/**
 		 * @var string
-		 */
+		*/
 		$key_path = self::_LicGetKeyPath($license);
 
 		/**
 		 * Get private key.
-		 */
+		*/
 		$private_key = openssl_pkey_get_private("file://{$key_path}");
 
 		/**
 		 * Init decrypted license.
-		 */
+		*/
 		$license_object = NULL;
 
 		/**
@@ -1235,17 +1260,17 @@ class Core
 
 		/**
 		 * Release private key.
-		 */
+		*/
 		openssl_free_key($private_key);
 
 		/**
 		 * Parse license data.
-		 */
+		*/
 		$license_data = simplexml_load_string($license_object);
 
 		/**
 		 * Get license status.
-		 */
+		*/
 		$license_status  = ($license_data) ? (string) $license_data->license[0]->status[0] : NULL;
 
 		if ('ok' != $license_status)
@@ -1295,12 +1320,12 @@ class Core
 
 		/**
 		 * Create license status file with dummy content.
-		 */
+		*/
 		file_put_contents($license['path'], "{$license['key']} {$status}");
 
 		/**
 		 * Change file mode.
-		 */
+		*/
 		@chmod($license['path'], 0600);
 
 		self::Log()->Write(sprintf(__('License Status: %s.', 'WEb'), $status), 'info');
@@ -1353,12 +1378,12 @@ class Core
 
 		/**
 		 * Check if the license key is present.
-		 */
+		*/
 		self::_LicGetKeyPath($license);
 
 		/**
 		 * Check if the licensepath isreadable, or if a license check request ('licenseCheck') is present.
-		 */
+		*/
 		if (is_readable($license['path']) ||
 		(!empty($_POST['r']) && '88096f65d8ce832d4f0a0edac045f7b9160a064d' == $_POST['r']))
 		{

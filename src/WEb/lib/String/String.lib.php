@@ -135,15 +135,15 @@ class String extends Library {
 
 		/**
 		 * Remove bad chars.
-		 */
+		*/
 		$string = str_replace($bad, '', $string);
 
 		/**
 		 * Return result.
-		 */
+		*/
 		return $string;
 	}
-	
+
 	/**
 	 * Remove known bad characters from a string.
 	 *
@@ -158,32 +158,32 @@ class String extends Library {
 		 * @var array
 		 */
 		$nl = array("\n", "\r");
-		
+
 		/**
 		 * Remove bad chars.
 		*/
 		$string = str_replace($nl, '', $string);
-		
+
 		/**
 		 * Return result.
 		*/
 		return $string;
 	}
-	
+
 	/**
 	 * Get the youtube video id.
 	 * Should work with link, embed, etc.
-	 * 
+	 *
 	 * @param string string
-	 * 
+	 *
 	 * @return string
 	 */
 	public function GetYoutubeVideoId($string) {
-		
+
 		if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $string, $match)) {
 			return $match[1];
 		}
-		
+
 		return NULL;
 	}
 
@@ -220,40 +220,40 @@ class String extends Library {
 		 * Block >.
 		 *
 		 * @var string
-		 */
+		*/
 		$string = str_replace('&gt;', '&#62;', $string);
 
 		/**
 		 * Block <.
 		 *
 		 * @var string
-		 */
+		*/
 		$string = str_replace('<', '&#60;', $string);
 
 		/**
 		 * Block >.
 		 *
 		 * @var string
-		 */
+		*/
 		$string = str_replace('>', '&#62;', $string);
 
 		/**
 		 * Block <.
 		 *
 		 * @var string
-		 */
+		*/
 		$string = str_replace('%3C', '&#60;', $string);
 
 		/**
 		 * Block >.
 		 *
 		 * @var string
-		 */
+		*/
 		$string = str_replace('%3E', '&#62;', $string);
 
 		/**
 		 * Return result.
-		 */
+		*/
 		return $string;
 	}
 
@@ -366,6 +366,7 @@ class String extends Library {
 	 * @return bool
 	 */
 	public function MatchesCaptcha($string) {
+
 		/**
 		 * @var string
 		 */
@@ -375,8 +376,8 @@ class String extends Library {
 		 * Check if data is the same as the match.
 		 *
 		 * Return result.
-		 */
-		return ($string !== $captcha) ? FALSE : TRUE;
+		*/
+		return ($string != $captcha) ? FALSE : TRUE;
 	}
 
 	/**
@@ -402,7 +403,7 @@ class String extends Library {
 		 * @var string
 		 */
 		$url_string = base64_decode(strtr($string, '-_.', '+/='));
-		
+
 		return $url_string;
 
 		/**

@@ -55,7 +55,7 @@ class I18n extends Library {
 	 * Stores the current domain.
 	 *
 	 * @var string
-	 */
+	*/
 	private $_mDomain;
 
 	/**
@@ -92,12 +92,12 @@ class I18n extends Library {
 
 		/**
 		 * Add default domain message catalog.
-		 */
+		*/
 		$this->Add($defaultDomain);
 
 		/**
 		 * Load default domain message catalog.
-		 */
+		*/
 		$this->Load($defaultDomain);
 
 		return TRUE;
@@ -141,14 +141,14 @@ class I18n extends Library {
 
 		/**
 		 * Rumored to be needed on Win.
-		 */
+		*/
 		putenv("LANG=" . $this->_mLocale);
 
 		setlocale(LC_ALL, $this->_mLocale);
 
 		/**
 		 * Check if we have a session.
-		 */
+		*/
 		if (!empty($_SESSION)) {
 			/**
 			 * @var array
@@ -221,7 +221,7 @@ class I18n extends Library {
 		 * Add domain to list.
 		 *
 		 * @var array
-		 */
+		*/
 		$this->_mDomains[$domain_data[0]] = $raw_domain;
 
 		return TRUE;
@@ -247,7 +247,7 @@ class I18n extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$domain_name = (array_key_exists(1, $parts)) ? $parts[1] : $parts[0];
 
 		textdomain($domain_name);
@@ -256,7 +256,7 @@ class I18n extends Library {
 		 * Set active domain.
 		 *
 		 * @var string
-		 */
+		*/
 		$this->_mDomain = $domain_name;
 
 		/**
@@ -270,7 +270,7 @@ class I18n extends Library {
 
 			/**
 			 * @var string
-			 */
+			*/
 			$codeset = $parts[1];
 
 			/**
@@ -301,7 +301,7 @@ class I18n extends Library {
 		 * Init domain base directory.
 		 *
 		 * @var mixed
-		 */
+		*/
 		$base = NULL;
 
 		/**
@@ -338,9 +338,9 @@ class I18n extends Library {
 		 */
 		switch ($type) {
 			case 'Core' :
-			/**
-			 * @var string
-			 */
+				/**
+				 * @var string
+				 */
 				$base = 'path.core';
 
 				/**
@@ -352,9 +352,9 @@ class I18n extends Library {
 
 			case 'App' :
 			default :
-			/**
-			 * @var string
-			 */
+				/**
+				 * @var string
+				 */
 				$base = 'path.app';
 
 				/**
@@ -380,5 +380,26 @@ class I18n extends Library {
 		return array($domain, $path);
 	}
 
+	/**
+	 * Get list of available languages.
+	 *
+	 * @return array
+	 */
+	public function GetAvailableLangs() {
+
+		$langs = array();
+
+		$langs_config = Core::Config()->Get('i18n.langs.item');
+
+		if (!empty($langs_config)) {
+
+			foreach ($langs_config as $item) {
+
+				$langs[$item['lang']] = $item['locale'];
+			}
+		}
+
+		return $langs;
+	}
 }
 ?>

@@ -47,12 +47,12 @@ class Session extends Library {
 	 * Library tables.
 	 *
 	 * @var array
-	 */
+	*/
 	protected $_mTable = array();
-	
+
 	/**
 	 * Key prefix (use 'bin.' for binary key identification)
-	 */
+	*/
 	protected $_mKeyPrefix = NULL;
 
 	/**
@@ -70,15 +70,15 @@ class Session extends Library {
 		 */
 		return parent::_GetInstance($className);
 	}
-	
+
 	private function _Init() {
-		
+
 		$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
-	
+
 		if (empty($this->_mTable)) {
-	
+
 			$app_prefix = Core::Config()->Get('app.prefix');
-			
+
 			$this->_mTable['persistent'] = "{$app_prefix}acl_persistent";
 		}
 	}
@@ -89,31 +89,31 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function Start() {
-		
+
 		$this->_Init();
-		
+
 		$this->_mProp = array('expire' => Core::Config()->Get('session.expire'), 'lifetime' => Core::Config()->Get('session.lifetime'), 'path' => Core::Config()->Get('session.path'), 'domain' => Core::Config()->Get('session.domain'), 'secure' => (1 == Core::Config()->Get('session.secure')) ? TRUE : FALSE, 'httponly' => (1 == Core::Config()->Get('session.httponly')) ? TRUE : FALSE,);
 
 		/**
 		 * Set cache limiter.
-		 */
+		*/
 		session_cache_limiter('public, must-revalidate');
 
 		/**
 		 * Set cache expire (minutes).
-		 */
+		*/
 		session_cache_expire($this->_mProp['expire'] / 60);
 
 		/**
 		 * Set garbage collector timeout (seconds).
-		 */
+		*/
 		ini_set('session.gc_maxlifetime', $this->_mProp['expire']);
 
 		/**
 		 * Sett application temp directory.
 		 *
 		 * @var string
-		 */
+		*/
 		$temp_path = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.tmp') . '/';
 
 		/**
@@ -123,57 +123,58 @@ class Session extends Library {
 
 		/**
 		 * Set custom session path to application temp directory.
-		 */
+		*/
 		session_save_path($temp_path);
 
 		/**
 		 * Make sure garbage collector visits us.
-		 */
+		*/
 		ini_set('session.gc_probability', 1);
 
 		/**
 		 * Start session.
-		 */
+		*/
 		session_start();
 
 		/**
 		 * Header entity tag.
-		 */
+		*/
 		header('ETag: PUB' . time());
 
 		/**
 		 * Header last modified tag.
-		 */
+		*/
 		header('Last-Modified: ' . gmdate("D, d M Y H:i:s", time() - 10) . ' GMT');
 
 		/**
 		 * Header expires tag.
-		 */
+		*/
 		header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 5) . ' GMT');
 
 		/**
 		 * Header pragma tag.
-		 */
+		*/
 		header('Pragma: no-cache');
 
 		/**
 		 * Header cache control tag.
-		 */
+		*/
 		header('Cache-Control: max-age=1, s-maxage=1, no-cache, must-revalidate');
 
 		Core::Log()->Write(__('Session library: Started new session.', 'WEb'), 'debug');
 
 		if ((1 == Core::Config()->Get('session.token')) && empty($_SESSION['token'])) {
+
 			Core::Log()->Write(__('Session library: Setting token', 'WEb'), 'debug');
 
 			/**
 			 * @var string
-			 */
+			*/
 			$salt = Core::Security()->GetSalt('session');
 
 			/**
 			 * @var array
-			 */
+			*/
 			$_SESSION['token'] = Core::Security()->GetToken($salt);
 		}
 
@@ -189,11 +190,11 @@ class Session extends Library {
 	 * @return mixed
 	 */
 	public function CheckPersistentSession() {
-		
+
 		$this->_Init();
-		
+
 		if (empty($this->_mProp)) {
-			
+
 			$this->Start();
 		}
 
@@ -213,17 +214,17 @@ class Session extends Library {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$options['conditions'][] = array('persistent_token', $cookie_value[0]);
 
 		/**
 		 * @var array
-		 */
+		*/
 		$options['conditions'][] = array('persistent_expire', date('Y-m-d H:i:s'), 'gt');
 
 		/**
 		 * @var array
-		 */
+		*/
 		$persistence_data = Core::Database()->RetrieveOne(array($this->_mKeyPrefix . 'user_id', 'persistent_expire'), $this->_mTable['persistent'], $options);
 
 		if (empty($persistence_data)) {
@@ -257,11 +258,11 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function AddPersistentSession($userId, $persistentToken, $persistentExpire = NULL) {
-		
+
 		$this->_Init();
-		
+
 		if (empty($userId)) {
-			
+
 			return FALSE;
 		}
 
@@ -294,12 +295,12 @@ class Session extends Library {
 
 			/**
 			 * @var string
-			 */
+			*/
 			$cookie_value = $persistentToken . strrev($persistentExpire);
 
 			/**
 			 * Set cookie
-			 */
+			*/
 			setcookie($cookie_name, $cookie_value, $persistentExpire, $this->_mProp['path'], $this->_mProp['domain'], $this->_mProp['secure'], $this->_mProp['httponly']);
 
 			return TRUE;
@@ -324,11 +325,11 @@ class Session extends Library {
 	 * @return bool
 	 */
 	public function RemovePersistentSession($userId = NULL, $persistentToken = NULL, $onlyOld = FALSE) {
-		
+
 		$this->_Init();
-		
+
 		if (empty($this->_mProp)) {
-			
+
 			$this->Start();
 		}
 
@@ -380,21 +381,21 @@ class Session extends Library {
 	public function RemoveCookie($cookieType = '.session') {
 		switch ($cookieType) {
 			case '.session' :
-			/**
-			 * @var string
-			 */
+				/**
+				 * @var string
+				 */
 				$cookie_name = session_name();
 				break;
 			case '.persistence' :
-			/**
-			 * @var string
-			 */
+				/**
+				 * @var string
+				 */
 				$cookie_name = $this->_GetCookieName();
 				break;
 			default :
-			/**
-			 * @var string
-			 */
+				/**
+				 * @var string
+				 */
 				$cookie_name = $cookieType;
 				break;
 		}
@@ -406,7 +407,7 @@ class Session extends Library {
 
 		/**
 		 * Destroy cookie.
-		 */
+		*/
 		unset($_COOKIE[$cookie_name]);
 
 		return TRUE;

@@ -29,7 +29,7 @@ if (!defined('_WEB'))
 
 /**
  * Captcha
- * 
+ *
  * Captcha library.
  *
  * @author     Radu Maier <radu@webserv.co>
@@ -54,7 +54,7 @@ class Captcha extends Library
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
-	 */
+	*/
 	public static function GetInstance($className = __CLASS__)
 	{
 		/**
@@ -113,7 +113,7 @@ class Captcha extends Library
 
 		/**
 		 * @var array
-		 */
+		*/
 		$color = array_map('hexdec', $color);
 
 		switch ($colorType)
@@ -198,7 +198,7 @@ class Captcha extends Library
 
 		/**
 		 * @var array
-		 */
+		*/
 		$this->_mProp['type'] = $defaults['type'];
 
 		/**
@@ -218,12 +218,12 @@ class Captcha extends Library
 
 		/**
 		 * Set foreground color.
-		 */
+		*/
 		$this->SetColor($defaults['foreground'], 'foreground');
 
 		/**
 		 * @var array
-		 */
+		*/
 		$this->_mProp['transparent'] = (1 == $defaults['transparent']) ? TRUE : FALSE;
 
 		/**
@@ -257,7 +257,6 @@ class Captcha extends Library
 		}
 
 		return $token;
-
 	}
 
 	/**
@@ -298,26 +297,26 @@ class Captcha extends Library
 		 * Set text from captcha.
 		 *
 		 * @var array
-		 */
+		*/
 		$captcha = str_split($this->GetToken(), 1);
 
 		/**
 		 * Initialize image.
 		 *
 		 * @var resource
-		 */
+		*/
 		$image = imagecreatetruecolor($this->_mProp['width'], $this->_mProp['height']);
 
 		/**
 		 * Set background color.
 		 *
 		 * @var resource
-		 */
+		*/
 		$background = imagecolorallocate($image, $this->_mProp['background'][0], $this->_mProp['background'][1], $this->_mProp['background'][2]);
 
 		/**
 		 * Check if we have transparency enabled.
-		 */
+		*/
 		if (FALSE !== $this->_mProp['transparent'])
 		{
 			/**
@@ -335,13 +334,14 @@ class Captcha extends Library
 
 		/**
 		 * Fill image with background color.
-		 */
+		*/
 		imagefill($image, 0, 0, $background);
 
 		/**
 		 * @var string
-		 */
-		$font_path = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.opt') . '/fonts/' . $this->_mProp['font'];
+		*/
+		$font_path = Core :: Config()->Get('path.www') . Core :: Config()->Get('dir.app.usr') . '/' .
+				Core :: Config()->Get('dir.app.skins') . '/' . Core :: Config()->Get('output.skin') . '/fonts/' . $this->_mProp['font'];
 
 		/**
 		 * Write to image (1).
@@ -350,27 +350,27 @@ class Captcha extends Library
 
 		/**
 		 * Write to image (2).
-		 */
+		*/
 		imagettftext($image, $this->_mProp['size'], -30, 13, 12, $foreground, $font_path, $captcha['1']);
 
 		/**
 		 * Write to image (3).
-		 */
+		*/
 		imagettftext($image, $this->_mProp['size'], 10, 30, 16, $foreground, $font_path, $captcha['2']);
 
 		/**
 		 * Write to image (4).
-		 */
+		*/
 		imagettftext($image, $this->_mProp['size'], -10, 40, 14, $foreground, $font_path, $captcha['3']);
 
 		/**
 		 * Write to image (5).
-		 */
+		*/
 		imagettftext($image, $this->_mProp['size'], 10, 58, 16, $foreground, $font_path, $captcha['4']);
 
 		/**
 		 * Check image type
-		 */
+		*/
 		switch ($this->_mProp['type'])
 		{
 			case 'png' :
@@ -382,7 +382,7 @@ class Captcha extends Library
 
 				/**
 				 * Set png image header.
-				 */
+				*/
 				header("Content-type: image/png");
 
 				break;
@@ -395,22 +395,22 @@ class Captcha extends Library
 
 		/**
 		 * Set expire header to a date in the past.
-		 */
+		*/
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 
 		/**
 		 * Get image data.
-		 */
+		*/
 		$data = ob_get_contents();
 
 		/**
 		 * Delete image from memory.
-		 */
+		*/
 		imagedestroy($image);
 
 		/**
 		 * Erase the output buffer and turn off output buffering.
-		 */
+		*/
 		ob_end_clean();
 
 		return ($outputImage) ? $data : base64_encode($data);

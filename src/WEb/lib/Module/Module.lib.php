@@ -71,17 +71,17 @@ class Module extends Library {
 
 		/**
 		 * Load module i18n.
-		 */
+		*/
 		Core::I18n()->Load($className);
 
 		/**
 		 * @var array
-		 */
+		*/
 		$parts = explode('_', $className);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$module_name = array_key_exists(1, $parts) ? strtolower($parts[1]) : $parts[0];
 
 		/**
@@ -91,7 +91,7 @@ class Module extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$cfg_file = $path_app . 'etc/' . Core::Config()->Get('dir.app.mod') . '/' . ucfirst($module_name) . '/' . $module_name . '.cfg.xml';
 
 		if (!is_readable($cfg_file)) {
@@ -119,5 +119,86 @@ class Module extends Library {
 		return Core::Config()->Set($cfg_file);
 	}
 
+
+	/**
+	 * Get current module name.
+	 *
+	 * @param array $request
+	 *
+	 * @return string
+	 */
+	public function GetCurrentModule($request) {
+
+		return strtolower(str_replace('Module_', '', $request['module']));
+	}
+
+	/**
+	 * Get current resource name.
+	 *
+	 * Module/Controller/Action.
+	 *
+	 * @param array $request
+	 * @param string $modulemodule name
+	 *
+	 * @return string
+	 */
+	public function GetCurrentResource($request, $module = NULL) {
+
+		if (empty($module)) {
+
+			$module = $this->GetCurrentModule($request);
+		}
+
+		$module = ucfirst($module);
+
+		$controller = str_replace(array("{$module}_", 'Controller_'), NULL, $request['controller']);
+
+		return $module . '/' . $controller . '/' . $request['action'];
+	}
+
+	/**
+	 * Get default paths.
+	 *
+	 * @return array
+	 */
+	public function GetDefaultPaths() {
+
+		/**
+		 * @var array
+		 */
+		$default_paths = array();
+
+		/**
+		 * App Path.
+		*/
+		$default_paths['path_app'] = Core :: Config()->Get('path.app');
+
+		/**
+		 * App WWW path.
+		*/
+		$default_paths['path_www'] = Core :: Config()->Get('path.www');
+
+		/**
+		 * App URL.
+		*/
+		$default_paths['url_app'] = Core :: Config()->Get('url.app');
+
+		/**
+		 * Skin URL
+		*/
+		$default_paths['url_skin'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/' . Core :: Config()->Get('dir.app.skins') . '/' . Core :: Config()->Get('output.skin') . '/';
+
+		/**
+		 * Scripts URL
+		 */
+		$default_paths['url_scripts'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/scripts/';
+
+		/**
+		 * Media URL.
+		 */
+		$default_paths['url_media'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/media/';
+
+		return $default_paths;
+	}
 }
 ?>

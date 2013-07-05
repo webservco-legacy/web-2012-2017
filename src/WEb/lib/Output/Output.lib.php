@@ -90,7 +90,7 @@ class Output extends Library {
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
-	 */
+	*/
 	public static function GetInstance($className = __CLASS__) {
 		/**
 		 * Call parent method with current class name as parameter.
@@ -140,14 +140,14 @@ class Output extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$out_template = $outTemplate ? $outTemplate : $this->_mTemplate;
 
 		Core::Log()->Write(__('Output library: Calling Set() method.', 'WEb'), 'debug');
 
 		/**
 		 * Check if we actually have data.
-		 */
+		*/
 		if (is_array($outData)) {
 			foreach ($outData as $out_name => $out_value) {
 				/**
@@ -182,13 +182,39 @@ class Output extends Library {
 
 		return TRUE;
 	}
-	
+
 	/**
-	 * Get template name.
+	 * Get main template name.
 	 */
 	public function GetTemplate() {
-		
+
 		return $this->_mTemplate;
+	}
+
+
+	/**
+	 * Get secondary template name/path.
+	 *
+	 * @param array $request
+	 * @param string $customTemplate
+	 *
+	 * @return string
+	 */
+	public function GetSubTemplate($request = array(), $customTemplate = NULL) {
+
+		if (!empty ($request['action']) && !empty ($request['module'])) {
+
+			/**
+			 * @var string
+			 */
+			$template_suffix = !empty ($customTemplate) ? $customTemplate : $request['action'];
+
+			return str_replace('Module_', NULL, $request['module']) . '/' . strtolower($template_suffix);
+
+		} else {
+
+			return !empty ($customTemplate) ? $customTemplate : 'error';
+		}
 	}
 
 	/**
@@ -214,7 +240,7 @@ class Output extends Library {
 
 			/**
 			 * @var string
-			 */
+			*/
 			$err_msg_b = _('Configuration file not found.');
 
 			Core::Log()->Write($err_msg_a . ' ' . $err_msg_b, 'erorr');
@@ -274,12 +300,12 @@ class Output extends Library {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$engine_config = Core::Config()->Get('output.' . strtolower($engineName));
 
 		/**
 		 * @var string
-		 */
+		*/
 		$engine_path = $this->GetEnginePath($engineName);
 
 		if (FALSE === $engine_path) {
@@ -289,7 +315,7 @@ class Output extends Library {
 			$err_msg_a = sprintf(__('Output Library: Error loading external output engine "%s".', 'WEb'), $engineName);
 			/**
 			 * @var string
-			 */
+			*/
 			$err_msg_b = _('File not found.');
 
 			trigger_error($err_msg_a . ' ' . $err_msg_b, 256);

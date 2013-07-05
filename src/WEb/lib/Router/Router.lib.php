@@ -53,21 +53,21 @@ class Router extends Library {
 	 *
 	 * @var string
 	 */
-	private $_mLocation;
+	private $_mLocation = NULL;
 
 	/**
 	 * Stores default route.
 	 *
 	 * @var string
 	 */
-	private $_mDefaultRoute;
+	private $_mDefaultRoute = NULL;
 
 	/**
 	 * Stores custom routes.
 	 *
 	 * @var array
 	 */
-	private $_mCustomRoutes;
+	private $_mCustomRoutes = array();
 
 	/**
 	 * Implement GetInstance() method.
@@ -77,7 +77,7 @@ class Router extends Library {
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
-	 */
+	*/
 	public static function GetInstance($className = __CLASS__) {
 		/**
 		 * Call parent method with current class name as parameter.
@@ -99,14 +99,14 @@ class Router extends Library {
 		 * Set request.
 		 *
 		 * @var string
-		 */
+		*/
 		$this->_mRequest = $this->_GetRequest();
 
 		/**
 		 * Set temporary location to current request.
 		 *
 		 * @var string
-		 */
+		*/
 		$this->_mLocation = $this->_mRequest;
 
 		/**
@@ -116,19 +116,19 @@ class Router extends Library {
 
 		/**
 		 * Empty get array for security.
-		 */
+		*/
 		$this->_EmptyGet();
 
 		/**
 		 * Get parsed request.
 		 *
 		 * @var array
-		 */
+		*/
 		$request = $this->_GetParsedRequest();
 
 		/**
 		 * Format final request.
-		 */
+		*/
 		return $this->_FormatFinalRequest($request);
 	}
 
@@ -153,12 +153,12 @@ class Router extends Library {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$raw_query = explode('/', $requestQuery);
 
 		/**
 		 * @var array
-		 */
+		*/
 		$raw_query = array_diff($raw_query, array(''));
 
 		if (FALSE !== $returnNumeric) {
@@ -194,12 +194,12 @@ class Router extends Library {
 
 		/**
 		 * @var bool
-		 */
+		*/
 		$check = Core::String()->EndsWith($extension, $request);
 
 		/**
 		 * Check if request ends with the fake extension.
-		 */
+		*/
 		if (('' != $extension) && (FALSE !== $check)) {
 			Core::Log()->Write(__('Router library: Removing fake extension.', 'WEb'), 'debug');
 
@@ -208,59 +208,59 @@ class Router extends Library {
 
 		return $request;
 	}
-	
+
 	/**
-	* Remove fake extension from request.
-	*
-	* @param string $request
-	*/
+	 * Remove fake extension from request.
+	 *
+	 * @param string $request
+	 */
 	public function RemoveFakeExtension($request) {
 		/**
 		 * @var string
 		 */
 		$extension = Core::Config()->Get('seo.extension');
-		
+
 		if (!empty($extension)) {
-			
+
 			if (is_array($extension)) {
-				
+
 				foreach ($extension as $extension) {
-					
+
 					/**
-					* @var bool
-					*/
+					 * @var bool
+					 */
 					$check = Core::String()->EndsWith($extension, $request);
-					
+
 					/**
 					 * Check if request ends with the fake extension.
-					 */
+					*/
 					if (('' != $extension) && (FALSE !== $check)) {
 						Core::Log()->Write(__('Router library: Removing fake extension.', 'WEb'), 'debug');
-					
+							
 						$request = str_replace($extension, '', $request);
 					}
-					
+
 				}
-				
+
 			} else {
-				
+
 				/**
-				* @var bool
-				*/
+				 * @var bool
+				 */
 				$check = Core::String()->EndsWith($extension, $request);
-				
+
 				/**
 				 * Check if request ends with the fake extension.
-				 */
+				*/
 				if (('' != $extension) && (FALSE !== $check)) {
 					Core::Log()->Write(__('Router library: Removing fake extension.', 'WEb'), 'debug');
-				
+
 					$request = str_replace($extension, '', $request);
 				}
-				
+
 			}
 		}
-	
+
 		return $request;
 	}
 
@@ -276,36 +276,44 @@ class Router extends Library {
 	 * @return void
 	 */
 	public function Redirect($newLocation = NULL) {
+
 		if (empty($newLocation)) {
+
 			return $this->_RedirectSelf();
 		}
 
+		$url_app = Core::Config()->Get('url.app');
+
 		/**
 		 * Check if the "home" keyword is present.
-		 */
+		*/
 		if ('/' == $newLocation) {
+
 			/**
-			 * Void the location so we have a home redirect.
+			 * Redirect to home.
 			 *
 			 * @var string
 			 */
-			$newLocation = NULL;
-		}
-		
-		if (
-			Core::String()->StartsWith($newLocation, 'http://') 
-			|| Core::String()->StartsWith($newLocation, 'https://')
-		) {
-			/**
-			 * @var string
-			 */
-			$url = $newLocation;
-				
+			$url = $url_app;
+
 		} else {
-			/**
-			 * @var string
-			 */
-			$url = Core::Config()->Get('url.app') . $newLocation;
+
+			if (
+			Core::String()->StartsWith($newLocation, 'http://') ||
+			Core::String()->StartsWith($newLocation, 'https://')
+			) {
+				/**
+				 * @var string
+				 */
+				$url = $newLocation;
+					
+			} else {
+				/**
+				 * @var string
+				 */
+				$url =  $url_app . $newLocation;
+			}
+
 		}
 
 		/**
@@ -315,7 +323,7 @@ class Router extends Library {
 
 		/**
 		 * Stop script execution.
-		 */
+		*/
 		exit();
 	}
 
@@ -330,14 +338,23 @@ class Router extends Library {
 		 */
 		$request = NULL;
 
-		if (isset($_SERVER['PATH_INFO'])) {
+		if (isset($_SERVER['REQUEST_URI'])) {
+			Core::Log()->Write(__('Router library: Performing REQUEST_URI routing.', 'WEb'), 'debug');
+
+			/**
+			 * Set request.
+			 *
+			 * @var string
+			*/
+			$request = $this->_processRequest($_SERVER['REQUEST_URI']);
+		} else if (isset($_SERVER['PATH_INFO'])) {
 			Core::Log()->Write(__('Router library: Performing PATH_INFO routing.', 'WEb'), 'debug');
 
 			/**
 			 * Set request.
 			 *
 			 * @var string
-			 */
+			*/
 			$request = $this->_ProcessRequest($_SERVER['PATH_INFO']);
 		} else if (isset($_SERVER['ORIG_PATH_INFO'])) {
 			Core::Log()->Write(__('Router library: Performing ORIG_PATH_INFO routing.', 'WEb'), 'debug');
@@ -346,17 +363,8 @@ class Router extends Library {
 			 * Set request.
 			 *
 			 * @var string
-			 */
+			*/
 			$request = $this->_processRequest($_SERVER['ORIG_PATH_INFO']);
-		} else if (isset($_SERVER['REQUEST_URI'])) {
-			Core::Log()->Write(__('Router library: Performing REQUEST_URI routing.', 'WEb'), 'debug');
-
-			/**
-			 * Set request.
-			 *
-			 * @var string
-			 */
-			$request = $this->_processRequest($_SERVER['REQUEST_URI']);
 		}
 		/**
 		 * In this case the request is old style (?option=value)
@@ -370,7 +378,7 @@ class Router extends Library {
 			 *
 			 * This method doesn't return anything.
 			 * It does a redirect.
-			 */
+			*/
 			return $this->_ProcessQueryString();
 		}
 
@@ -381,7 +389,7 @@ class Router extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request = rtrim($request, '/');
 
 		return $request;
@@ -410,7 +418,7 @@ class Router extends Library {
 		 * Initialize second part of request.
 		 *
 		 * @var string
-		 */
+		*/
 		$req2 = '';
 
 		/**
@@ -443,12 +451,12 @@ class Router extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$server_path = parse_url($app_url, PHP_URL_PATH);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$unwanted = ('/' != $server_path) ? $server_path : '';
 
 		/**
@@ -458,17 +466,17 @@ class Router extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request_string = str_replace('&', '/', $request_string);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request_string = str_replace('=', '/', $request_string);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request_string = str_replace('//', '/0/', $request_string);
 
 		return $request_string;
@@ -496,17 +504,17 @@ class Router extends Library {
 		 * Init request uri.
 		 *
 		 * @var string
-		 */
+		*/
 		$req_uri = str_replace('?' . $_SERVER['QUERY_STRING'], '/' . $qs, $_SERVER['REQUEST_URI']);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$req_uri = str_replace('//', '/', $req_uri);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$server = NULL;
 
 		if (isset($_SERVER['HTTP_HOST']) && ('' != $_SERVER['HTTP_HOST'])) {
@@ -544,12 +552,12 @@ class Router extends Library {
 
 		/**
 		 * Set costom routes, (and also default route).
-		 */
+		*/
 		$this->_SetCustomRoutes();
 
 		/**
 		 * Check for empty request.
-		 */
+		*/
 		if (NULL == $this->_mRequest) {
 			Core::Log()->Write(__('Router library: Empty request. Setting to default.', 'WEb'), 'debug');
 
@@ -557,7 +565,7 @@ class Router extends Library {
 			 * Set request to default request, and exit.
 			 *
 			 * @var string
-			 */
+			*/
 			$this->_mRequest = $this->_mDefaultRoute;
 
 			return TRUE;
@@ -578,12 +586,12 @@ class Router extends Library {
 			 * Replace {any} wildcards with regular expressions.
 			 *
 			 * @var string
-			 */
+			*/
 			$route_name = str_replace('{any}', '.+', $route_name);
 
 			/**
 			 * Check for a custom route match.
-			 */
+			*/
 			if (preg_match('#^' . $route_name . '$#', $this->_mRequest) || preg_match('#^' . $route_name . '/$#', $this->_mRequest)) {
 				/**
 				 * Check for back-references.
@@ -630,20 +638,26 @@ class Router extends Library {
 			return FALSE;
 		}
 
+		if ('name' === key($routes)) {
+			$routes = array(
+					0 => $routes,
+			);
+		}
+
 		foreach ($routes as $route) {
 			if ('index' == $route['name']) {
 				Core::Log()->Write(__('Router library: Setting default route.', 'WEb'), 'debug');
 
 				/**
 				 * @var string
-				 */
+				*/
 				$this->_mDefaultRoute = $route['value'];
 			} else {
 				Core::Log()->Write(__('Router library: Setting custom route.', 'WEb'), 'debug');
 
 				/**
 				 * @var array
-				 */
+				*/
 				$this->_mCustomRoutes[$route['name']] = $route['value'];
 			}
 		}
@@ -691,17 +705,17 @@ class Router extends Library {
 		 * Split request in four parts.
 		 *
 		 * @var array
-		 */
+		*/
 		$request_values = explode('/', $this->_mRequest, 4);
 
 		/**
 		 * @var int
-		 */
+		*/
 		$total_values = count($request_values);
 
 		/**
 		 * Check if we have enough values.
-		 */
+		*/
 		if (4 > $total_values) {
 			/**
 			 * Fill with blanks.
@@ -720,28 +734,28 @@ class Router extends Library {
 		 * If module is empty, set it to default.
 		 *
 		 * @var string
-		 */
+		*/
 		$request['module'] = (!empty($request['module'])) ? Core::Security()->FilterInput($request['module'], TRUE, TRUE) : Core::Config()->Get('router.default.module');
 
 		/**
 		 * If controller is empty, set it to default.
 		 *
 		 * @var string
-		 */
+		*/
 		$request['controller'] = (!empty($request['controller'])) ? Core::Security()->FilterInput($request['controller'], TRUE, TRUE) : Core::Config()->Get('router.default.controller');
 
 		/**
 		 * If action is empty, set it to default.
 		 *
 		 * @var string
-		 */
+		*/
 		$request['action'] = (!empty($request['action'])) ? Core::Security()->FilterInput($request['action'], TRUE, TRUE) : Core::Config()->Get('router.default.action');
 
 		/**
 		 * If query is not empty, filter it.
 		 *
 		 * @var string
-		 */
+		*/
 		$request['query'] = (!empty($request['query'])) ? Core::Security()->FilterInput($request['query'], TRUE, TRUE) : '';
 
 		/**
@@ -766,7 +780,7 @@ class Router extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request['module'] = 'Module_' . $module;
 
 		/**
@@ -776,7 +790,7 @@ class Router extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$request['controller'] = 'Controller_' . $module . '_' . $controller;
 
 		/**
@@ -786,7 +800,7 @@ class Router extends Library {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$request['query'] = (!empty($request['query'])) ? $this->ParseRequestQuery($request['query']) : array();
 
 		Core::Log()->Write(__('Router library: Request formatting done.', 'WEb'), 'debug');
@@ -826,9 +840,8 @@ class Router extends Library {
 
 		/**
 		 * Stop script execution.
-		 */
+		*/
 		exit();
 	}
-
 }
 ?>

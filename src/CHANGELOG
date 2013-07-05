@@ -2,6 +2,10 @@ $Id$
 
 Web Engine for Business Change log.
 
+2013-07-05 Radu Maier <radu@webserv.co>
+	
+	* version 6
+
 2010-09-19 Radu Maier <radu@webserv.co>
 	
 	* Config Class is ready
