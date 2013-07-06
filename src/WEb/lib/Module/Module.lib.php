@@ -200,5 +200,54 @@ class Module extends Library {
 
 		return $default_paths;
 	}
+
+	public function GetMenu($url_app, $menuNode = 'web') {
+
+		$menu = array();
+
+		$menu_config = Core::Config()->Get("menu.{$menuNode}.item");
+
+		if (!empty($menu_config)) {
+
+			foreach ($menu_config as $menu_item) {
+					
+				if (!empty($menu_item['url'])) {
+
+					$menu_href = $menu_item['url'];
+
+				} else {
+
+					if (!empty($menu_item['link'])) {
+
+						if ('index' == $menu_item['link']) {
+
+							$menu_href = $url_app;
+							
+						} else {
+							
+							$menu_href = $url_app . $menu_item['link'];
+						}
+
+					} else {
+
+						$menu_href = NULL;
+					}
+				}
+
+				$submenu = !empty($menu_item['submenu']) ? $this->GetMenu($url_app, $menu_item['submenu']) : NULL;
+
+				$target = !empty($menu_item['target']) ? $menu_item['target'] : NULL;
+
+				$menu[] = array(
+						'title' => $menu_item['title'],
+						'href' => $menu_href,
+						'target' => $target,
+						'submenu' => $submenu,
+				);
+			}
+		}
+
+		return $menu;
+	}
 }
 ?>

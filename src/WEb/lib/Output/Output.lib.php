@@ -185,10 +185,12 @@ class Output extends Library {
 
 	/**
 	 * Get main template name.
+	 * 
+	 * @param string $templatePrefix
 	 */
-	public function GetTemplate() {
+	public function GetTemplate($templatePrefix = NULL) {
 
-		return $this->_mTemplate;
+		return $templatePrefix . $this->_mTemplate;
 	}
 
 
@@ -197,10 +199,11 @@ class Output extends Library {
 	 *
 	 * @param array $request
 	 * @param string $customTemplate
+	 * @param string $templatePrefix
 	 *
 	 * @return string
 	 */
-	public function GetSubTemplate($request = array(), $customTemplate = NULL) {
+	public function GetSubTemplate($request = array(), $customTemplate = NULL, $templatePrefix = NULL) {
 
 		if (!empty ($request['action']) && !empty ($request['module'])) {
 
@@ -209,7 +212,7 @@ class Output extends Library {
 			 */
 			$template_suffix = !empty ($customTemplate) ? $customTemplate : $request['action'];
 
-			return str_replace('Module_', NULL, $request['module']) . '/' . strtolower($template_suffix);
+			return str_replace('Module_', NULL, $request['module']) . '/' . strtolower($templatePrefix) . strtolower($template_suffix);
 
 		} else {
 
