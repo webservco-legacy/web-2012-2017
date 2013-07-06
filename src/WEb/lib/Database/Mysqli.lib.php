@@ -54,14 +54,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 	 * Order by.
 	 *
 	 * @var array
-	 */
+	*/
 	private $_mOrderBy = array('asc' => 'ASC', 'desc' => 'DESC',);
 
 	/**
 	 * Setup database connection.
 	 *
 	 * @return bool
-	 */
+	*/
 	protected function _GetLink() {
 		/**
 		 * Set configuration data.
@@ -72,7 +72,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set MySQL default port if we have no custom port in configuration settings.
 		 *
 		 * @var string
-		 */
+		*/
 		$db_port = ('' != $this->_mDbPort) ? $this->_mDbPort : '3306';
 
 		/**
@@ -109,12 +109,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * UTF Compatibility.
-		 */
+		*/
 		$this->_mDbLink->set_charset('utf8');
 
 		/**
 		 * Check if we should fic GROUP_CONCAT limit
-		 */
+		*/
 		if (1 == Core::Config()->Get('database.fix_gc')) {
 			$this->_mDbLink->query("SET SESSION group_concat_max_len = 1048576");
 		}
@@ -127,6 +127,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 	 * @see Interface_Database::Disconnect()
 	 */
 	public function Disconnect() {
+
 		return $this->_mDbLink->close();
 	}
 
@@ -165,6 +166,15 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		$result = $this->_mDbLink->query($query);
 
+		if (!$result) {
+
+			Core::Log()->Write($query, 'info');
+
+			$message = __('Database library: Error executing query.', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
+
 		Core::Log()->Write($query, 'debug');
 
 		return $result;
@@ -181,6 +191,13 @@ class Database_Mysqli extends Database implements Interface_Database {
 		$this->Connect();
 
 		$result = $this->_mDbLink->query("SELECT REPLACE(UUID(), '-', '')");
+
+		if (!$result) {
+
+			$message = __('Database library: Error generating UUID:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		/**
 		 * @var array
@@ -204,19 +221,22 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "SELECT COLUMN_NAME AS primary_key FROM INFORMATION_SCHEMA.STATISTICS
-					WHERE INDEX_NAME='PRIMARY'
-					AND INDEX_SCHEMA='{$this->_mDbDatabase}'
-					AND TABLE_NAME='{$table}'";
+		WHERE INDEX_NAME='PRIMARY'
+		AND INDEX_SCHEMA='{$this->_mDbDatabase}'
+		AND TABLE_NAME='{$table}'";
 
 		/**
 		 * @var resource
 		 */
 		$result = $this->_mDbLink->query($query);
 
-		if (FALSE === $result) {
-			return FALSE;
+		if (!$result) {
+
+			$message = __('Database library: Error getting primary key:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
 		}
 
 		/**
@@ -241,12 +261,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$fields = array();
 
 		/**
 		 * @var array
-		 */
+		*/
 		$values = array();
 
 		foreach ($data as $field => $value) {
@@ -261,7 +281,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 					$fields[] = $this->_PrepareBinaryField($field);
 					/**
 					 * @var array
-					 */
+					*/
 					$values[] = "UNHEX('{$this->EscapeString($value)}')";
 				} else {
 					/**
@@ -283,12 +303,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$qf_values = implode(', ', $values);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "INSERT INTO {$table} ({$qf_fields}) VALUES ({$qf_values})";
 
 		Core::Log()->Write(__('Database Library: Preparing create query.', 'WEb'), 'debug');
@@ -297,21 +317,26 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var resource
-		 */
+		*/
 		$this->_mDbStmt = $this->_mDbLink->prepare($query);
 
 		if (FALSE === $this->_mDbStmt) {
 			return FALSE;
 		}
 
-		$this->_mDbStmt->execute();
+		if (!$this->_mDbStmt->execute()) {
+
+			$message = __('Database library: Error executing statement:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		$this->_mDbStmt->close();
 
 		/**
 		 * Perhaps needed in the future.
 		 * return $this->_mDbLink->insert_id;
-		 */
+		*/
 
 		return TRUE;
 	}
@@ -330,7 +355,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Needed for result binding.
 		 *
 		 * @var array
-		 */
+		*/
 		$data = (!is_array($data)) ? array($data) : $data;
 
 		/**
@@ -350,7 +375,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 			 * Set column name
 			 *
 			 * @var string
-			 */
+			*/
 			$col = $raw_field[0];
 
 			if ($this->_IsBinaryField($col)) {
@@ -394,26 +419,26 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set default condition query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_conditions = $this->_PrepareConditionsString($options);
 
 		/**
 		 * Set default order query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_order = $this->_PrepareOrderString($options);
 
 		/**
 		 * Set default limit query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_limit = $this->_PrepareLimitString($options);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "SELECT {$columns} FROM {$table}{$qf_conditions}{$qf_order}{$qf_limit}";
 
 		Core::Log()->Write(__('Database Library: Preparing retrieve query.', 'WEb'), 'debug');
@@ -426,7 +451,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 			return FALSE;
 		}
 
-		$this->_mDbStmt->execute();
+		if (!$this->_mDbStmt->execute()) {
+
+			$message = __('Database library: Error executing statement:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		/**
 		 * @var array
@@ -435,7 +465,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var array
-		 */
+		*/
 		$params = $data;
 
 		/**
@@ -461,7 +491,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Init empty result.
 		 *
 		 * @var array
-		 */
+		*/
 		$results = array();
 
 		while ($this->_mDbStmt->fetch()) {
@@ -505,7 +535,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set default values query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_data = NULL;
 
 		foreach ($data as $key => $value) {
@@ -526,7 +556,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 					/**
 					 * @var string
-					 */
+					*/
 					$value = "UNHEX('$value')";
 				} else {
 					/**
@@ -551,19 +581,19 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set default condition query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_conditions = $this->_PrepareConditionsString($options);
 
 		/**
 		 * Set default limit query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_limit = $this->_PrepareLimitString($options);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "UPDATE {$table} SET {$qf_data}{$qf_conditions}{$qf_limit}";
 
 		Core::Log()->Write(__('Database Library: Preparing update query.', 'WEb'), 'debug');
@@ -572,7 +602,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		$this->_mDbStmt = $this->_mDbLink->prepare($query);
 
-		$this->_mDbStmt->execute();
+		if (!$this->_mDbStmt->execute()) {
+
+			$message = __('Database library: Error executing statement:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		$this->_mDbStmt->close();
 
@@ -593,26 +628,26 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set default condition query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_conditions = $this->_PrepareConditionsString($options);
 
 		/**
 		 * Set default order query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_order = $this->_PrepareOrderString($options);
 
 		/**
 		 * Set default limit query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_limit = $this->_PrepareLimitString($options);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "DELETE FROM {$table}{$qf_conditions}{$qf_order}{$qf_limit}";
 
 		Core::Log()->Write(__('Database Library: Preparing delete query.', 'WEb'), 'debug');
@@ -621,10 +656,15 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var resource
-		 */
+		*/
 		$this->_mDbStmt = $this->_mDbLink->prepare($query);
 
-		$this->_mDbStmt->execute();
+		if (!$this->_mDbStmt->execute()) {
+
+			$message = __('Database library: Error executing statement:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		$this->_mDbStmt->close();
 
@@ -645,7 +685,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Make sure the limit isset.
 		 *
 		 * @var array
-		 */
+		*/
 		$options['limit'] = 1;
 
 		/**
@@ -670,7 +710,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$data = "COUNT({$data}):total";
 
 		/**
@@ -697,19 +737,19 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set default condition query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_conditions = $this->_PrepareConditionsString($options);
 
 		/**
 		 * Set default limit query fill.
 		 *
 		 * @var string
-		 */
+		*/
 		$qf_limit = $this->_PrepareLimitString($options);
 
 		/**
 		 * @var string
-		 */
+		*/
 		$query = "UPDATE {$table} SET {$field} = $field+1{$qf_conditions}{$qf_limit}";
 
 		Core::Log()->Write(__('Database Library: Preparing increment query.', 'WEb'), 'debug');
@@ -718,7 +758,12 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		$this->_mDbStmt = $this->_mDbLink->prepare($query);
 
-		$this->_mDbStmt->execute();
+		if (!$this->_mDbStmt->execute()) {
+
+			$message = __('Database library: Error executing statement:', 'WEb') . ' ' . $this->_mDbLink->error;
+
+			trigger_error($message);
+		}
 
 		$this->_mDbStmt->close();
 
@@ -761,21 +806,21 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 		return (!empty($result['max_item'])) ? $result['max_item'] : NULL;
 	}
-	
+
 	public function ValueExists($table, $field, $value) {
-		
+
 		$options['conditions'][] = array($field, $value);
-		
+
 		$result = $this->RetrieveOne($field, $table, $options);
-		
+
 		return !empty($result[$field]) ? TRUE: FALSE;
-		
+
 	}
-	
+
 	public function GetInsertId() {
-		
+
 		$this->Connect();
-		
+
 		return $this->_mDbLink->insert_id;
 	}
 
@@ -783,8 +828,6 @@ class Database_Mysqli extends Database implements Interface_Database {
 	 * PHP 5.3 fix call_user_func_array + mysqli bind_param
 	 *
 	 * @author http://ca.php.net/manual/en/mysqli-stmt.bind-param.php#96770
-	 *
-	 * @todo move to string library or similar, so we can also use it in other places.
 	 *
 	 * @param array $data
 	 *
@@ -849,7 +892,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 				/**
 				 * Check binary field
-				 */
+				*/
 				if ($this->_IsBinaryField($options['conditions'][0])) {
 					/**
 					 * @var array
@@ -857,7 +900,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 					$options['conditions'][0] = $this->_PrepareBinaryField($options['conditions'][0]);
 					/**
 					 * @var array
-					 */
+					*/
 					$options['conditions'][1] = "UNHEX('{$value}')";
 				} else {
 					/**
@@ -883,7 +926,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 					/**
 					 * Check binary field
-					 */
+					*/
 					if ($this->_IsBinaryField($condition[0])) {
 						/**
 						 * @var array
@@ -892,7 +935,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 						/**
 						 * @var array
-						 */
+						*/
 						$condition[1] = "UNHEX('{$value}')";
 					} else {
 						/**
@@ -902,7 +945,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 						/**
 						 * @var array
-						 */
+						*/
 						$condition[1] = "'{$value}'";
 					}
 					/**
