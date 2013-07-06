@@ -25,8 +25,8 @@
 			
 			<p>
 				<select name="item_status" id="item_status">
-					<option value="on"<?php if ('off' == $form['data']['item_status']) {echo ' selected="selected"';} ?>><?php echo __('on'); ?></option>
-					<option value="off"<?php if ('off' == $form['data']['item_status']) {echo ' selected="selected"';} ?>><?php echo __('off'); ?></option>
+					<option value="on"<?php if (!empty($form['data']['item_status']) && 'on' == $form['data']['item_status']) {echo ' selected="selected"';} ?>><?php echo __('on'); ?></option>
+					<option value="off"<?php if (!empty($form['data']['item_status']) && 'off' == $form['data']['item_status']) {echo ' selected="selected"';} ?>><?php echo __('off'); ?></option>
 				</select>
 				<?php
 				if (!empty($form['errors']['fields']["item_status"])) {
@@ -69,8 +69,6 @@
 		</fieldset>
 	
 	</form>
-		
-		
 		
 	<?php } else {
 		

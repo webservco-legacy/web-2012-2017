@@ -38,7 +38,66 @@ class Controller_Items_Admin extends ControllerApp {
 		return TRUE;
 	}
 
-	public function Item() {
+	public function Add() {
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
+		if (!$this->CheckAdminAccess($data)) {
+
+			return FALSE;
+		}
+
+		/**
+		 * Custom functionality below this line.
+		 */
+
+		$data['strings']['title'] = __('Item');
+
+		$data['errors'] = NULL;
+
+		if (!empty($_POST)) {
+
+			$data['form'] = $this->Module()->Add($_POST);
+
+		} else {
+
+			$data['form']['data'] = NULL;
+		}
+
+		echo $this->GetOutput($data);
+
+		return TRUE;
+	}
+
+	public function Added() {
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
+		if (!$this->CheckAdminAccess($data)) {
+
+			return FALSE;
+		}
+
+		/**
+		 * Custom functionality below this line.
+		 */
+
+		$data['strings']['title'] = __('Item');
+
+		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
+
+		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully added'), $data['item_id']);
+
+		echo $this->GetOutput($data, 'result');
+
+		return TRUE;
+	}
+
+	public function Modify() {
 
 		$this->Init();
 
@@ -63,7 +122,7 @@ class Controller_Items_Admin extends ControllerApp {
 
 			if (!empty($_POST)) {
 					
-				$data['form'] = $this->Module()->SaveItem($data['item_id'], $_POST);
+				$data['form'] = $this->Module()->Modify($data['item_id'], $_POST);
 					
 			} else {
 					
@@ -80,7 +139,7 @@ class Controller_Items_Admin extends ControllerApp {
 		return TRUE;
 	}
 
-	public function ItemSaved() {
+	public function Modified() {
 
 		$this->Init();
 
@@ -99,9 +158,68 @@ class Controller_Items_Admin extends ControllerApp {
 
 		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
 
-		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully saved'), $data['item_id']);
+		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully modified.'), $data['item_id']);
+
+		echo $this->GetOutput($data, 'result');
+
+		return TRUE;
+	}
+
+	public function Delete() {
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
+		if (!$this->CheckAdminAccess($data)) {
+
+			return FALSE;
+		}
+
+		/**
+		 * Custom functionality below this line.
+		 */
+		
+		$data['strings']['title'] = __('Item');
+		
+		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
+
+		if (!empty($data['query']['confirm'])) {
+
+			$this->Module()->Delete($data['item_id']);
+
+			return TRUE;
+		}
+
+		$data['strings']['message'] = sprintf(__('Please confirm you really want to delete Item ID %s and all related data.'), $data['item_id']);
 
 		echo $this->GetOutput($data);
+
+		return TRUE;
+	}
+
+	public function Deleted() {
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
+		if (!$this->CheckAdminAccess($data)) {
+
+			return FALSE;
+		}
+
+		/**
+		 * Custom functionality below this line.
+		 */
+
+		$data['strings']['title'] = __('Item');
+
+		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
+
+		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully deleted.'), $data['item_id']);
+
+		echo $this->GetOutput($data, 'deleted');
 
 		return TRUE;
 	}

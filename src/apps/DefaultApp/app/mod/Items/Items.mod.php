@@ -161,7 +161,85 @@ class Module_Items extends ModuleApp {
 		return $data;
 	}
 
-	public function SaveItem($itemId, $itemData) {
+	public function Add($itemData) {
+
+		$form = array(
+				'data' => $itemData,
+				'errors' => NULL,
+		);
+
+		$app_langs = Core::I18n()->GetAvailableLangs();
+
+		if (empty($itemData['item_status'])) {
+
+			$form['errors']['fields']['item_status'] = sprintf(__('The field "%s" is required.'), __('Status'));
+		}
+
+		foreach ($app_langs as $lang => $locale) {
+
+			$itemData[$locale]['item_title'] = $itemData["item_title_{$lang}"];
+			$itemData[$locale]['item_description'] = $itemData["item_description_{$lang}"];
+
+			if (empty($itemData[$locale]['item_title'])) {
+
+				$form['errors']['fields']["item_title_{$lang}"] = sprintf(__('The field "%s" is required.'), __('Title') . " ({$lang})");
+			}
+		}
+
+		if (!empty($form['errors'])) {
+
+			return $form;
+		}
+
+		$q_main = "INSERT INTO items_main (item_status) VALUES('{$itemData['item_status']}')";
+
+		if (!Core::Database()->Query($q_main)) {
+
+			$form['errors']['result'][] = __('Error saving item data.');
+		}
+
+		$item_id = Core::Database()->GetInsertId();
+
+		if (empty($item_id)) {
+
+			$form['errors']['result'][] = __('Error getting new item id.');
+		}
+
+		$q_details = "INSERT INTO items_details (item_id, i18n_locale, item_title, item_description) VALUES ";
+
+		$q_details_values = array();
+
+		foreach ($app_langs as $lang => $locale) {
+
+			if (isset($itemData["item_title_{$lang}"]) && isset($itemData["item_description_{$lang}"])) {
+
+				$q_details_values[] = "('{$item_id}', '{$locale}', '{$itemData["item_title_{$lang}"]}', '{$itemData["item_description_{$lang}"]}')";
+			}
+		}
+
+		if (!empty($q_details_values)) {
+
+			$q_details .= implode(", ", $q_details_values);
+
+			$q_details .= " ON DUPLICATE KEY UPDATE item_title = VALUES(item_title), item_description = VALUES(item_description)";
+
+			if (!Core::Database()->Query($q_details)) {
+					
+				$form['errors']['result'][] = __('Error saving item details.');
+			}
+		}
+
+		if (!empty($form['errors'])) {
+
+			return $form;
+		}
+
+		Core::Router()->Redirect("Items/Admin/Added/id/{$item_id}");
+
+		exit();
+	}
+
+	public function Modify($itemId, $itemData) {
 
 		/**
 		 * Data filtering is already done, so we can just go ahead and use it.
@@ -231,9 +309,31 @@ class Module_Items extends ModuleApp {
 			return $form;
 		}
 
-		Core::Router()->Redirect("Items/Admin/ItemSaved/id/{$itemId}");
+		Core::Router()->Redirect("Items/Admin/Saved/id/{$itemId}");
 
 		exit();
+	}
+
+	public function Delete($itemId) {
+
+		$q_main = "DELETE FROM items_main WHERE item_id = '{$itemId}' LIMIT 1";
+
+		if (!Core::Database()->Query($q_main)) {
+
+			return FALSE;
+		}
+
+		$q_details = "DELETE FROM items_details WHERE item_id = '{$itemId}'";
+
+
+		if (!Core::Database()->Query($q_details)) {
+
+			return FALSE;
+		}
+
+		Core::Router()->Redirect("Items/Admin/Deleted/id/{$itemId}");
+
+		exit();return TRUE;
 	}
 }
 ?>
