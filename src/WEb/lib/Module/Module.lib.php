@@ -380,7 +380,7 @@ class Module extends Library {
 		/**
 		 * App language.
 		*/
-		$data['lang'] = substr(Core :: I18n()->GetLocale(), 0, 2);
+		$data['lang'] = substr(Core::I18n()->GetLocale(), 0, 2);
 
 		/**
 		 * List of available languages.
