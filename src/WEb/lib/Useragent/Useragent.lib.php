@@ -304,5 +304,27 @@ class Useragent extends Library {
 
 		return FALSE;
 	}
+
+	/**
+	 * Get custom web app version sent from mobile devices.
+	 * 
+	 * Custom user agent string must end with "WebApp/VERSION".
+	 *
+	 * @param string $userAgent
+	 *
+	 * @return boolean
+	 */
+	public function GetWebAppVersion($userAgent = NULL) {
+
+		$user_agent = !empty($userAgent) ? $userAgent : $_SERVER['HTTP_USER_AGENT'];
+
+		$data = array();
+
+		$pattern = "#WebApp(\s+|/\s*)([^)(;\s]+)#i";
+
+		preg_match($pattern, $user_agent, $data);
+
+		return (!empty($data[2])) ? $data[2] : FALSE;
+	}
 }
 ?>
