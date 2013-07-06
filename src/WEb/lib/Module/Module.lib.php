@@ -259,15 +259,33 @@ class Module extends Library {
 		return $data;
 	}
 
-	public function GetMenu($url_www, $menuNode = 'web') {
+	public function GetMenu($url_www) {
 
 		$menu = array();
 
-		$menu_config = Core::Config()->Get("menu.{$menuNode}.item");
+		$menu_config = Core::Config()->Get("menu");
 
 		if (!empty($menu_config)) {
 
-			foreach ($menu_config as $menu_item) {
+			foreach ($menu_config as $menu_node => $menu_data) {
+
+				if (!empty($menu_data['item'])) {
+
+					$menu[$menu_node] = $this->GetMenuItem($url_www, $menu_data['item']);
+				}
+			}
+		}
+
+		return $menu;
+	}
+
+	public function GetMenuItem($url_www, $menuData = array()) {
+
+		$menu = array();
+
+		if (!empty($menuData)) {
+
+			foreach ($menuData as $menu_item) {
 					
 				if (!empty($menu_item['url'])) {
 
@@ -292,7 +310,16 @@ class Module extends Library {
 					}
 				}
 
-				$submenu = !empty($menu_item['submenu']) ? $this->GetMenu($url_www, $menu_item['submenu']) : NULL;
+				$submenu = NULL;
+
+				if (!empty($menu_item['submenu'])) {
+
+					$submenu_data = Core::Config()->Get("menu.{$menu_item['submenu']}.item");
+
+					if (!empty($submenu_data)) {
+						$submenu = $this->GetMenuItem($url_www, $submenu_data);
+					}
+				}
 
 				$target = !empty($menu_item['target']) ? $menu_item['target'] : NULL;
 
@@ -533,6 +560,29 @@ class Module extends Library {
 		$data['strings'] = $this->GetDefaultStrings();
 
 		/**
+		 * $data['menu'] [OPTIONAL]
+		 *
+		 * Custom menu functionality.
+		 *
+		 * Values:
+		 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
+		 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
+		 * $data['menu'][MENU_NODE_FROM_CONFIG][target'']
+		 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
+		 *
+		 * Usage:
+		 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']
+		 * Template: $menu['MENU_NODE_FROM_CONFIG']
+		*/
+
+		$opt_menus = Core::Config()->Get('options.menus');
+
+		if (!empty($opt_menus)) {
+
+			$data['menu'] = $this->GetMenu($data['url']['www']);
+		}
+
+		/**
 		 * $data['timezone'] [OPTIONAL]
 		 *
 		 * Custom timezone functionality.
@@ -553,7 +603,7 @@ class Module extends Library {
 		 * Usage:
 		 * Controller: $data['timezone']
 		 * Template: $timezone
-		*/
+		 */
 
 		$opt_timezone = Core::Config()->Get('options.timezone');
 
