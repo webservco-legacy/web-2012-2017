@@ -292,9 +292,9 @@ class Module_Users extends ModuleApp {
 		$q_limit = NULL;
 
 		if (!empty($userId)) {
-				
+
 			$q_conditions .= "AND user_id = '{$userId}'";
-				
+
 			$q_limit = "LIMIT 1";
 		}
 
@@ -311,15 +311,15 @@ class Module_Users extends ModuleApp {
 
 		if (0 < $t) {
 
+			if ((1 == $t) && !empty($userId)) {
+
+				return $rs->fetch_assoc();
+			}
+
 			while ($r = $rs->fetch_assoc()) {
 
 				$data[$r['user_id']] = $r;
 			}
-		}
-		
-		if (!empty($userId) && !empty($data[$userId])) {
-			
-			return $data[$userId];
 		}
 
 		return $data;

@@ -9,7 +9,7 @@
 		</p>
 <?php } else { ?>
 		
-		<p><?php echo $string_no_data; ?></p>
+		<p><?php echo $strings['no_data']; ?></p>
 <?php } ?>
 
 </article>

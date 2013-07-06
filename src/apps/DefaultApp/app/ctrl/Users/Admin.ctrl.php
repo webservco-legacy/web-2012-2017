@@ -20,6 +20,10 @@ class Controller_Users_Admin extends ControllerApp {
 
 			return FALSE;
 		}
+		
+		/**
+		 * Custom functionality below this line.
+		 */
 
 		$data['items'] = $this->Module()->Get();
 
@@ -34,14 +38,18 @@ class Controller_Users_Admin extends ControllerApp {
 
 		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['user_id'] = !empty($data['query']['id']) ? $data['query']['id'] : 0;
-
-		$data['strings']['title'] = __('User');
-
 		if (!$this->CheckAdminAccess($data)) {
 
 			return FALSE;
 		}
+		
+		$data['strings']['title'] = __('User');
+		
+		$data['user_id'] = !empty($data['query']['id']) ? $data['query']['id'] : 0;
+		
+		/**
+		 * Custom functionality below this line.
+		 */
 
 		$data['item'] = $this->Module()->Get($data['user_id']);
 

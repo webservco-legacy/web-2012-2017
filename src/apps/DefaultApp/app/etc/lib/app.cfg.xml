@@ -10,10 +10,11 @@
 			<prefix></prefix>
 		</app>
 		<options>
+		    <menus>1</menus><!-- use menus -->
+		    <timezone>1</timezone><!-- custom timezone functionality -->
+		    <webapp>1</webapp><!-- web app functionality (device info, multi markets, free/pro, etc -->
 			<sessions>1</sessions><!-- use sessions (required for users functionality) -->
 			<users>1</users><!-- users functionality -->
-			<timezone>1</timezone><!-- custom timezone functionality -->
-			<webapp>1</webapp><!-- web app functionality (device info, multi markets, free/pro, etc -->
 		</options>
 		<menu>
 			<web>
@@ -25,6 +26,11 @@
 				<item>
 					<title>Account</title>
 					<link>Users/App/Account</link>
+					<url></url>
+				</item>
+				<item>
+					<title>Items</title>
+					<link>Items/App/Items</link>
 					<url></url>
 				</item>
 				<item>
@@ -42,13 +48,18 @@
 			</web>
 			<web_admin>
 				<item>
+					<title>Home</title>
+					<link>index</link>
+					<url></url>
+				</item>
+				<item>
 					<title>Users</title>
 					<link>Users/Admin/Users</link>
 					<url></url>
 				</item>
 				<item>
-					<title>User</title>
-					<link>Users/Admin/User/id/1</link>
+					<title>Items</title>
+					<link>Items/Admin/Items</link>
 					<url></url>
 				</item>
 			</web_admin>

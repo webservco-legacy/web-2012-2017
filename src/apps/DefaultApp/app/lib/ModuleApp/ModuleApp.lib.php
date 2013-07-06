@@ -142,6 +142,20 @@ class ModuleApp extends Module {
 	 * Controller: $data['strings']['title']
 	 * Template: $strings['title']
 	 * **************************************************
+	 * $data['menu'] [OPTIONAL]
+	 *
+	 * Custom menu functionality.
+	 *
+	 * Values:
+	 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
+	 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
+	 * $data['menu'][MENU_NODE_FROM_CONFIG][target'']
+	 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
+	 *
+	 * Usage:
+	 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']
+	 * Template: $menu['MENU_NODE_FROM_CONFIG']
+	 * **************************************************
 	 * $data['timezone'] [OPTIONAL]
 	 *
 	 * Custom timezone functionality.
@@ -232,9 +246,9 @@ class ModuleApp extends Module {
 		}
 
 		/**
-		 * Menu.
+		 * Example (use as $data['test'] (Controller) or $test (Output template).
 		 */
-		$data['menu']['web'] = $this->GetMenu($data['url']['www'], 'web');
+		$data['test'] = 'test data';
 
 		return $data;
 	}

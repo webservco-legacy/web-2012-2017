@@ -9,7 +9,7 @@
 		
 	} else {
 		
-		echo $string_no_data;
+		echo $strings['no_data'];
 	}
 	?>
 </article>
