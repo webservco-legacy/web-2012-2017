@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: App $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-05 17:56+0100\n"
-"PO-Revision-Date: 2013-07-05 17:56+0100\n"
+"POT-Creation-Date: 2013-07-06 12:15+0100\n"
+"PO-Revision-Date: 2013-07-06 12:15+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: \n"
@@ -22,7 +22,15 @@ msgstr ""
 "X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib\n"
 "X-Poedit-SearchPath-4: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/mod\n"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ModuleApp/ModuleApp.lib.php:107
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+msgid "Error"
+msgstr "Errore"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+msgid "You don't have permission to access this resource."
+msgstr "Non hai il permesso di accedere a questa risorsa."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ModuleApp/ModuleApp.lib.php:53
 msgid "No data to display"
 msgstr "Nessun dato"
 
@@ -30,11 +38,29 @@ msgstr "Nessun dato"
 msgid "Default app"
 msgstr "Default app"
 
-#: app.cfg.xml:16
 #: app.cfg.xml:21
+msgid "Home"
+msgstr "Home"
+
 #: app.cfg.xml:26
-msgid "Menu item"
-msgstr "Menu item"
+msgid "Account"
+msgstr "Account"
+
+#: app.cfg.xml:31
+msgid "Admin"
+msgstr "Admin"
+
+#: app.cfg.xml:37
+msgid "Italia Multimedia"
+msgstr "Italia Multimedia"
+
+#: app.cfg.xml:45
+msgid "Users"
+msgstr "Users"
+
+#: app.cfg.xml:50
+msgid "User"
+msgstr "User"
 
 #: form.cfg.xml:12
 #: form.cfg.xml:55
