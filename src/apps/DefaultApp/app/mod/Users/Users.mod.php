@@ -36,8 +36,8 @@ if (!defined('_WEB'))
  * @subpackage UsersModule
  *
  */
-class Module_Users extends ModuleApp
-{
+class Module_Users extends ModuleApp {
+
 	/**
 	 * Handles login functionality.
 	 *
@@ -279,6 +279,50 @@ class Module_Users extends ModuleApp
 		}
 
 		return $form;
+	}
+
+	public function Get($userId = NULL, $i18nLocale = NULL) {
+
+		$data = array();
+
+		$i18n_locale = !empty ($i18nLocale) ? $i18nLocale : Core :: I18n()->GetLocale();
+
+		$q_conditions = NULL;
+
+		$q_limit = NULL;
+
+		if (!empty($userId)) {
+				
+			$q_conditions .= "AND user_id = '{$userId}'";
+				
+			$q_limit = "LIMIT 1";
+		}
+
+		$q = "SELECT user_id, user_email, user_nickname, user_status, user_name_first, user_name_last
+		FROM acl_object_user
+		WHERE 1
+		{$q_conditions}
+		ORDER BY user_name_last, user_name_first
+		{$q_limit}";
+
+		$rs = Core::Database()->Query($q);
+
+		$t = $rs->num_rows;
+
+		if (0 < $t) {
+
+			while ($r = $rs->fetch_assoc()) {
+
+				$data[$r['user_id']] = $r;
+			}
+		}
+		
+		if (!empty($userId) && !empty($data[$userId])) {
+			
+			return $data[$userId];
+		}
+
+		return $data;
 	}
 }
 ?>

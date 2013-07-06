@@ -37,6 +37,8 @@ if (!defined('_WEB')) {
  */
 class ControllerApp extends Controller {
 
+	protected $_mTemplatePrefix = NULL;
+
 	/**
 	 * Controller initialization.
 	 *
@@ -125,42 +127,44 @@ class ControllerApp extends Controller {
 		 * Local data.
 		 *
 		 * @var array
-		*/
+		 */
 		$local_data = array();
-		
+
+		$template_prefix = $this->_mTemplatePrefix;
+
 		/**
 		 * Set the header tpl var to the parsed content template.
 		 *
 		 * @var array
 		 */
-		$local_data['tpl_header'] = $this->Output()->Out('header', $contentData);
-		
-		/**
-		 * Set the scripts tpl var to the parsed content template.
-		 *
-		 * @var array
-		 */
-		$local_data['tpl_footer'] = $this->Output()->Out('footer', $contentData);
+		$local_data['tpl_header'] = $this->Output()->Out($template_prefix . 'header', $contentData);
 
 		/**
 		 * Set the scripts tpl var to the parsed content template.
 		 *
 		 * @var array
 		*/
-		$local_data['tpl_scripts'] = $this->Output()->Out('scripts', $contentData);
-		
+		$local_data['tpl_footer'] = $this->Output()->Out($template_prefix . 'footer', $contentData);
+
+		/**
+		 * Set the scripts tpl var to the parsed content template.
+		 *
+		 * @var array
+		*/
+		$local_data['tpl_scripts'] = $this->Output()->Out($template_prefix . 'scripts', $contentData);
+
 		/**
 		 * Get secondary template name.
 		 *
 		 * @var string
-		 */
-		$template_name = (FALSE !== $globalTemplate) ? $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate);
-		
+		*/
+		$template_name = (FALSE !== $globalTemplate) ? $template_prefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate, $template_prefix);
+
 		/**
 		 * Set the content tpl var to the parsed content template.
 		 *
 		 * @var array
-		 */
+		*/
 		$local_data['tpl_content'] = $this->Output()->Out($template_name, $contentData);
 
 		/**
@@ -177,8 +181,8 @@ class ControllerApp extends Controller {
 
 		/**
 		 * Get main template name.
-		 */
-		$main_template = !empty($mainTemplate) ? $mainTemplate : $this->Output()->GetTemplate();
+		*/
+		$main_template = !empty($mainTemplate) ? $template_prefix . $mainTemplate : $this->Output()->GetTemplate($template_prefix);
 
 		if (Core::Useragent()->IsDevice()) {
 
@@ -193,6 +197,33 @@ class ControllerApp extends Controller {
 		}
 
 		return $this->Output()->Out($main_template, $data);
+	}
+
+	public function CheckAdminAccess($data) {
+
+		if (!empty($data['user']['Logged']) && !empty($data['resource'])) {
+
+			if (Core::Acl()->Check($data['user']['Id'], $data['resource'])) {
+
+				return TRUE;
+
+			} else {
+
+				$data['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
+
+				echo $this->GetOutput($data, 'error', TRUE);
+
+				return FALSE;
+			}
+
+		} else {
+
+			Core::Router()->Redirect('Users/App/Account');
+
+			exit();
+		}
+
+		return FALSE;
 	}
 }
 ?>

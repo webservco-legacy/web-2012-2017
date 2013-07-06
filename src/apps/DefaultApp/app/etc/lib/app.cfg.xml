@@ -13,21 +13,40 @@
 		<menu>
 		    <web>
 				<item>
-		            <title>Menu item</title>
-		            <link>local/link</link>
-		            <url>http</url>
+		            <title>Home</title>
+		            <link>index</link>
+		            <url></url>
 		        </item>
 		        <item>
-		            <title>Menu item</title>
-		            <link>local/link</link>
-		            <url>http</url>
+		            <title>Account</title>
+		            <link>Users/App/Account</link>
+		            <url></url>
 		        </item>
 		        <item>
-		            <title>Menu item</title>
-		            <link>local/link</link>
-		            <url>http</url>
+		            <title>Admin</title>
+		            <link>Users/Admin/Users</link>
+		            <url></url>
+		            <submenu>web_admin</submenu>
+		        </item>
+		        <item>
+		            <title>Italia Multimedia</title>
+		            <link></link>
+		            <url>http://www.italiamultimedia.com</url>
+		            <target>_blank</target>
 		        </item>
 		    </web>
+		    <web_admin>
+		        <item>
+		            <title>Users</title>
+		            <link>Users/Admin/Users</link>
+		            <url></url>
+		        </item>
+		        <item>
+		            <title>User</title>
+		            <link>Users/Admin/User/id/1</link>
+		            <url></url>
+		        </item>
+		    </web_admin>
 		    <mobile>
 		    </mobile>
 		</menu>

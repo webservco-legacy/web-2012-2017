@@ -102,8 +102,13 @@ class ModuleApp extends Module {
 		$default_data['user'] = $_SESSION['User'];
 
 		/**
-		 * Default error messages used in most pages.
+		 * Menu
 		 */
+		$default_data['menu_web'] = $this->GetMenu($default_data['url_app'], 'web');
+
+		/**
+		 * Default error messages used in most pages.
+		*/
 		$default_data['string_no_data'] = __('No data to display', 'App');
 
 		return $default_data;
