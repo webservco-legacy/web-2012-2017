@@ -60,6 +60,20 @@ class Controller extends Library {
 	protected $_mRequest;
 
 	/**
+	 * Use sessions flag
+	 *
+	 * @var boolean
+	 */
+	protected $_mUseSessions = FALSE;
+
+	/**
+	 * Template prefix used in output.
+	 *
+	 * @var string
+	 */
+	protected $_mTemplatePrefix = NULL;
+
+	/**
 	 * Implement GetInstance() method.
 	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
@@ -102,12 +116,12 @@ class Controller extends Library {
 
 			/**
 			 * @var array
-			 */
+			*/
 			$ctrl_parts = explode('_', $ctrl_name);
 
 			/**
 			 * @var string
-			 */
+			*/
 			$module_name = 'Module_' . $ctrl_parts[1];
 
 			/**
@@ -140,7 +154,7 @@ class Controller extends Library {
 
 			/**
 			 * @var string
-			 */
+			*/
 			$engine = (FALSE !== $engine) ? $engine : 'WEb';
 
 			/**
@@ -153,7 +167,7 @@ class Controller extends Library {
 			 * $this->_mOutputObject = $engine_class::GetInstance($engine_class);
 			 *
 			 * @var object
-			 */
+			*/
 			$this->_mOutputObject = call_user_func(array($engine_class, 'GetInstance'), $engine_class);
 
 			$out_msg = sprintf(__('Controller library: Output library "%s" loading.', 'WEb'), $engine);

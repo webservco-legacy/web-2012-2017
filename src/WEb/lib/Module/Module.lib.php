@@ -38,6 +38,36 @@ if (!defined('_WEB')) {
  *
  */
 class Module extends Library {
+
+	/**
+	 * Use sessions flag
+	 *
+	 * @var boolean
+	 */
+	protected $_mUseSessions = FALSE;
+
+	/**
+	 * Web app market id.
+	 *
+	 * 0 - none
+	 * 1 - google
+	 * 2 - samsung
+	 * 3 - amazon
+	 * 4 - itunes
+	 *
+	 * @var integer
+	 */
+	protected $_mWebAppMarket = 0;
+
+	/**
+	 * Web app type.
+	 *
+	 * free, pro, etc
+	 *
+	 * @var unknown
+	 */
+	protected  $_mWebAppType = NULL;
+
 	/**
 	 * Implement GetInstance() method.
 	 *
@@ -157,51 +187,79 @@ class Module extends Library {
 	}
 
 	/**
+	 * General information.
+	 *
+	 * @param array $request
+	 *
+	 * @return array
+	 */
+	public function GetInfo($request) {
+
+		$data = array();
+
+		/**
+		 * Current module name.
+		*/
+		$data['module'] = $this->GetCurrentModule($request);
+
+		/**
+		 * Current resource name (Module/Controller/Action)
+		*/
+		$data['resource'] = $this->GetCurrentResource($request, $data['module']);
+
+		return $data;
+	}
+
+	public function GetDefaultUrls() {
+
+		$data = array();
+
+		/**
+		 * App URL.
+		*/
+		$data['www'] = Core :: Config()->Get('url.www');
+
+		/**
+		 * Skin URL
+		*/
+		$data['skin'] = Core :: Config()->Get('url.www') . Core :: Config()->Get('dir.app.usr') . '/' . Core :: Config()->Get('dir.app.skins') . '/' . Core :: Config()->Get('output.skin') . '/';
+
+		/**
+		 * Scripts URL
+		 */
+		$data['scripts'] = Core :: Config()->Get('url.www') . Core :: Config()->Get('dir.app.usr') . '/scripts/';
+
+		/**
+		 * Media URL.
+		 */
+		$data['media'] = Core :: Config()->Get('url.www') . Core :: Config()->Get('dir.app.usr') . '/media/';
+
+		return $data;
+	}
+
+	/**
 	 * Get default paths.
 	 *
 	 * @return array
 	 */
 	public function GetDefaultPaths() {
 
-		/**
-		 * @var array
-		 */
-		$default_paths = array();
+		$data = array();
 
 		/**
 		 * App Path.
 		*/
-		$default_paths['path_app'] = Core :: Config()->Get('path.app');
+		$data['app'] = Core :: Config()->Get('path.app');
 
 		/**
 		 * App WWW path.
 		*/
-		$default_paths['path_www'] = Core :: Config()->Get('path.www');
+		$data['www'] = Core :: Config()->Get('path.www');
 
-		/**
-		 * App URL.
-		*/
-		$default_paths['url_app'] = Core :: Config()->Get('url.app');
-
-		/**
-		 * Skin URL
-		*/
-		$default_paths['url_skin'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/' . Core :: Config()->Get('dir.app.skins') . '/' . Core :: Config()->Get('output.skin') . '/';
-
-		/**
-		 * Scripts URL
-		 */
-		$default_paths['url_scripts'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/scripts/';
-
-		/**
-		 * Media URL.
-		 */
-		$default_paths['url_media'] = Core :: Config()->Get('url.app') . Core :: Config()->Get('dir.app.usr') . '/media/';
-
-		return $default_paths;
+		return $data;
 	}
 
-	public function GetMenu($url_app, $menuNode = 'web') {
+	public function GetMenu($url_www, $menuNode = 'web') {
 
 		$menu = array();
 
@@ -221,11 +279,11 @@ class Module extends Library {
 
 						if ('index' == $menu_item['link']) {
 
-							$menu_href = $url_app;
-							
+							$menu_href = $url_www;
+
 						} else {
-							
-							$menu_href = $url_app . $menu_item['link'];
+
+							$menu_href = $url_www . $menu_item['link'];
 						}
 
 					} else {
@@ -234,7 +292,7 @@ class Module extends Library {
 					}
 				}
 
-				$submenu = !empty($menu_item['submenu']) ? $this->GetMenu($url_app, $menu_item['submenu']) : NULL;
+				$submenu = !empty($menu_item['submenu']) ? $this->GetMenu($url_www, $menu_item['submenu']) : NULL;
 
 				$target = !empty($menu_item['target']) ? $menu_item['target'] : NULL;
 
@@ -248,6 +306,339 @@ class Module extends Library {
 		}
 
 		return $menu;
+	}
+
+	public function GetTimezone($request) {
+
+		$timezone = NULL;
+
+		if (!empty($request['query']['timezone'])) {
+
+			$timezone = Core::String()->DecodeUrlString($request['query']['timezone']);
+
+			Core::Date()->SetTimeZone($timezone);
+
+			if ($this->_mUseSessions) {
+
+				$_SESSION['Date']['TimeZone'] = $timezone;
+			}
+		}
+
+		if ($this->_mUseSessions) {
+
+			if (empty($_SESSION['Date']['TimeZone'])) {
+
+				$_SESSION['Date']['TimeZone'] = Core::Date()->GetTimeZone();
+			}
+		}
+
+		return !empty($timezone) ? $timezone : Core::Date()->GetTimeZone();
+	}
+
+	public function GetWebAppInfo($request) {
+
+		$data = array();
+
+		/**
+		 * OS Type (android, ios, other).
+		 *
+		 * This does not tell us if it's mobile or PC
+		*/
+		$data['os_type'] = Core::Useragent()->GetOsType();
+
+		/**
+		 * Device Type (tablet, phone, other).
+		*/
+		$data['device_type'] = Core::Useragent()->GetDeviceType();
+
+		/**
+		 * Get custom web app version sent from mobile devices.
+		 *
+		 * Custom user agent string must end with "WebApp/VERSION".
+		*/
+		$data['version'] = Core::Useragent()->GetWebAppVersion();
+
+		/**
+		 * Web app market id.
+		*/
+		$data['market'] = !empty($request['query']['market']) ? $this->_mWebAppMarket = (int) $request['query']['market'] : 0;
+
+		/**
+		 * Web app type.
+		 *
+		 * free/pro/etc
+		 */
+		$data['type'] = $this->_mWebAppType = !empty($request['query']['app_type']) ? $request['query']['app_type'] : NULL;
+
+		return $data;
+	}
+
+	public function GetLangInfo() {
+
+		$data = array();
+
+		/**
+		 * App language.
+		*/
+		$data['lang'] = substr(Core :: I18n()->GetLocale(), 0, 2);
+
+		/**
+		 * List of available languages.
+		*/
+		$data['langs'] = Core::I18n()->GetAvailableLangs();
+
+		return $data;
+	}
+
+	public function ChangeLocale($newLang, $redirect = NULL) {
+
+		$app_langs = Core::I18n()->GetAvailableLangs();
+
+		if (!empty($newLang) && array_key_exists($newLang, $app_langs)) {
+
+			Core::I18n()->SetLocale($app_langs[$newLang]);
+
+			if ($this->_mUseSessions && !empty($_SESSION['I18n'])) {
+
+				$_SESSION['I18n']['Chosen'] = TRUE;
+			}
+
+			if (!empty($redirect)) {
+
+				Core::Router()->Redirect($redirect);
+
+				exit();
+			}
+
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
+	public function GetUserInfo() {
+
+		if ($this->_mUseSessions) {
+
+			Core::User()->Init();
+
+			return $_SESSION['User'];
+		}
+
+		return FALSE;
+	}
+
+	/**
+	 * Get default output data.
+	 *
+	 * @param array $request
+	 *
+	 * @return array
+	 */
+	public function GetDataDefault($request) {
+
+		$data = array();
+
+		/**
+		 * $data['query']
+		 *
+		 * Request query.
+		 *
+		 * Values:
+		 * array of key/data
+		 *
+		 * Usage:
+		 * Controller: $data['query'][STUFF]
+		 * Template: $query[STUFF]
+		*/
+		$data['query'] = !empty($request['query']) ? $request['query'] : NULL;
+
+		/**
+		 * $data['info']
+		 *
+		 * General information
+		 *
+		 * Values:
+		 * $data['info']['module'] - current module name
+		 * $data['info']['resource'] - current resource (Module/App/Controller)
+		 *
+		 * Usage:
+		 * Controller: $data['info']['module']
+		 * Template: $info['module']
+		 */
+		$data['info'] = $this->GetInfo($request);
+
+		/**
+		 * $data['url']
+		 *
+		 * Default URLs.
+		 *
+		 * Values:
+		 * $data['url']['www'] (http://www.example.com)
+		 * $data['url']['skin'] (http://www.example.com/myskin/)
+		 * $data['url']['scripts'] (http://www.example.com/js/)
+		 * $data['url']['media'] (http://www.example.com/media/)
+		 *
+		 * Usage:
+		 * Controller: $data['url']['www']
+		 * Template: $url['www']
+		 *
+		*/
+		$data['url'] = $this->GetDefaultUrls();
+
+		/**
+		 * $data['path']
+		 *
+		 * Default paths.
+		 *
+		 * Values:
+		 * $data['path']['app'] (/full/server/path/to/app/dir/)
+		 * $data['path']['www'] (/full/server/path/to/www/dir/)
+		 *
+		 * Usage:
+		 * Controller: $data['path']['www']
+		 * Template: $path['www']
+		*/
+		$data['path'] = $this->GetDefaultPaths();
+
+		/**
+		 * $data['i18n']
+		 *
+		 * Internationalization.
+		 *
+		 * Values:
+		 * $data['i18n']['lang'] - all language (en, it, etc)
+		 * $data['i18n']['langs'] - array of all available languages - language / locale
+		 *
+		 * Usage:
+		 * Controller: $data['i18n']['lang']
+		 * Template: $i18n['lang']
+		*/
+		$data['i18n'] = $this->GetLangInfo();
+
+		/**
+		 * $data['strings']
+		 *
+		 * Default messages used in most pages.
+		 *
+		 * Values:
+		 * $data['strings']['title']
+		 * $data['strings']['app_title']
+		 * $data['strings']['no_data']
+		 *
+		 * Usage:
+		 * Controller: $data['strings']['title']
+		 * Template: $strings['title']
+		*/
+		$data['strings'] = $this->GetDefaultStrings();
+
+		/**
+		 * $data['timezone'] [OPTIONAL]
+		 *
+		 * Custom timezone functionality.
+		 *
+		 * A custom timezone can be set by adding:
+		 * /timezone/ENCODEDTIMEZONEVALUE
+		 * to the URL
+		 *
+		 * ENCODEDTIMEZONEVALUE is the timezone value encoded with Core::String()->EncodeUrlString
+		 * Example: "RXVyb3BlL1JvbWU." (Europe/Rome)
+		 *
+		 * If session functionality is enabled, the custom timezone value is also stored in the variable:
+		 * $_SESSION['Date']['TimeZone']
+		 *
+		 * Value:
+		 * string representation of custom timezone (Europe/Rome)
+		 *
+		 * Usage:
+		 * Controller: $data['timezone']
+		 * Template: $timezone
+		*/
+
+		$opt_timezone = Core::Config()->Get('options.timezone');
+
+		if (!empty($opt_timezone)) {
+
+			$data['timezone'] = $this->GetTimezone($request);
+		}
+
+		/**
+		 * $data['webapp'] [OPTIONAL]
+		 *
+		 * Web app info.
+		 *
+		 * Values:
+		 * $data['webapp']['os_type'] - os type (android, ios, other)
+		 * $data['webapp']['device_type'] - mobile device type (tablet, phone, other)
+		 * $data['webapp']['version'] - custom app version set by_mobile devices
+		 * $data['webapp']['market'] - app market id (0 - none, 1 - google, 2 - samsung, 3 - amazon, 4 - itunes)
+		 * $data['webapp']['type'] - app type (free, pro, etc)
+		 *
+		 * Usage:
+		 * Controller: $data['webapp']['os_type']
+		 * Template: $webapp['os_type']
+		 */
+
+		$opt_webapp = Core::Config()->Get('options.webapp');
+
+		if (!empty($opt_webapp)) {
+
+			$data['webapp'] = $this->GetWebAppInfo($request);
+		}
+
+		/**
+		 * $data['user'] [OPTIONAL]
+		 *
+		 * User functionality.
+		 *
+		 * Values (not logged in):
+		 * $data['user']['StatsCurrent']['time']
+		 * $data['user']['StatsCurrent']['ip']
+		 * $data['user']['StatsCurrent']['agent']
+		 * $data['user']['StatsCurrent']['auto']
+		 * $data['user']['InitialVisit']
+		 *
+		 * Values (logged in):
+		 * $data['user']['Id']
+		 * $data['user']['Logged']
+		 * $data['user']['Persistent']
+		 * $data['user']['Prop']['user_id']
+		 * $data['user']['Prop']['user_email']
+		 * $data['user']['Prop']['user_nickname']
+		 * $data['user']['Prop']['user_status']
+		 * + custom user properties
+		 * $data['user']['StatsCurrent']['time']
+		 * $data['user']['StatsCurrent']['ip']
+		 * $data['user']['StatsCurrent']['agent']
+		 * $data['user']['StatsCurrent']['auto']
+		 * $data['user']['StatsPrevious']['time']
+		 * $data['user']['StatsPrevious']['ip']
+		 * $data['user']['StatsPrevious']['agent']
+		 * $data['user']['StatsPrevious']['auto']
+		 * $data['user']['InitialVisit']
+		 *
+		 * Usage:
+		 * Controller: $data['user']['Id']
+		 * Template: $user['Id']
+		 */
+
+		$opt_users = Core::Config()->Get('options.users');
+
+		if (!empty($opt_users)) {
+
+			$data['user'] = $this->GetUserInfo();
+		}
+
+		return $data;
+	}
+
+	public function GetData($request) {
+
+		$this->_mUseSessions = (bool) Core::Config()->Get('options.sessions');
+
+		$data = $this->GetDataDefault($request);
+
+		return $this->GetDataCustom($request, $data);
 	}
 }
 ?>

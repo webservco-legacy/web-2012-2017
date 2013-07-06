@@ -5,15 +5,15 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title><?php echo $title; ?> - <?php echo __('Admin'); ?> - <?php echo $title_app; ?></title>
+        <title><?php echo $strings['title']; ?> - <?php echo __('Admin'); ?> - <?php echo $strings['title_app']; ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="<?php echo $url_skin; ?>css/normalize.css">
-        <link rel="stylesheet" href="<?php echo $url_skin; ?>css/main.css">
-        <script src="<?php echo $url_scripts; ?>vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="<?php echo $url['skin']; ?>css/normalize.css">
+        <link rel="stylesheet" href="<?php echo $url['skin']; ?>css/main.css">
+        <script src="<?php echo $url['scripts']; ?>vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>

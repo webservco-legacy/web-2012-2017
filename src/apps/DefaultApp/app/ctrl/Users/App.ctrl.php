@@ -4,8 +4,7 @@ if (!defined('_WEB'))
 	exit();
 }
 
-class Controller_Users_App extends ControllerApp
-{
+class Controller_Users_App extends ControllerApp {
 	/**
 	 * Account.
 	 *
@@ -13,22 +12,22 @@ class Controller_Users_App extends ControllerApp
 	 */
 	public function Account()
 	{
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Account');
+		$data['strings']['title'] = __('Account');
 
-		if (Core::User()->IsLogged()) {
-			
+		if (!empty($data['user']['Logged'])) {
+
 			$template = 'account';
-			
+
 		} else {
-			
-			$data['title'] = __('Login');
-			
+
+			$data['strings']['title'] = __('Login');
+
 			$data['form'] = $this->Module()->GetLoginForm();
-			
+
 			$template = 'login';
 		}
 
@@ -39,13 +38,13 @@ class Controller_Users_App extends ControllerApp
 
 	public function Register() {
 
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Register');
+		$data['strings']['title'] = __('Register');
 
-		if (Core::User()->IsLogged()) {
+		if (!empty($data['user']['Logged'])) {
 
 			$template = 'account';
 
@@ -63,13 +62,13 @@ class Controller_Users_App extends ControllerApp
 
 	public function ResetPassword() {
 
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Reset password');
+		$data['strings']['title'] = __('Reset password');
 
-		if (Core::User()->IsLogged()) {
+		if (!empty($data['user']['Logged'])) {
 
 			$template = 'account';
 
@@ -87,11 +86,11 @@ class Controller_Users_App extends ControllerApp
 
 	public function ResetPasswordDone() {
 
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Reset password');
+		$data['strings']['title'] = __('Reset password');
 
 		echo $this->GetOutput($data, 'reset_password_done');
 
@@ -106,13 +105,13 @@ class Controller_Users_App extends ControllerApp
 	 */
 	public function LoginError()
 	{
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Login error');
+		$data['strings']['title'] = __('Login error');
 
-		$data['error_message'] = __('Login error') . ': ' . __('Please make sure your credentials are correct.');
+		$data['strings']['error_message'] = __('Login error') . ': ' . __('Please make sure your credentials are correct.');
 
 		echo $this->GetOutput($data,  'login');
 	}
@@ -124,6 +123,10 @@ class Controller_Users_App extends ControllerApp
 	 */
 	public function Logout()
 	{
+		/**
+		 * No initialization or data needed.
+		 */
+
 		Core::User()->Logout();
 
 		Core::Router()->Redirect('Users/App/Account');
@@ -139,9 +142,9 @@ class Controller_Users_App extends ControllerApp
 	public function Captcha()
 	{
 		/**
-		 * Needed so we have needed configs available for captcha lib.
+		 * Controller initializations needed so we have needed configs available for captcha lib.
 		 */
-		$this->InitController();
+		$this->Init();
 
 		echo Core::Captcha()->GetImage();
 

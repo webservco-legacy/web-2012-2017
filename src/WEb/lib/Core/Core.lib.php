@@ -925,7 +925,7 @@ class Core
 		/**
 		 * @var unknown_type
 		 */
-		$headers['Referer'] = self::Config()->Get('url.app');
+		$headers['Referer'] = self::Config()->Get('url.www');
 
 		/**
 		 * @var unknown_type
@@ -1116,7 +1116,7 @@ class Core
 		/**
 		 * @var string
 		*/
-		$license_name = rtrim(str_replace(array('http://', 'www.'), '', self::Config()->Get('url.app')), '/');
+		$license_name = rtrim(str_replace(array('http://', 'www.'), '', self::Config()->Get('url.www')), '/');
 
 		/**
 		 * Set license CN
@@ -1295,7 +1295,7 @@ class Core
 		/**
 		 * Redirect to application root.
 		 */
-		header('Location: ' . self::Config()->Get('url.app'));
+		header('Location: ' . self::Config()->Get('url.www'));
 
 		exit();
 	}

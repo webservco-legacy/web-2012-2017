@@ -37,14 +37,14 @@ if (!defined('_WEB')) {
  */
 class ControllerApp extends Controller {
 
-	protected $_mTemplatePrefix = NULL;
-
 	/**
 	 * Controller initialization.
 	 *
 	 * @return bool
 	 */
-	public function InitController() {
+	public function Init() {
+
+		$this->_mUseSessions = (bool) Core::Config()->Get('options.sessions');
 
 		/**
 		 * Initialize output.
@@ -52,21 +52,20 @@ class ControllerApp extends Controller {
 		 * This is actually not required,
 		 * but we need it here so we can use the
 		 * Output library configuration data.
-		 */
+		*/
 		$this->Output()->Init();
 
 		/**
 		 * Use only in multi-language apps.
-		 *
-		 * $this->InitLocale();
 		*/
+		$this->InitLocale();
 
 		return TRUE;
 	}
 
 	public function InitLocale() {
 
-		if (!empty($_SESSION['I18n']['Chosen'])) {
+		if ($this->_mUseSessions && !empty($_SESSION['I18n']['Chosen'])) {
 
 			return FALSE;
 		}
@@ -76,33 +75,8 @@ class ControllerApp extends Controller {
 		$user_lang = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : NULL;
 
 		if (!empty($user_lang) && array_key_exists($user_lang, $app_langs)) {
+
 			Core::I18n()->SetLocale($app_langs[$user_lang]);
-
-			return TRUE;
-		}
-
-		return FALSE;
-	}
-
-	public function ChangeLocale($newLang, $redirect = NULL) {
-
-		$app_langs = Core::I18n()->GetAvailableLangs();
-
-		if (!empty($newLang) && array_key_exists($newLang, $app_langs)) {
-
-			Core::I18n()->SetLocale($app_langs[$newLang]);
-
-			if (!empty($_SESSION['I18n'])) {
-
-				$_SESSION['I18n']['Chosen'] = TRUE;
-			}
-
-			if (!empty($redirect)) {
-
-				Core::Router()->Redirect($redirect);
-
-				exit();
-			}
 
 			return TRUE;
 		}
@@ -130,6 +104,9 @@ class ControllerApp extends Controller {
 		 */
 		$local_data = array();
 
+		/**
+		 * @var string
+		*/
 		$template_prefix = $this->_mTemplatePrefix;
 
 		/**
@@ -201,15 +178,15 @@ class ControllerApp extends Controller {
 
 	public function CheckAdminAccess($data) {
 
-		if (!empty($data['user']['Logged']) && !empty($data['resource'])) {
+		if (!empty($data['user']['Logged']) && !empty($data['info']['resource'])) {
 
-			if (Core::Acl()->Check($data['user']['Id'], $data['resource'])) {
+			if (Core::Acl()->Check($data['user']['Id'], $data['info']['resource'])) {
 
 				return TRUE;
 
 			} else {
 
-				$data['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
+				$data['strings']['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
 
 				echo $this->GetOutput($data, 'error', TRUE);
 

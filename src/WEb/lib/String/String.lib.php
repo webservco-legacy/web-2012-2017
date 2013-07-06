@@ -388,7 +388,7 @@ class String extends Library {
 	 * @return string
 	 */
 	public function EncodeUrlString($string) {
-		
+
 		return strtr(base64_encode($string), '+/=', '-_.');
 	}
 
@@ -408,10 +408,9 @@ class String extends Library {
 		return $url_string;
 
 		/**
-		 * XXX NO WORK Return decoded URL string only if valid.
+		 * DISABLED, NO WORK Return decoded URL string only if valid.
+		 * return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
 		 */
-		return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
 	}
-
 }
 ?>

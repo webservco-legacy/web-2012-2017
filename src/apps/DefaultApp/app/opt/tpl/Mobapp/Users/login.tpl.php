@@ -1,8 +1,8 @@
 <article>
 		
-<?php if (!empty($error_message)) { ?>
+<?php if (!empty($strings['error_message'])) { ?>
 	
-		<p class="strong ko"><?php echo $error_message; ?></p>
+		<p class="strong ko"><?php echo $strings['error_message']; ?></p>
 		
 <?php } else if (!empty($form)) { ?>
 		
@@ -14,7 +14,7 @@
 				<label class="tooltip" for="<?php echo $field_id; ?>" title="<?php echo $meta['description']; ?>">
 					<?php echo $meta['title']; ?>&#160;
 										<?php if ('captcha' ==  $field_id) { ?>
-					<img src="<?php echo $url_app; ?>Users/App/Captcha" title="<?php echo __('Captcha'); ?>" alt="<?php echo __('Captcha'); ?>" />
+					<img src="<?php echo $url['www']; ?>Users/App/Captcha" title="<?php echo __('Captcha'); ?>" alt="<?php echo __('Captcha'); ?>" />
 					<?php } ?>
 				</label>
 					
@@ -40,16 +40,16 @@
 		<p class="clearfix">
 			<?php echo __('Did you forget your password?'); ?>
 			<br />
-			<a href="<?php echo $url_app; ?>Users/App/ResetPassword" title="<?php echo __('Reset password'); ?>"><?php echo __('Reset password'); ?></a>
+			<a href="<?php echo $url['www']; ?>Users/App/ResetPassword" title="<?php echo __('Reset password'); ?>"><?php echo __('Reset password'); ?></a>
 		</p>
 		
 		<p class="clearfix">
 			<br />
 			<?php echo __('Other options'); ?>:
 			<br />
-			<a href="<?php echo $url_app; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
+			<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
 			<br />
-			<a href="<?php echo $url_app; ?>Users/App/Register" title="<?php echo __('Register'); ?>"><?php echo __('Register'); ?></a>
+			<a href="<?php echo $url['www']; ?>Users/App/Register" title="<?php echo __('Register'); ?>"><?php echo __('Register'); ?></a>
 		</p>
 		
 </article>		

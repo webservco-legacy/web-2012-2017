@@ -38,80 +38,205 @@ if (!defined('_WEB')) {
 class ModuleApp extends Module {
 
 	/**
-	 * Get default output data.
+	 * Get default messages.
 	 *
-	 * @param array $request
+	 * Must stay here and not in Module.lib in order to be picked up by Poedit.
 	 *
 	 * @return array
 	 */
-	public function GetDefaultData($request) {
+	public function GetDefaultStrings() {
+
+		$data = array();
+
+		$data['title'] = $data['title_app'] = __(Core :: Config()->Get('app.title'), 'App');
+
+		$data['no_data'] = __('No data to display', 'App');
+
+		return $data;
+	}
+
+	/**
+	 * Get custom data.
+	 *
+	 * Add here any custom initializations.
+	 *
+	 * If necessary, you can also override any default data.
+	 *
+	 * Important: Data marked with "[OPTIONAL]" is only available if the corresponding setting is set to "1" in app configuration.
+	 *
+	 * Default data:
+	 * (already available here, can be overwritten)
+	 *
+	 * **************************************************
+	 * $data['query']
+	 *
+	 * Request query.
+	 *
+	 * Values:
+	 * array of key/data
+	 *
+	 * Usage:
+	 * Controller: $data['query'][STUFF]
+	 * Template: $query[STUFF]
+	 * **************************************************
+	 * $data['info']
+	 *
+	 * General information
+	 *
+	 * Values:
+	 * $data['info']['module'] - current module name
+	 * $data['info']['resource'] - current resource (Module/App/Controller)
+	 *
+	 * Usage:
+	 * Controller: $data['info']['module']
+	 * Template: $info['module']
+	 * **************************************************
+	 * $data['url']
+	 *
+	 * Default URLs
+	 *
+	 * Values:
+	 * $data['url']['www'] (http://www.example.com)
+	 * $data['url']['skin'] (http://www.example.com/myskin/)
+	 * $data['url']['scripts'] (http://www.example.com/js/)
+	 * $data['url']['media'] (http://www.example.com/media/)
+	 *
+	 * Usage:
+	 * Controller: $data['url']['www']
+	 * Template: $url['www']
+	 * **************************************************
+	 * $data['path']
+	 *
+	 * Default paths.
+	 *
+	 * Values:
+	 * $data['path']['app'] (/full/server/path/to/app/dir/)
+	 * $data['path']['www'] (/full/server/path/to/www/dir/)
+	 *
+	 * Usage:
+	 * Controller: $data['path']['www']
+	 * Template: $path['www']
+	 * **************************************************
+	 * $data['i18n']
+	 *
+	 * Internationalization.
+	 *
+	 * Values:
+	 * $data['i18n']['lang'] - all language (en, it, etc)
+	 * $data['i18n']['langs'] - array of all available languages - language / locale
+	 *
+	 * Usage:
+	 * Controller: $data['i18n']['lang']
+	 * Template: $i18n['lang']
+	 * **************************************************
+	 * $data['strings']
+	 *
+	 * Default messages used in most pages.
+	 *
+	 * Values:
+	 * $data['strings']['title']
+	 * $data['strings']['app_title']
+	 * $data['strings']['no_data']
+	 *
+	 * Usage:
+	 * Controller: $data['strings']['title']
+	 * Template: $strings['title']
+	 * **************************************************
+	 * $data['timezone'] [OPTIONAL]
+	 *
+	 * Custom timezone functionality.
+	 *
+	 * A custom timezone can be set by adding:
+	 * /timezone/ENCODEDTIMEZONEVALUE
+	 * to the URL
+	 *
+	 * ENCODEDTIMEZONEVALUE is the timezone value encoded with Core::String()->EncodeUrlString
+	 * Example: "RXVyb3BlL1JvbWU." (Europe/Rome)
+	 *
+	 * If session functionality is enabled, the custom timezone value is also stored in the variable:
+	 * $_SESSION['Date']['TimeZone']
+	 *
+	 * Value:
+	 * string representation of custom timezone (Europe/Rome)
+	 *
+	 * Usage:
+	 * Controller: $data['timezone']
+	 * Template: $timezone
+	 * **************************************************
+	 * $data['webapp'] [OPTIONAL]
+	 *
+	 * Web app info.
+	 *
+	 * Values:
+	 * $data['webapp']['os_type'] - os type (android, ios, other)
+	 * $data['webapp']['device_type'] - mobile device type (tablet, phone, other)
+	 * $data['webapp']['version'] - custom app version set by_mobile devices
+	 * $data['webapp']['market'] - app market id (0 - none, 1 - google, 2 - samsung, 3 - amazon, 4 - itunes)
+	 * $data['webapp']['type'] - app type (free, pro, etc)
+	 *
+	 * Usage:
+	 * Controller: $data['webapp']['os_type']
+	 * Template: $webapp['os_type']
+	 * **************************************************
+	 * $data['user'] [OPTIONAL]
+	 *
+	 * User functionality.
+	 *
+	 * Values (not logged in):
+	 * $data['user']['StatsCurrent']['time']
+	 * $data['user']['StatsCurrent']['ip']
+	 * $data['user']['StatsCurrent']['agent']
+	 * $data['user']['StatsCurrent']['auto']
+	 * $data['user']['InitialVisit']
+	 *
+	 * Values (logged in):
+	 * $data['user']['Id']
+	 * $data['user']['Logged']
+	 * $data['user']['Persistent']
+	 * $data['user']['Prop']['user_id']
+	 * $data['user']['Prop']['user_email']
+	 * $data['user']['Prop']['user_nickname']
+	 * $data['user']['Prop']['user_status']
+	 * + custom user properties
+	 * $data['user']['StatsCurrent']['time']
+	 * $data['user']['StatsCurrent']['ip']
+	 * $data['user']['StatsCurrent']['agent']
+	 * $data['user']['StatsCurrent']['auto']
+	 * $data['user']['StatsPrevious']['time']
+	 * $data['user']['StatsPrevious']['ip']
+	 * $data['user']['StatsPrevious']['agent']
+	 * $data['user']['StatsPrevious']['auto']
+	 * $data['user']['InitialVisit']
+	 *
+	 * Usage:
+	 * Controller: $data['user']['Id']
+	 * Template: $user['Id']
+	 * **************************************************
+	 *
+	 * @param array $request
+	 * @return array
+	 */
+	public function GetDataCustom($request, $data) {
 
 		/**
-		 * Get the default paths.
-		 *
-		 *  url_app
-		 *  path_www
-		 *  url_skin
-		 *  url_scripts
-		 *  url_media
+		 * Custom app data.
 		 */
-		$default_data = $this->GetDefaultPaths();
 
 		/**
-		 * OS Type (android, ios, other).
-		 *
-		 * This does not tell us if it's mobile or PC
-		*/
-		$default_data['os_type'] = Core::Useragent()->GetOsType();
-
-		/**
-		 * Device Type (tablet, phone, other).
-		*/
-		$default_data['device_type'] = Core::Useragent()->GetDeviceType();
-
-		/**
-		 * App language.
-		*/
-		$default_data['lang'] = substr(Core :: I18n()->GetLocale(), 0, 2);
-
-		/**
-		 * List of available languages.
-		*/
-		$default_data['langs'] = Core::I18n()->GetAvailableLangs();
-
-		/**
-		 * Default page title.
-		*/
-		$default_data['title'] = $default_data['title_app'] = __(Core :: Config()->Get('app.title'), 'App');
-
-		/**
-		 * Current module name.
-		*/
-		$default_data['module'] = $this->GetCurrentModule($request);
-
-		/**
-		 * Current resource name (Module/Controller/Action)
-		*/
-		$default_data['resource'] = $this->GetCurrentResource($request, $default_data['module']);
-
-		/**
-		 * User functionality (disable if not used).
-		*/
-		Core::User()->Init();
-
-		$default_data['user'] = $_SESSION['User'];
-
-		/**
-		 * Menu
+		 * Example: performm additional initializations for logged in users.
 		 */
-		$default_data['menu_web'] = $this->GetMenu($default_data['url_app'], 'web');
+		if (!empty($data['user']['Logged'])) {
+			/**
+			 * Do stuff.
+			 */
+		}
 
 		/**
-		 * Default error messages used in most pages.
-		*/
-		$default_data['string_no_data'] = __('No data to display', 'App');
+		 * Menu.
+		 */
+		$data['menu']['web'] = $this->GetMenu($data['url']['www'], 'web');
 
-		return $default_data;
+		return $data;
 	}
 }
 ?>

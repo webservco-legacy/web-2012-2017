@@ -40,9 +40,9 @@
 				<br />
 				<?php echo __('Other options'); ?>:
 				<br />
-				<a href="<?php echo $url_app; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
+				<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
 				<br />
-				<a href="<?php echo $url_app; ?>Users/App/Register" title="<?php echo __('Register'); ?>"><?php echo __('Register'); ?></a>
+				<a href="<?php echo $url['www']; ?>Users/App/Register" title="<?php echo __('Register'); ?>"><?php echo __('Register'); ?></a>
 			</p>
 		
 		<?php } else { ?>

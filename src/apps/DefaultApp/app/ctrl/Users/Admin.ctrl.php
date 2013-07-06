@@ -10,11 +10,11 @@ class Controller_Users_Admin extends ControllerApp {
 
 	public function Users() {
 
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['title'] = __('Users');
+		$data['strings']['title'] = __('Users');
 
 		if (!$this->CheckAdminAccess($data)) {
 
@@ -30,13 +30,13 @@ class Controller_Users_Admin extends ControllerApp {
 
 	public function User() {
 
-		$this->InitController();
+		$this->Init();
 
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
+		$data = $this->Module()->GetData($this->_mRequest);
 
-		$data['user_id'] = !empty($this->_mRequest['query']['id']) ? $this->_mRequest['query']['id'] : 0;
+		$data['user_id'] = !empty($data['query']['id']) ? $data['query']['id'] : 0;
 
-		$data['title'] = __('User');
+		$data['strings']['title'] = __('User');
 
 		if (!$this->CheckAdminAccess($data)) {
 

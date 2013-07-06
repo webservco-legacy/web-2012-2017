@@ -10,7 +10,7 @@
 			<www>/home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
 		</path>
 		<url>
-			<app>http://192.168.1.80/default_app/</app>
+			<www>http://192.168.1.80/default_app/</www>
 		</url>
 	</dev>
 	<!-- Test Environment -->
@@ -24,7 +24,7 @@
 			<www>/var/www/app.italiamultimedia.com/web/default_app/</www>
 		</path>
 		<url>
-			<app>http://app.italiamultimedia.com/default_app/</app>
+			<www>http://app.italiamultimedia.com/default_app/</www>
 		</url>
 	</prod>
 </config>

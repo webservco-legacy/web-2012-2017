@@ -41,7 +41,7 @@
 			<p>
 			<?php echo __('Already have an account?'); ?>
 			<br />
-			<a href="<?php echo $url_app; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
+			<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
 			</p>
 		
 <?php } else { ?>

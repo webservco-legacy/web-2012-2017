@@ -282,7 +282,7 @@ class Router extends Library {
 			return $this->_RedirectSelf();
 		}
 
-		$url_app = Core::Config()->Get('url.app');
+		$url_www = Core::Config()->Get('url.www');
 
 		/**
 		 * Check if the "home" keyword is present.
@@ -294,7 +294,7 @@ class Router extends Library {
 			 *
 			 * @var string
 			 */
-			$url = $url_app;
+			$url = $url_www;
 
 		} else {
 
@@ -311,7 +311,7 @@ class Router extends Library {
 				/**
 				 * @var string
 				 */
-				$url =  $url_app . $newLocation;
+				$url =  $url_www . $newLocation;
 			}
 
 		}
@@ -447,12 +447,12 @@ class Router extends Library {
 		/**
 		 * @var string
 		 */
-		$app_url = Core::Config()->Get('url.app');
+		$www_url = Core::Config()->Get('url.www');
 
 		/**
 		 * @var string
 		*/
-		$server_path = parse_url($app_url, PHP_URL_PATH);
+		$server_path = parse_url($www_url, PHP_URL_PATH);
 
 		/**
 		 * @var string
@@ -830,7 +830,7 @@ class Router extends Library {
 			/**
 			 * @var string
 			 */
-			$url = Core::Config()->Get('url.app');
+			$url = Core::Config()->Get('url.www');
 		}
 
 		/**

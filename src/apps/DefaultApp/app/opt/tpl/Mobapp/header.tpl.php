@@ -1,13 +1,13 @@
 	<header>
-		<h1><?php echo $title; ?></h1>
+		<h1><?php echo $strings['title']; ?></h1>
 			
 		<nav>
 		<?php
-		if (!empty($menu_web)) {
+		if (!empty($menu['web'])) {
 			
 			echo "<ul>\n";
 			
-			foreach ($menu_web as $menu_item) {
+			foreach ($menu['web'] as $menu_item) {
 				
 				$a_href = !empty($menu_item['href']) ? " href=\"{$menu_item['href']}\"" : NULL;
 				

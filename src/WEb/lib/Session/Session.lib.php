@@ -424,7 +424,7 @@ class Session extends Library {
 		 */
 		$cookie_salt = Core::Security()->GetSalt(Core::Config()->Get('path.app'));
 
-		return Core::Security()->GetToken($cookie_salt, Core::Config()->Get('url.app'));
+		return Core::Security()->GetToken($cookie_salt, Core::Config()->Get('url.www'));
 	}
 
 }

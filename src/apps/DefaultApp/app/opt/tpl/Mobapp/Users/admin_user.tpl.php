@@ -1,7 +1,7 @@
 <article>
 
 	<p>
-		<a href="<?php echo $url_app; ?>Users/Admin/Users"><?php echo __('Users'); ?></a>
+		<a href="<?php echo $url['www']; ?>Users/Admin/Users"><?php echo __('Users'); ?></a>
 	</p>
 	
 	<?php

@@ -294,7 +294,7 @@ class Browser extends Library
 		/**
 		 * @var array
 		 */
-		$this->_mProp['referer'] = !empty($defaults['referer']) ? $defaults['referer'] : Core::Config()->Get('url.app');
+		$this->_mProp['referer'] = !empty($defaults['referer']) ? $defaults['referer'] : Core::Config()->Get('url.www');
 
 		/**
 		 * @var array

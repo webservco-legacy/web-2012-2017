@@ -4,7 +4,7 @@
 		
 		foreach ($items as $id => $item) {
 			
-			echo "<a href=\"{$url_app}Users/Admin/User/id/{$id}\">{$id}</a>: <strong>{$item['user_name_first']} {$item['user_name_last']}</strong> ({$item['user_email']})<br />";
+			echo "<a href=\"{$url['www']}Users/Admin/User/id/{$id}\">{$id}</a>: <strong>{$item['user_name_first']} {$item['user_name_last']}</strong> ({$item['user_email']})<br />";
 		}
 		
 	} else {

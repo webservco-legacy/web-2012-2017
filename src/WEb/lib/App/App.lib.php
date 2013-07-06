@@ -123,7 +123,7 @@ class App extends Library {
 			/**
 			 * Check if we have sessions enabled.
 			 */
-			if (1 == Core::Config()->Get('app.sessions')) {
+			if (1 == Core::Config()->Get('options.sessions')) {
 				/**
 				 * Start session.
 				 */

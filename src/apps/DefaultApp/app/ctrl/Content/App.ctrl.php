@@ -4,15 +4,15 @@ if (!defined('_WEB')) {
 }
 
 class Controller_Content_App extends ControllerApp {
-	
+
 	public function Home() {
-		
-		$this->InitController();
-		
-		$data = $this->Module()->GetDefaultData($this->_mRequest);
-		
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
 		echo $this->GetOutput($data);
-		
+
 		return TRUE;
 	}
 }
