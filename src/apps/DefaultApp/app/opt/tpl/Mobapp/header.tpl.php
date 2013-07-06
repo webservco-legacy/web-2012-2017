@@ -5,8 +5,6 @@
 		<?php
 		if (!empty($menu['web'])) {
 			
-			echo "<hr>\n";
-			
 			echo "<ul>\n";
 			
 			foreach ($menu['web'] as $menu_item) {
@@ -43,8 +41,6 @@
 			}
 			
 			echo "</ul>\n";
-			
-			echo "<hr>\n";
 		}
 		?>
 		</nav>
