@@ -388,6 +388,7 @@ class String extends Library {
 	 * @return string
 	 */
 	public function EncodeUrlString($string) {
+		
 		return strtr(base64_encode($string), '+/=', '-_.');
 	}
 
