@@ -1,0 +1,43 @@
+--------------------------------------------------------------------------------
+layout.tpl - web;
+layout_mobile.tpl - mobile devices, optimized for tablet;
+layou_mobile_phone.tpl - mobile phone
+--------------------------------------------------------------------------------
+users:
+add extra fields in obj/user.cfg and table acl_users_custom
+--------------------------------------------------------------------------------
+Core::Log()->Debug('Debugging $data', $data, 'info');
+--------------------------------------------------------------------------------
+/next/Core::String()->EncodeUrlString('next/path')
+=> $data['info']['next_url']
+--------------------------------------------------------------------------------
+localized http header? (oups)
+device tokens
+stats
+external db
+!module->section
+--------------------------------------------------------------------------------
+New SECTION (Items):
+
+Config:
+- create dir (req): ./app/etc/mod/Items
+- create config (opt): ./app/etc/mod/Items/items.cfg.xml
+
+Internationalization (opt)
+- ./app/i18n/en_US/LC_MESSAGES/Items.po (copy/paste from Content)
+- repeat for each locale (it_IT.UTF8, etc)
+
+Module (req)
+- create dir: ./app/mod/Items/
+- create model file: ./app/mod/Items/Items.mod.php
+
+Controller (req)
+- create dir: ./app/ctrl/Items/
+- create controller file: ./app/ctrl/Items/App.ctl.php (App can be any name)
+
+Output templates (req)
+- create dir: ./app/opt/tpl/Mobapp/
+- create tpl files for all actions (methods from controller): lowercase action name
+eg: Items() -> items.tpl.php
+--------------------------------------------------------------------------------
+
