@@ -69,7 +69,7 @@ class Log extends Library {
 	 * @param string $className class name to instantiate
 	 *
 	 * @return object
-	 */
+	*/
 	public static function GetInstance($className = __CLASS__) {
 		/**
 		 * Call parent method with current class name as parameter.
@@ -169,7 +169,7 @@ class Log extends Library {
 
 		/**
 		 * Check if log file exists.
-		 */
+		*/
 		if (!file_exists($log_file)) {
 			/**
 			 * Check if log directory is writable.
@@ -215,7 +215,7 @@ class Log extends Library {
 
 		/**
 		 * Stop if log file is not writable.
-		 */
+		*/
 		if (FALSE === $log_file) {
 			return FALSE;
 		}
@@ -239,6 +239,8 @@ class Log extends Library {
 	 * @param string $logLevel
 	 * @param string $logType
 	 * @param string $logPath
+	 *
+	 * @return boolean
 	 */
 	public function Write($logMessage, $logLevel = NULL, $logType = NULL, $logPath = NULL) {
 		/**
@@ -248,7 +250,7 @@ class Log extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$log_type = ($logType) ? $logType : $this->_mLogType;
 
 		/**
@@ -260,7 +262,7 @@ class Log extends Library {
 
 		/**
 		 * Stop if log file is not writable, or logging level too low.
-		 */
+		*/
 		if ((FALSE === $log_file) || (!array_key_exists($log_level, $this->_mLogLevels)) || ($this->_mLogLevels[$log_level] < $this->_mLogLevel)) {
 			return FALSE;
 		}
@@ -272,7 +274,7 @@ class Log extends Library {
 
 		/**
 		 * @var string
-		 */
+		*/
 		$ip = ('cli' == PHP_SAPI) ? gethostbyname(php_uname('n')) . ' (CLI)' : $_SERVER['REMOTE_ADDR'];
 
 		/**
@@ -292,5 +294,27 @@ class Log extends Library {
 		return TRUE;
 	}
 
+	/**
+	 * Debug.
+	 *
+	 * Write custom message and data to log.
+	 *
+	 * @param string $logMessage
+	 * @param mixed $logData
+	 * @param string $logLevel
+	 *
+	 * @return boolean
+	 */
+	public function Debug($logMessage, $logData, $logLevel = 'debug') {
+
+		$this->Write($logMessage, $logLevel);
+
+		if (!empty($logData)) {
+
+			$this->Write(var_export($logData, TRUE), $logLevel);
+		}
+
+		return TRUE;
+	}
 }
 ?>
