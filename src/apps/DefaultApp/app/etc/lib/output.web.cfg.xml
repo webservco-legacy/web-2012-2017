@@ -6,7 +6,7 @@
 	<dev>
 		<!-- Output library settings -->
 		<output>
-			<skin>Mobapp</skin>
+			<skin>Webapp</skin>
 			<template>layout</template>
 			<extension>.tpl.php</extension>
 		</output>
@@ -15,7 +15,7 @@
 	<test>
 		<!-- Output library settings -->
 		<output>
-			<skin>Mobapp</skin>
+			<skin>Webapp</skin>
 			<template>layout</template>
 			<extension>.tpl.php</extension>
 		</output>
@@ -24,7 +24,7 @@
 	<prod>
 		<!-- Output library settings -->
 		<output>
-			<skin>Mobapp</skin>
+			<skin>Webapp</skin>
 			<template>layout</template>
 			<extension>.tpl.php</extension>
 		</output>

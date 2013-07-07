@@ -15,7 +15,8 @@ localized http header? (oups)
 device tokens
 stats
 external db
-!module->section
+--------------------------------------------------------------------------------
+IM DOCS
 --------------------------------------------------------------------------------
 New SECTION (Items):
 
