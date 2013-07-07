@@ -201,8 +201,10 @@ class ControllerApp extends Controller {
 			}
 
 		} else {
+			
+			$next = Core::String()->EncodeUrlString($data['info']['resource']);
 
-			Core::Router()->Redirect('Users/App/Account');
+			Core::Router()->Redirect("Users/App/Account/next/{$next}");
 
 			exit();
 		}

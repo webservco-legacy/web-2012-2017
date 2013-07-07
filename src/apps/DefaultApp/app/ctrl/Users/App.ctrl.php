@@ -15,10 +15,10 @@ class Controller_Users_App extends ControllerApp {
 		$this->Init();
 
 		$data = $this->Module()->GetData($this->_mRequest);
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		$data['strings']['title'] = __('Account');
 
@@ -30,7 +30,7 @@ class Controller_Users_App extends ControllerApp {
 
 			$data['strings']['title'] = __('Login');
 
-			$data['form'] = $this->Module()->GetLoginForm();
+			$data['form'] = $this->Module()->GetLoginForm($data['info']['next_url']);
 
 			$template = 'login';
 		}
@@ -45,10 +45,10 @@ class Controller_Users_App extends ControllerApp {
 		$this->Init();
 
 		$data = $this->Module()->GetData($this->_mRequest);
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		$data['strings']['title'] = __('Register');
 
@@ -73,10 +73,10 @@ class Controller_Users_App extends ControllerApp {
 		$this->Init();
 
 		$data = $this->Module()->GetData($this->_mRequest);
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		$data['strings']['title'] = __('Reset password');
 
@@ -101,10 +101,10 @@ class Controller_Users_App extends ControllerApp {
 		$this->Init();
 
 		$data = $this->Module()->GetData($this->_mRequest);
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		$data['strings']['title'] = __('Reset password');
 
@@ -124,10 +124,10 @@ class Controller_Users_App extends ControllerApp {
 		$this->Init();
 
 		$data = $this->Module()->GetData($this->_mRequest);
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		$data['strings']['title'] = __('Login error');
 
@@ -149,9 +149,24 @@ class Controller_Users_App extends ControllerApp {
 
 		Core::User()->Logout();
 
-		Core::Router()->Redirect('Users/App/Account');
+		Core::Router()->Redirect('Users/App/LogoutDone');
 
 		exit();
+	}
+
+	public function LogoutDone() {
+
+		$this->Init();
+
+		$data = $this->Module()->GetData($this->_mRequest);
+
+		/**
+		 * Custom functionality below this line.
+		*/
+
+		$data['strings']['message'] = __('You have been succesfully logged out.');
+
+		echo $this->GetOutput($data,  'logout');
 	}
 
 	/**
@@ -165,10 +180,10 @@ class Controller_Users_App extends ControllerApp {
 		 * Controller initializations needed so we have needed configs available for captcha lib.
 		 */
 		$this->Init();
-		
+
 		/**
 		 * Custom functionality below this line.
-		 */
+		*/
 
 		echo Core::Captcha()->GetImage();
 

@@ -43,7 +43,7 @@ class Module_Users extends ModuleApp {
 	 *
 	 * @return mixed
 	 */
-	public function GetLoginForm()
+	public function GetLoginForm($nextUrl = NULL)
 	{
 		Core::Form()->SetMethod('post');
 
@@ -92,7 +92,9 @@ class Module_Users extends ModuleApp {
 					 * perform any aditional user initialization.
 					 */
 
-					Core::Router()->Redirect('Users/App/Account');
+					$redirect = !empty($nextUrl) ? $nextUrl : 'Users/App/Account';
+
+					Core::Router()->Redirect($redirect);
 
 					exit();
 				}

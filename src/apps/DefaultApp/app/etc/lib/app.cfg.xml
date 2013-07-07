@@ -36,7 +36,7 @@
 				</item>
 				<item>
 					<title>Admin</title>
-					<link>Users/Admin/Users</link>
+					<link>Content/Admin/Home</link>
 					<url></url>
 					<submenu></submenu>
 				</item>
@@ -49,8 +49,8 @@
 			</web>
 			<web_admin>
 				<item>
-					<title>Frontend</title>
-					<link>index</link>
+					<title>Home</title>
+					<link>Content/Admin/Home</link>
 					<url></url>
 				</item>
 				<item>
@@ -61,6 +61,11 @@
 				<item>
 					<title>Items</title>
 					<link>Items/Admin/Items</link>
+					<url></url>
+				</item>
+				<item>
+					<title>Frontend</title>
+					<link>index</link>
 					<url></url>
 				</item>
 			</web_admin>

@@ -86,6 +86,7 @@ class ModuleApp extends Module {
 	 * Values:
 	 * $data['info']['module'] - current module name
 	 * $data['info']['resource'] - current resource (Module/App/Controller)
+	 * $data['info']['next_url'] - next url
 	 *
 	 * Usage:
 	 * Controller: $data['info']['module']

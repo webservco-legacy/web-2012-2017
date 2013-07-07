@@ -32,10 +32,6 @@ class Controller_Items_Admin extends ControllerApp {
 		echo $this->GetOutput($data);
 
 		return TRUE;
-
-		echo $this->GetOutput($data);
-
-		return TRUE;
 	}
 
 	public function Add() {
