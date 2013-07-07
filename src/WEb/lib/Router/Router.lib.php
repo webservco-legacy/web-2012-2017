@@ -338,16 +338,8 @@ class Router extends Library {
 		 */
 		$request = NULL;
 
-		if (isset($_SERVER['REQUEST_URI'])) {
-			Core::Log()->Write(__('Router library: Performing REQUEST_URI routing.', 'WEb'), 'debug');
+		if (isset($_SERVER['PATH_INFO'])) {
 
-			/**
-			 * Set request.
-			 *
-			 * @var string
-			*/
-			$request = $this->_processRequest($_SERVER['REQUEST_URI']);
-		} else if (isset($_SERVER['PATH_INFO'])) {
 			Core::Log()->Write(__('Router library: Performing PATH_INFO routing.', 'WEb'), 'debug');
 
 			/**
@@ -356,7 +348,21 @@ class Router extends Library {
 			 * @var string
 			*/
 			$request = $this->_ProcessRequest($_SERVER['PATH_INFO']);
-		} else if (isset($_SERVER['ORIG_PATH_INFO'])) {
+
+		}
+		else if (isset($_SERVER['REQUEST_URI'])) {
+
+			Core::Log()->Write(__('Router library: Performing REQUEST_URI routing.', 'WEb'), 'debug');
+
+			/**
+			 * Set request.
+			 *
+			 * @var string
+			*/
+			$request = $this->_processRequest($_SERVER['REQUEST_URI']);
+		}
+		else if (isset($_SERVER['ORIG_PATH_INFO'])) {
+
 			Core::Log()->Write(__('Router library: Performing ORIG_PATH_INFO routing.', 'WEb'), 'debug');
 
 			/**
@@ -371,6 +377,7 @@ class Router extends Library {
 		 * so we need to do some rewriting.
 		 */
 		else if (isset($_SERVER['QUERY_STRING']) && ('' != $_SERVER['QUERY_STRING'])) {
+
 			Core::Log()->Write(__('Router library: Performing QUERY_STRING routing.', 'WEb'), 'debug');
 
 			/**
