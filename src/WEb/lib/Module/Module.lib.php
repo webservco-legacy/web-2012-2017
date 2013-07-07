@@ -163,30 +163,6 @@ class Module extends Library {
 	}
 
 	/**
-	 * Get current resource name.
-	 *
-	 * Module/Controller/Action.
-	 *
-	 * @param array $request
-	 * @param string $modulemodule name
-	 *
-	 * @return string
-	 */
-	public function GetCurrentResource($request, $module = NULL) {
-
-		if (empty($module)) {
-
-			$module = $this->GetCurrentModule($request);
-		}
-
-		$module = ucfirst($module);
-
-		$controller = str_replace(array("{$module}_", 'Controller_'), NULL, $request['controller']);
-
-		return $module . '/' . $controller . '/' . $request['action'];
-	}
-
-	/**
 	 * General information.
 	 *
 	 * @param array $request
@@ -203,14 +179,36 @@ class Module extends Library {
 		$data['module'] = $this->GetCurrentModule($request);
 
 		/**
-		 * Current resource name (Module/Controller/Action)
+		 * Current location (Module/Controller/Action)
 		*/
-		$data['resource'] = $this->GetCurrentResource($request, $data['module']);
+		$data['location'] = $request['location'];
+
+		/**
+		 * Location path.
+		 */
+		$data['path'] = "/";
+
+		/**
+		 * Location path without page number.
+		 */
+		$data['path_pagination'] = "/";
+
+		if (!empty($request['query'])) {
+
+			foreach ($request['query'] as $key => $value) {
+
+				$data['path'] .= "{$key}/{$value}/";
+
+				if ('page' != $key) {
+					$data['path_pagination'] .= "{$key}/{$value}/";
+				}
+			}
+		}
 
 		/**
 		 * Next URL.
-		*/
-		$data['next_url'] = !empty($request['query']['next']) ? Core::String()->DecodeUrlString($request['query']['next']) : NULL;
+		 */
+		$data['url_next'] = !empty($request['query']['next']) ? Core::String()->DecodeUrlString($request['query']['next']) : NULL;
 
 		return $data;
 	}
@@ -333,6 +331,7 @@ class Module extends Library {
 						'href' => $menu_href,
 						'target' => $target,
 						'submenu' => $submenu,
+						'resource' => $menu_item['resource'],
 				);
 			}
 		}
@@ -492,8 +491,10 @@ class Module extends Library {
 		 *
 		 * Values:
 		 * $data['info']['module'] - current module name
-		 * $data['info']['resource'] - current resource (Module/App/Controller)
-		 * $data['info']['next_url'] - next url
+		 * $data['info']['location'] - current location (Module/App/Controller)
+		 * $data['info]['path'] - current location path (Item/1/page/3)
+		 * $data['info]['path_pagination'] - current location path without page number (Item/1/)
+		 * $data['info']['url_next'] - next url
 		 *
 		 * Usage:
 		 * Controller: $data['info']['module']
@@ -573,8 +574,9 @@ class Module extends Library {
 		 * Values:
 		 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
-		 * $data['menu'][MENU_NODE_FROM_CONFIG][target'']
+		 * $data['menu'][MENU_NODE_FROM_CONFIG]['target']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
+		 * $data['menu'][MENU_NODE_FROM_CONFIG]['resource']
 		 *
 		 * Usage:
 		 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']
