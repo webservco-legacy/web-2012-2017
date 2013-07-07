@@ -207,6 +207,11 @@ class Module extends Library {
 		*/
 		$data['resource'] = $this->GetCurrentResource($request, $data['module']);
 
+		/**
+		 * Next URL.
+		*/
+		$data['next_url'] = !empty($request['query']['next']) ? Core::String()->DecodeUrlString($request['query']['next']) : NULL;
+
 		return $data;
 	}
 
@@ -488,6 +493,7 @@ class Module extends Library {
 		 * Values:
 		 * $data['info']['module'] - current module name
 		 * $data['info']['resource'] - current resource (Module/App/Controller)
+		 * $data['info']['next_url'] - next url
 		 *
 		 * Usage:
 		 * Controller: $data['info']['module']
