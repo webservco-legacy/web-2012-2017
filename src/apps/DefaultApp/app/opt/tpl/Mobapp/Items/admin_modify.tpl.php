@@ -49,7 +49,7 @@
 			<label for="item_description_<?php echo $lang; ?>" title=""><?php echo __('Description'); ?> (<?php echo $lang; ?>)</label>
 			
 			<p>
-				<textarea name="item_description_<?php echo $lang; ?>" id="item_description_<?php echo $lang; ?>" rows="4"><?php echo !empty($form['data'][$locale]['item_description']) ? $form['data'][$locale]['item_description'] : NULL; ?></textarea>
+				<textarea class="wysiwyg" name="item_description_<?php echo $lang; ?>" id="item_description_<?php echo $lang; ?>" rows="4"><?php echo !empty($form['data'][$locale]['item_description']) ? $form['data'][$locale]['item_description'] : NULL; ?></textarea>
 				<?php
 				if (!empty($form['errors']['fields']["item_description_{$lang}"])) {
 					echo "<strong class=\"ko\">{$form['errors']['fields']["item_description_{$lang}"]}</strong>";	
