@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Users $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 12:16+0100\n"
-"PO-Revision-Date: 2013-07-06 12:16+0100\n"
+"POT-Creation-Date: 2013-07-07 07:24+0100\n"
+"PO-Revision-Date: 2013-07-07 07:24+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: \n"
@@ -21,11 +21,11 @@ msgstr ""
 "X-Poedit-SearchPath-2: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Users\n"
 "X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users\n"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:19
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:23
 msgid "Account"
 msgstr "Conto"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:27
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:31
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/register.tpl.php:44
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password_done.tpl.php:10
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:43
@@ -33,33 +33,32 @@ msgstr "Conto"
 msgid "Login"
 msgstr "Login"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:45
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:53
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/reset_password.tpl.php:45
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:52
 msgid "Register"
 msgstr "Registrati"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:69
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:93
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:81
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:109
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/login.tpl.php:43
 msgid "Reset password"
 msgstr "Reset password"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:112
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:114
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:132
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:134
 msgid "Login error"
 msgstr "Errore login"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:114
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/App.ctrl.php:134
 msgid "Please make sure your credentials are correct."
 msgstr "Si prega di assicurarsi che le credenziali siano corrette."
 
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/Admin.ctrl.php:17
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Users/admin_user.tpl.php:4
 msgid "Users"
 msgstr "Utenti"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/Admin.ctrl.php:39
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Users/Admin.ctrl.php:46
 msgid "User"
 msgstr "Utente"
 

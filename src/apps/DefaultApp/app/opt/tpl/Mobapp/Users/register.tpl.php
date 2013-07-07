@@ -6,7 +6,7 @@
 		
 <?php } else if (!empty($form)) { ?>
 			
-			<form class="login" enctype="multipart/form-data" method="post" action="">
+			<form class="login" enctype="multipart/form-data" method="post" action="" autocomplete="off">
 			
 				<fieldset>
 						

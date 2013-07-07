@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: App $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 12:15+0100\n"
-"PO-Revision-Date: 2013-07-06 12:15+0100\n"
+"POT-Creation-Date: 2013-07-07 07:24+0100\n"
+"PO-Revision-Date: 2013-07-07 07:24+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: \n"
@@ -20,13 +20,12 @@ msgstr ""
 "X-Poedit-SearchPath-1: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/obj\n"
 "X-Poedit-SearchPath-2: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/obj\n"
 "X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib\n"
-"X-Poedit-SearchPath-4: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/mod\n"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
 msgid "Error"
 msgstr "Errore"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
 msgid "You don't have permission to access this resource."
 msgstr "Non hai il permesso di accedere a questa risorsa."
 
@@ -38,29 +37,34 @@ msgstr "Nessun dato"
 msgid "Default app"
 msgstr "Default app"
 
-#: app.cfg.xml:21
+#: app.cfg.xml:23
 msgid "Home"
 msgstr "Home"
 
-#: app.cfg.xml:26
+#: app.cfg.xml:28
 msgid "Account"
 msgstr "Account"
 
-#: app.cfg.xml:31
+#: app.cfg.xml:33
+#: app.cfg.xml:62
+msgid "Items"
+msgstr "Articoli"
+
+#: app.cfg.xml:38
 msgid "Admin"
 msgstr "Admin"
 
-#: app.cfg.xml:37
+#: app.cfg.xml:44
 msgid "Italia Multimedia"
 msgstr "Italia Multimedia"
 
-#: app.cfg.xml:45
-msgid "Users"
-msgstr "Users"
+#: app.cfg.xml:52
+msgid "Frontend"
+msgstr "Frontend"
 
-#: app.cfg.xml:50
-msgid "User"
-msgstr "User"
+#: app.cfg.xml:57
+msgid "Users"
+msgstr "Utenti"
 
 #: form.cfg.xml:12
 #: form.cfg.xml:55

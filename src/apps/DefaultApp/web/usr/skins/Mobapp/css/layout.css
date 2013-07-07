@@ -6,12 +6,11 @@ html,button,input,select,textarea {
 
 body {
 	font-size: 1em;
-	line-height: 1.4;
+	line-height: 1.7;
 }
 
 a:link,a:hover,a:visited,a:active {
 	color: #024591;
-	font-weight: bold;
 	text-decoration: none;
 	border-bottom: 1px dashed #024591;
 }
@@ -21,14 +20,23 @@ a:hover {
 }
 
 header,section,footer {
-	background: #ffc;
 	display: block;
 	width: 80%;
-	margin: 1em auto;
-	padding: 10px 20px;
+	margin: 0em auto;
+	padding: 0px;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+}
+
+section {
+	background: #ffc;
+	margin: 1em auto;
+}
+
+article {
+	margin: 0 1em;
+	padding: 1em 0;
 }
 
 h1,h2,h3 {
@@ -36,10 +44,18 @@ h1,h2,h3 {
 	letter-spacing: 1px;
 }
 
+header article {
+	float: right;
+	display: inline;
+	text-align: right;
+}
+
 nav {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
 	background: #777;
 	color: #ffc;
-	margin-bottom: 2em;
 	overflow: hidden;
 	padding: 0;
 	border-radius: 5px;
@@ -94,4 +110,35 @@ nav ul li a.active,nav ul li a:hover,nav ul li a:active {
 	border: 0;
 	background: #ffc;
 	color: #777;
+}
+
+button,input,select,textarea {
+	background: #eee;
+	padding: 5px 10px;
+	border: 1px solid #777;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+input[type="submit"], input[type="reset"], a.button {
+	background: #777;
+	color: #ffc;
+	font-weight: bold;
+	border: 0;
+	padding: 5px 10px;
+	text-decoration: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.ko {
+	color: #900 !important;
+	font-weight: bold !important;
+}
+
+.ok {
+	color: #090 !important;
+	font-weight: bold !important;
 }

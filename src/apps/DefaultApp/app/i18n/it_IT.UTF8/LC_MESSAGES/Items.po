@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Items $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 17:42+0100\n"
-"PO-Revision-Date: 2013-07-06 17:42+0100\n"
+"POT-Creation-Date: 2013-07-07 07:30+0100\n"
+"PO-Revision-Date: 2013-07-07 07:30+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: \n"
@@ -21,8 +21,124 @@ msgstr ""
 "X-Poedit-SearchPath-2: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/etc/mod/Items\n"
 "X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items\n"
 
+#: Items.mod.php:175
+#: Items.mod.php:185
+#: Items.mod.php:257
+#: Items.mod.php:267
+#, php-format
+msgid "The field \"%s\" is required."
+msgstr "Il campo \"%s\" e' obbligatorio."
+
+#: Items.mod.php:175
+#: Items.mod.php:257
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:24
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:24
+msgid "Status"
+msgstr "Status"
+
+#: Items.mod.php:185
+#: Items.mod.php:267
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:39
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:39
+msgid "Title"
+msgstr "Titolo"
+
+#: Items.mod.php:198
+#: Items.mod.php:280
+msgid "Error saving item data."
+msgstr "Error saving item data."
+
+#: Items.mod.php:205
+msgid "Error getting new item id."
+msgstr "Error getting new item id."
+
+#: Items.mod.php:228
+#: Items.mod.php:303
+msgid "Error saving item details."
+msgstr "Error saving item details."
+
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/App.ctrl.php:18
 #: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:26
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_result.tpl.php:7
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_deleted.tpl.php:7
 msgid "Items"
-msgstr "Items"
+msgstr "Articoli"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:56
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:89
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:115
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:157
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:183
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:216
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_result.tpl.php:11
+msgid "Item"
+msgstr "Articolo"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:93
+#, php-format
+msgid "Item ID %s was succesfully added"
+msgstr "Item ID %s was succesfully added"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:161
+#, php-format
+msgid "Item ID %s was succesfully modified."
+msgstr "Item ID %s was succesfully modified."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:194
+#, php-format
+msgid "Please confirm you really want to delete Item ID %s and all related data."
+msgstr "Please confirm you really want to delete Item ID %s and all related data."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/ctrl/Items/Admin.ctrl.php:220
+#, php-format
+msgid "Item ID %s was succesfully deleted."
+msgstr "Item ID %s was succesfully deleted."
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_items.tpl.php:8
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:66
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_delete.tpl.php:7
+msgid "Delete"
+msgstr "Cancella"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_items.tpl.php:11
+msgid "Add item"
+msgstr "Aggiungi articolo"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:9
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:9
+msgid "Error"
+msgstr "Errore"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:28
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:28
+msgid "on"
+msgstr "on"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:29
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:29
+msgid "off"
+msgstr "off"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:49
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:49
+msgid "Description"
+msgstr "Descrizione"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:64
+msgid "Add"
+msgstr "Aggiungi"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:66
+msgid "Reset"
+msgstr "Reset"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_add.tpl.php:68
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:68
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_delete.tpl.php:9
+msgid "Cancel"
+msgstr "Annulare"
+
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Mobapp/Items/admin_modify.tpl.php:64
+msgid "Modify"
+msgstr "Modifica"
 

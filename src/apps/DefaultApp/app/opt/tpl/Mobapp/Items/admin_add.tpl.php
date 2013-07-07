@@ -5,19 +5,19 @@
 	<?php
 	if (!empty($form['errors']['result']) || !empty($form['errors']['fields'])) {
 		
-		echo '<p>';
-		echo '<strong>' . __('Error') . '!</strong><br />';
+		echo '<p class="ko">';
+		echo '' . __('Error') . '!<br />';
 		
 		if (!empty($form['errors']['result'])) {
 			foreach ($form['errors']['result'] as $message) {
-				echo "<strong>{$message}</strong><br />";
+				echo "{$message}<br />";
 			}
 		}
 		echo '</p>';
 	}
 	?>
 		
-	<form class="" enctype="multipart/form-data" method="post" action="">
+	<form class="" enctype="multipart/form-data" method="post" action="" autocomplete="off">
 	
 		<fieldset>
 		
@@ -49,9 +49,7 @@
 			<label for="item_description_<?php echo $lang; ?>" title=""><?php echo __('Description'); ?> (<?php echo $lang; ?>)</label>
 			
 			<p>
-				<textarea name="item_description_<?php echo $lang; ?>" id="item_description_<?php echo $lang; ?>">
-					<?php echo !empty($form['data'][$locale]['item_description']) ? $form['data'][$locale]['item_description'] : NULL; ?>
-				</textarea>
+				<textarea name="item_description_<?php echo $lang; ?>" id="item_description_<?php echo $lang; ?>"><?php echo !empty($form['data'][$locale]['item_description']) ? $form['data'][$locale]['item_description'] : NULL; ?></textarea>
 				<?php
 				if (!empty($form['errors']['fields']["item_description_{$lang}"])) {
 					echo "<strong class=\"ko\">{$form['errors']['fields']["item_description_{$lang}"]}</strong>";	
@@ -63,7 +61,11 @@
 			<label for="save" title=""></label>
 			
 			<p>
-				<input name="add" id="add" type="submit" title="" value="<?php echo __('Add'); ?>" />
+				<input name="add" id="add" type="submit" title="<?php echo __('Add'); ?>" value="<?php echo __('Add'); ?>" />
+				&#160;&#160;&#160;
+				<input name="reset" id="reset" type=reset title="<?php echo __('Reset'); ?>" value="<?php echo __('Reset'); ?>" />
+				&#160;&#160;&#160;
+				<a class="button" href="<?php echo $url['www']; ?>Items/Admin/Items" title="<?php echo __('Cancel'); ?>"><?php echo __('Cancel'); ?></a>
 			</p>
 		
 		</fieldset>

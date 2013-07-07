@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: App $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 12:13+0100\n"
-"PO-Revision-Date: 2013-07-06 12:13+0100\n"
+"POT-Creation-Date: 2013-07-07 07:18+0100\n"
+"PO-Revision-Date: 2013-07-07 07:19+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: \n"
@@ -21,11 +21,11 @@ msgstr ""
 "X-Poedit-SearchPath-2: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/obj\n"
 "X-Poedit-SearchPath-3: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib\n"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
 msgid "Error"
 msgstr "Error"
 
-#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:189
+#: /home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
 msgid "You don't have permission to access this resource."
 msgstr "You don't have permission to access this resource."
 
@@ -37,29 +37,34 @@ msgstr "No data to display"
 msgid "Default app"
 msgstr "Default app"
 
-#: app.cfg.xml:21
+#: app.cfg.xml:23
 msgid "Home"
 msgstr "Home"
 
-#: app.cfg.xml:26
+#: app.cfg.xml:28
 msgid "Account"
 msgstr "Account"
 
-#: app.cfg.xml:31
+#: app.cfg.xml:33
+#: app.cfg.xml:62
+msgid "Items"
+msgstr "Items"
+
+#: app.cfg.xml:38
 msgid "Admin"
 msgstr "Admin"
 
-#: app.cfg.xml:37
+#: app.cfg.xml:44
 msgid "Italia Multimedia"
 msgstr "Italia Multimedia"
 
-#: app.cfg.xml:45
+#: app.cfg.xml:52
+msgid "Frontend"
+msgstr "Frontend"
+
+#: app.cfg.xml:57
 msgid "Users"
 msgstr "Users"
-
-#: app.cfg.xml:50
-msgid "User"
-msgstr "User"
 
 #: form.cfg.xml:12
 #: form.cfg.xml:55
@@ -108,3 +113,5 @@ msgstr "\"%s\" is already registered, please choose another, or use the options 
 msgid "\"%s\" is not registered, please make sure you enter the correct address."
 msgstr "\"%s\" is not registered, please make sure you enter the correct address."
 
+#~ msgid "User"
+#~ msgstr "User"

@@ -10,6 +10,7 @@
 			<prefix></prefix>
 		</app>
 		<options>
+		    <multilanguage></multilanguage>
 		    <menus>1</menus><!-- use menus -->
 		    <timezone>1</timezone><!-- custom timezone functionality -->
 		    <webapp>1</webapp><!-- web app functionality (device info, multi markets, free/pro, etc -->
@@ -48,7 +49,7 @@
 			</web>
 			<web_admin>
 				<item>
-					<title>Home</title>
+					<title>Frontend</title>
 					<link>index</link>
 					<url></url>
 				</item>

@@ -65,6 +65,13 @@ class ControllerApp extends Controller {
 
 	public function InitLocale() {
 
+		$opt_multilanguage = Core::Config()->Get('options.multilanguage');
+
+		if (!$opt_multilanguage) {
+
+			return FALSE;
+		}
+
 		if ($this->_mUseSessions && !empty($_SESSION['I18n']['Chosen'])) {
 
 			return FALSE;

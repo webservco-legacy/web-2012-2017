@@ -250,6 +250,8 @@ class ModuleApp extends Module {
 		 */
 		$data['test'] = 'test data';
 
+		$data['lang'] = substr(Core::I18n()->GetLocale(), 0, 2);
+
 		return $data;
 	}
 }
