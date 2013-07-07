@@ -63,9 +63,9 @@
 			<p>
 				<input name="save" id="save" type="submit" title="<?php echo __('Modify'); ?>" value="<?php echo __('Modify'); ?>" />
 				&#160;&#160;&#160;
-				<a class="button" href="<?php echo $url['www']; ?>Items/Admin/Delete/id/<?php echo $item_id; ?>" title="<?php echo __('Delete'); ?>"><?php echo __('Delete'); ?></a>
+				<a class="button" href="<?php echo $url['www']; ?>Items/Admin/Delete/id/<?php echo $item_id; ?><?php echo $url['next_string']; ?>" title="<?php echo __('Delete'); ?>"><?php echo __('Delete'); ?></a>
 				&#160;&#160;&#160;
-				<a class="button" href="<?php echo $url['www']; ?>Items/Admin/Items" title="<?php echo __('Cancel'); ?>"><?php echo __('Cancel'); ?></a>
+				<a class="button" href="<?php echo $url['items_admin']; ?>" title="<?php echo __('Cancel'); ?>"><?php echo __('Cancel'); ?></a>
 			</p>
 		
 		</fieldset>

@@ -38,6 +38,16 @@ class Module_Items extends ModuleApp {
 		return TRUE;
 	}
 
+	public function SetFilters($query) {
+
+		if (!empty($query['filter_status'])) {
+
+			$this->SetCondition('status', $query['filter_status']);
+		}
+
+		return TRUE;
+	}
+
 	private function _SetQueryExtra() {
 
 		if (!empty($this->_mConditions['id'])) {
@@ -88,7 +98,7 @@ class Module_Items extends ModuleApp {
 
 		$this->_SetQueryExtra();
 
-		$q = "SELECT M.item_id, M.item_status = 'on', D.item_title, D.item_description
+		$q = "SELECT M.item_id, M.item_status, D.item_title, D.item_description
 		FROM items_main AS M
 		LEFT JOIN items_details AS D ON (D.item_id = M.item_id)
 		WHERE 1
@@ -114,6 +124,38 @@ class Module_Items extends ModuleApp {
 		}
 
 		return $data;
+	}
+
+	public function GetPagination($pageNum = 1) {
+
+		$items = array();
+
+		$items_per_page = Core::Config()->Get('items.pagination.items');
+
+		if (empty($items_per_page)) {
+
+			$items_per_page = Core::Config()->Get('settings.pagination.items');
+		}
+
+		$data = $this->Get();
+
+		if (!empty($data)) {
+
+			$items['data']['total'] = array_chunk($data, $items_per_page);
+			$items['count']['total'] = count($data);
+
+			$items['count']['page'] = !empty($pageNum) ? $pageNum : 1;
+			$items['count']['pages'] = count($items['data']['total']);
+
+
+			$items['count']['index'] = !empty($items['count']['page']) ? ($items['count']['page'] - 1) : 0;
+
+			$items['data']['current'] = !empty($items['data']['total'][$items['count']['index']]) ? $items['data']['total'][$items['count']['index']] : array();
+			$items['count']['current'] = count($items['data']['current']);
+
+		}
+
+		return $items;
 	}
 
 	public function GetMain($itemId) {
@@ -175,10 +217,10 @@ class Module_Items extends ModuleApp {
 
 		foreach ($app_langs as $lang => $locale) {
 
-			$itemData[$locale]['item_title'] = $itemData["item_title_{$lang}"];
-			$itemData[$locale]['item_description'] = $itemData["item_description_{$lang}"];
+			$form['data'][$locale]['item_title'] = $itemData["item_title_{$lang}"];
+			$form['data'][$locale]['item_description'] = $itemData["item_description_{$lang}"];
 
-			if (empty($itemData[$locale]['item_title'])) {
+			if (empty($form['data'][$locale]['item_title'])) {
 
 				$form['errors']['fields']["item_title_{$lang}"] = sprintf(__('The field "%s" is required.'), __('Title') . " ({$lang})");
 			}
@@ -237,7 +279,7 @@ class Module_Items extends ModuleApp {
 		exit();
 	}
 
-	public function Modify($itemId, $itemData) {
+	public function Modify($itemId, $itemData, $next = NULL) {
 
 		/**
 		 * Data filtering is already done, so we can just go ahead and use it.
@@ -306,13 +348,13 @@ class Module_Items extends ModuleApp {
 
 			return $form;
 		}
-
-		Core::Router()->Redirect("Items/Admin/Modified/id/{$itemId}");
+		
+		Core::Router()->Redirect("Items/Admin/Modified/id/{$itemId}{$next}");
 
 		exit();
 	}
 
-	public function Delete($itemId) {
+	public function Delete($itemId, $next = NULL) {
 
 		$q_main = "DELETE FROM items_main WHERE item_id = '{$itemId}' LIMIT 1";
 
@@ -328,8 +370,8 @@ class Module_Items extends ModuleApp {
 
 			return FALSE;
 		}
-
-		Core::Router()->Redirect("Items/Admin/Deleted/id/{$itemId}");
+		
+		Core::Router()->Redirect("Items/Admin/Deleted/id/{$itemId}{$next}");
 
 		exit();return TRUE;
 	}

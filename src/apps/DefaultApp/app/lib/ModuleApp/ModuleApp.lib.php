@@ -85,8 +85,10 @@ class ModuleApp extends Module {
 	 *
 	 * Values:
 	 * $data['info']['module'] - current module name
-	 * $data['info']['resource'] - current resource (Module/App/Controller)
-	 * $data['info']['next_url'] - next url
+	 * $data['info']['location'] - current location (Module/App/Controller)
+	 * $data['info]['path'] - current location path (Item/1/page/3)
+	 * $data['info]['path_pagination'] - current location path without page number (Item/1/)
+	 * $data['info']['url_next'] - next url
 	 *
 	 * Usage:
 	 * Controller: $data['info']['module']
@@ -150,8 +152,9 @@ class ModuleApp extends Module {
 	 * Values:
 	 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
 	 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
-	 * $data['menu'][MENU_NODE_FROM_CONFIG][target'']
+	 * $data['menu'][MENU_NODE_FROM_CONFIG]['target']
 	 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
+	 * $data['menu'][MENU_NODE_FROM_CONFIG]['resource'] $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
 	 *
 	 * Usage:
 	 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']
@@ -251,7 +254,9 @@ class ModuleApp extends Module {
 		 */
 		$data['test'] = 'test data';
 
-		$data['lang'] = substr(Core::I18n()->GetLocale(), 0, 2);
+		$data['url']['next_string'] = !empty($data['query']['next']) ? "/next/{$data['query']['next']}" : NULL;
+
+		$data['url']['items_admin'] = !empty($data['info']['url_next']) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
 
 		return $data;
 	}

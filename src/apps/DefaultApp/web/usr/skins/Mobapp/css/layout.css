@@ -1,7 +1,7 @@
 html,button,input,select,textarea {
 	background: #cfc;
 	color: #777;
-	font-family: Tahoma, Geneva, Kalimati, sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
 }
 
 body {
@@ -141,4 +141,22 @@ input[type="submit"], input[type="reset"], a.button {
 .ok {
 	color: #090 !important;
 	font-weight: bold !important;
+}
+
+table.items {}
+
+table.items th, table.items td {
+	padding: 5px 10px;
+	border-bottom: 1px solid #777;
+}
+
+#pagination a {
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #777;
+	border-bottom: 1px dashed #777;
+}
+
+#pagination a:hover {
+	border-bottom: 1px dotted #777;
 }

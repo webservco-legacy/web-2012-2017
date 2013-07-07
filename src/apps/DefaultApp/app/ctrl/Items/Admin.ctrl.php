@@ -24,15 +24,16 @@ class Controller_Items_Admin extends ControllerApp {
 		 */
 
 		$data['strings']['title'] = __('Items');
-		
-		if (!empty($data['query']['filter_status'])) {
-			
-			$this->Module()->SetCondition('status', $data['query']['filter_status']);
-		}
 
 		$this->Module()->SetCondition('i18n_locale', Core::I18n()->GetLocale());
 
-		$data['items'] = $this->Module()->Get();
+		$this->Module()->SetFilters($data['query']);
+
+		$data['items'] = $this->Module()->GetPagination(!empty($data['query']['page']) ? $data['query']['page'] : NULL);
+
+		$data['tpl_pagination'] = $this->Output()->Out('pagination', $data);
+
+		$data['url_return'] = Core::String()->EncodeUrlString("{$data['info']['location']}{$data['info']['path']}");
 
 		echo $this->GetOutput($data);
 
@@ -91,7 +92,7 @@ class Controller_Items_Admin extends ControllerApp {
 
 		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
 
-		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully added'), $data['item_id']);
+		$data['strings']['message'] = sprintf(__('Item ID %s was succesfully added!'), $data['item_id']);
 
 		echo $this->GetOutput($data, 'result');
 
@@ -123,7 +124,7 @@ class Controller_Items_Admin extends ControllerApp {
 
 			if (!empty($_POST)) {
 					
-				$data['form'] = $this->Module()->Modify($data['item_id'], $_POST);
+				$data['form'] = $this->Module()->Modify($data['item_id'], $_POST, $data['url']['next_string']);
 					
 			} else {
 					
@@ -180,14 +181,14 @@ class Controller_Items_Admin extends ControllerApp {
 		/**
 		 * Custom functionality below this line.
 		 */
-		
+
 		$data['strings']['title'] = __('Item');
-		
+
 		$data['item_id'] = !empty($data['query']['id']) ? $data['query']['id'] : NULL;
 
 		if (!empty($data['query']['confirm'])) {
 
-			$this->Module()->Delete($data['item_id']);
+			$this->Module()->Delete($data['item_id'], $data['url']['next_string']);
 
 			return TRUE;
 		}

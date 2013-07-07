@@ -185,9 +185,9 @@ class ControllerApp extends Controller {
 
 	public function CheckAdminAccess($data) {
 
-		if (!empty($data['user']['Logged']) && !empty($data['info']['resource'])) {
+		if (!empty($data['user']['Logged']) && !empty($data['info']['location'])) {
 
-			if (Core::Acl()->Check($data['user']['Id'], $data['info']['resource'])) {
+			if (Core::Acl()->Check($data['user']['Id'], $data['info']['location'])) {
 
 				return TRUE;
 
@@ -202,7 +202,7 @@ class ControllerApp extends Controller {
 
 		} else {
 			
-			$next = Core::String()->EncodeUrlString($data['info']['resource']);
+			$next = Core::String()->EncodeUrlString($data['info']['location']);
 
 			Core::Router()->Redirect("Users/App/Account/next/{$next}");
 

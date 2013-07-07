@@ -4,7 +4,7 @@
 	<p><?php echo $strings['message']; ?></p>
 	
 	<p>
-		<a href="<?php echo $url['www']; ?>Items/Admin/Items" title="<?php echo __('Items'); ?>"><?php echo __('Items'); ?></a>
+		<a class="button" href="<?php echo $url['items_admin']; ?>" title="<?php echo __('Items'); ?>"><?php echo __('Items'); ?></a>
 	</p>
 	
 	<?php

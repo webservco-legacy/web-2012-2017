@@ -30,7 +30,7 @@ class Controller_Users_App extends ControllerApp {
 
 			$data['strings']['title'] = __('Login');
 
-			$data['form'] = $this->Module()->GetLoginForm($data['info']['next_url']);
+			$data['form'] = $this->Module()->GetLoginForm($data['info']['url_next']);
 
 			$template = 'login';
 		}

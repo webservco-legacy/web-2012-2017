@@ -20,6 +20,15 @@
 			
 			foreach ($menu['web'] as $menu_item) {
 				
+				$a_class = NULL;
+				
+				if (!empty($menu_item['resource'])) {
+					
+					if (0 === strpos($info['location'], $menu_item['resource']) || (empty($info['location']) && '/' == $menu_item['resource'])) {
+						$a_class = ' class="active"';	
+					}
+				}
+				
 				$a_href = !empty($menu_item['href']) ? " href=\"{$menu_item['href']}\"" : NULL;
 				
 				$a_target = !empty($menu_item['target']) ? " target=\"{$menu_item['target']}\"" : NULL;
@@ -28,13 +37,22 @@
 				
 				echo "<li>\n";
 				
-				echo "<a{$a_href}{$a_target} title=\"{$a_title}\">{$a_title}</a>\n";
+				echo "<a{$a_class}{$a_href}{$a_target} title=\"{$a_title}\">{$a_title}</a>\n";
 				
 				if (!empty($menu_item['submenu'])) {
 					
 					echo "<ul>\n";
 					
 					foreach ($menu_item['submenu'] as $submenu_item) {
+						
+						$a_class = NULL;
+				
+						if (!empty($su['resource'])) {
+							
+							if (0 === strpos($info['location'], $submenu_item['resource']) || (empty($info['location']) && '/' == $submenu_item['resource'])) {
+								$a_class = ' class="active"';	
+							}
+						}
 						
 						$a_href = !empty($submenu_item['href']) ? " href=\"{$submenu_item['href']}\"" : NULL;
 						
@@ -44,7 +62,7 @@
 						
 						echo "<li>\n";
 						
-						echo "<a{$a_href}{$a_target} title=\"{$a_title}\">{$a_title}</a>\n";
+						echo "<a{$a_class}{$a_href}{$a_target} title=\"{$a_title}\">{$a_title}</a>\n";
 						
 						echo "</li>\n";
 					}
