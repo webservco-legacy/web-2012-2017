@@ -410,8 +410,14 @@ class Router extends Library {
 	 * @return string
 	 */
 	private function _ProcessRequest($firstPart = NULL) {
+
 		if (FALSE !== strpos($firstPart, 'index.php?')) {
+
 			return $this->_ProcessQueryString();
+
+		} else if (FALSE !== strpos($firstPart, '?')) {
+
+			return $this->_ProcessQueryStringMixed();
 		}
 
 		/**
@@ -518,6 +524,71 @@ class Router extends Library {
 		 * @var string
 		*/
 		$req_uri = str_replace('//', '/', $req_uri);
+
+		/**
+		 * @var string
+		*/
+		$server = NULL;
+
+		if (isset($_SERVER['HTTP_HOST']) && ('' != $_SERVER['HTTP_HOST'])) {
+			/**
+			 * @var string
+			 */
+			$server = $_SERVER['HTTP_HOST'];
+		} else if (isset($_SERVER['SERVER_NAME']) && ('' != $_SERVER['SERVER_NAME'])) {
+			/**
+			 * @var string
+			 */
+			$server = $_SERVER['SERVER_NAME'];
+		}
+
+		/**
+		 * @var string
+		 */
+		$url = 'http://' . $server . $req_uri;
+
+		/**
+		 * Redirect to new custom URL.
+		 */
+		return header("Location: " . $url);
+	}
+
+	/**
+	 * Process query string mixed.
+	 *
+	 * Turn mixed request (/value1/value2/?option1=value1&option2=value2) into internal request (/value1/value2/value3/value4).
+	 * Then do a redirect.
+	 *
+	 * @return mixed.
+	 */
+	private function _ProcessQueryStringMixed() {
+		/**
+		 * Init query string.
+		 *
+		 * It is easier to work with the $_GET so we use it instead of QUERY_STRING.
+		 *
+		 * @var string
+		 */
+		$qs = NULL;
+
+		foreach ($_GET as $key => $value) {
+
+			$qs .= "{$key}/{$value}/";
+		}
+
+		/**
+		 * Init request uri.
+		 *
+		 * @var string
+		 */
+		$req_uri = str_replace('?' . $_SERVER['QUERY_STRING'], '/' . $qs, $_SERVER['REQUEST_URI']);
+
+		/**
+		 * @var string
+		*/
+		$req_uri = str_replace('//', '/', $req_uri);
+
+		//var_dump($req_uri); exit();
 
 		/**
 		 * @var string
