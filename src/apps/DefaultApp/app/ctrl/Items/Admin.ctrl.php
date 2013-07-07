@@ -24,6 +24,11 @@ class Controller_Items_Admin extends ControllerApp {
 		 */
 
 		$data['strings']['title'] = __('Items');
+		
+		if (!empty($data['query']['filter_status'])) {
+			
+			$this->Module()->SetCondition('status', $data['query']['filter_status']);
+		}
 
 		$this->Module()->SetCondition('i18n_locale', Core::I18n()->GetLocale());
 
