@@ -8,7 +8,7 @@
 	</p>
 	
 	<p>
-		<a href="<?php echo $url['www']; ?>Items/Admin/Edit/id/<?php echo $item_id; ?>" title="<?php echo __('Item'); ?> <?php echo $item_id; ?>"><?php echo __('Item'); ?> <?php echo $item_id; ?></a>
+		<a href="<?php echo $url['www']; ?>Items/Admin/Modify/id/<?php echo $item_id; ?>" title="<?php echo __('Item'); ?> <?php echo $item_id; ?>"><?php echo __('Item'); ?> <?php echo $item_id; ?></a>
 	</p>
 	
 	<?php

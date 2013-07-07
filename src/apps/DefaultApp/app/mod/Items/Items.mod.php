@@ -153,8 +153,6 @@ class Module_Items extends ModuleApp {
 			while($r = $rs->fetch_assoc()) {
 
 				$data[$r['i18n_locale']] = $r;
-
-				//XXX
 			}
 		}
 
@@ -309,7 +307,7 @@ class Module_Items extends ModuleApp {
 			return $form;
 		}
 
-		Core::Router()->Redirect("Items/Admin/Saved/id/{$itemId}");
+		Core::Router()->Redirect("Items/Admin/Modified/id/{$itemId}");
 
 		exit();
 	}
