@@ -573,6 +573,11 @@ class Router extends Library {
 
 		foreach ($_GET as $key => $value) {
 
+			if (empty($value)) {
+
+				$value = '0';
+			}
+
 			$qs .= "{$key}/{$value}/";
 		}
 
