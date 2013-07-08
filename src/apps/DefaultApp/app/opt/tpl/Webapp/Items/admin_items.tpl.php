@@ -6,7 +6,7 @@
 		
 		<?php echo __('Status'); ?>:&#160;
 		<select name="filter_status" id="filter_status">
-			<option value="0">---</option>
+			<option value="">---</option>
 			<option value="on"<?php if (!empty($query['filter_status']) && 'on' == $query['filter_status']) {echo ' selected="selected"';} ?>><?php echo __('on'); ?></option>
 			<option value="off"<?php if (!empty($query['filter_status']) && 'off' == $query['filter_status']) {echo ' selected="selected"';} ?>><?php echo __('off'); ?></option>
 		</select>
