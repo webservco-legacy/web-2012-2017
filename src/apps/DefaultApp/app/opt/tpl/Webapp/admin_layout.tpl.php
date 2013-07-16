@@ -18,7 +18,7 @@
 	
 		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/normalize.css">
 		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/main.css">
-		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/layout.css">
+		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/layout_admin.css">
 		
 		<script src="<?php echo $url['scripts']; ?>vendor/modernizr-2.6.2.min.js"></script>
 		
