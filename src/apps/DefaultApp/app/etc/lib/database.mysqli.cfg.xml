@@ -10,7 +10,7 @@
 			<port>3306</port>
 			<user>im</user>
 			<password>im</password>
-			<database>im_app</database>
+			<database>im_app_default</database>
 			<!-- Fix GROUP_CONCAT limit? -->
 			<fix_gc>1</fix_gc>
 		</database>

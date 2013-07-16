@@ -5,9 +5,9 @@
 	<!-- Development Environment -->
 	<dev>
 		<path>
-			<core>/home/radu/Projects/Eclipse/ws_WEb/src/WEb/</core>
-			<app>/home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/</app>
-			<www>/home/radu/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
+			<core>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/</core>
+			<app>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/</app>
+			<www>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
 		</path>
 		<url>
 			<www>http://192.168.1.80/default_app/</www>
@@ -19,7 +19,7 @@
 	<!-- Production Environment -->
 	<prod>
 		<path>
-			<core>/var/www/app.italiamultimedia.com/libs/WEb/</core>
+			<core>/var/www/app.italiamultimedia.com/libs/WEb7/</core>
 			<app>/var/www/app.italiamultimedia.com/web/default_app/app/</app>
 			<www>/var/www/app.italiamultimedia.com/web/default_app/</www>
 		</path>
