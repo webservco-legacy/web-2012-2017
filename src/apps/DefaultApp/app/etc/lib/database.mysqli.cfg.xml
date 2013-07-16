@@ -20,6 +20,16 @@
 	</test>
 	<!-- Production Environment -->
 	<prod>
+	    <!-- Database configuration -->
+		<database>
+			<host>localhost</host>
+			<port>3306</port>
+			<user>c1_a_default</user>
+			<password>REDACTED</password>
+			<database>@ppDb@#%imimim0</database>
+			<!-- Fix GROUP_CONCAT limit? -->
+			<fix_gc>1</fix_gc>
+		</database>
 	</prod>
 </config>
 <!-- $Id$ -->

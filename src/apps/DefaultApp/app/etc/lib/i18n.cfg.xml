@@ -43,7 +43,11 @@
 				<item>
 					<lang>it</lang>
 					<locale>it_IT.UTF8</locale>
-				</item>
+				</item> 
+				<!--<item>
+					<lang>ro</lang>
+					<locale>ro_RO.UTF8</locale>
+				</item>-->
 			</langs>
 		</i18n>
 	</prod>
