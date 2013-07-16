@@ -22,5 +22,19 @@
 	<!-- Test Environment -->
 	<test></test>
 	<!-- Production Environment -->
-	<prod></prod>
+	<prod>
+	    <!-- User object settings -->
+		<user>
+			<login>
+				<!-- Failed logins timeout (minutes) -->
+				<timeout>5</timeout>
+				<!-- Maximum failed login attempts permitted -->
+				<attempts>10</attempts>
+			</login>
+			<props>
+			    <item>user_name_first</item>
+			    <item>user_name_last</item>
+			</props>
+		</user>
+	</prod>
 </config>

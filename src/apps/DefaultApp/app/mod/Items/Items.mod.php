@@ -99,8 +99,8 @@ class Module_Items extends ModuleApp {
 		$this->_SetQueryExtra();
 
 		$q = "SELECT M.item_id, M.item_status, D.item_title, D.item_description
-		FROM items_main AS M
-		LEFT JOIN items_details AS D ON (D.item_id = M.item_id)
+		FROM {$this->_mAppPrefix}items_main AS M
+		LEFT JOIN {$this->_mAppPrefix}items_details AS D ON (D.item_id = M.item_id)
 		WHERE 1
 		{$this->_mQueryConditions}
 		{$this->_mQueryOrder}
@@ -161,7 +161,7 @@ class Module_Items extends ModuleApp {
 	public function GetMain($itemId) {
 
 		$q = "SELECT item_id, item_status
-		FROM items_main
+		FROM {$this->_mAppPrefix}items_main
 		WHERE item_id = '{$itemId}' LIMIT 1";
 
 		$rs = Core::Database()->Query($q);
@@ -183,7 +183,7 @@ class Module_Items extends ModuleApp {
 		$app_langs = Core::I18n()->GetAvailableLangs();
 
 		$q = "SELECT item_id, i18n_locale, item_title, item_description
-		FROM items_details
+		FROM {$this->_mAppPrefix}items_details
 		WHERE item_id = '{$itemId}'";
 
 		$rs = Core::Database()->Query($q);
@@ -231,7 +231,7 @@ class Module_Items extends ModuleApp {
 			return $form;
 		}
 
-		$q_main = "INSERT INTO items_main (item_status) VALUES('{$itemData['item_status']}')";
+		$q_main = "INSERT INTO {$this->_mAppPrefix}items_main (item_status) VALUES('{$itemData['item_status']}')";
 
 		if (!Core::Database()->Query($q_main)) {
 
@@ -245,7 +245,7 @@ class Module_Items extends ModuleApp {
 			$form['errors']['result'][] = __('Error getting new item id.');
 		}
 
-		$q_details = "INSERT INTO items_details (item_id, i18n_locale, item_title, item_description) VALUES ";
+		$q_details = "INSERT INTO {$this->_mAppPrefix}items_details (item_id, i18n_locale, item_title, item_description) VALUES ";
 
 		$q_details_values = array();
 
@@ -313,14 +313,14 @@ class Module_Items extends ModuleApp {
 			return $form;
 		}
 
-		$q_main = "UPDATE items_main SET item_status = '{$itemData['item_status']}' WHERE item_id = '{$itemId}' LIMIT 1";
+		$q_main = "UPDATE {$this->_mAppPrefix}items_main SET item_status = '{$itemData['item_status']}' WHERE item_id = '{$itemId}' LIMIT 1";
 
 		if (!Core::Database()->Query($q_main)) {
 
 			$form['errors']['result'][] = __('Error saving item data.');
 		}
 
-		$q_details = "INSERT INTO items_details (item_id, i18n_locale, item_title, item_description) VALUES ";
+		$q_details = "INSERT INTO {$this->_mAppPrefix}items_details (item_id, i18n_locale, item_title, item_description) VALUES ";
 
 		$q_details_values = array();
 
@@ -356,14 +356,14 @@ class Module_Items extends ModuleApp {
 
 	public function Delete($itemId, $next = NULL) {
 
-		$q_main = "DELETE FROM items_main WHERE item_id = '{$itemId}' LIMIT 1";
+		$q_main = "DELETE FROM {$this->_mAppPrefix}items_main WHERE item_id = '{$itemId}' LIMIT 1";
 
 		if (!Core::Database()->Query($q_main)) {
 
 			return FALSE;
 		}
 
-		$q_details = "DELETE FROM items_details WHERE item_id = '{$itemId}'";
+		$q_details = "DELETE FROM {$this->_mAppPrefix}items_details WHERE item_id = '{$itemId}'";
 
 
 		if (!Core::Database()->Query($q_details)) {

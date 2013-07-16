@@ -16,7 +16,12 @@
 	</test>
 	<!-- Production Environment -->
 	<prod>
-	    
+	    <!-- Users module settings -->
+		<items>
+		    <pagination>
+		        <items>3</items>
+		    </pagination>
+		</items>
 	</prod>
 </config>
 <!-- $Id$ -->

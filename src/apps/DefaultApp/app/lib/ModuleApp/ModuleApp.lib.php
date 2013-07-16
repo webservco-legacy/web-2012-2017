@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined ( '_WEB' )) {
 	/**
 	 * Stop script execution.
 	 */
@@ -30,13 +30,13 @@ if (!defined('_WEB')) {
  *
  * Application module library.
  *
- * @author     Radu Maier <radu@italiamultimedia.com>
- * @package    DefaultApp
+ * @author Radu Maier <radu@italiamultimedia.com>
+ * @package DefaultApp
  * @subpackage ModuleApp
- *
+ *            
  */
 class ModuleApp extends Module {
-
+	
 	/**
 	 * Get default messages.
 	 *
@@ -45,16 +45,15 @@ class ModuleApp extends Module {
 	 * @return array
 	 */
 	public function GetDefaultStrings() {
-
-		$data = array();
-
-		$data['title'] = $data['title_app'] = __(Core :: Config()->Get('app.title'), 'App');
-
-		$data['no_data'] = __('No data to display', 'App');
-
+		$data = array ();
+		
+		$data ['title'] = $data ['title_app'] = __ ( Core::Config ()->Get ( 'app.title' ), 'App' );
+		
+		$data ['no_data'] = __ ( 'No data to display', 'App' );
+		
 		return $data;
 	}
-
+	
 	/**
 	 * Get custom data.
 	 *
@@ -84,6 +83,7 @@ class ModuleApp extends Module {
 	 * General information
 	 *
 	 * Values:
+	 * $data['info']['prefix'] - application prefix
 	 * $data['info']['module'] - current module name
 	 * $data['info']['location'] - current location (Module/App/Controller)
 	 * $data['info]['path'] - current location path (Item/1/page/3)
@@ -231,33 +231,33 @@ class ModuleApp extends Module {
 	 * Template: $user['Id']
 	 * **************************************************
 	 *
-	 * @param array $request
+	 * @param array $request        	
 	 * @return array
 	 */
 	public function GetDataCustom($request, $data) {
-
+		
 		/**
 		 * Custom app data.
 		 */
-
+		
 		/**
 		 * Example: performm additional initializations for logged in users.
 		 */
-		if (!empty($data['user']['Logged'])) {
-			/**
-			 * Do stuff.
-			 */
+		if (! empty ( $data ['user'] ['Logged'] )) {
+		/**
+		 * Do stuff.
+		 */
 		}
-
+		
 		/**
 		 * Example (use as $data['test'] (Controller) or $test (Output template).
 		 */
-		$data['test'] = 'test data';
-
-		$data['url']['next_string'] = !empty($data['query']['next']) ? "/next/{$data['query']['next']}" : NULL;
-
-		$data['url']['items_admin'] = !empty($data['info']['url_next']) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
-
+		$data ['test'] = 'test data';
+		
+		$data ['url'] ['next_string'] = ! empty ( $data ['query'] ['next'] ) ? "/next/{$data['query']['next']}" : NULL;
+		
+		$data ['url'] ['items_admin'] = ! empty ( $data ['info'] ['url_next'] ) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
+		
 		return $data;
 	}
 }

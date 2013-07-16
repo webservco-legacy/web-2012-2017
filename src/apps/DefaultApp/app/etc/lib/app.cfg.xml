@@ -7,7 +7,7 @@
 		<!-- Application settings -->
 		<app>
 			<title>Default app</title>
-			<prefix></prefix>
+			<prefix>app_</prefix>
 		</app>
 		<options>
 		    <multilanguage>1</multilanguage>
@@ -108,7 +108,7 @@
 	    <!-- Application settings -->
 		<app>
 			<title>Default app</title>
-			<prefix></prefix>
+			<prefix>app_</prefix>
 		</app>
 		<options>
 		    <multilanguage>1</multilanguage>

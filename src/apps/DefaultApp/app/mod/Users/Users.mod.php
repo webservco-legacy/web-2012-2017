@@ -143,7 +143,7 @@ class Module_Users extends ModuleApp {
 
 				$form['data'] = Core::Form()->GetFilteredData();
 
-				$email_exists = Core::Database()->ValueExists('acl_users', 'user_email', $form['data']['email']);
+				$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $form['data']['email']);
 
 				if ($email_exists) {
 
@@ -156,14 +156,14 @@ class Module_Users extends ModuleApp {
 
 					$user_auth = Core::Security()->GetToken($user_salt, $form['data']['password']);
 
-					$q = "INSERT INTO acl_users (user_email, user_auth, owner_id, user_date_add) VALUES
+					$q = "INSERT INTO {$this->_mAppPrefix}acl_users (user_email, user_auth, owner_id, user_date_add) VALUES
 					('{$form['data']['email']}', '{$user_auth}', 1, NOW())";
 
 					Core::Database()->Query($q);
 
 					$user_id = Core::Database()->GetInsertId();
 
-					$qc = "INSERT INTO acl_users_custom (user_id_key, user_name_first, user_name_last) VALUES
+					$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (user_id_key, user_name_first, user_name_last) VALUES
 					($user_id, '{$form['data']['name_first']}', '{$form['data']['name_last']}')";
 
 					Core::Database()->Query($qc);
@@ -234,7 +234,7 @@ class Module_Users extends ModuleApp {
 
 				$form['data'] = Core::Form()->GetFilteredData();
 
-				$email_exists = Core::Database()->ValueExists('acl_users', 'user_email', $form['data']['email']);
+				$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $form['data']['email']);
 
 				if (!$email_exists) {
 
@@ -249,7 +249,7 @@ class Module_Users extends ModuleApp {
 
 					$user_auth = Core::Security()->GetToken($user_salt, $new_pass);
 
-					$q = "UPDATE acl_users SET user_auth = '{$user_auth}' WHERE user_email = '{$form['data']['email']}' LIMIT 1";
+					$q = "UPDATE {$this->_mAppPrefix}acl_users SET user_auth = '{$user_auth}' WHERE user_email = '{$form['data']['email']}' LIMIT 1";
 
 					Core::Database()->Query($q);
 
@@ -301,7 +301,7 @@ class Module_Users extends ModuleApp {
 		}
 
 		$q = "SELECT user_id, user_email, user_nickname, user_status, user_name_first, user_name_last
-		FROM acl_object_user
+		FROM {$this->_mAppPrefix}acl_object_user
 		WHERE 1
 		{$q_conditions}
 		ORDER BY user_name_last, user_name_first
