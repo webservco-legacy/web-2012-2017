@@ -1,5 +1,5 @@
 html,button,input,select,textarea {
-	background: #eee;
+	background: #cfc;
 	color: #777;
 	font-family: Verdana, Geneva, sans-serif;
 }
@@ -30,7 +30,7 @@ header,section,footer {
 }
 
 section {
-	background: #ddd;
+	background: #ffc;
 	margin: 1em auto;
 }
 
@@ -108,7 +108,7 @@ nav ul li a:link,nav ul li a:visited {
 nav ul li a.active,nav ul li a:hover,nav ul li a:active {
 	text-decoration: none;
 	border: 0;
-	background: #ddd;
+	background: #ffc;
 	color: #777;
 }
 
