@@ -20,11 +20,11 @@
 /**
  * Security check.
  */
-if (! defined ( '_WEB' )) {
+if (!defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
-	exit ();
+	exit();
 }
 
 /**
@@ -38,43 +38,28 @@ if (! defined ( '_WEB' )) {
  *            
  */
 class Module extends Library {
-	
+
 	/**
 	 * App prefix.
 	 *
 	 * @var string
 	 */
 	protected $_mAppPrefix = NULL;
-	
+
 	/**
 	 * Use sessions flag
 	 *
 	 * @var boolean
 	 */
 	protected $_mUseSessions = FALSE;
-	
+
 	/**
-	 * Web app market id.
+	 * Web app info.
 	 *
-	 * 0 - none
-	 * 1 - google
-	 * 2 - samsung
-	 * 3 - amazon
-	 * 4 - itunes
-	 *
-	 * @var integer
+	 * @var array
 	 */
-	protected $_mWebAppMarket = 0;
-	
-	/**
-	 * Web app type.
-	 *
-	 * free, pro, etc
-	 *
-	 * @var unknown
-	 */
-	protected $_mWebAppType = NULL;
-	
+	protected $_mWebAppInfo = array();
+
 	/**
 	 * Implement GetInstance() method.
 	 *
@@ -86,12 +71,13 @@ class Module extends Library {
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
+
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
-		return parent::_GetInstance ( $className );
+		return parent::_GetInstance($className);
 	}
-	
+
 	/**
 	 * Load configuration file for current library.
 	 *
@@ -103,67 +89,68 @@ class Module extends Library {
 	 * @return bool
 	 */
 	protected function _LoadConfig($className) {
+
 		/**
 		 * Add module i18n.
 		 */
-		Core::I18n ()->Add ( $className );
+		Core::I18n()->Add($className);
 		
 		/**
 		 * Load module i18n.
 		 */
-		Core::I18n ()->Load ( $className );
+		Core::I18n()->Load($className);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$parts = explode ( '_', $className );
+		$parts = explode('_', $className);
 		
 		/**
 		 *
 		 * @var string
 		 */
-		$module_name = array_key_exists ( 1, $parts ) ? strtolower ( $parts [1] ) : $parts [0];
+		$module_name = array_key_exists(1, $parts) ? strtolower($parts[1]) : $parts[0];
 		
 		/**
 		 *
 		 * @var string
 		 */
-		$path_app = Core::Config ()->Get ( 'path.app' );
+		$path_app = Core::Config()->Get('path.app');
 		
 		/**
 		 *
 		 * @var string
 		 */
-		$cfg_file = $path_app . 'etc/' . Core::Config ()->Get ( 'dir.app.mod' ) . '/' . ucfirst ( $module_name ) . '/' . $module_name . '.cfg.xml';
+		$cfg_file = $path_app . 'etc/' . Core::Config()->Get('dir.app.mod') . '/' . ucfirst($module_name) . '/' . $module_name . '.cfg.xml';
 		
-		if (! is_readable ( $cfg_file )) {
-			if (function_exists ( '__' )) {
+		if (!is_readable($cfg_file)) {
+			if (function_exists('__')) {
 				/**
 				 *
 				 * @var string
 				 */
-				$config_msg = sprintf ( __ ( '%s module: Skipping configuration file "%s" (not found).', 'WEb' ), $className, $module_name );
+				$config_msg = sprintf(__('%s module: Skipping configuration file "%s" (not found).', 'WEb'), $className, $module_name);
 				
-				Core::Log ()->Write ( $config_msg, 'debug' );
+				Core::Log()->Write($config_msg, 'debug');
 			}
 			
 			return FALSE;
 		}
 		
-		if (function_exists ( '__' )) {
+		if (function_exists('__')) {
 			/**
 			 *
 			 * @var string
 			 */
-			$config_msg = sprintf ( __ ( '%s module: Loading configuration file "%s".', 'WEb' ), $className, $module_name );
+			$config_msg = sprintf(__('%s module: Loading configuration file "%s".', 'WEb'), $className, $module_name);
 			
-			Core::Log ()->Write ( $config_msg, 'debug' );
+			Core::Log()->Write($config_msg, 'debug');
 		}
 		
-		return Core::Config ()->Set ( $cfg_file );
+		return Core::Config()->Set($cfg_file);
 	}
-	
+
 	/**
 	 * Get current module name.
 	 *
@@ -172,9 +159,10 @@ class Module extends Library {
 	 * @return string
 	 */
 	public function GetCurrentModule($request) {
-		return strtolower ( str_replace ( 'Module_', '', $request ['module'] ) );
+
+		return strtolower(str_replace('Module_', '', $request['module']));
 	}
-	
+
 	/**
 	 * General information.
 	 *
@@ -183,41 +171,42 @@ class Module extends Library {
 	 * @return array
 	 */
 	public function GetInfo($request) {
-		$data = array ();
+
+		$data = array();
 		
 		/**
 		 * Application prefix.
 		 */
-		$data ['prefix'] = $this->_mAppPrefix = Core::Config ()->Get ( 'app.prefix' );
+		$data['prefix'] = $this->_mAppPrefix = Core::Config()->Get('app.prefix');
 		
 		/**
 		 * Current module name.
 		 */
-		$data ['module'] = $this->GetCurrentModule ( $request );
+		$data['module'] = $this->GetCurrentModule($request);
 		
 		/**
 		 * Current location (Module/Controller/Action)
 		 */
-		$data ['location'] = $request ['location'];
+		$data['location'] = $request['location'];
 		
 		/**
 		 * Location path.
 		 */
-		$data ['path'] = "/";
+		$data['path'] = "/";
 		
 		/**
 		 * Location path without page number.
 		 */
-		$data ['path_pagination'] = "/";
+		$data['path_pagination'] = "/";
 		
-		if (! empty ( $request ['query'] )) {
+		if (!empty($request['query'])) {
 			
-			foreach ( $request ['query'] as $key => $value ) {
+			foreach ($request['query'] as $key => $value) {
 				
-				$data ['path'] .= "{$key}/{$value}/";
+				$data['path'] .= "{$key}/{$value}/";
 				
 				if ('page' != $key) {
-					$data ['path_pagination'] .= "{$key}/{$value}/";
+					$data['path_pagination'] .= "{$key}/{$value}/";
 				}
 			}
 		}
@@ -225,94 +214,101 @@ class Module extends Library {
 		/**
 		 * Next URL.
 		 */
-		$data ['url_next'] = ! empty ( $request ['query'] ['next'] ) ? Core::String ()->DecodeUrlString ( $request ['query'] ['next'] ) : NULL;
+		$data['url_next'] = !empty($request['query']['next']) ? Core::String()->DecodeUrlString($request['query']['next']) : NULL;
 		
 		return $data;
 	}
+
 	public function GetDefaultUrls() {
-		$data = array ();
+
+		$data = array();
 		
 		/**
 		 * App URL.
 		 */
-		$data ['www'] = Core::Config ()->Get ( 'url.www' );
+		$data['www'] = Core::Config()->Get('url.www');
 		
 		/**
 		 * Skin URL
 		 */
-		$data ['skin'] = Core::Config ()->Get ( 'url.www' ) . Core::Config ()->Get ( 'dir.app.usr' ) . '/' . Core::Config ()->Get ( 'dir.app.skins' ) . '/' . Core::Config ()->Get ( 'output.skin' ) . '/';
+		$data['skin'] = Core::Config()->Get('url.www') . Core::Config()->Get('dir.app.usr') . '/' . Core::Config()->Get('dir.app.skins') . '/' . Core::Config()->Get('output.skin') . '/';
 		
 		/**
 		 * Scripts URL
 		 */
-		$data ['scripts'] = Core::Config ()->Get ( 'url.www' ) . Core::Config ()->Get ( 'dir.app.usr' ) . '/scripts/';
+		$data['scripts'] = Core::Config()->Get('url.www') . Core::Config()->Get('dir.app.usr') . '/scripts/';
 		
 		/**
 		 * Media URL.
 		 */
-		$data ['media'] = Core::Config ()->Get ( 'url.www' ) . Core::Config ()->Get ( 'dir.app.usr' ) . '/media/';
+		$data['media'] = Core::Config()->Get('url.www') . Core::Config()->Get('dir.app.usr') . '/media/';
 		
 		return $data;
 	}
-	
+
 	/**
 	 * Get default paths.
 	 *
 	 * @return array
 	 */
 	public function GetDefaultPaths() {
-		$data = array ();
+
+		$data = array();
 		
 		/**
 		 * App Path.
 		 */
-		$data ['app'] = Core::Config ()->Get ( 'path.app' );
+		$data['app'] = Core::Config()->Get('path.app');
 		
 		/**
 		 * App WWW path.
 		 */
-		$data ['www'] = Core::Config ()->Get ( 'path.www' );
+		$data['www'] = Core::Config()->Get('path.www');
 		
 		return $data;
 	}
+
 	public function GetMenu($url_www) {
-		$menu = array ();
+
+		$menu = array();
 		
-		$menu_config = Core::Config ()->Get ( "menu" );
+		$menu_config = Core::Config()->Get("menu");
 		
-		if (! empty ( $menu_config )) {
+		if (!empty($menu_config)) {
 			
-			foreach ( $menu_config as $menu_node => $menu_data ) {
+			foreach ($menu_config as $menu_node => $menu_data) {
 				
-				if (! empty ( $menu_data ['item'] )) {
+				if (!empty($menu_data['item'])) {
 					
-					$menu [$menu_node] = $this->GetMenuItem ( $url_www, $menu_data ['item'] );
+					$menu[$menu_node] = $this->GetMenuItem($url_www, $menu_data['item']);
 				}
 			}
 		}
 		
 		return $menu;
 	}
+
 	public function GetMenuItem($url_www, $menuData = array()) {
-		$menu = array ();
+
+		$menu = array();
 		
-		if (! empty ( $menuData )) {
+		if (!empty($menuData)) {
 			
-			foreach ( $menuData as $menu_item ) {
+			foreach ($menuData as $menu_item) {
 				
-				if (! empty ( $menu_item ['url'] )) {
+				if (!empty($menu_item['url'])) {
 					
-					$menu_href = $menu_item ['url'];
+					$menu_href = $menu_item['url'];
 				} else {
 					
-					if (! empty ( $menu_item ['link'] )) {
+					if (!empty($menu_item['link'])) {
 						
-						if ('index' == $menu_item ['link']) {
+						if ('index' == $menu_item['link']) {
 							
 							$menu_href = $url_www;
 						} else {
 							
-							$menu_href = $url_www . $menu_item ['link'];
+							$menu_href = $url_www . $menu_item['link'];
 						}
 					} else {
 						
@@ -322,122 +318,137 @@ class Module extends Library {
 				
 				$submenu = NULL;
 				
-				if (! empty ( $menu_item ['submenu'] )) {
+				if (!empty($menu_item['submenu'])) {
 					
-					$submenu_data = Core::Config ()->Get ( "menu.{$menu_item['submenu']}.item" );
+					$submenu_data = Core::Config()->Get("menu.{$menu_item['submenu']}.item");
 					
-					if (! empty ( $submenu_data )) {
-						$submenu = $this->GetMenuItem ( $url_www, $submenu_data );
+					if (!empty($submenu_data)) {
+						$submenu = $this->GetMenuItem($url_www, $submenu_data);
 					}
 				}
 				
-				$target = ! empty ( $menu_item ['target'] ) ? $menu_item ['target'] : NULL;
+				$target = !empty($menu_item['target']) ? $menu_item['target'] : NULL;
 				
-				$menu [] = array (
-						'title' => $menu_item ['title'],
-						'href' => $menu_href,
-						'target' => $target,
-						'submenu' => $submenu,
-						'resource' => $menu_item ['resource'] 
+				$menu[] = array(
+					'title' => $menu_item['title'],
+					'href' => $menu_href,
+					'target' => $target,
+					'submenu' => $submenu,
+					'resource' => $menu_item['resource']
 				);
 			}
 		}
 		
 		return $menu;
 	}
+
 	public function GetTimezone($request) {
+
 		$timezone = NULL;
 		
-		if (! empty ( $request ['query'] ['timezone'] )) {
+		if (!empty($request['query']['timezone'])) {
 			
-			$timezone = Core::String ()->DecodeUrlString ( $request ['query'] ['timezone'] );
+			$timezone = Core::String()->DecodeUrlString($request['query']['timezone']);
 			
-			Core::Date ()->SetTimeZone ( $timezone );
+			Core::Date()->SetTimeZone($timezone);
 			
 			if ($this->_mUseSessions) {
 				
-				$_SESSION ['Date'] ['TimeZone'] = $timezone;
+				$_SESSION['Date']['TimeZone'] = $timezone;
 			}
 		}
 		
 		if ($this->_mUseSessions) {
 			
-			if (empty ( $_SESSION ['Date'] ['TimeZone'] )) {
+			if (empty($_SESSION['Date']['TimeZone'])) {
 				
-				$_SESSION ['Date'] ['TimeZone'] = Core::Date ()->GetTimeZone ();
+				$_SESSION['Date']['TimeZone'] = Core::Date()->GetTimeZone();
 			}
 		}
 		
-		return ! empty ( $timezone ) ? $timezone : Core::Date ()->GetTimeZone ();
+		return !empty($timezone) ? $timezone : Core::Date()->GetTimeZone();
 	}
+
 	public function GetWebAppInfo($request) {
-		$data = array ();
+
+		$data = array();
+		
+		/**
+		 * App Id from configuration file.
+		 */
+		$data['app_id'] = Core::Config()->Get('app.id');
 		
 		/**
 		 * OS Type (android, ios, other).
 		 *
 		 * This does not tell us if it's mobile or PC
 		 */
-		$data ['os_type'] = Core::Useragent ()->GetOsType ();
+		$data['os_type'] = Core::Useragent()->GetOsType();
 		
 		/**
 		 * Device Type (tablet, phone, other).
 		 */
-		$data ['device_type'] = Core::Useragent ()->GetDeviceType ();
+		$data['device_type'] = Core::Useragent()->GetDeviceType();
 		
 		/**
 		 * Get custom web app version sent from mobile devices.
 		 *
 		 * Custom user agent string must end with "WebApp/VERSION".
 		 */
-		$data ['version'] = Core::Useragent ()->GetWebAppVersion ();
+		$data['version'] = Core::Useragent()->GetWebAppVersion();
 		
 		/**
 		 * Web app market id.
 		 */
-		$data ['market'] = $this->_mWebAppMarket = ! empty ( $request ['query'] ['market'] ) ? ( int ) $request ['query'] ['market'] : 0;
+		$data['market'] = !empty($request['query']['market']) ? (int) $request['query']['market'] : 0;
 		
 		/**
 		 * Web app type.
 		 *
 		 * free/pro/etc
 		 */
-		$data ['type'] = $this->_mWebAppType = ! empty ( $request ['query'] ['app_type'] ) ? $request ['query'] ['app_type'] : NULL;
+		$data['type'] = !empty($request['query']['app_type']) ? $request['query']['app_type'] : NULL;
+		
+		$this->_mWebAppInfo = $data;
 		
 		return $data;
 	}
+
 	public function GetLangInfo() {
-		$data = array ();
+
+		$data = array();
 		
 		/**
 		 * App language.
 		 */
-		$data ['lang'] = substr ( Core::I18n ()->GetLocale (), 0, 2 );
+		$data['lang'] = substr(Core::I18n()->GetLocale(), 0, 2);
 		
 		/**
 		 * List of available languages.
 		 */
-		$data ['langs'] = Core::I18n ()->GetAvailableLangs ();
+		$data['langs'] = Core::I18n()->GetAvailableLangs();
 		
 		return $data;
 	}
+
 	public function ChangeLocale($newLang, $redirect = NULL) {
-		$app_langs = Core::I18n ()->GetAvailableLangs ();
+
+		$app_langs = Core::I18n()->GetAvailableLangs();
 		
-		if (! empty ( $newLang ) && array_key_exists ( $newLang, $app_langs )) {
+		if (!empty($newLang) && array_key_exists($newLang, $app_langs)) {
 			
-			Core::I18n ()->SetLocale ( $app_langs [$newLang] );
+			Core::I18n()->SetLocale($app_langs[$newLang]);
 			
-			if ($this->_mUseSessions && ! empty ( $_SESSION ['I18n'] )) {
+			if ($this->_mUseSessions && !empty($_SESSION['I18n'])) {
 				
-				$_SESSION ['I18n'] ['Chosen'] = TRUE;
+				$_SESSION['I18n']['Chosen'] = TRUE;
 			}
 			
-			if (! empty ( $redirect )) {
+			if (!empty($redirect)) {
 				
-				Core::Router ()->Redirect ( $redirect );
+				Core::Router()->Redirect($redirect);
 				
-				exit ();
+				exit();
 			}
 			
 			return TRUE;
@@ -445,17 +456,19 @@ class Module extends Library {
 		
 		return FALSE;
 	}
+
 	public function GetUserInfo() {
+
 		if ($this->_mUseSessions) {
 			
-			Core::User ()->Init ();
+			Core::User()->Init();
 			
-			return $_SESSION ['User'];
+			return $_SESSION['User'];
 		}
 		
 		return FALSE;
 	}
-	
+
 	/**
 	 * Get default output data.
 	 *
@@ -464,7 +477,8 @@ class Module extends Library {
 	 * @return array
 	 */
 	public function GetDataDefault($request) {
-		$data = array ();
+
+		$data = array();
 		
 		/**
 		 * $data['query']
@@ -478,7 +492,7 @@ class Module extends Library {
 		 * Controller: $data['query'][STUFF]
 		 * Template: $query[STUFF]
 		 */
-		$data ['query'] = ! empty ( $request ['query'] ) ? $request ['query'] : NULL;
+		$data['query'] = !empty($request['query']) ? $request['query'] : NULL;
 		
 		/**
 		 * $data['info']
@@ -497,7 +511,7 @@ class Module extends Library {
 		 * Controller: $data['info']['module']
 		 * Template: $info['module']
 		 */
-		$data ['info'] = $this->GetInfo ( $request );
+		$data['info'] = $this->GetInfo($request);
 		
 		/**
 		 * $data['url']
@@ -514,7 +528,7 @@ class Module extends Library {
 		 * Controller: $data['url']['www']
 		 * Template: $url['www']
 		 */
-		$data ['url'] = $this->GetDefaultUrls ();
+		$data['url'] = $this->GetDefaultUrls();
 		
 		/**
 		 * $data['path']
@@ -529,7 +543,7 @@ class Module extends Library {
 		 * Controller: $data['path']['www']
 		 * Template: $path['www']
 		 */
-		$data ['path'] = $this->GetDefaultPaths ();
+		$data['path'] = $this->GetDefaultPaths();
 		
 		/**
 		 * $data['i18n']
@@ -544,7 +558,7 @@ class Module extends Library {
 		 * Controller: $data['i18n']['lang']
 		 * Template: $i18n['lang']
 		 */
-		$data ['i18n'] = $this->GetLangInfo ();
+		$data['i18n'] = $this->GetLangInfo();
 		
 		/**
 		 * $data['strings']
@@ -560,7 +574,7 @@ class Module extends Library {
 		 * Controller: $data['strings']['title']
 		 * Template: $strings['title']
 		 */
-		$data ['strings'] = $this->GetDefaultStrings ();
+		$data['strings'] = $this->GetDefaultStrings();
 		
 		/**
 		 * $data['menu'] [OPTIONAL]
@@ -579,11 +593,11 @@ class Module extends Library {
 		 * Template: $menu['MENU_NODE_FROM_CONFIG']
 		 */
 		
-		$opt_menus = Core::Config ()->Get ( 'options.menus' );
+		$opt_menus = Core::Config()->Get('options.menus');
 		
-		if (! empty ( $opt_menus )) {
+		if (!empty($opt_menus)) {
 			
-			$data ['menu'] = $this->GetMenu ( $data ['url'] ['www'] );
+			$data['menu'] = $this->GetMenu($data['url']['www']);
 		}
 		
 		/**
@@ -609,11 +623,11 @@ class Module extends Library {
 		 * Template: $timezone
 		 */
 		
-		$opt_timezone = Core::Config ()->Get ( 'options.timezone' );
+		$opt_timezone = Core::Config()->Get('options.timezone');
 		
-		if (! empty ( $opt_timezone )) {
+		if (!empty($opt_timezone)) {
 			
-			$data ['timezone'] = $this->GetTimezone ( $request );
+			$data['timezone'] = $this->GetTimezone($request);
 		}
 		
 		/**
@@ -622,6 +636,7 @@ class Module extends Library {
 		 * Web app info.
 		 *
 		 * Values:
+		 * $data['webapp']['app_id'] - custom app id (from config)
 		 * $data['webapp']['os_type'] - os type (android, ios, other)
 		 * $data['webapp']['device_type'] - mobile device type (tablet, phone, other)
 		 * $data['webapp']['version'] - custom app version set by_mobile devices
@@ -633,11 +648,11 @@ class Module extends Library {
 		 * Template: $webapp['os_type']
 		 */
 		
-		$opt_webapp = Core::Config ()->Get ( 'options.webapp' );
+		$opt_webapp = Core::Config()->Get('options.webapp');
 		
-		if (! empty ( $opt_webapp )) {
+		if (!empty($opt_webapp)) {
 			
-			$data ['webapp'] = $this->GetWebAppInfo ( $request );
+			$data['webapp'] = $this->GetWebAppInfo($request);
 		}
 		
 		/**
@@ -676,21 +691,23 @@ class Module extends Library {
 		 * Template: $user['Id']
 		 */
 		
-		$opt_users = Core::Config ()->Get ( 'options.users' );
+		$opt_users = Core::Config()->Get('options.users');
 		
-		if (! empty ( $opt_users )) {
+		if (!empty($opt_users)) {
 			
-			$data ['user'] = $this->GetUserInfo ();
+			$data['user'] = $this->GetUserInfo();
 		}
 		
 		return $data;
 	}
+
 	public function GetData($request) {
-		$this->_mUseSessions = ( bool ) Core::Config ()->Get ( 'options.sessions' );
+
+		$this->_mUseSessions = (bool) Core::Config()->Get('options.sessions');
 		
-		$data = $this->GetDataDefault ( $request );
+		$data = $this->GetDataDefault($request);
 		
-		return $this->GetDataCustom ( $request, $data );
+		return $this->GetDataCustom($request, $data);
 	}
 }
 ?>
