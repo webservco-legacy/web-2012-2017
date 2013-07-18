@@ -18,11 +18,11 @@
 /**
  * Security check.
  */
-if (! defined ( '_WEB' )) {
+if (!defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
-	exit ();
+	exit();
 }
 
 /**
@@ -36,7 +36,38 @@ if (! defined ( '_WEB' )) {
  *            
  */
 class ModuleApp extends Module {
-	
+
+	public $_mDbExtra = NULL;
+
+	/**
+	 * Open extra database connection.
+	 *
+	 * Old style MySQL.
+	 *
+	 * @return boolean
+	 */
+	public function OpenDbExtra() {
+
+		if (!empty($this->_mDbExtra)) {
+			return TRUE;
+		}
+		
+		$db_cfg = Core::Config()->Get('database.extra');
+		
+		if (empty($db_cfg)) {
+			
+			return FALSE;
+		}
+		
+		$this->_mDbExtra = mysql_connect($db_cfg['host'], $db_cfg['user'], $db_cfg['password']);
+		
+		mysql_select_db($db_cfg['database'], $this->_mDbExtra);
+		
+		mysql_set_charset('utf8', $this->_mDbExtra);
+		
+		return TRUE;
+	}
+
 	/**
 	 * Get default messages.
 	 *
@@ -45,15 +76,16 @@ class ModuleApp extends Module {
 	 * @return array
 	 */
 	public function GetDefaultStrings() {
-		$data = array ();
+
+		$data = array();
 		
-		$data ['title'] = $data ['title_app'] = __ ( Core::Config ()->Get ( 'app.title' ), 'App' );
+		$data['title'] = $data['title_app'] = __(Core::Config()->Get('app.title'), 'App');
 		
-		$data ['no_data'] = __ ( 'No data to display', 'App' );
+		$data['no_data'] = __('No data to display', 'App');
 		
 		return $data;
 	}
-	
+
 	/**
 	 * Get custom data.
 	 *
@@ -186,6 +218,7 @@ class ModuleApp extends Module {
 	 * Web app info.
 	 *
 	 * Values:
+	 * $data['webapp']['app_id'] - custom app id (from config)
 	 * $data['webapp']['os_type'] - os type (android, ios, other)
 	 * $data['webapp']['device_type'] - mobile device type (tablet, phone, other)
 	 * $data['webapp']['version'] - custom app version set by_mobile devices
@@ -235,7 +268,7 @@ class ModuleApp extends Module {
 	 * @return array
 	 */
 	public function GetDataCustom($request, $data) {
-		
+
 		/**
 		 * Custom app data.
 		 */
@@ -243,7 +276,7 @@ class ModuleApp extends Module {
 		/**
 		 * Example: performm additional initializations for logged in users.
 		 */
-		if (! empty ( $data ['user'] ['Logged'] )) {
+		if (!empty($data['user']['Logged'])) {
 		/**
 		 * Do stuff.
 		 */
@@ -252,11 +285,11 @@ class ModuleApp extends Module {
 		/**
 		 * Example (use as $data['test'] (Controller) or $test (Output template).
 		 */
-		$data ['test'] = 'test data';
+		$data['test'] = 'test data';
 		
-		$data ['url'] ['next_string'] = ! empty ( $data ['query'] ['next'] ) ? "/next/{$data['query']['next']}" : NULL;
+		$data['url']['next_string'] = !empty($data['query']['next']) ? "/next/{$data['query']['next']}" : NULL;
 		
-		$data ['url'] ['items_admin'] = ! empty ( $data ['info'] ['url_next'] ) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
+		$data['url']['items_admin'] = !empty($data['info']['url_next']) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
 		
 		return $data;
 	}

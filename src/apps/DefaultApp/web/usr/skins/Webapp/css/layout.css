@@ -160,3 +160,85 @@ table.items th, table.items td {
 #pagination a:hover {
 	border-bottom: 1px dotted #777;
 }
+
+/* CREDITS START */
+.container_apps_tab {
+width:610px;
+margin:auto;
+}
+
+.box_credits {
+background:url('../img/iphone_cell.png') no-repeat;
+width:247px;
+height:324px;
+padding:25px 15px 0px 23px;
+float:left;
+margin:auto;
+color:#000000;
+}
+
+	.tab_credits {
+	margin:0px 20px 0px 0px;
+	}
+	
+	.tab_cat {
+	float:none;
+	margin:auto;
+	}
+
+	.icon {
+	float:left;
+	border:0px;
+	width:75px;
+	height:75px;
+	}
+	
+	.box_text {
+	float:right;
+	text-align:center;
+	margin:0px;
+	padding:0px 2px 0px 0px;
+	width:170px;
+	font-size:0.8em;
+	}
+	
+		.box_text a {
+		text-decoration:none;
+		color:#000000;
+		}
+	
+	.descrizione {
+	padding:0px 15px 0px 0px;
+	height:25px;
+	font-size:0.8em;
+	}
+	
+	.image {
+	width:230px;
+	height:173px;
+	margin:10px 0px 0px 3px;
+	border:0px;
+	}
+
+.install_button {
+	display: block;
+	width: 172px;
+	height: 43px;
+	background: transparent url('../img/iphone_button_eng.png') no-repeat 0 0;
+	text-decoration: none;
+	margin:10px auto;
+}
+
+.bottone_installa {
+	display: block;
+	width: 172px;
+	height: 43px;
+	background: transparent url('../img/iphone_button_ita.png') no-repeat 0 0;
+	text-decoration: none;
+	margin:10px auto;
+}
+
+.install_button:hover, .install_button:active, .bottone_installa:hover, .bottone_installa:active {
+	background-position: 0px -42px;
+}
+/* CREDITS END */

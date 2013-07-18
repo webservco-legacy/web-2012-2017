@@ -6,6 +6,7 @@
 	<dev>
 		<!-- Application settings -->
 		<app>
+		    <id>28</id>
 			<title>Default app</title>
 			<prefix>app_</prefix>
 		</app>
@@ -90,6 +91,13 @@
 		<database>
 			<type>MySQLi</type>
 			<binkey>0</binkey>
+			<extra>
+				<host>backend.italiamultimedia.spin.it</host>
+				<port>3306</port>
+				<user>ginger</user>
+				<password>REDACTED</password>
+				<database>italiamultimedia_nuovo</database>
+			</extra>
 		</database>
 		<!-- Output settings -->
 		<output>
@@ -107,6 +115,7 @@
 	<prod>
 	    <!-- Application settings -->
 		<app>
+			<id>0</id>
 			<title>Default app</title>
 			<prefix>app_</prefix>
 		</app>
@@ -191,6 +200,13 @@
 		<database>
 			<type>MySQLi</type>
 			<binkey>0</binkey>
+			<extra>
+				<host>backend.italiamultimedia.spin.it</host>
+				<port>3306</port>
+				<user>ginger</user>
+				<password>REDACTED</password>
+				<database>italiamultimedia_nuovo</database>
+			</extra>
 		</database>
 		<!-- Output settings -->
 		<output>
