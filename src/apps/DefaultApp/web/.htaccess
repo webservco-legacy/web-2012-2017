@@ -13,7 +13,7 @@
 	RewriteEngine On
 	
 	# Change to reflect application web directory path.
-	RewriteBase /default_app/
+	RewriteBase /~radu/default_app/
 	
 	# Disable rewriting for existing files and directories.
 	RewriteCond %{REQUEST_FILENAME} !-f

@@ -10,7 +10,7 @@
 			<www>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
 		</path>
 		<url>
-			<www>http://192.168.1.80/default_app/</www>
+			<www>http://192.168.1.80/~radu/default_app/</www>
 		</url>
 	</dev>
 	<!-- Test Environment -->
