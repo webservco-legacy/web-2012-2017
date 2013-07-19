@@ -2,47 +2,124 @@
 	
 <?php if (!empty($error_message)) { ?>
 			
-			<p class="strong ko"><?php echo $error_message; ?></p>
+	<p class="strong ko"><?php echo $error_message; ?></p>
 		
 <?php } else if (!empty($form)) { ?>
 			
-			<form class="login" enctype="multipart/form-data" method="post" action="" autocomplete="off">
+	<?php
+	//echo '<pre>'; print_r($form); echo '</pre>'; //XXX 
+	
+	
+	echo '<form enctype="multipart/form-data" method="post" action="" autocomplete="off">';
+				
+	echo '<fieldset>';
+				
+	//echo "<legend></legend>";
+				
+	foreach ($form['meta'] as $field_id => $meta) {
+
+		/**
+		 * Label
+		 */
+		echo "<label for=\"{$field_id}\" title=\"{$meta['description']}\">";
+		
+		echo "{$meta['title']}&#160;";
+		
+		if (!empty($meta['required'])) {
 			
-				<fieldset>
-						
-					<legend></legend>
-						
-				<?php foreach ($form['meta'] as $field_id => $meta) { ?>
-					<label class="tooltip" for="<?php echo $field_id; ?>" title="<?php echo $meta['description']; ?>">
-						<?php echo $meta['title']; ?>&#160;
-					</label>
-						
-					<p>
-						<input class="tooltip" title="<?php echo $meta['description']; ?>" type="<?php echo $meta['type']; ?>" name="<?php echo $field_id; ?>" id="<?php echo $field_id; ?>" value="<?php echo $form['data'][$field_id]; ?>" /> 
-					</p>
+			echo '<span class="ko">*</span>';
+		}
+		
+		echo "</label>";
+		
+		
+		/**
+		 * Actual form field.
+		 */
+		
+		echo '<p>';
+		
+		switch ($meta['type']) {
+				
+			case 'select' :
+				
+				echo "<select name=\"{$field_id}\" id=\"{$field_id}\">";
+				
+				echo '	<option value="">' . __('Please select') . '</option>';
+				
+				if (!empty($meta['options'])) {
 					
-					<p class="form_info">
-						<?php echo $meta['description']; ?>
-					</p>
+					foreach ($meta['options'] as $value => $title) {
 						
-					<?php if (!empty($form['errors'][$field_id])) { ?>
-					<p class="form_error ko">
-						<?php foreach ($form['errors'][$field_id] as $error_msg) {
-							echo $error_msg . '<br />';
-						} ?> 
-					</p>
-					<?php } ?>				
-				<?php } ?>				
+						echo "<option value=\"{$value}\"";
 						
-				</fieldset>		
+						if ($form['data'][$field_id] == $value) {
+							
+							echo ' selected="selected"';
+						}
+						
+						echo ">{$title}</option>";
+					}
+				}
+				
+				echo "<select>";
+				
+				break;
+				
+			case 'textarea' :
+				
+				echo "<textarea name=\"{$field_id}\" id=\"{$field_id}\" title=\"{$meta['description']}\">{$form['data'][$field_id]}</textarea>";
+				
+				break;
 			
-			</form>
+			case 'text' :
+			case 'checkbox' :
+			case 'submit' :
+			default :
+				
+				echo "<input name=\"{$field_id}\" id=\"{$field_id}\" type=\"{$meta['type']}\" title=\"{$meta['description']}\" value=\"{$form['data'][$field_id]}\" />";
+				
+				break;
+			}
+		
+		echo '</p>';
+		
+		/**
+		 * Field info.
+		 */
+		echo "<p class=\"form_info\">";
+		
+		echo $meta['description'];
+		
+		echo "</p>";
+		
+		/**
+		 * Field errors.
+		 */
+		if (!empty($form['errors'][$field_id])) {
 			
-			<p>
-			<?php echo __('Already have an account?'); ?>
-			<br />
-			<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
-			</p>
+			echo "<p class=\"form_error ko\">";
+			
+			foreach ($form['errors'][$field_id] as $error_msg) {
+				
+				echo "{$error_msg}<br />";
+			}
+			
+			echo "</p>";
+		}
+		
+	} //iteration
+
+	echo "</fieldset>";
+	
+	echo "</form>";
+	?>				
+			
+	<p>
+	<?php echo __('Already have an account?'); ?>
+	<br />
+	<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
+	</p>
 		
 <?php } else { ?>
 				

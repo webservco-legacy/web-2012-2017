@@ -16,6 +16,9 @@
 			<props>
 			    <item>user_name_first</item>
 			    <item>user_name_last</item>
+			    <item>user_city</item>
+			    <item>user_department</item>
+			    <item>user_country</item>
 			</props>
 		</user>
 	</dev>
@@ -34,6 +37,9 @@
 			<props>
 			    <item>user_name_first</item>
 			    <item>user_name_last</item>
+			    <item>user_city</item>
+			    <item>user_department</item>
+			    <item>user_country</item>
 			</props>
 		</user>
 	</prod>

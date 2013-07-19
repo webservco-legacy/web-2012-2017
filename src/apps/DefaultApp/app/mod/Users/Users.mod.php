@@ -130,6 +130,20 @@ class Module_Users extends ModuleApp {
 		Core::Form()->SetMethod('post');
 
 		Core::Form()->SetData(Core::Config()->Get('users.form.register'));
+		
+		$departments = Core::Geo()->GetDepartments('IT');
+		
+		if (!empty($departments)) {
+			
+			Core::Form()->SetMeta('department', 'options', $departments);
+		}
+		
+		$countries = Core::Geo()->GetCountries();
+		
+		if (!empty($countries)) {
+			
+			Core::Form()->SetMeta('country', 'options', $countries);
+		}
 
 		$form['meta'] = Core::Form()->GetMeta();
 
@@ -163,8 +177,8 @@ class Module_Users extends ModuleApp {
 
 					$user_id = Core::Database()->GetInsertId();
 
-					$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (user_id_key, user_name_first, user_name_last) VALUES
-					($user_id, '{$form['data']['name_first']}', '{$form['data']['name_last']}')";
+					$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (user_id_key, user_name_first, user_name_last, user_city, user_department, user_country) VALUES
+					($user_id, '{$form['data']['name_first']}', '{$form['data']['name_last']}', '{$form['data']['city']}', '{$form['data']['department']}', '{$form['data']['country']}')";
 
 					Core::Database()->Query($qc);
 
@@ -182,7 +196,7 @@ class Module_Users extends ModuleApp {
 					Core::User()->Login($form['data']['email'], $form['data']['password']);
 
 					$result_login = Core::User()->Login($form['data']['email'], $form['data']['password']);
-
+					
 					if (TRUE !== $result_login)
 					{
 						/**
@@ -300,7 +314,7 @@ class Module_Users extends ModuleApp {
 			$q_limit = "LIMIT 1";
 		}
 
-		$q = "SELECT user_id, user_email, user_nickname, user_status, user_name_first, user_name_last
+		$q = "SELECT user_id, user_email, user_nickname, user_status, user_name_first, user_name_last, user_city, user_department, user_country
 		FROM {$this->_mAppPrefix}acl_object_user
 		WHERE 1
 		{$q_conditions}
