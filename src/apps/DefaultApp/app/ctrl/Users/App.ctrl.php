@@ -34,7 +34,7 @@ class Controller_Users_App extends ControllerApp {
 
 			$template = 'login';
 		}
-
+		
 		echo $this->GetOutput($data, $template);
 
 		return TRUE;

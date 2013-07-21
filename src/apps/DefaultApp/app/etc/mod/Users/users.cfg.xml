@@ -150,7 +150,6 @@
 	</test>
 	<!-- Production Environment -->
 	<prod>
-		<!-- Users module settings -->
 		<users>
 			<form>
 				<login>
@@ -289,6 +288,7 @@
 					</send>
 				</resetpassword>
 			</form>
+		</users>
 	</prod>
 </config>
 <!-- $Id$ -->
