@@ -30,22 +30,25 @@ if (!defined('_WEB')) {
  *
  * String library.
  *
- * @author     Radu Maier <radu@webserv.co>
- * @package    WEb
+ * @author Radu Maier <radu@webserv.co>
+ * @package WEb
  * @subpackage WebString
- *
+ *            
  */
 class String extends Library {
+
 	/**
 	 * Implement GetInstance() method.
 	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
-	 * @param string $className class name to instantiate
-	 *
+	 * @param string $className
+	 *        	class name to instantiate
+	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
+
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
@@ -55,62 +58,66 @@ class String extends Library {
 	/**
 	 * Check if haystack starts with needle.
 	 *
-	 * @param string $needle
-	 * @param string $haystack
-	 * @param bool $ignoreCase
+	 * @param string $needle        	
+	 * @param string $haystack        	
+	 * @param bool $ignoreCase        	
 	 *
 	 * @return bool
 	 */
 	public function StartsWith($needle, $haystack, $ignoreCase = TRUE) {
+
 		if (FALSE !== $ignoreCase) {
 			$f_strpos = (function_exists('mb_stripos')) ? 'mb_stripos' : 'stripos';
 		} else {
 			$f_strpos = (function_exists('mb_strpos')) ? 'mb_strpos' : 'strpos';
 		}
-
+		
 		return 0 === $f_strpos($haystack, $needle);
 	}
 
 	/**
 	 * Check if haystack ends with needle.
 	 *
-	 * @param string $needle
-	 * @param string $haystack
+	 * @param string $needle        	
+	 * @param string $haystack        	
 	 *
 	 * @return bool
 	 */
 	public function EndsWith($needle, $haystack) {
+
 		/**
 		 * Check if multybyte function is available.
 		 *
 		 * @var string
 		 */
 		$f_substr = (function_exists('mb_substr')) ? 'mb_substr' : 'substr';
-
+		
 		/**
 		 * Check if multybyte function is available.
 		 *
 		 * @var string
 		 */
 		$f_strlen = (function_exists('mb_strlen')) ? 'mb_strlen' : 'strlen';
-
+		
 		/**
+		 *
 		 * @var string
 		 */
 		$check = $f_substr($haystack, $f_strlen($haystack) - ($f_strlen($needle)));
-
+		
 		return $check == $needle;
 	}
 
 	/**
 	 * Get first item of a string.
 	 *
-	 * @param string $string
-	 * @param string $separator
+	 * @param string $string        	
+	 * @param string $separator        	
 	 *
 	 * @return string
 	 */
 	public function GetFirstItem($string, $separator = ' ') {
+
 		if (FALSE !== ($pos = strpos($string, $separator))) {
 			return substr($string, 0, $pos);
 		} else {
@@ -121,52 +128,90 @@ class String extends Library {
 	/**
 	 * Remove known bad characters from a string.
 	 *
-	 * @param string $string input string
-	 *
+	 * @param string $string
+	 *        	input string
+	 *        	
 	 * @return string
 	 */
 	public function RemoveBadChars($string) {
+
 		/**
 		 * Known bad characters.
 		 *
 		 * @var array
 		 */
-		$bad = array("`", "'", '"', "\b", "\n", "\r", "\t", "?", "!", "@", "~", "#", "%", "^", "&", "*", "+", "=", "[", "]", ":", ";", ",", "|", "\\", "{", "}", "(", ")", "\$");
-
+		$bad = array(
+			"`",
+			"'",
+			'"',
+			"\b",
+			"\n",
+			"\r",
+			"\t",
+			"?",
+			"!",
+			"@",
+			"~",
+			"#",
+			"%",
+			"^",
+			"&",
+			"*",
+			"+",
+			"=",
+			"[",
+			"]",
+			":",
+			";",
+			",",
+			"|",
+			"\\",
+			"{",
+			"}",
+			"(",
+			")",
+			"\$"
+		);
+		
 		/**
 		 * Remove bad chars.
-		*/
+		 */
 		$string = str_replace($bad, '', $string);
-
+		
 		/**
 		 * Return result.
-		*/
+		 */
 		return $string;
 	}
 
 	/**
 	 * Remove known bad characters from a string.
 	 *
-	 * @param string $string input string
-	 *
+	 * @param string $string
+	 *        	input string
+	 *        	
 	 * @return string
 	 */
 	public function RemoveNewlines($string) {
+
 		/**
 		 * Newline chars.
 		 *
 		 * @var array
 		 */
-		$nl = array("\n", "\r");
-
+		$nl = array(
+			"\n",
+			"\r"
+		);
+		
 		/**
 		 * Remove bad chars.
-		*/
+		 */
 		$string = str_replace($nl, '', $string);
-
+		
 		/**
 		 * Return result.
-		*/
+		 */
 		return $string;
 	}
 
@@ -174,8 +219,9 @@ class String extends Library {
 	 * Get the youtube video id.
 	 * Should work with link, embed, etc.
 	 *
-	 * @param string string
-	 *
+	 * @param
+	 *        	string string
+	 *        	
 	 * @return string
 	 */
 	public function GetYoutubeVideoId($string) {
@@ -183,18 +229,19 @@ class String extends Library {
 		if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $string, $match)) {
 			return $match[1];
 		}
-
+		
 		return NULL;
 	}
 
 	/**
 	 * Strip tags from string.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return string
 	 */
 	public function StripTags($string) {
+
 		/**
 		 * Return result.
 		 */
@@ -204,68 +251,71 @@ class String extends Library {
 	/**
 	 * Disable tags from a string.
 	 *
-	 * @param string $string input string
-	 *
+	 * @param string $string
+	 *        	input string
+	 *        	
 	 * @return string
 	 */
 	public function DisableTags($string) {
+
 		/**
 		 * Block <.
 		 *
 		 * @var string
 		 */
 		$string = str_replace('&lt;', '&#60;', $string);
-
+		
 		/**
 		 * Block >.
 		 *
 		 * @var string
-		*/
+		 */
 		$string = str_replace('&gt;', '&#62;', $string);
-
+		
 		/**
 		 * Block <.
 		 *
 		 * @var string
-		*/
+		 */
 		$string = str_replace('<', '&#60;', $string);
-
+		
 		/**
 		 * Block >.
 		 *
 		 * @var string
-		*/
+		 */
 		$string = str_replace('>', '&#62;', $string);
-
+		
 		/**
 		 * Block <.
 		 *
 		 * @var string
-		*/
+		 */
 		$string = str_replace('%3C', '&#60;', $string);
-
+		
 		/**
 		 * Block >.
 		 *
 		 * @var string
-		*/
+		 */
 		$string = str_replace('%3E', '&#62;', $string);
-
+		
 		/**
 		 * Return result.
-		*/
+		 */
 		return $string;
 	}
 
 	/**
 	 * Check if string is of minimum length.
 	 *
-	 * @param string $string
-	 * @param int $length
+	 * @param string $string        	
+	 * @param int $length        	
 	 *
 	 * @return bool
 	 */
 	public function HasLengthMin($string, $length = 0) {
+
 		/**
 		 * Set function name.
 		 *
@@ -274,7 +324,7 @@ class String extends Library {
 		 * @var string
 		 */
 		$f = (function_exists('mb_internal_encoding')) ? 'mb_strlen' : 'strlen';
-
+		
 		/**
 		 * Check data length.
 		 *
@@ -286,12 +336,13 @@ class String extends Library {
 	/**
 	 * Check if string is of maximum length.
 	 *
-	 * @param string $string
-	 * @param int $length
+	 * @param string $string        	
+	 * @param int $length        	
 	 *
 	 * @return bool
 	 */
 	public function HasLengthMax($string, $length = 0) {
+
 		/**
 		 * Set function name.
 		 *
@@ -300,7 +351,7 @@ class String extends Library {
 		 * @var string
 		 */
 		$f = (function_exists('mb_internal_encoding')) ? 'mb_strlen' : 'strlen';
-
+		
 		/**
 		 * Check data length.
 		 *
@@ -310,14 +361,29 @@ class String extends Library {
 	}
 
 	/**
+	 * Check if string has the maximum word length.
+	 *
+	 * @param string $string        	
+	 * @param number $length        	
+	 * @return boolean
+	 */
+	public function HasWordsMax($string, $length = 0) {
+
+		$word_count = $this->GetWordCount($string);
+		
+		return $word_count > $length ? FALSE : TRUE;
+	}
+
+	/**
 	 * Check if two strings are equal.
 	 *
-	 * @param stirng $string
-	 * @param string $match
+	 * @param stirng $string        	
+	 * @param string $match        	
 	 *
 	 * @return bool
 	 */
 	public function Equals($string, $match) {
+
 		/**
 		 * Check if data is the same as the match.
 		 *
@@ -329,16 +395,17 @@ class String extends Library {
 	/**
 	 * Check is string contains both letters and numbers.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return bool
 	 */
 	public function IsAlphanumeric($string) {
+
 		/**
 		 * Set condition.
 		 */
 		$match = "/^.*(?=.*\d)(?=.*[A-z]).*$/";
-
+		
 		/**
 		 * Check if data is a valid password.
 		 *
@@ -350,40 +417,75 @@ class String extends Library {
 	/**
 	 * Check if string is a valid email address.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return bool
 	 */
 	public function IsValidEmail($string) {
+
 		return (filter_var($string, FILTER_VALIDATE_EMAIL)) ? TRUE : FALSE;
 	}
 
 	/**
 	 * Check if string matches captcha.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return bool
 	 */
 	public function MatchesCaptcha($string) {
 
 		/**
+		 *
 		 * @var string
 		 */
 		$captcha = Core::Captcha()->GetToken();
-
+		
 		/**
 		 * Check if data is the same as the match.
 		 *
 		 * Return result.
-		*/
+		 */
 		return ($string != $captcha) ? FALSE : TRUE;
+	}
+
+	/**
+	 * Get an array with all words in a string.
+	 *
+	 * Unlike the native function this also cosiders numbers as words
+	 * and works with UTF strings
+	 *
+	 * @param string $string        	
+	 *
+	 * @return array
+	 */
+	public function GetWords($string) {
+
+		preg_match_all("/\S+/", $string, $matches);
+		
+		return !empty($matches[0]) ? $matches[0] : array();
+	}
+
+	/**
+	 * Get number of words in a string.
+	 *
+	 * Unlike the native function this also cosiders numbers as words
+	 * and works with UTF strings
+	 *
+	 * @param string $string        	
+	 * @return number
+	 */
+	public function GetWordCount($string) {
+
+		$words = $this->GetWords($string);
+		
+		return count($words);
 	}
 
 	/**
 	 * Encode URL string.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return string
 	 */
@@ -395,22 +497,24 @@ class String extends Library {
 	/**
 	 * Decode URL string.
 	 *
-	 * @param string $string
+	 * @param string $string        	
 	 *
 	 * @return string
 	 */
 	public function DecodeUrlString($string) {
+
 		/**
+		 *
 		 * @var string
 		 */
 		$url_string = base64_decode(strtr($string, '-_.', '+/='));
-
+		
 		return $url_string;
-
-		/**
-		 * DISABLED, NO WORK Return decoded URL string only if valid.
-		 * return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
-		 */
+	
+	/**
+	 * DISABLED, NO WORK Return decoded URL string only if valid.
+	 * return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
+	 */
 	}
 }
 ?>
