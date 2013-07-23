@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Items $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-18 11:56+0100\n"
-"PO-Revision-Date: 2013-07-18 11:56+0100\n"
+"POT-Creation-Date: 2013-07-23 18:07+0100\n"
+"PO-Revision-Date: 2013-07-23 18:07+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: it_IT\n"
@@ -32,16 +32,16 @@ msgstr "Il campo \"%s\" e' obbligatorio."
 
 #: Items.mod.php:215 Items.mod.php:297
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:24
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:24
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:7
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:36
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:24
 msgid "Status"
 msgstr "Status"
 
 #: Items.mod.php:225 Items.mod.php:307
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:39
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:39
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:33
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:39
 msgid "Title"
 msgstr "Titolo"
 
@@ -102,14 +102,14 @@ msgid "Error"
 msgstr "Errore"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:28
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:28
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:10
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:28
 msgid "on"
 msgstr "on"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:29
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:29
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:11
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:29
 msgid "off"
 msgstr "off"
 
@@ -124,29 +124,16 @@ msgid "Modify"
 msgstr "Modifica"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:66
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_delete.tpl.php:7
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:55
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_delete.tpl.php:7
 msgid "Delete"
 msgstr "Cancella"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_modify.tpl.php:68
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:68
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_delete.tpl.php:9
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:68
 msgid "Cancel"
 msgstr "Annulare"
-
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:64
-msgid "Add"
-msgstr "Aggiungi"
-
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:66
-msgid "Reset"
-msgstr "Reset"
-
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_result.tpl.php:15
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:19
-msgid "Add item"
-msgstr "Aggiungi articolo"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:15
 msgid "Filter"
@@ -156,6 +143,11 @@ msgstr "Filter"
 msgid "Clear"
 msgstr "Clear"
 
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:19
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_result.tpl.php:15
+msgid "Add item"
+msgstr "Aggiungi articolo"
+
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:30
 msgid "Id"
 msgstr "Id"
@@ -163,3 +155,11 @@ msgstr "Id"
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_items.tpl.php:39
 msgid "Options"
 msgstr "Options"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:64
+msgid "Add"
+msgstr "Aggiungi"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/Items/admin_add.tpl.php:66
+msgid "Reset"
+msgstr "Reset"

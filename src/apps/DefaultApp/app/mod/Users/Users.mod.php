@@ -46,10 +46,10 @@ class Module_Users extends ModuleApp {
 
 		Core::Form()->SetMethod('post');
 		
-		$login_form = Core::Config()->Get('users.form.login');
+		$form_config = Core::Config()->Get('users.form.login');
 		
-		if (empty($login_form)) {
-			
+		if (empty($form_config)) {
+				
 			return FALSE;
 		}
 		
@@ -134,7 +134,14 @@ class Module_Users extends ModuleApp {
 
 		Core::Form()->SetMethod('post');
 		
-		Core::Form()->SetData(Core::Config()->Get('users.form.register'));
+		$form_config = Core::Config()->Get('users.form.register');
+		
+		if (empty($form_config)) {
+			
+			return FALSE;
+		}
+		
+		Core::Form()->SetData($form_config);
 		
 		$departments = Core::Geo()->GetDepartments('IT');
 		
@@ -235,7 +242,14 @@ class Module_Users extends ModuleApp {
 
 		Core::Form()->SetMethod('post');
 		
-		Core::Form()->SetData(Core::Config()->Get('users.form.resetpassword'));
+		$form_config = Core::Config()->Get('users.form.resetpassword');
+		
+		if (empty($form_config)) {
+				
+			return FALSE;
+		}
+		
+		Core::Form()->SetData($form_config);
 		
 		$form['meta'] = Core::Form()->GetMeta();
 		
