@@ -16,10 +16,16 @@
 				</default>
 				<haslengthmin>
 					<text>The field "%s" is too short.</text>
+					<description>The field must contain at least %s chars.</description>
 				</haslengthmin>
 				<haslengthmax>
 					<text>The field "%s" is too long.</text>
+					<description>The field must contain at most %s chars.</description>
 				</haslengthmax>
+				<haswordsmax>
+				    <text>The field "%s" is too long.</text>
+				    <description>The field must contain at most %s words.</description>
+				</haswordsmax>
 				<equals>
 					<text>The field "%s" doesn't mach the specified item.</text>
 				</equals>
@@ -59,10 +65,16 @@
 				</default>
 				<haslengthmin>
 					<text>The field "%s" is too short.</text>
+					<description>The field must contain at least %s chars.</description>
 				</haslengthmin>
 				<haslengthmax>
 					<text>The field "%s" is too long.</text>
+					<description>The field must contain at most %s chars.</description>
 				</haslengthmax>
+				<haswordsmax>
+				    <text>The field "%s" is too long.</text>
+				    <description>The field must contain at most %s words.</description>
+				</haswordsmax>
 				<equals>
 					<text>The field "%s" doesn't mach the specified item.</text>
 				</equals>
