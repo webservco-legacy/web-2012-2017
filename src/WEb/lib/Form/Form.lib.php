@@ -1,17 +1,16 @@
 <?php
 /**
  * $Id$
- *
  * Form handling library.
- *
- * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2012, Radu Maier
- * @license    http://www.opensource.org/licenses/bsd-license.php
- * @package    WEb
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @copyright Copyright (c) 2008 - 2012, Radu Maier
+ * @license http://www.opensource.org/licenses/bsd-license.php
+ * @package WEb
  * @subpackage WebForm
- * @version    $Revision$
- * @since      Version 5
- * @access     public
+ * @version $Revision$
+ * @since Version 5
+ * @access public
  * @filesource
  */
 
@@ -27,94 +26,85 @@ if (!defined('_WEB')) {
 
 /**
  * Form
- *
  * Form handling library.
- *
+ * 
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebForm
- *            
  */
 class Form extends Library {
 
 	/**
 	 * Form sending method
-	 *
+	 * 
 	 * @var string
 	 */
 	private $_mMethod;
 
 	/**
 	 * Request query.
-	 *
 	 * Used to store form data for GET method.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mRequestQuery = array();
 
 	/**
 	 * Actual form data.
-	 *
 	 * If validation is made, contains actual form data.
 	 * Otherwise it contains NULL values or default data.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mData = array();
 
 	/**
 	 * Form meta data.
-	 *
 	 * Contains aditional form info,
 	 * such as titles, description, required fields.
-	 *
+	 * 
 	 * @var string
 	 */
 	private $_mMeta = array();
 
 	/**
 	 * Form filters.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mFilters = array();
 
 	/**
 	 * Form validation conditions.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mConditions = array();
 
 	/**
 	 * Form errors.
-	 *
 	 * Contains all form errors resulting from validation.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mErrors = array();
 
 	/**
 	 * Filtered form data.
-	 *
 	 * Contains the form data with the filters applied.
 	 * This is usually used for actual data manipulation (eg db storage)
 	 * after form validation.
-	 *
+	 * 
 	 * @var array
 	 */
 	private $_mDataFiltered = array();
 
 	/**
 	 * Implement GetInstance() method.
-	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
+	 * 
 	 * @param string $className
 	 *        	class name to instantiate
-	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
@@ -127,7 +117,7 @@ class Form extends Library {
 
 	/**
 	 * Set form handling method
-	 *
+	 * 
 	 * @param string $method        	
 	 *
 	 * @return bool
@@ -160,7 +150,7 @@ class Form extends Library {
 
 	/**
 	 * Set data.
-	 *
+	 * 
 	 * @param array $formData        	
 	 *
 	 * @return bool
@@ -173,44 +163,43 @@ class Form extends Library {
 		foreach ($formData as $field => $data) {
 			/**
 			 * Set main data.
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mData[$field] = (!empty($data['content'])) ? $data['content'] : NULL;
 			
 			/**
 			 * Set meta type.
-			 *
 			 * Defaults to 'text'
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mMeta[$field]['type'] = (!empty($data['type'])) ? $data['type'] : 'text';
 			
 			/**
 			 * Set meta title.
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mMeta[$field]['title'] = (!empty($data['title'])) ? $data['title'] : NULL;
 			
 			/**
 			 * Set meta description.
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mMeta[$field]['description'] = (!empty($data['description'])) ? $data['description'] : NULL;
 			
 			/**
 			 * Set meta required.
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mMeta[$field]['required'] = (!empty($data['required'])) ? (bool) $data['required'] : FALSE;
 			
 			/**
 			 * Set meta ignore.
-			 *
+			 * 
 			 * @var array
 			 */
 			$this->_mMeta[$field]['ignore'] = (!empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
@@ -241,7 +230,7 @@ class Form extends Library {
 			if (!empty($data['filters'])) {
 				/**
 				 * Set filters.
-				 *
+				 * 
 				 * @var array
 				 */
 				$this->_mFilters[$field] = $data['filters'];
@@ -253,7 +242,7 @@ class Form extends Library {
 			if (!empty($data['conditions'])) {
 				/**
 				 * Set conditions
-				 *
+				 * 
 				 * @var array
 				 */
 				$this->_mConditions[$field] = $data['conditions'];
@@ -265,7 +254,7 @@ class Form extends Library {
 
 	/**
 	 * Set custom meta values.
-	 *
+	 * 
 	 * @param string $field        	
 	 * @param string $type        	
 	 * @param mixed $data        	
@@ -281,7 +270,7 @@ class Form extends Library {
 
 	/**
 	 * Get form metadata.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetMeta() {
@@ -291,7 +280,7 @@ class Form extends Library {
 
 	/**
 	 * Get form data.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetData() {
@@ -301,7 +290,7 @@ class Form extends Library {
 
 	/**
 	 * Get filtered form data.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetFilteredData() {
@@ -311,7 +300,7 @@ class Form extends Library {
 
 	/**
 	 * Get form errors.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetErrors() {
@@ -357,7 +346,7 @@ class Form extends Library {
 			if (!empty($this->_mConditions[$field]) && !empty($data)) {
 				/**
 				 * Get conditions.
-				 *
+				 * 
 				 * @var array
 				 */
 				$conditions = array_diff(explode('|', $this->_mConditions[$field]), array(
@@ -403,7 +392,7 @@ class Form extends Library {
 					if (method_exists(Core::String(), $condition_function)) {
 						/**
 						 * Perform actual validation.
-						 *
+						 * 
 						 * @var bool
 						 */
 						$validation = Core::String()->$condition_function($data, $condition_parameter);
@@ -421,12 +410,28 @@ class Form extends Library {
 							 */
 							$error_message = Core::Config()->Get("form.error.{$condition_index}.text");
 							
-							if (FALSE !== $error_message) {
+							if (!empty($error_message)) {
 								/**
 								 *
 								 * @var array
 								 */
 								$this->_mErrors[$field][] = sprintf($error_message, $this->_mMeta[$field]['title'], $condition_parameter);
+								
+								/**
+								 *
+								 * @var string
+								 */
+								$error_message_description = Core::Config()->Get("form.error.{$condition_index}.description");
+								
+								if (!empty($error_message_description)) {
+									
+									/**
+									 *
+									 * @var array
+									 */
+									$this->_mErrors[$field][] = sprintf($error_message_description, $condition_parameter);
+								}
+							
 							} else {
 								/**
 								 *
@@ -456,7 +461,7 @@ class Form extends Library {
 
 	/**
 	 * Set request data.
-	 *
+	 * 
 	 * @return bool
 	 */
 	private function _SetRequestData() {
@@ -484,7 +489,7 @@ class Form extends Library {
 				} else {
 					/**
 					 * Set form data.
-					 *
+					 * 
 					 * @var array
 					 */
 					$this->_mData[$field] = $request[$field];
@@ -497,7 +502,7 @@ class Form extends Library {
 
 	/**
 	 * Filter form data.
-	 *
+	 * 
 	 * @return bool
 	 */
 	private function _Filter() {
@@ -509,7 +514,7 @@ class Form extends Library {
 			if (!empty($this->_mFilters[$field])) {
 				/**
 				 * Get filters.
-				 *
+				 * 
 				 * @var array
 				 */
 				$filters = array_diff(explode('|', $this->_mFilters[$field]), array(
@@ -526,7 +531,7 @@ class Form extends Library {
 					if (function_exists($filter)) {
 						/**
 						 * Filter data using a built in function.
-						 *
+						 * 
 						 * @var array
 						 */
 						$this->_mDataFiltered[$field] = ${
@@ -538,7 +543,7 @@ class Form extends Library {
 						if (method_exists(Core::String(), $filter)) {
 							/**
 							 * Filter data using custom string method.
-							 *
+							 * 
 							 * @var array
 							 */
 							$this->_mDataFiltered[$field] = call_user_func(array(
@@ -560,10 +565,11 @@ class Form extends Library {
 				/**
 				 * If field is set to ignore we don't add it to the filtered array.
 				 */
-				if ($this->_mMeta[$field]['ignore']) {} else {
+				if ($this->_mMeta[$field]['ignore']) {
+				} else {
 					/**
 					 * No filters are present, set the data as is.
-					 *
+					 * 
 					 * @var array
 					 */
 					$this->_mDataFiltered[$field] = $data;
