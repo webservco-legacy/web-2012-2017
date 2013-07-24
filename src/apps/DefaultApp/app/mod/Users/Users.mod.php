@@ -53,7 +53,7 @@ class Module_Users extends ModuleApp {
 			return FALSE;
 		}
 		
-		Core::Form()->SetData($login_form);
+		Core::Form()->SetData($form_config);
 		
 		/**
 		 *
