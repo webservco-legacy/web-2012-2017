@@ -44,6 +44,12 @@
 				<notregistered>
 				    <text>"%s" is not registered, please make sure you enter the correct address.</text>
 				</notregistered>
+				<passwordwrong>
+				    <text>Password is incorrect.</text>
+				</passwordwrong>
+				<passwordsame>
+				    <text>The new password is the same as the old one.</text>
+				</passwordsame>
 			</error>
 		</form>
 	</dev>
@@ -93,6 +99,12 @@
 				<notregistered>
 				    <text>"%s" is not registered, please make sure you enter the correct address.</text>
 				</notregistered>
+				<passwordwrong>
+				    <text>Password is incorrect.</text>
+				</passwordwrong>
+				<passwordsame>
+				    <text>The new password is the same as the old one.</text>
+				</passwordsame>
 			</error>
 		</form>
 	</prod>

@@ -4,7 +4,11 @@
 
 		<p><?php echo __('Welcome'); ?> <strong><?php echo $user['Prop']['user_name_first']; ?></strong>!</p>
 		
-		<p>
+		<p class="clearfix">
+			<a href="<?php echo $url['www']; ?>Users/App/ChangePassword" title="<?php echo __('Change password'); ?>"><?php echo __('Change password'); ?></a>
+		</p>
+		
+		<p class="clearfix">
 			<a class="button" href="<?php echo $url['www']; ?>Users/App/Logout" title="<?php echo __('Logout'); ?>"><?php echo __('Logout'); ?></a>
 		</p>
 <?php } else { ?>

@@ -142,6 +142,27 @@
 						<content>Reset password</content>
 					</send>
 				</resetpassword>
+				<changepassword>
+					<password_old>
+						<type>password</type>
+						<title>Old Password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password_old>
+					<password_new>
+						<type>password</type>
+						<title>New Password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password_new>
+					<send>
+						<type>submit</type>
+						<title></title>
+						<content>Change password</content>
+					</send>
+				</changepassword>
 			</form>
 		</users>
 	</dev>
@@ -287,6 +308,27 @@
 						<content>Reset password</content>
 					</send>
 				</resetpassword>
+				<changepassword>
+					<password_old>
+						<type>password</type>
+						<title>Old Password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password_old>
+					<password_new>
+						<type>password</type>
+						<title>New Password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password_new>
+					<send>
+						<type>submit</type>
+						<title></title>
+						<content>Change password</content>
+					</send>
+				</changepassword>
 			</form>
 		</users>
 	</prod>

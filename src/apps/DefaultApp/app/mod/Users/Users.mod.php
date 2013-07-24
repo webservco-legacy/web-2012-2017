@@ -27,19 +27,17 @@ if (!defined('_WEB')) {
 
 /**
  * Module_Users
- *
  * Model class for Users module.
- *
+ * 
  * @author Radu Maier <radu@webserv.co>
  * @package RaduApp
  * @subpackage UsersModule
- *            
  */
 class Module_Users extends ModuleApp {
 
 	/**
 	 * Handles login functionality.
-	 *
+	 * 
 	 * @return mixed
 	 */
 	public function GetLoginForm($nextUrl = NULL) {
@@ -49,7 +47,7 @@ class Module_Users extends ModuleApp {
 		$form_config = Core::Config()->Get('users.form.login');
 		
 		if (empty($form_config)) {
-				
+			
 			return FALSE;
 		}
 		
@@ -243,7 +241,7 @@ class Module_Users extends ModuleApp {
 		$form_config = Core::Config()->Get('users.form.resetpassword');
 		
 		if (empty($form_config)) {
-				
+			
 			return FALSE;
 		}
 		
@@ -286,9 +284,9 @@ class Module_Users extends ModuleApp {
 					
 					$mail_message = "{$app_name} password reset.<br />You new password is <b>{$new_pass}</b>";
 					
-					$this->SendMail($form['data']['email'], $mail_subject, $mail_message);
+					Core::Mail()->SendSimple($form['data']['email'], $mail_subject, $mail_message);
 					
-					Core::Router()->Redirect('Users/App/ResetPasswordDone');
+					Core::Router()->Redirect('Users/App/PasswordDone');
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -305,6 +303,114 @@ class Module_Users extends ModuleApp {
 		}
 		
 		return $form;
+	}
+
+	public function GetChangePasswordForm($userId, $userEmail) {
+
+		Core::Form()->SetMethod('post');
+		
+		$form_config = Core::Config()->Get('users.form.changepassword');
+		
+		if (empty($form_config)) {
+			
+			return FALSE;
+		}
+		
+		Core::Form()->SetData($form_config);
+		
+		$form['meta'] = Core::Form()->GetMeta();
+		
+		$form['errors'] = array();
+		
+		if (!empty($_POST)) {
+			
+			$result_validation = Core::Form()->Validate();
+			
+			if (FALSE !== $result_validation) {
+				
+				$form['data'] = Core::Form()->GetFilteredData();
+				
+				$verify_password_old = $this->VerifyPassword($userEmail, $form['data']['password_old']);
+				
+				if (!$verify_password_old) {
+					
+					$form['errors']['password_old'][] = Core::Config()->Get('form.error.passwordwrong.text');
+				}
+				
+				if ($form['data']['password_old'] == $form['data']['password_new']) {
+					$form['errors']['password_new'][] = Core::Config()->Get('form.error.passwordsame.text');
+				}
+				
+				if (empty($form['errors'])) {
+					
+					$user_salt = Core::Security()->GetSalt($userEmail);
+					
+					$user_auth = Core::Security()->GetToken($user_salt, $form['data']['password_new']);
+					
+					$q = "UPDATE {$this->_mAppPrefix}acl_users SET user_auth = '{$user_auth}' WHERE user_email = '{$userEmail}' LIMIT 1";
+					
+					Core::Database()->Query($q);
+					
+					$app_name = __(Core::Config()->Get('app.title'), 'App');
+					
+					$mail_subject = "{$app_name}: Password changed";
+					
+					$mail_message = "{$app_name} password changed.<br />You new password is <b>{$form['data']['password_new']}</b>";
+					
+					Core::Mail()->SendSimple($userEmail, $mail_subject, $mail_message);
+					
+					Core::Router()->Redirect('Users/App/PasswordDone');
+				} else {
+					
+					$form['data'] = Core::Form()->GetData();
+				}
+			} else {
+				
+				$form['data'] = Core::Form()->GetData();
+				
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+		} else {
+			
+			$form['data'] = Core::Form()->GetData();
+		}
+		
+		return $form;
+	}
+
+	/**
+	 * Verify if the input password is correct.
+	 * 
+	 * @param string $userEmail        	
+	 * @param string $password        	
+	 *
+	 * @return boolean
+	 */
+	public function VerifyPassword($userEmail, $password) {
+
+		$user_salt = Core::Security()->GetSalt($userEmail);
+		
+		$user_auth_verify = Core::Security()->GetToken($user_salt, $password);
+		
+		$q = "SELECT user_auth FROM {$this->_mAppPrefix}acl_users WHERE user_email = '{$userEmail}' LIMIT 1";
+		
+		$rs = Core::Database()->Query($q);
+		
+		$t = $rs->num_rows;
+		
+		if (1 == $t) {
+			
+			$r = $rs->fetch_assoc();
+			
+			$user_auth_db = $r['user_auth'];
+		}
+		
+		if (!empty($user_auth_verify) && !empty($user_auth_db)) {
+			
+			return $user_auth_verify == $user_auth_db;
+		}
+		
+		return FALSE;
 	}
 
 	public function Get($userId = NULL, $i18nLocale = NULL) {
