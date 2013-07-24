@@ -517,7 +517,7 @@ class Mail extends Library {
 		/**
 		 * Add application fingerprint.
 		 */
-		$this->AddHeader('X-Mailer', 'WEb 7 (http://www.WebServ.Co)');
+		$this->AddHeader('X-Mailer', 'WEb Application Framework (http://web.webserv.co)');
 		
 		/**
 		 *
@@ -775,10 +775,7 @@ class Mail extends Library {
 		/**
 		 * Add header.
 		 */
-		if ('To' != $header_type) {
-			
-			$this->AddHeader($header_type, $address);
-		}
+		$this->AddHeader($header_type, $address);
 		
 		return $address;
 	}
