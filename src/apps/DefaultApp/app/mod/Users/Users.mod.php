@@ -205,8 +205,6 @@ class Module_Users extends ModuleApp {
 						exit();
 					}
 					
-					Core::User()->Login($form['data']['email'], $form['data']['password']);
-					
 					$result_login = Core::User()->Login($form['data']['email'], $form['data']['password']);
 					
 					if (TRUE !== $result_login) {
