@@ -174,6 +174,11 @@ class Module_Users extends ModuleApp {
 					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['email']['title']);
 				}
 				
+				if ($form['data']['password'] != $form['data']['password_confirm']) {
+					
+					$form['errors']['password_confirm'][] = Core::Config()->Get('form.error.passworddifferent.text');
+				}
+				
 				if (empty($form['errors'])) {
 					
 					$user_salt = Core::Security()->GetSalt($form['data']['email']);
@@ -187,10 +192,7 @@ class Module_Users extends ModuleApp {
 					
 					$user_id = Core::Database()->GetInsertId();
 					
-					$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (user_id_key, user_name_first, user_name_last, user_city, user_department, user_country) VALUES
-					($user_id, '{$form['data']['name_first']}', '{$form['data']['name_last']}', '{$form['data']['city']}', '{$form['data']['department']}', '{$form['data']['country']}')";
-					
-					Core::Database()->Query($qc);
+					$this->InsertCustomData($user_id, $form['data']);
 					
 					if (empty($user_id)) {
 						
@@ -232,6 +234,55 @@ class Module_Users extends ModuleApp {
 		}
 		
 		return $form;
+	}
+
+	public function InsertCustomData($userId, $formData) {
+
+		$data['user_id_key'] = $userId;
+		$data['user_name_first'] = Core::Database()->EscapeString($formData['name_first']);
+		$data['user_name_last'] = Core::Database()->EscapeString($formData['name_last']);
+		$data['user_company'] = Core::Database()->EscapeString($formData['company']);
+		$data['user_address'] = Core::Database()->EscapeString($formData['address']);
+		$data['user_zip'] = Core::Database()->EscapeString($formData['zip']);
+		$data['user_city'] = Core::Database()->EscapeString($formData['city']);
+		$data['user_department'] = Core::Database()->EscapeString($formData['department']);
+		$data['user_country'] = Core::Database()->EscapeString($formData['country']);
+		$data['user_phone'] = Core::Database()->EscapeString($formData['phone']);
+		$data['user_description'] = Core::Database()->EscapeString($formData['description']);
+		
+		$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (";
+		$qc .= implode(', ', array_keys($data));
+		$qc .= ") VALUES (";
+		$qc .= "'" . implode("', '", array_values($data)) . "'";
+		$qc .= ")";
+		
+		return Core::Database()->Query($qc) ? TRUE : FALSE;
+	}
+
+	public function ModifyCustomData($userId, $formData) {
+
+		$data['user_name_first'] = Core::Database()->EscapeString($formData['name_first']);
+		$data['user_name_last'] = Core::Database()->EscapeString($formData['name_last']);
+		$data['user_company'] = Core::Database()->EscapeString($formData['company']);
+		$data['user_address'] = Core::Database()->EscapeString($formData['address']);
+		$data['user_zip'] = Core::Database()->EscapeString($formData['zip']);
+		$data['user_city'] = Core::Database()->EscapeString($formData['city']);
+		$data['user_department'] = Core::Database()->EscapeString($formData['department']);
+		$data['user_country'] = Core::Database()->EscapeString($formData['country']);
+		$data['user_phone'] = Core::Database()->EscapeString($formData['phone']);
+		$data['user_description'] = Core::Database()->EscapeString($formData['description']);
+		
+		$qc = "UPDATE {$this->_mAppPrefix}acl_users_custom SET ";
+		
+		foreach ($data as $key => $value) {
+			
+			$qm[] = "`{$key}` = '{$value}'";
+		}
+		
+		$qc .= implode(', ', $qm);
+		$qc .= " WHERE user_id_key = '{$userId}' LIMIT 1";
+		
+		return Core::Database()->Query($qc) ? TRUE : FALSE;
 	}
 
 	public function GetResetPasswordForm() {
@@ -421,6 +472,7 @@ class Module_Users extends ModuleApp {
 		
 		unset($form_config['email']);
 		unset($form_config['password']);
+		unset($form_config['password_confirm']);
 		unset($form_config['send']);
 		
 		if (empty($form_config)) {
@@ -458,18 +510,7 @@ class Module_Users extends ModuleApp {
 				
 				if (empty($form['errors'])) {
 					
-					$user_name_first = Core::Database()->EscapeString($form['data']['name_first']);
-					$user_name_last = Core::Database()->EscapeString($form['data']['name_last']);
-					$user_city = Core::Database()->EscapeString($form['data']['city']);
-					$user_department = Core::Database()->EscapeString($form['data']['department']);
-					$user_country = Core::Database()->EscapeString($form['data']['country']);
-					;
-					
-					$qc = "UPDATE {$this->_mAppPrefix}acl_users_custom SET
-		 user_name_first = '{$user_name_first}', user_name_last = '{$user_name_last}', user_city = '{$user_city}', user_department = '{$user_department}', user_country = '{$user_country}'
-		 WHERE user_id_key = '{$userId}' LIMIT 1";
-					
-					Core::Database()->Query($qc);
+					$this->ModifyCustomData($userId, $form['data']);
 					
 					Core::User()->Reload();
 					
@@ -521,7 +562,7 @@ class Module_Users extends ModuleApp {
 			$q_limit = "LIMIT 1";
 		}
 		
-		$q = "SELECT user_id, user_email, user_nickname, user_status, user_name_first, user_name_last, user_city, user_department, user_country
+		$q = "SELECT *
 		FROM {$this->_mAppPrefix}acl_object_user
 		WHERE 1
 		{$q_conditions}

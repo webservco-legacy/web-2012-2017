@@ -23,8 +23,8 @@
 					<description>The field must contain at most %s chars.</description>
 				</haslengthmax>
 				<haswordsmax>
-				    <text>The field "%s" is too long.</text>
-				    <description>The field must contain at most %s words.</description>
+					<text>The field "%s" is too long.</text>
+					<description>The field must contain at most %s words.</description>
 				</haswordsmax>
 				<equals>
 					<text>The field "%s" doesn't mach the specified item.</text>
@@ -39,23 +39,26 @@
 					<text>The field "%s" doesn't mach the specified item.</text>
 				</matchescaptcha>
 				<alreadyregistered>
-				    <text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
+					<text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
 				</alreadyregistered>
 				<notregistered>
-				    <text>"%s" is not registered, please make sure you enter the correct address.</text>
+					<text>"%s" is not registered, please make sure you enter the correct address.</text>
 				</notregistered>
 				<passwordwrong>
-				    <text>Password is incorrect.</text>
+					<text>Password is incorrect.</text>
 				</passwordwrong>
 				<passwordsame>
-				    <text>The new password is the same as the old one.</text>
+					<text>The new password is the same as the old one.</text>
 				</passwordsame>
+				<passworddifferent>
+					<text>The passwords are not the same.</text>
+				</passworddifferent>
 			</error>
 		</form>
 	</dev>
 	<!-- Test Environment -->
 	<test>
-		
+
 	</test>
 	<!-- Production Environment -->
 	<prod>
@@ -78,8 +81,8 @@
 					<description>The field must contain at most %s chars.</description>
 				</haslengthmax>
 				<haswordsmax>
-				    <text>The field "%s" is too long.</text>
-				    <description>The field must contain at most %s words.</description>
+					<text>The field "%s" is too long.</text>
+					<description>The field must contain at most %s words.</description>
 				</haswordsmax>
 				<equals>
 					<text>The field "%s" doesn't mach the specified item.</text>
@@ -94,17 +97,20 @@
 					<text>The field "%s" doesn't mach the specified item.</text>
 				</matchescaptcha>
 				<alreadyregistered>
-				    <text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
+					<text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
 				</alreadyregistered>
 				<notregistered>
-				    <text>"%s" is not registered, please make sure you enter the correct address.</text>
+					<text>"%s" is not registered, please make sure you enter the correct address.</text>
 				</notregistered>
 				<passwordwrong>
-				    <text>Password is incorrect.</text>
+					<text>Password is incorrect.</text>
 				</passwordwrong>
 				<passwordsame>
-				    <text>The new password is the same as the old one.</text>
+					<text>The new password is the same as the old one.</text>
 				</passwordsame>
+				<passworddifferent>
+					<text>The passwords are not the same.</text>
+				</passworddifferent>
 			</error>
 		</form>
 	</prod>

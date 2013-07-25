@@ -46,38 +46,48 @@
 					</send>
 				</login>
 				<register>
-					<email>
-						<type>text</type>
-						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
-						<required>1</required>
-						<filters>StripTags</filters>
-						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
-					</email>
-					<password>
-						<type>password</type>
-						<title>Password</title>
-						<description>Choose a password</description>
-						<required>1</required>
-						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
-					</password>
 					<name_first>
 						<type>text</type>
-						<title>First name</title>
-						<description>Your first name</description>
+						<title>Name</title>
+						<description></description>
 						<required>1</required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 					</name_first>
 					<name_last>
 						<type>text</type>
-						<title>Last name</title>
-						<description>Your last name</description>
+						<title>Surname</title>
+						<description></description>
 						<required>1</required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 					</name_last>
+					<company>
+						<type>text</type>
+						<title>Company</title>
+						<description></description>
+						<required></required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+					</company>
+					<address>
+						<type>text</type>
+						<title>Address</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+						<content></content>
+					</address>
+					<zip>
+						<type>text</type>
+						<title>Zip</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[3]|HasLengthMax[10]</conditions>
+						<content></content>
+					</zip>
 					<city>
 						<type>text</type>
 						<title>City</title>
@@ -85,8 +95,9 @@
 						<required>1</required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
-						<content>Milano</content>
+						<content></content>
 					</city>
+
 					<department>
 						<type>select</type>
 						<title>State</title>
@@ -111,7 +122,7 @@
 						</options>
 					</department>
 					<country>
-					    <type>select</type>
+						<type>select</type>
 						<title>Country</title>
 						<description></description>
 						<required>1</required>
@@ -119,6 +130,44 @@
 						<conditions></conditions>
 						<content>IT</content>
 					</country>
+					<phone>
+						<type>text</type>
+						<title>Phone</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+					</phone>
+					<email>
+						<type>text</type>
+						<title>Email</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags</filters>
+						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
+					</email>
+					<password>
+						<type>password</type>
+						<title>Password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password>
+					<password_confirm>
+						<type>password</type>
+						<title>Confirm password</title>
+						<description></description>
+						<required>1</required>
+						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
+					</password_confirm>
+					<description>
+						<type>textarea</type>
+						<title>Description</title>
+						<description></description>
+						<required></required>
+						<filters>StripTags</filters>
+						<conditions>HasLengthMin[4]|HasWordsMax[200]</conditions>
+					</description>
 					<send>
 						<type>submit</type>
 						<title></title>
@@ -171,166 +220,7 @@
 	</test>
 	<!-- Production Environment -->
 	<prod>
-		<users>
-			<form>
-				<login>
-					<email>
-						<type>text</type>
-						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
-						<required>1</required>
-						<filters>StripTags</filters>
-						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
-						</conditions>
-					</email>
-					<password>
-						<type>password</type>
-						<title>Password</title>
-						<description>Your password</description>
-						<required>1</required>
-						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
-					</password>
-					<captcha>
-						<type>text</type>
-						<title>Security Code</title>
-						<description>Enter the code you see in the picture</description>
-						<required>1</required>
-						<filters>RemoveBadChars</filters>
-						<conditions>MatchesCaptcha</conditions>
-					</captcha>
-					<remember>
-						<type>checkbox</type>
-						<title>Remember me</title>
-						<description>Check to stay logged in</description>
-						<required>0</required>
-					</remember>
-					<send>
-						<type>submit</type>
-						<title></title>
-						<content>Login</content>
-					</send>
-				</login>
-				<register>
-					<email>
-						<type>text</type>
-						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
-						<required>1</required>
-						<filters>StripTags</filters>
-						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
-					</email>
-					<password>
-						<type>password</type>
-						<title>Password</title>
-						<description>Choose a password</description>
-						<required>1</required>
-						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
-					</password>
-					<name_first>
-						<type>text</type>
-						<title>First name</title>
-						<description>Your first name</description>
-						<required>1</required>
-						<filters>StripTags|RemoveBadChars</filters>
-						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
-					</name_first>
-					<name_last>
-						<type>text</type>
-						<title>Last name</title>
-						<description>Your last name</description>
-						<required>1</required>
-						<filters>StripTags|RemoveBadChars</filters>
-						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
-					</name_last>
-					<city>
-						<type>text</type>
-						<title>City</title>
-						<description></description>
-						<required>1</required>
-						<filters>StripTags|RemoveBadChars</filters>
-						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
-						<content>Milano</content>
-					</city>
-					<department>
-						<type>select</type>
-						<title>State</title>
-						<description></description>
-						<required>1</required>
-						<filters></filters>
-						<conditions></conditions>
-						<content>MI</content>
-						<options>
-							<option>
-								<value>ME</value>
-								<name>Messina</name>
-							</option>
-							<option>
-								<value>MI</value>
-								<name>Milano</name>
-							</option>
-							<option>
-								<value>MO</value>
-								<name>Modena</name>
-							</option>
-						</options>
-					</department>
-					<country>
-					    <type>select</type>
-						<title>Country</title>
-						<description></description>
-						<required>1</required>
-						<filters></filters>
-						<conditions></conditions>
-						<content>IT</content>
-					</country>
-					<send>
-						<type>submit</type>
-						<title></title>
-						<content>Register</content>
-					</send>
-				</register>
-				<resetpassword>
-					<email>
-						<type>text</type>
-						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
-						<required>1</required>
-						<filters>StripTags</filters>
-						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
-						</conditions>
-					</email>
-					<send>
-						<type>submit</type>
-						<title></title>
-						<content>Reset password</content>
-					</send>
-				</resetpassword>
-				<changepassword>
-					<password_old>
-						<type>password</type>
-						<title>Old Password</title>
-						<description></description>
-						<required>1</required>
-						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
-					</password_old>
-					<password_new>
-						<type>password</type>
-						<title>New Password</title>
-						<description></description>
-						<required>1</required>
-						<conditions>HasLengthMin[4]|HasLengthMax[20]</conditions>
-					</password_new>
-					<send>
-						<type>submit</type>
-						<title></title>
-						<content>Change password</content>
-					</send>
-				</changepassword>
-			</form>
-		</users>
 	</prod>
+
 </config>
 <!-- $Id$ -->

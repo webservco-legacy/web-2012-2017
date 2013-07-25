@@ -14,11 +14,16 @@
 				<attempts>10</attempts>
 			</login>
 			<props>
-			    <item>user_name_first</item>
-			    <item>user_name_last</item>
-			    <item>user_city</item>
-			    <item>user_department</item>
-			    <item>user_country</item>
+				<item>user_name_first</item>
+				<item>user_name_last</item>
+				<item>user_company</item>
+				<item>user_address</item>
+				<item>user_zip</item>
+				<item>user_city</item>
+				<item>user_department</item>
+				<item>user_country</item>
+				<item>user_phone</item>
+				<item>user_description</item>
 			</props>
 		</user>
 	</dev>
@@ -26,7 +31,7 @@
 	<test></test>
 	<!-- Production Environment -->
 	<prod>
-	    <!-- User object settings -->
+		<!-- User object settings -->
 		<user>
 			<login>
 				<!-- Failed logins timeout (minutes) -->
@@ -35,11 +40,16 @@
 				<attempts>10</attempts>
 			</login>
 			<props>
-			    <item>user_name_first</item>
-			    <item>user_name_last</item>
-			    <item>user_city</item>
-			    <item>user_department</item>
-			    <item>user_country</item>
+				<item>user_name_first</item>
+				<item>user_name_last</item>
+				<item>user_company</item>
+				<item>user_address</item>
+				<item>user_zip</item>
+				<item>user_city</item>
+				<item>user_department</item>
+				<item>user_country</item>
+				<item>user_phone</item>
+				<item>user_description</item>
 			</props>
 		</user>
 	</prod>
