@@ -6,6 +6,8 @@
 		
 		<p class="clearfix">
 			<a href="<?php echo $url['www']; ?>Users/App/ChangePassword" title="<?php echo __('Change password'); ?>"><?php echo __('Change password'); ?></a>
+			<br />
+			<a href="<?php echo $url['www']; ?>Users/App/Edit" title="<?php echo __('Edit account'); ?>"><?php echo __('Edit account'); ?></a>
 		</p>
 		
 		<p class="clearfix">

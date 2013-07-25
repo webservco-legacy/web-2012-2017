@@ -141,6 +141,34 @@ class Controller_Users_App extends ControllerApp {
 		return TRUE;
 	}
 
+	public function Edit() {
+
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		/**
+		 * Custom functionality below this line.
+		 */
+		
+		$data['strings']['title'] = __('Edit account');
+		
+		if (empty($data['user']['Logged'])) {
+			
+			$template = 'account';
+		
+		} else {
+			
+			$data['form'] = $this->Module()->GetEditForm($data['user']['Id'], $data['user']['Prop']);
+			
+			$template = 'edit';
+		}
+		
+		echo $this->GetOutput($data, $template);
+		
+		return TRUE;
+	}
+
 	/**
 	 * Login error.
 	 * 

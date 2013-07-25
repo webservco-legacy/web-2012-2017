@@ -413,6 +413,97 @@ class Module_Users extends ModuleApp {
 		return FALSE;
 	}
 
+	public function GetEditForm($userId, $userProp) {
+
+		Core::Form()->SetMethod('post');
+		
+		$form_config = Core::Config()->Get("users.form.register");
+		
+		unset($form_config['email']);
+		unset($form_config['password']);
+		unset($form_config['send']);
+		
+		if (empty($form_config)) {
+			
+			return FALSE;
+		}
+		
+		Core::Form()->SetData($form_config);
+		
+		$departments = Core::Geo()->GetDepartments('IT');
+		
+		if (!empty($departments)) {
+			
+			Core::Form()->SetMeta('department', 'options', $departments);
+		}
+		
+		$countries = Core::Geo()->GetCountries();
+		
+		if (!empty($countries)) {
+			
+			Core::Form()->SetMeta('country', 'options', $countries);
+		}
+		
+		$form['meta'] = Core::Form()->GetMeta();
+		
+		$form['errors'] = array();
+		
+		if (!empty($_POST)) {
+			
+			$result_validation = Core::Form()->Validate();
+			
+			if (FALSE !== $result_validation) {
+				
+				$form['data'] = Core::Form()->GetFilteredData();
+				
+				if (empty($form['errors'])) {
+					
+					$user_name_first = Core::Database()->EscapeString($form['data']['name_first']);
+					$user_name_last = Core::Database()->EscapeString($form['data']['name_last']);
+					$user_city = Core::Database()->EscapeString($form['data']['city']);
+					$user_department = Core::Database()->EscapeString($form['data']['department']);
+					$user_country = Core::Database()->EscapeString($form['data']['country']);
+					;
+					
+					$qc = "UPDATE {$this->_mAppPrefix}acl_users_custom SET
+		 user_name_first = '{$user_name_first}', user_name_last = '{$user_name_last}', user_city = '{$user_city}', user_department = '{$user_department}', user_country = '{$user_country}'
+		 WHERE user_id_key = '{$userId}' LIMIT 1";
+					
+					Core::Database()->Query($qc);
+					
+					Core::User()->Reload();
+					
+					Core::Router()->Redirect('Users/App/Account');
+				
+				} else {
+					
+					$form['data'] = Core::Form()->GetData();
+				}
+			} else {
+				
+				$form['data'] = Core::Form()->GetData();
+				
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+		} else {
+			
+			$form['data'] = Core::Form()->GetData();
+			
+			/**
+			 * Set existing data.
+			 */
+			foreach ($form['data'] as $field_id => $data) {
+				
+				if (isset($userProp["user_{$field_id}"])) {
+					
+					$form['data'][$field_id] = $userProp["user_{$field_id}"];
+				}
+			}
+		}
+		
+		return $form;
+	}
+
 	public function Get($userId = NULL, $i18nLocale = NULL) {
 
 		$data = array();
