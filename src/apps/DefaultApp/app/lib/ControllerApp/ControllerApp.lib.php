@@ -191,7 +191,7 @@ class ControllerApp extends Controller {
 				
 				$data['strings']['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
 				
-				echo $this->GetOutput($data, 'error', TRUE);
+				echo $this->_GetOutput($data, 'error', TRUE);
 				
 				return FALSE;
 			}
@@ -206,6 +206,22 @@ class ControllerApp extends Controller {
 		}
 		
 		return FALSE;
+	}
+	
+	public function GetDefaultOutput($title = NULL) {
+		
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		if (!empty($title)) {
+			
+			$data['strings']['title'] = $title;
+		}
+		
+		echo $this->GetOutput($data);
+		
+		return TRUE;
 	}
 }
 ?>

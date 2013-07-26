@@ -7,13 +7,12 @@ class Controller_Content_App extends ControllerApp {
 
 	public function Home() {
 
-		$this->Init();
-		
-		$data = $this->Module()->GetData($this->_mRequest);
-		
-		echo $this->GetOutput($data);
-		
-		return TRUE;
+		return $this->GetDefaultOutput();
+	}
+
+	public function Info() {
+
+		return $this->GetDefaultOutput(__('Info'));
 	}
 
 	public function Credits() {
