@@ -11,8 +11,7 @@
 					<email>
 						<type>text</type>
 						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
+						<description>Email address asociated with your account</description>
 						<required>1</required>
 						<filters>StripTags</filters>
 						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
@@ -178,8 +177,7 @@
 					<email>
 						<type>text</type>
 						<title>Email</title>
-						<description>Email address asociated with your account
-						</description>
+						<description>Email address asociated with your account</description>
 						<required>1</required>
 						<filters>StripTags</filters>
 						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: App $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-23 18:07+0100\n"
-"PO-Revision-Date: 2013-07-23 18:07+0100\n"
+"POT-Creation-Date: 2013-07-26 15:21+0100\n"
+"PO-Revision-Date: 2013-07-26 15:21+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: it_IT\n"
@@ -23,48 +23,74 @@ msgstr ""
 "DefaultApp/app/obj\n"
 "X-Poedit-SearchPath-3: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/"
 "DefaultApp/app/lib\n"
+"X-Poedit-SearchPath-4: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/"
+"DefaultApp/app/opt/tpl/Webapp/_main\n"
 
 #: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ModuleApp/ModuleApp.lib.php:84
 msgid "No data to display"
 msgstr "Nessuna data"
 
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:201
 msgid "Error"
 msgstr "Errore"
 
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:196
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:201
 msgid "You don't have permission to access this resource."
 msgstr "Non hai il permesso di accedere a questa risorsa."
 
-#: form.cfg.xml:12 form.cfg.xml:55
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/admin_header.tpl.php:8
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/header.tpl.php:6
+msgid "Logout"
+msgstr "Logout"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/admin_header.tpl.php:9
+msgid "Administration area"
+msgstr "Administration area"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/admin_header.tpl.php:11
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/header.tpl.php:8
+msgid "Login"
+msgstr "Login"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/admin_header.tpl.php:17
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/admin_layout.tpl.php:12
+#: app.cfg.xml:47 app.cfg.xml:156
+msgid "Admin"
+msgstr "Admin"
+
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/footer.tpl.php:2
+msgid "Italy"
+msgstr "Italia"
+
+#: form.cfg.xml:12 form.cfg.xml:70
 msgid "The field \"%s\" is required."
 msgstr "Il campo \"%s\" e' obbligatorio."
 
-#: form.cfg.xml:15 form.cfg.xml:58
+#: form.cfg.xml:15 form.cfg.xml:73
 msgid "There is an error regarding the field \"%s\"."
 msgstr "Errore nel campo \"%s\"."
 
-#: form.cfg.xml:18 form.cfg.xml:61
+#: form.cfg.xml:18 form.cfg.xml:76
 msgid "The field \"%s\" is too short."
 msgstr "Il campo \"%s\" e' troppo corto."
 
-#: form.cfg.xml:21 form.cfg.xml:64
+#: form.cfg.xml:22 form.cfg.xml:26 form.cfg.xml:80 form.cfg.xml:84
 msgid "The field \"%s\" is too long."
 msgstr "Il campo \"%s\" e' troppo lungo."
 
-#: form.cfg.xml:24 form.cfg.xml:33 form.cfg.xml:67 form.cfg.xml:76
+#: form.cfg.xml:30 form.cfg.xml:39 form.cfg.xml:88 form.cfg.xml:97
 msgid "The field \"%s\" doesn't mach the specified item."
 msgstr "Errore nel campo \"%s\"."
 
-#: form.cfg.xml:27 form.cfg.xml:70
+#: form.cfg.xml:33 form.cfg.xml:91
 msgid "The field \"%s\" must contain both letters and numbers."
 msgstr "Il campo \"%s\" deve contenere sia numeri che lettere."
 
-#: form.cfg.xml:30 form.cfg.xml:73
+#: form.cfg.xml:36 form.cfg.xml:94
 msgid "The field \"%s\" is not a valid email address."
 msgstr "\"%s\" non e' un indirizzo email valido."
 
-#: form.cfg.xml:36 form.cfg.xml:79
+#: form.cfg.xml:42 form.cfg.xml:100
 msgid ""
 "\"%s\" is already registered, please choose another, or use the options to "
 "\"Login\" or \"Reset password\"."
@@ -72,11 +98,23 @@ msgstr ""
 "\"%s\" is already registered, please choose another, or use the options to "
 "\"Login\" or \"Reset password\"."
 
-#: form.cfg.xml:39 form.cfg.xml:82
+#: form.cfg.xml:45 form.cfg.xml:103
 msgid ""
 "\"%s\" is not registered, please make sure you enter the correct address."
 msgstr ""
 "\"%s\" is not registered, please make sure you enter the correct address."
+
+#: form.cfg.xml:48 form.cfg.xml:106
+msgid "Password is incorrect."
+msgstr "Password is incorrect."
+
+#: form.cfg.xml:51 form.cfg.xml:109
+msgid "The new password is the same as the old one."
+msgstr "The new password is the same as the old one."
+
+#: form.cfg.xml:54 form.cfg.xml:112
+msgid "The passwords are not the same."
+msgstr "The passwords are not the same."
 
 #: app.cfg.xml:10 app.cfg.xml:119
 msgid "Default app"
@@ -93,10 +131,6 @@ msgstr "Account"
 #: app.cfg.xml:41 app.cfg.xml:75 app.cfg.xml:150 app.cfg.xml:184
 msgid "Items"
 msgstr "Articoli"
-
-#: app.cfg.xml:47 app.cfg.xml:156
-msgid "Admin"
-msgstr "Admin"
 
 #: app.cfg.xml:54 app.cfg.xml:163
 msgid "Italia Multimedia"

@@ -31,7 +31,7 @@ class Controller_Items_Admin extends ControllerApp {
 
 		$data['items'] = $this->Module()->GetPagination(!empty($data['query']['page']) ? $data['query']['page'] : NULL);
 
-		$data['tpl_pagination'] = $this->Output()->Out('pagination', $data);
+		$data['tpl_pagination'] = $this->Output()->Out('_main/pagination', $data);
 
 		$data['url_return'] = Core::String()->EncodeUrlString("{$data['info']['location']}{$data['info']['path']}");
 
