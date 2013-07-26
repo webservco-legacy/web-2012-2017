@@ -8,6 +8,13 @@
 		<output>
 			<skin>Webapp</skin>
 			<template>layout</template>
+			<templates_extra>
+				<item>header</item>
+				<item>left</item>
+				<item>right</item>
+				<item>footer</item>
+				<item>scripts</item>
+			</templates_extra>
 			<extension>.tpl.php</extension>
 		</output>
 	</dev>
@@ -17,6 +24,13 @@
 		<output>
 			<skin>Webapp</skin>
 			<template>layout</template>
+			<templates_extra>
+				<item>header</item>
+				<item>left</item>
+				<item>right</item>
+				<item>footer</item>
+				<item>scripts</item>
+			</templates_extra>
 			<extension>.tpl.php</extension>
 		</output>
 	</test>
@@ -26,6 +40,13 @@
 		<output>
 			<skin>Webapp</skin>
 			<template>layout</template>
+			<templates_extra>
+				<item>header</item>
+				<item>left</item>
+				<item>right</item>
+				<item>footer</item>
+				<item>scripts</item>
+			</templates_extra>
 			<extension>.tpl.php</extension>
 		</output>
 	</prod>

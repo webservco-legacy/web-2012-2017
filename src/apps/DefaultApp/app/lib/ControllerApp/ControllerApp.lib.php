@@ -50,7 +50,7 @@ class ControllerApp extends Controller {
 		 * but we need it here so we can use the
 		 * Output library configuration data.
 		 */
-		$this->Output()->Init();
+		$this->Output()->Init($this->_mTemplatePrefix);
 		
 		/**
 		 * Use only in multi-language apps.
@@ -110,10 +110,9 @@ class ControllerApp extends Controller {
 		$local_data = array();
 		
 		/**
-		 *
-		 * @var string
+		 * The method has a redundancy check, so it's no trouble if it's already called in $this->Init();
 		 */
-		$template_prefix = $this->_mTemplatePrefix;
+		$this->Output()->Init($this->_mTemplatePrefix);
 		
 		/**
 		 *
@@ -121,33 +120,25 @@ class ControllerApp extends Controller {
 		 */
 		$template_dir_main = '_main/';
 		
-		/**
-		 * Set the header tpl var to the parsed content template.
-		 * 
-		 * @var array
-		 */
-		$local_data['tpl_header'] = $this->Output()->Out($template_dir_main . $template_prefix . 'header', $contentData);
+		$templates_extra = $this->Output()->GetTemplatesExtra();
 		
-		/**
-		 * Set the scripts tpl var to the parsed content template.
-		 * 
-		 * @var array
-		 */
-		$local_data['tpl_footer'] = $this->Output()->Out($template_dir_main . $template_prefix . 'footer', $contentData);
-		
-		/**
-		 * Set the scripts tpl var to the parsed content template.
-		 * 
-		 * @var array
-		 */
-		$local_data['tpl_scripts'] = $this->Output()->Out($template_dir_main . $template_prefix . 'scripts', $contentData);
+		foreach ($templates_extra as $template_extra) {
+			
+			/**
+			 * Set the extra tpl var to the parsed content template.
+			 * 
+			 * @var array
+			 */
+			
+			$local_data["tpl_{$template_extra}"] = $this->Output()->Out($template_dir_main . $template_extra, $contentData);
+		}
 		
 		/**
 		 * Get secondary template name.
 		 * 
 		 * @var string
 		 */
-		$template_name = (FALSE !== $globalTemplate) ? $template_prefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate, $template_prefix);
+		$template_name = (FALSE !== $globalTemplate) ? $this->_mTemplatePrefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate);
 		
 		/**
 		 * Set the content tpl var to the parsed content template.
@@ -171,7 +162,7 @@ class ControllerApp extends Controller {
 		/**
 		 * Get main template name.
 		 */
-		$main_template = !empty($mainTemplate) ? $template_prefix . $mainTemplate : $this->Output()->GetTemplate($template_prefix);
+		$main_template = !empty($mainTemplate) ? $this->_mTemplatePrefix . $mainTemplate : $this->Output()->GetTemplate();
 		
 		if (Core::Useragent()->IsDevice()) {
 			

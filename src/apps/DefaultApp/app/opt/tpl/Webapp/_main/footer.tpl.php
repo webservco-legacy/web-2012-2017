@@ -1,3 +1,3 @@
-	<footer>
-	<?php echo __('Italy', 'App'); ?>
-	</footer>
+<footer>
+	{footer}
+</footer>

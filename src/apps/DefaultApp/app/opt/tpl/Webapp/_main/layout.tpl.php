@@ -29,12 +29,19 @@
         <![endif]-->
 
 	<?php echo $tpl_header; ?>
+	
+	<main>
 
-	<section id="content">
-
-		<?php echo $tpl_content; ?>
-
-	</section>
+		<?php echo $tpl_left; ?>
+		
+		<section id="content">
+			<?php echo $tpl_content; ?>
+	
+		</section>
+		
+		<?php echo $tpl_right; ?>
+	
+	</main>
 
 	<?php echo $tpl_footer; ?>
 

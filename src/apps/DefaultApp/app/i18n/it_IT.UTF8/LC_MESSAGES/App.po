@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: App $Id$\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-26 15:21+0100\n"
-"PO-Revision-Date: 2013-07-26 15:21+0100\n"
+"POT-Creation-Date: 2013-07-26 18:44+0100\n"
+"PO-Revision-Date: 2013-07-26 18:45+0100\n"
 "Last-Translator: Radu Maier <radu@webserv.co>\n"
 "Language-Team: Italia Multimedia Srl <info@italiamultimedia.com>\n"
 "Language: it_IT\n"
@@ -30,11 +30,11 @@ msgstr ""
 msgid "No data to display"
 msgstr "Nessuna data"
 
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:201
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:192
 msgid "Error"
 msgstr "Errore"
 
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:201
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/lib/ControllerApp/ControllerApp.lib.php:192
 msgid "You don't have permission to access this resource."
 msgstr "Non hai il permesso di accedere a questa risorsa."
 
@@ -57,10 +57,6 @@ msgstr "Login"
 #: app.cfg.xml:47 app.cfg.xml:156
 msgid "Admin"
 msgstr "Admin"
-
-#: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/opt/tpl/Webapp/_main/footer.tpl.php:2
-msgid "Italy"
-msgstr "Italia"
 
 #: form.cfg.xml:12 form.cfg.xml:70
 msgid "The field \"%s\" is required."
@@ -143,3 +139,6 @@ msgstr "Utenti"
 #: app.cfg.xml:81 app.cfg.xml:190
 msgid "Frontend"
 msgstr "Frontend"
+
+#~ msgid "Italy"
+#~ msgstr "Italia"

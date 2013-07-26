@@ -18,7 +18,7 @@
 	
 		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/normalize.css">
 		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/main.css">
-		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/layout_admin.css">
+		<link rel="stylesheet" href="<?php echo $url['skin']; ?>css/admin_layout.css">
 		
 		<script src="<?php echo $url['scripts']; ?>vendor/modernizr-2.6.2.min.js"></script>
 		
@@ -28,17 +28,24 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-	<?php echo $tpl_header; ?>
+	<?php echo $tpl_admin_header; ?>
+	
+	<main>
 
-	<section id="content">
+		<?php echo $tpl_admin_left; ?>
+		
+		<section id="content">
+			<?php echo $tpl_content; ?>
+	
+		</section>
+		
+		<?php echo $tpl_admin_right; ?>
+	
+	</main>
 
-		<?php echo $tpl_content; ?>
+	<?php echo $tpl_admin_footer; ?>
 
-	</section>
-
-	<?php echo $tpl_footer; ?>
-
-	<?php echo $tpl_scripts; ?>
+	<?php echo $tpl_admin_scripts; ?>
 
 	</body>
 </html>
