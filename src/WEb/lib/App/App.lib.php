@@ -278,7 +278,7 @@ class App extends Library {
 					 *
 					 * @var string
 					 */
-					$action_methods[] = $m->name;
+					$action_methods[] = ucfirst(strtolower($m->name));
 				}
 			}
 			
