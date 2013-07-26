@@ -18,7 +18,7 @@ class Controller_Oups_Core extends ControllerApp {
 
 		header(__('HTTP/1.1 404 Not Found'));
 			
-		echo $this->GetOutput($data, 'error');
+		echo $this->GetOutput($data, '_main/error');
 
 		return TRUE;
 	}
