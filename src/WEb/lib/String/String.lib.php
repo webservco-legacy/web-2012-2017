@@ -27,24 +27,20 @@ if (!defined('_WEB')) {
 
 /**
  * String
- *
  * String library.
- *
+ * 
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebString
- *            
  */
 class String extends Library {
 
 	/**
 	 * Implement GetInstance() method.
-	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
+	 * 
 	 * @param string $className
 	 *        	class name to instantiate
-	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
@@ -57,7 +53,7 @@ class String extends Library {
 
 	/**
 	 * Check if haystack starts with needle.
-	 *
+	 * 
 	 * @param string $needle        	
 	 * @param string $haystack        	
 	 * @param bool $ignoreCase        	
@@ -77,7 +73,7 @@ class String extends Library {
 
 	/**
 	 * Check if haystack ends with needle.
-	 *
+	 * 
 	 * @param string $needle        	
 	 * @param string $haystack        	
 	 *
@@ -87,14 +83,14 @@ class String extends Library {
 
 		/**
 		 * Check if multybyte function is available.
-		 *
+		 * 
 		 * @var string
 		 */
 		$f_substr = (function_exists('mb_substr')) ? 'mb_substr' : 'substr';
 		
 		/**
 		 * Check if multybyte function is available.
-		 *
+		 * 
 		 * @var string
 		 */
 		$f_strlen = (function_exists('mb_strlen')) ? 'mb_strlen' : 'strlen';
@@ -110,7 +106,7 @@ class String extends Library {
 
 	/**
 	 * Get first item of a string.
-	 *
+	 * 
 	 * @param string $string        	
 	 * @param string $separator        	
 	 *
@@ -127,17 +123,16 @@ class String extends Library {
 
 	/**
 	 * Remove known bad characters from a string.
-	 *
+	 * 
 	 * @param string $string
 	 *        	input string
-	 *        	
 	 * @return string
 	 */
 	public function RemoveBadChars($string) {
 
 		/**
 		 * Known bad characters.
-		 *
+		 * 
 		 * @var array
 		 */
 		$bad = array(
@@ -186,17 +181,16 @@ class String extends Library {
 
 	/**
 	 * Remove known bad characters from a string.
-	 *
+	 * 
 	 * @param string $string
 	 *        	input string
-	 *        	
 	 * @return string
 	 */
 	public function RemoveNewlines($string) {
 
 		/**
 		 * Newline chars.
-		 *
+		 * 
 		 * @var array
 		 */
 		$nl = array(
@@ -218,10 +212,9 @@ class String extends Library {
 	/**
 	 * Get the youtube video id.
 	 * Should work with link, embed, etc.
-	 *
+	 * 
 	 * @param
 	 *        	string string
-	 *        	
 	 * @return string
 	 */
 	public function GetYoutubeVideoId($string) {
@@ -235,7 +228,7 @@ class String extends Library {
 
 	/**
 	 * Strip tags from string.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return string
@@ -250,52 +243,51 @@ class String extends Library {
 
 	/**
 	 * Disable tags from a string.
-	 *
+	 * 
 	 * @param string $string
 	 *        	input string
-	 *        	
 	 * @return string
 	 */
 	public function DisableTags($string) {
 
 		/**
 		 * Block <.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('&lt;', '&#60;', $string);
 		
 		/**
 		 * Block >.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('&gt;', '&#62;', $string);
 		
 		/**
 		 * Block <.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('<', '&#60;', $string);
 		
 		/**
 		 * Block >.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('>', '&#62;', $string);
 		
 		/**
 		 * Block <.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('%3C', '&#60;', $string);
 		
 		/**
 		 * Block >.
-		 *
+		 * 
 		 * @var string
 		 */
 		$string = str_replace('%3E', '&#62;', $string);
@@ -308,7 +300,7 @@ class String extends Library {
 
 	/**
 	 * Check if string is of minimum length.
-	 *
+	 * 
 	 * @param string $string        	
 	 * @param int $length        	
 	 *
@@ -318,16 +310,14 @@ class String extends Library {
 
 		/**
 		 * Set function name.
-		 *
 		 * Check if mbsting extension is available.
-		 *
+		 * 
 		 * @var string
 		 */
 		$f = (function_exists('mb_internal_encoding')) ? 'mb_strlen' : 'strlen';
 		
 		/**
 		 * Check data length.
-		 *
 		 * Return result.
 		 */
 		return ($f($string) < $length) ? FALSE : TRUE;
@@ -335,7 +325,7 @@ class String extends Library {
 
 	/**
 	 * Check if string is of maximum length.
-	 *
+	 * 
 	 * @param string $string        	
 	 * @param int $length        	
 	 *
@@ -345,16 +335,14 @@ class String extends Library {
 
 		/**
 		 * Set function name.
-		 *
 		 * Check if mbsting extension is available.
-		 *
+		 * 
 		 * @var string
 		 */
 		$f = (function_exists('mb_internal_encoding')) ? 'mb_strlen' : 'strlen';
 		
 		/**
 		 * Check data length.
-		 *
 		 * Return result.
 		 */
 		return ($f($string) > $length) ? FALSE : TRUE;
@@ -362,7 +350,7 @@ class String extends Library {
 
 	/**
 	 * Check if string has the maximum word length.
-	 *
+	 * 
 	 * @param string $string        	
 	 * @param number $length        	
 	 * @return boolean
@@ -376,7 +364,7 @@ class String extends Library {
 
 	/**
 	 * Check if two strings are equal.
-	 *
+	 * 
 	 * @param stirng $string        	
 	 * @param string $match        	
 	 *
@@ -386,7 +374,6 @@ class String extends Library {
 
 		/**
 		 * Check if data is the same as the match.
-		 *
 		 * Return result.
 		 */
 		return ($string !== $match) ? FALSE : TRUE;
@@ -394,7 +381,7 @@ class String extends Library {
 
 	/**
 	 * Check is string contains both letters and numbers.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return bool
@@ -408,7 +395,6 @@ class String extends Library {
 		
 		/**
 		 * Check if data is a valid password.
-		 *
 		 * Return result.
 		 */
 		return (preg_match($match, $string)) ? TRUE : FALSE;
@@ -416,7 +402,7 @@ class String extends Library {
 
 	/**
 	 * Check if string is a valid email address.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return bool
@@ -428,7 +414,7 @@ class String extends Library {
 
 	/**
 	 * Check if string matches captcha.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return bool
@@ -443,7 +429,6 @@ class String extends Library {
 		
 		/**
 		 * Check if data is the same as the match.
-		 *
 		 * Return result.
 		 */
 		return ($string != $captcha) ? FALSE : TRUE;
@@ -451,10 +436,9 @@ class String extends Library {
 
 	/**
 	 * Get an array with all words in a string.
-	 *
 	 * Unlike the native function this also cosiders numbers as words
 	 * and works with UTF strings
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return array
@@ -468,10 +452,9 @@ class String extends Library {
 
 	/**
 	 * Get number of words in a string.
-	 *
 	 * Unlike the native function this also cosiders numbers as words
 	 * and works with UTF strings
-	 *
+	 * 
 	 * @param string $string        	
 	 * @return number
 	 */
@@ -484,7 +467,7 @@ class String extends Library {
 
 	/**
 	 * Encode URL string.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return string
@@ -496,7 +479,7 @@ class String extends Library {
 
 	/**
 	 * Decode URL string.
-	 *
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return string
@@ -515,6 +498,72 @@ class String extends Library {
 	 * DISABLED, NO WORK Return decoded URL string only if valid.
 	 * return preg_match("/^[a-zA-Z0-9\/\-\_.]+$/", $url_string) ? $url_string : '/';
 	 */
+	}
+
+	/**
+	 * Return a short string based on the full string.
+	 * It can work with character limit, word limit, or both.
+	 * Eg. get max 80 characters: Truncate($string, 80)
+	 * Eg. get max 10 words: Truncate($string, NULL, 10)
+	 * Eg. get max 80 characters but no more than 10 words: Truncate($string, 80, 10)
+	 * 
+	 * @param string $string
+	 *        	initial string
+	 * @param int $chars
+	 *        	character limit
+	 * @param int $words
+	 *        	word limit
+	 * @param string $add
+	 *        	what to add after the string
+	 * @return string result
+	 */
+	public function Truncate($string, $chars = 0, $words = 0, $add = ' ...') {
+
+		/**
+		 * Initialize string.
+		 */
+		$data = $string;
+		
+		/**
+		 * Check string length
+		 */
+		if (strlen($string) <= $chars) {
+			/**
+			 * Return unmodified string.
+			 */
+			return $data;
+		}
+		/**
+		 * Check for character limit.
+		 */
+		if (!empty($chars)) {
+			/**
+			 * Set raw string.
+			 * Chop it off at chars limit.
+			 */
+			$raw = substr($string, 0, $chars);
+			/**
+			 * Set new string.
+			 */
+			$data = substr($raw, 0, strrpos($raw, ' '));
+		}
+		
+		/**
+		 * Check if we have words limit.
+		 */
+		if (!empty($words)) {
+			
+			$raw = str_word_count($data, 2, ',.!');
+			/**
+			 * Set new string.
+			 */
+			$data = implode(' ', array_slice($raw, 0, $words));
+		}
+		
+		/**
+		 * Return result.
+		 */
+		return $data . $add;
 	}
 }
 ?>
