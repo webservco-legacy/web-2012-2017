@@ -35,6 +35,7 @@ section#content {
 	float: left;
 	width: 480px;
 	min-height: 320px;
+	overflow: auto;
 }
 
 section, aside {

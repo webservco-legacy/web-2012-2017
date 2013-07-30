@@ -23,11 +23,6 @@ class Controller_Items_App extends ControllerApp {
 		
 		$data['items'] = $this->Module()->Get();
 		
-		/**
-		 * Debug using the log instead of output in browser (useful for live apps).
-		 */
-		// Core::Log()->Debug('Debugging $data', $data, 'info');
-		
 		echo $this->GetOutput($data);
 		
 		return TRUE;
