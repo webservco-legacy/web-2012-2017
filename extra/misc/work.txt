@@ -6,7 +6,13 @@ layou_mobile_phone.tpl - mobile phone
 users:
 add extra fields in obj/user.cfg and table acl_users_custom
 --------------------------------------------------------------------------------
+static output
+return $this->GetDefaultOutput();
+--------------------------------------------------------------------------------
 Core::Log()->Debug('Debugging $data', $data, 'info');
+--------------------------------------------------------------------------------
+external module
+
 --------------------------------------------------------------------------------
 /next/Core::String()->EncodeUrlString('next/path')
 => $data['info']['next_url']
