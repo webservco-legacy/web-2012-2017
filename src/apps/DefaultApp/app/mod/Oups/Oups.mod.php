@@ -7,7 +7,7 @@
  * @author     Radu Maier <radu@italiamultimedia.com>
  * @copyright  Copyright (c) 2011, Italia Multimedia Srl
  * @license    http://www.opensource.org/licenses/bsd-license.php
- * @package    RecipesApp
+ * @package    DefaultApp
  * @subpackage OupsModule
  * @version    $Revision$
  * @since      Version 1
@@ -31,7 +31,7 @@ if (!defined('_WEB')) {
  * Model class for Oups module.
  *
  * @author     Radu Maier <radu@italiamultimedia.com>
- * @package    RecipesApp
+ * @package    DefaultApp
  * @subpackage OupsModule
  *
  */

@@ -1,8 +1,34 @@
 <?php
+/**
+ * $Id$
+ *
+ * App controller.
+ *
+ * Module: Items
+ *
+ * @author     Radu Maier <radu@webserv.co>
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ * @package    DefaultApp
+ * @subpackage ItemsModule
+ * @version    $Revision$
+ * @since      Version 7
+ * @access     public
+ * @filesource
+ */
+
 if (!defined('_WEB')) {
 	exit();
 }
 
+/**
+ * Controller_Items_App
+ * App Controller for Items module.
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package DefaultApp
+ * @subpackage ItemsModule
+ */
 class Controller_Items_App extends ControllerApp {
 
 	public function Items() {

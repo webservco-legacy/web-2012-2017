@@ -5,12 +5,12 @@
  * Users module.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2012, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    DefaultApp
  * @subpackage UsersModule
  * @version    $Revision$
- * @since      Version 5
+ * @since      Version 7
  * @access     public
  * @filesource
  */
@@ -30,7 +30,7 @@ if (!defined('_WEB')) {
  * Model class for Users module.
  * 
  * @author Radu Maier <radu@webserv.co>
- * @package RaduApp
+ * @package DefaultApp
  * @subpackage UsersModule
  */
 class Module_Users extends ModuleApp {

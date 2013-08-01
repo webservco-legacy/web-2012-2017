@@ -1,8 +1,32 @@
 <?php
+/**
+ * $Id$
+ *
+ * Content module.
+ *
+ * @author     Radu Maier <radu@webserv.co>
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ * @package    DefaultApp
+ * @subpackage ContentModule
+ * @version    $Revision$
+ * @since      Version 7
+ * @access     public
+ * @filesource
+ */
+
 if (!defined('_WEB')) {
 	exit();
 }
 
+/**
+ * Module_Content
+ * Model class for Content module.
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package DefaultApp
+ * @subpackage ContentModule
+ */
 class Module_Content extends ModuleApp {
 
 	public function GetAppAssets($app_id) {
@@ -114,8 +138,8 @@ class Module_Content extends ModuleApp {
 				
 				switch ($this->_mWebAppInfo['market']) {
 					
-					case 1:
-					default:
+					case 1 :
+					default :
 						if ($row['google_market'] == 'si') {
 							$data[$row['app_id']]['market_url'] = "market://details?id={$row['package_name']}";
 						} else {
@@ -123,7 +147,7 @@ class Module_Content extends ModuleApp {
 						}
 						// $data[$row['app_id']]['market_url'] = "market://details?id={$row['package_name']}";
 						break;
-					case 2:
+					case 2 :
 						if ($row['samsung_market'] == 'si') {
 							$data[$row['app_id']]['market_url'] = "samsungapps://ProductDetail/{$row['package_name']}";
 						} else {
@@ -131,7 +155,7 @@ class Module_Content extends ModuleApp {
 						}
 						// $data[$row['app_id']]['market_url'] = "samsungapps://ProductDetail/{$row['package_name']}";
 						break;
-					case 3:
+					case 3 :
 						if ($row['amazon_market'] == 'si') {
 							$data[$row['app_id']]['market_url'] = "http://www.amazon.com/gp/mas/dl/android?p={$row['package_name']}";
 						} else {
@@ -139,7 +163,7 @@ class Module_Content extends ModuleApp {
 						}
 						// $data[$row['app_id']]['market_url'] = "http://www.amazon.com/gp/mas/dl/android?p={$row['package_name']}";
 						break;
-					case 4:
+					case 4 :
 						if ($row['ios_id'] != '') {
 							$data[$row['app_id']]['market_url'] = "https://itunes.apple.com/app/id{$row['ios_id']}";
 						} else {

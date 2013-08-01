@@ -1,8 +1,34 @@
 <?php
+/**
+ * $Id$
+ *
+ * App controller.
+ *
+ * Module: Content
+ *
+ * @author     Radu Maier <radu@webserv.co>
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
+ * @license    http://www.opensource.org/licenses/bsd-license.php
+ * @package    DefaultApp
+ * @subpackage ContentModule
+ * @version    $Revision$
+ * @since      Version 7
+ * @access     public
+ * @filesource
+ */
+
 if (!defined('_WEB')) {
 	exit();
 }
 
+/**
+ * Controller_Content_App
+ * App Controller for Content module.
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package DefaultApp
+ * @subpackage ContentModule
+ */
 class Controller_Content_App extends ControllerApp {
 
 	public function Home() {
