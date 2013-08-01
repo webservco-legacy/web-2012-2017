@@ -5,7 +5,7 @@
 #############
 # CONSTANTS #
 #############
-P_PATH='/home/radu/Documents/workspace/wsWEb/bin/'
+P_PATH='/home/radu/Documents/Projects/Eclipse/ws_WEb/bin/'
 P_NAME=$(basename $0)
 P_VERSION='$Revision$'
 P_USER=$USER
