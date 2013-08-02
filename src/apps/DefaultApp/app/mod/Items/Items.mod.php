@@ -276,7 +276,10 @@ class Module_Items extends ModuleApp {
 			
 			if (isset($itemData["item_title_{$lang}"]) && isset($itemData["item_description_{$lang}"])) {
 				
-				$q_details_values[] = "('{$item_id}', '{$locale}', '{$itemData["item_title_{$lang}"]}', '{$itemData["item_description_{$lang}"]}')";
+				$item_title = Core::Database()->EscapeString($itemData["item_title_{$lang}"]);
+				$item_description = Core::Database()->EscapeString($itemData["item_description_{$lang}"]);
+				
+				$q_details_values[] = "('{$item_id}', '{$locale}', '{$item_title}', '{$item_description}')";
 			}
 		}
 		
@@ -351,7 +354,10 @@ class Module_Items extends ModuleApp {
 			
 			if (isset($itemData["item_title_{$lang}"]) && isset($itemData["item_description_{$lang}"])) {
 				
-				$q_details_values[] = "('{$itemId}', '{$locale}', '{$itemData["item_title_{$lang}"]}', '{$itemData["item_description_{$lang}"]}')";
+				$item_title = Core::Database()->EscapeString($itemData["item_title_{$lang}"]);
+				$item_description = Core::Database()->EscapeString($itemData["item_description_{$lang}"]);
+				
+				$q_details_values[] = "('{$itemId}', '{$locale}', '{$item_title}', '{$item_description}')";
 			}
 		}
 		

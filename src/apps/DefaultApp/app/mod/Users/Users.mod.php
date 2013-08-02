@@ -77,7 +77,7 @@ class Module_Users extends ModuleApp {
 				 *
 				 * @var array
 				 */
-				$form['data'] = Core::Form()->GetFilteredData();
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
 				
 				/**
 				 *
@@ -165,7 +165,7 @@ class Module_Users extends ModuleApp {
 			
 			if (FALSE !== $result_validation) {
 				
-				$form['data'] = Core::Form()->GetFilteredData();
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
 				
 				$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $form['data']['email']);
 				
@@ -238,17 +238,14 @@ class Module_Users extends ModuleApp {
 
 	public function InsertCustomData($userId, $formData) {
 
-		$data['user_id_key'] = $userId;
-		$data['user_name_first'] = Core::Database()->EscapeString($formData['name_first']);
-		$data['user_name_last'] = Core::Database()->EscapeString($formData['name_last']);
-		$data['user_company'] = Core::Database()->EscapeString($formData['company']);
-		$data['user_address'] = Core::Database()->EscapeString($formData['address']);
-		$data['user_zip'] = Core::Database()->EscapeString($formData['zip']);
-		$data['user_city'] = Core::Database()->EscapeString($formData['city']);
-		$data['user_department'] = Core::Database()->EscapeString($formData['department']);
-		$data['user_country'] = Core::Database()->EscapeString($formData['country']);
-		$data['user_phone'] = Core::Database()->EscapeString($formData['phone']);
-		$data['user_description'] = Core::Database()->EscapeString($formData['description']);
+		$data = array(
+			'user_id_key' => $userId
+		);
+		
+		foreach ($formData as $key => $value) {
+			
+			$data["user_{$key}"] = $value;
+		}
 		
 		$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (";
 		$qc .= implode(', ', array_keys($data));
@@ -261,16 +258,10 @@ class Module_Users extends ModuleApp {
 
 	public function ModifyCustomData($userId, $formData) {
 
-		$data['user_name_first'] = Core::Database()->EscapeString($formData['name_first']);
-		$data['user_name_last'] = Core::Database()->EscapeString($formData['name_last']);
-		$data['user_company'] = Core::Database()->EscapeString($formData['company']);
-		$data['user_address'] = Core::Database()->EscapeString($formData['address']);
-		$data['user_zip'] = Core::Database()->EscapeString($formData['zip']);
-		$data['user_city'] = Core::Database()->EscapeString($formData['city']);
-		$data['user_department'] = Core::Database()->EscapeString($formData['department']);
-		$data['user_country'] = Core::Database()->EscapeString($formData['country']);
-		$data['user_phone'] = Core::Database()->EscapeString($formData['phone']);
-		$data['user_description'] = Core::Database()->EscapeString($formData['description']);
+		foreach ($formData as $key => $value) {
+			
+			$data["user_{$key}"] = $value;
+		}
 		
 		$qc = "UPDATE {$this->_mAppPrefix}acl_users_custom SET ";
 		
@@ -308,7 +299,7 @@ class Module_Users extends ModuleApp {
 			
 			if (FALSE !== $result_validation) {
 				
-				$form['data'] = Core::Form()->GetFilteredData();
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
 				
 				$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $form['data']['email']);
 				
@@ -379,7 +370,7 @@ class Module_Users extends ModuleApp {
 			
 			if (FALSE !== $result_validation) {
 				
-				$form['data'] = Core::Form()->GetFilteredData();
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
 				
 				$verify_password_old = $this->VerifyPassword($userEmail, $form['data']['password_old']);
 				
@@ -406,7 +397,9 @@ class Module_Users extends ModuleApp {
 					
 					$mail_subject = "{$app_name}: Password changed";
 					
-					$mail_message = "{$app_name} password changed.<br />You new password is <b>{$form['data']['password_new']}</b>";
+					$password_new = stripslashes($form['data']['password_new']);
+					
+					$mail_message = "{$app_name} password changed.<br />You new password is <b>{$password_new}</b>";
 					
 					Core::Mail()->SendSimple($userEmail, $mail_subject, $mail_message);
 					
@@ -506,7 +499,7 @@ class Module_Users extends ModuleApp {
 			
 			if (FALSE !== $result_validation) {
 				
-				$form['data'] = Core::Form()->GetFilteredData();
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
 				
 				if (empty($form['errors'])) {
 					
