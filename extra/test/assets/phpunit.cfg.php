@@ -76,6 +76,8 @@ require_once 'WEb/lib/Session/Session.lib.php';
 
 require_once 'WEb/lib/Acl/Acl.lib.php';
 
+require_once 'WEb/lib/Date/Date.lib.php';
+
 require_once 'WEb/lib/Geo/Geo.lib.php';
 
 require_once 'WEb/lib/Form/Form.lib.php';
