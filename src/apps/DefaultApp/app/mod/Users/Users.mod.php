@@ -91,6 +91,7 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/LoginError');
 					
 					exit();
+				
 				} else {
 					/**
 					 * perform any aditional user initialization.
@@ -102,6 +103,7 @@ class Module_Users extends ModuleApp {
 					
 					exit();
 				}
+			
 			} else {
 				Core::Captcha()->GetNewToken();
 				
@@ -181,43 +183,12 @@ class Module_Users extends ModuleApp {
 				
 				if (empty($form['errors'])) {
 					
-					$user_salt = Core::Security()->GetSalt($form['data']['email']);
-					
-					$user_auth = Core::Security()->GetToken($user_salt, $form['data']['password']);
-					
-					$q = "INSERT INTO {$this->_mAppPrefix}acl_users (user_email, user_auth, owner_id, user_date_add) VALUES
-					('{$form['data']['email']}', '{$user_auth}', 1, NOW())";
-					
-					Core::Database()->Query($q);
-					
-					$user_id = Core::Database()->GetInsertId();
-					
-					$this->InsertCustomData($user_id, $form['data']);
-					
-					if (empty($user_id)) {
-						
-						/**
-						 * Registration error.
-						 */
-						
-						echo 'Registration error, please try again later.';
-						
-						exit();
-					}
-					
-					$result_login = Core::User()->Login($form['data']['email'], $form['data']['password']);
-					
-					if (TRUE !== $result_login) {
-						/**
-						 * Autologin error.
-						 */
-						
-						echo 'Autologin error, please try again later.';
-						
-						exit();
-					}
+					$user_id = $this->RegisterUser($form['data']);
 					
 					Core::Router()->Redirect('Users/App/Account');
+					
+					exit();
+				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -236,11 +207,57 @@ class Module_Users extends ModuleApp {
 		return $form;
 	}
 
+	public function RegisterUser($formData) {
+
+		$user_salt = Core::Security()->GetSalt($formData['email']);
+		
+		$user_auth = Core::Security()->GetToken($user_salt, $formData['password']);
+		
+		$q = "INSERT INTO {$this->_mAppPrefix}acl_users (user_email, user_auth, owner_id, user_date_add) VALUES
+		('{$formData['email']}', '{$user_auth}', 1, NOW())";
+		
+		Core::Database()->Query($q);
+		
+		$user_id = Core::Database()->GetInsertId();
+		
+		$this->InsertCustomData($user_id, $formData);
+		
+		if (empty($user_id)) {
+			
+			/**
+			 * Registration error.
+			 */
+			
+			echo 'Registration error, please try again later.';
+			
+			exit();
+		}
+		
+		$result_login = Core::User()->Login($formData['email'], $formData['password']);
+		
+		if (TRUE !== $result_login) {
+			/**
+			 * Autologin error.
+			 */
+			
+			echo 'Autologin error, please try again later.';
+			
+			exit();
+		}
+		
+		return $user_id;
+	}
+
 	public function InsertCustomData($userId, $formData) {
 
 		$data = array(
 			'user_id_key' => $userId
 		);
+		
+		unset($formData['email']);
+		unset($formData['password']);
+		unset($formData['password_confirm']);
+		unset($formData['send']);
 		
 		foreach ($formData as $key => $value) {
 			
@@ -329,6 +346,9 @@ class Module_Users extends ModuleApp {
 					Core::Mail()->SendSimple($form['data']['email'], $mail_subject, $mail_message);
 					
 					Core::Router()->Redirect('Users/App/PasswordDone');
+					
+					exit();
+				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -404,6 +424,9 @@ class Module_Users extends ModuleApp {
 					Core::Mail()->SendSimple($userEmail, $mail_subject, $mail_message);
 					
 					Core::Router()->Redirect('Users/App/PasswordDone');
+					
+					exit();
+				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -508,6 +531,8 @@ class Module_Users extends ModuleApp {
 					Core::User()->Reload();
 					
 					Core::Router()->Redirect('Users/App/Account');
+					
+					exit();
 				
 				} else {
 					
