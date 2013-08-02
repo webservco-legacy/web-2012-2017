@@ -175,9 +175,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	public function GetWorksOnSimpleQueryWhenValueIsArray()
 	{
 		$values = array(
-			'core' => '/home/radu/Documents/workspace/wsWEb/src/WEb/',
-			'app' => '/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/app/',
-			'www' => '/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/',
+			'core' => '/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/',
+			'app' => '/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/',
+			'www' => '/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/',
 		);
 
 		$this->assertEquals($values, $this->_mObject->Get('path'));
@@ -190,7 +190,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnSpecialQuery()
 	{
-		$this->assertEquals('/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get('path.core'));
+		$this->assertEquals('/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/', $this->_mObject->Get('path.core'));
 	}
 
 	/**
@@ -200,7 +200,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 	 */
 	public function GetWorksOnArrayInput()
 	{
-		$this->assertEquals('/home/radu/Documents/workspace/wsWEb/src/WEb/', $this->_mObject->Get(array('path' , 'core')));
+		$this->assertEquals('/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/', $this->_mObject->Get(array('path' , 'core')));
 	}
 
 	/**

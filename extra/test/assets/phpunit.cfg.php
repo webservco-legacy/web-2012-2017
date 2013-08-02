@@ -23,7 +23,7 @@ define('_WEB', TRUE);
 /**
  * Set timezone.
  */
-date_default_timezone_set('Europe/Bucharest');
+date_default_timezone_set('Europe/Budapest');
 
 /**
  * Load all required files
@@ -45,8 +45,6 @@ require_once 'WEb/lib/Log/Log.lib.php';
 require_once 'WEb/lib/App/App.lib.php';
 
 require_once 'WEb/int/Database/Database.int.php';
-
-require_once 'WEb/int/Database/Date.int.php';
 
 require_once 'WEb/lib/Database/Database.lib.php';
 require_once 'WEb/lib/Database/Mysql.lib.php';
@@ -99,6 +97,6 @@ require_once 'WEb/obj/User/User.obj.php';
 /**
  * Assets path.
  */
-define ('_PU_ASSETS_PATH', '/home/radu/Documents/workspace/wsWEb/extra/test/assets/');
+define ('_PU_ASSETS_PATH', '/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/assets/');
 
 ?>

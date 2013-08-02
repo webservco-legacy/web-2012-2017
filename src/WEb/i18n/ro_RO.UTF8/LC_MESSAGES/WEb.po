@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;___:1,2\n"
-"X-Poedit-Basepath: /home/radu/Documents/workspace/wsWEb/src/wsWEb/\n"
+"X-Poedit-Basepath: /home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
 "X-Poedit-Language: Romanian\n"
 "X-Poedit-Country: ROMANIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: /home/radu/Documents/workspace/wsWEb/extra/test/cases/wsWEb\n"
+"X-Poedit-SearchPath-1: /home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb\n"
 
 #: lib/Object/Object.lib.php:173
 #, php-format
@@ -466,9 +466,9 @@ msgstr "Status Licență: %s."
 msgid "License Error: Your license key is missing."
 msgstr "Eroare Licență: Cheia de licență lipsește."
 
-#: /home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:136
-#: /home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:144
-#: /home/radu/Documents/workspace/wsWEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:152
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:136
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:144
+#: /home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/I18n/I18nTest.lib.php:152
 msgid "Hello World!"
 msgstr "Salut Lume!"
 

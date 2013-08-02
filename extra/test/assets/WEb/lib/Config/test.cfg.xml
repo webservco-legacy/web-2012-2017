@@ -9,15 +9,15 @@
 		<path>
 			<!-- Full path to engine directory. Defaults to "./WEb/". -->
 			<core>
-				/home/radu/Documents/workspace/wsWEb/src/WEb/
+				/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/
 			</core>
 			<!-- Full path to application directory. Defaults to "./". -->
 			<app>
-				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/app/
+				/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/
 			</app>
 			<!-- Full path to application web accessible directory. Defaults to "./". -->
 			<www>
-				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/
+				/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/
 			</www>
 		</path>
 
