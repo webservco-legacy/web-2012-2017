@@ -299,6 +299,23 @@ class Form extends Library {
 	}
 
 	/**
+	 * Get filtered from data, escaped for using in database inserts.
+	 * 
+	 * @return array
+	 */
+	public function GetEscapedFilteredData() {
+
+		$escaped_filtered_data = array();
+		
+		foreach ($this->_mDataFiltered as $field => $data) {
+			
+			$escaped_filtered_data[$field] = Core::Database()->EscapeString($data);
+		}
+		
+		return $escaped_filtered_data;
+	}
+
+	/**
 	 * Get form errors.
 	 * 
 	 * @return array
@@ -534,8 +551,7 @@ class Form extends Library {
 						 * 
 						 * @var array
 						 */
-						$this->_mDataFiltered[$field] = ${
-							$filter}($data);
+						$this->_mDataFiltered[$field] = ${$filter}($data);
 					} /**
 					 * Check if filter is a string method
 					 */
