@@ -27,104 +27,279 @@ if (!defined('_WEB')) {
 
 /**
  * Database_Mysql
- *
  * MySQL database library.
- *
- * @author     Radu Maier <radu@webserv.co>
- * @package    WEb
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package WEb
  * @subpackage WebDatabase
- *
  */
 class Database_Mysql extends Database implements Interface_Database {
+
 	/**
 	 * Setup database connection.
-	 *
+	 * 
 	 * @return bool
 	 */
 	protected function _GetLink() {
+
 		/**
 		 * Set configuration data.
 		 */
 		$this->_SetData();
-
+		
 		/**
 		 * Set MySQL default port if we have no custom port in configuration settings.
-		 *
+		 * 
 		 * @var string
 		 */
 		$db_port = ('' != $this->_mDbPort) ? $this->_mDbPort : '3306';
-
+		
 		/**
 		 * Set database link identifier.
-		 *
+		 * 
 		 * @var resource
 		 */
 		$db_link = mysql_connect($this->_mDbHost . ':' . $db_port, $this->_mDbUser, $this->_mDbPassword);
-
+		
 		if (!$db_link) {
 			/**
+			 *
 			 * @var string
 			 */
 			$message = __('Database library: Error connecting to database management server.', 'WEb') . ' ' . mysql_error();
-
+			
 			trigger_error($message);
-
+			
 			return FALSE;
 		}
-
+		
 		if (TRUE !== mysql_select_db($this->_mDbDatabase, $db_link)) {
 			/**
+			 *
 			 * @var string
 			 */
 			$message = sprintf(__('Database library: Error opening database %s.', 'WEb'), $this->_mDbDatabase) . ' ' . mysql_error();
-
+			
 			trigger_error($message);
-
+			
 			return FALSE;
 		}
-
+		
 		/**
 		 * Set database link identifier.
-		 *
+		 * 
 		 * @var resource
 		 */
 		$this->_mDbLink = $db_link;
-
+		
 		/**
+		 *
 		 * @var string
 		 */
 		$db_message = sprintf(__('Database library: Database connection opened (driver: %s).', 'WEb'), Core::Config()->Get('database.type'));
-
+		
 		Core::Log()->Write($db_message, 'debug');
-
+		
 		/**
 		 * UTF Compatibility.
 		 */
 		mysql_set_charset('utf8', $this->_mDbLink);
-
+		
 		return TRUE;
 	}
 
 	/**
 	 * (non-PHPdoc)
+	 * 
 	 * @see Interface_Database::Disconnect()
 	 */
 	public function Disconnect() {
+
 		return mysql_close($this->_mDbLink);
 	}
 
 	/**
 	 * (non-PHPdoc)
+	 * 
 	 * @see Interface_Database::EscapeString()
 	 */
 	public function EscapeString($string) {
+
 		/**
 		 * Open database connection if not already opened.
 		 */
 		$this->Connect();
-
+		
 		return mysql_real_escape_string($string);
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetVersion()
+	 */
+	public function GetVersion() {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Query()
+	 */
+	public function Query($query) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GenerateId()
+	 */
+	public function GenerateId() {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetPrimaryKey()
+	 */
+	public function GetPrimaryKey($table) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Create()
+	 */
+	public function Create($data, $table) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Retrieve()
+	 */
+	public function Retrieve($data, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Update()
+	 */
+	public function Update($data, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Delete()
+	 */
+	public function Delete($table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::RetrieveOne()
+	 */
+	public function RetrieveOne($data, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Count()
+	 */
+	public function Count($data, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::Increment()
+	 */
+	public function Increment($field, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetNext()
+	 */
+	public function GetNext($field, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetMax()
+	 */
+	public function GetMax($field, $table, $options = array()) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
 }
 ?>
