@@ -205,6 +205,13 @@ class Form extends Library {
 			$this->_mMeta[$field]['ignore'] = (!empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
 			
 			/**
+			 * Set meta custom.
+			 * 
+			 * @var array
+			 */
+			$this->_mMeta[$field]['custom'] = (!empty($data['custom'])) ? $data['custom'] : FALSE;
+			
+			/**
 			 * Set options for select fields.
 			 */
 			$this->_mMeta[$field]['options'] = array();
