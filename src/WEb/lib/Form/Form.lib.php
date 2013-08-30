@@ -316,7 +316,16 @@ class Form extends Library {
 		
 		foreach ($this->_mDataFiltered as $field => $data) {
 			
-			$escaped_filtered_data[$field] = Core::Database()->EscapeString($data);
+			if (is_array($data)) {
+				
+				foreach ($data as $key => $value) {
+					
+					$escaped_filtered_data[$field][$key] = Core::Database()->EscapeString($value);
+				}
+			} else {
+				
+				$escaped_filtered_data[$field] = Core::Database()->EscapeString($data);
+			}
 		}
 		
 		return $escaped_filtered_data;
