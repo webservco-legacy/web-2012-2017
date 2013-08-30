@@ -504,12 +504,21 @@ class Form extends Library {
 			 * Check if we have request.
 			 */
 			if (isset($request[$field])) {
+				
 				if ('checkbox' == $this->_mMeta[$field]['type']) {
-					/**
-					 *
-					 * @var array
-					 */
-					$this->_mData[$field] = TRUE;
+					
+					if (is_array($request[$field])) {
+						
+						foreach ($request[$field] as $key => $value) {
+							
+							$this->_mData[$field][$value] = TRUE;
+						}
+					
+					} else {
+						
+						$this->_mData[$field] = TRUE;
+					}
+				
 				} else {
 					/**
 					 * Set form data.
