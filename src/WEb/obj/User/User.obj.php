@@ -456,6 +456,16 @@ class User extends Object {
 	}
 
 	/**
+	 * Get current user id.
+	 * 
+	 * @return string
+	 */
+	public function GetId() {
+
+		return $this->_mId;
+	}
+
+	/**
 	 * Get user email.
 	 * 
 	 * @param string $userId        	
