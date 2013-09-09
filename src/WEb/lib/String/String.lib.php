@@ -299,13 +299,13 @@ class String extends Library {
 	}
 
 	/**
-	 * Extract numbers form a string.
+	 * Extract number from a string.
 	 * 
 	 * @param string $string        	
 	 * @param string $separator        	
 	 * @return string
 	 */
-	public function ExtractNumbers($string, $separator = '') {
+	public function ExtractNumber($string, $separator = '') {
 
 		preg_match_all('!\d+!', $string, $matches);
 		
