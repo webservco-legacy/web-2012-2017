@@ -299,6 +299,20 @@ class String extends Library {
 	}
 
 	/**
+	 * Extract numbers form a string.
+	 * 
+	 * @param string $string        	
+	 * @param string $separator        	
+	 * @return string
+	 */
+	public function ExtractNumbers($string, $separator = '') {
+
+		preg_match_all('!\d+!', $string, $matches);
+		
+		return !empty($matches[0]) ? implode($separator, $matches[0]) : NULL;
+	}
+
+	/**
 	 * Check if string is of minimum length.
 	 * 
 	 * @param string $string        	
