@@ -552,11 +552,17 @@ class Mail extends Library {
 		ini_set('sendmail_from', $msg_from_address);
 		
 		/**
+		 * Remove the To value from header.
+		 * If this is left, it will appear twice in email headers.
+		 */
+		unset($this->_mHeaders['To']);
+		
+		/**
 		 *
 		 * @var string
 		 */
 		$headers = $this->_GetHeaders();
-		
+
 		/**
 		 *
 		 * @var string
