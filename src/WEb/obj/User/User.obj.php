@@ -110,7 +110,7 @@ class User extends Object {
 		$_SESSION[__CLASS__]['StatsCurrent'] = array(
 			'time' => date('Y-m-d H:i:s'),
 			'ip' => Core::Geo()->GetIp(),
-			'agent' => (!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : NULL,
+			'agent' => Core::Useragent()->GetUserAgent(),
 			'auto' => FALSE
 		);
 		
