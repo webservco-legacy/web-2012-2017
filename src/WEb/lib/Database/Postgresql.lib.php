@@ -290,5 +290,44 @@ class Database_Postgresql extends Database implements Interface_Database {
 		 */
 		trigger_error(__('Database library: functionality not implemented', 'WEb'));
 	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::ValueExists()
+	 */
+	public function ValueExists($table, $field, $value) {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetInsertId()
+	 */
+	public function GetInsertId() {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * 
+	 * @see Interface_Database::GetAffectedRows()
+	 */
+	public function GetAffectedRows() {
+
+		/**
+		 * TODO implement method.
+		 */
+		trigger_error(__('Database library: functionality not implemented', 'WEb'));
+	}
 }
 ?>
