@@ -29,27 +29,25 @@ if (!defined('_WEB')) {
 
 /**
  * Interface_Database
- *
  * Database interface.
- *
- * @author     Radu Maier <radu@webserv.co>
- * @package    WEb
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package WEb
  * @subpackage WebDatabase
- *
  */
 interface Interface_Database {
 
 	/**
 	 * Close database connection.
-	 *
+	 * 
 	 * @return bool
 	 */
 	public function Disconnect();
 
 	/**
 	 * Escape a string for use in a database query.
-	 *
-	 * @param string $string
+	 * 
+	 * @param string $string        	
 	 *
 	 * @return string
 	 */
@@ -57,15 +55,15 @@ interface Interface_Database {
 
 	/**
 	 * Get DBMS Version number.
-	 *
+	 * 
 	 * @return string
 	 */
 	public function GetVersion();
 
 	/**
 	 * Return the result of performing a raw query.
-	 *
-	 * @param string $query
+	 * 
+	 * @param string $query        	
 	 *
 	 * @return mixed
 	 */
@@ -73,17 +71,16 @@ interface Interface_Database {
 
 	/**
 	 * Generate an universally unique identifier.
-	 *
 	 * The Id is return as a string without hyphens.
-	 *
+	 * 
 	 * @return string
 	 */
 	public function GenerateId();
 
 	/**
 	 * Get the priamry key of a table.
-	 *
-	 * @param string $table
+	 * 
+	 * @param string $table        	
 	 *
 	 * @return mixed
 	 */
@@ -91,9 +88,9 @@ interface Interface_Database {
 
 	/**
 	 * Create record in the database.
-	 *
-	 * @param mixed $data
-	 * @param string $table
+	 * 
+	 * @param mixed $data        	
+	 * @param string $table        	
 	 *
 	 * @return mixed
 	 */
@@ -101,10 +98,10 @@ interface Interface_Database {
 
 	/**
 	 * Get data from database.
-	 *
-	 * @param mixed $data
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param mixed $data        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 *
 	 * @return mixed
 	 */
@@ -112,10 +109,10 @@ interface Interface_Database {
 
 	/**
 	 * Update data.
-	 *
-	 * @param mixed $data
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param mixed $data        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 *
 	 * @return mixed
 	 */
@@ -123,9 +120,9 @@ interface Interface_Database {
 
 	/**
 	 * Delete data.
-	 *
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param string $table        	
+	 * @param array $options        	
 	 *
 	 * @return mixed
 	 */
@@ -133,10 +130,10 @@ interface Interface_Database {
 
 	/**
 	 * Get only one result from the database.
-	 *
-	 * @param mixed $data
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param mixed $data        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 *
 	 * @return mixed
 	 */
@@ -144,38 +141,61 @@ interface Interface_Database {
 
 	/**
 	 * Count method.
-	 *
-	 * @param string $data
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param string $data        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 */
 	public function Count($data, $table, $options = array());
 
 	/**
 	 * Increment a field.
-	 *
-	 * @param string $field
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param string $field        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 */
 	public function Increment($field, $table, $options = array());
 
 	/**
 	 * Get the next value of a field.
-	 *
-	 * @param string $field
-	 * @param string $table
-	 * @param array $options
+	 * 
+	 * @param string $field        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 */
 	public function GetNext($field, $table, $options = array());
-	
+
 	/**
 	 * Get the maximum value of a field.
 	 * 
-	 * @param string $field
-	 * @param string $table
-	 * @param array $options
+	 * @param string $field        	
+	 * @param string $table        	
+	 * @param array $options        	
 	 */
 	public function GetMax($field, $table, $options = array());
+
+	/**
+	 * Check if value exists.
+	 * 
+	 * @param string $table        	
+	 * @param string $field        	
+	 * @param string $value        	
+	 */
+	public function ValueExists($table, $field, $value);
+
+	/**
+	 * Get insert id.
+	 * 
+	 * @return int
+	 */
+	public function GetInsertId();
+
+	/**
+	 * Get affected rows.
+	 * 
+	 * @return int
+	 */
+	public function GetAffectedRows();
 }
 ?>
