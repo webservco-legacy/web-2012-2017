@@ -275,7 +275,7 @@ class Log extends Library {
 		/**
 		 * @var string
 		*/
-		$ip = ('cli' == PHP_SAPI) ? gethostbyname(php_uname('n')) . ' (CLI)' : $_SERVER['REMOTE_ADDR'];
+		$ip = (Core::IsCli()) ? gethostbyname(php_uname('n')) . ' (CLI)' : $_SERVER['REMOTE_ADDR'];
 
 		/**
 		 * @var string

@@ -337,6 +337,16 @@ class App extends Library {
 	}
 
 	/**
+	 * Get request.
+	 * 
+	 * @return array
+	 */
+	public function GetRequest() {
+
+		return $this->_mRequest;
+	}
+
+	/**
 	 * Initialize application logging.
 	 * 
 	 * @return bool

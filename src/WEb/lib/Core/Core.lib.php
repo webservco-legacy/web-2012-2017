@@ -949,6 +949,16 @@ class Core {
 	}
 
 	/**
+	 * Check if PHP is running in CLI mode.
+	 * 
+	 * @return boolean
+	 */
+	public static function IsCli() {
+
+		return (('cli' == PHP_SAPI) && empty($_SERVER['REMOTE_ADDR']));
+	}
+
+	/**
 	 * Open URL handle.
 	 * 
 	 * @param string $url        	

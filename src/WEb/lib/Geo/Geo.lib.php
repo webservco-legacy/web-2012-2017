@@ -27,24 +27,20 @@ if (!defined('_WEB')) {
 
 /**
  * Geo
- *
  * Geolocation library.
- *
+ * 
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebGeo
- *            
  */
 class Geo extends Library {
 
 	/**
 	 * Implement GetInstance() method.
-	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
+	 * 
 	 * @param string $className
 	 *        	class name to instantiate
-	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
@@ -57,9 +53,8 @@ class Geo extends Library {
 
 	/**
 	 * Get IP address.
-	 *
 	 * Uses the $_SERVER superglobal
-	 *
+	 * 
 	 * @return string
 	 */
 	public function GetIp() {
@@ -110,6 +105,11 @@ class Geo extends Library {
 			'ZHTTP_CACHE_CONTROL'
 		);
 		
+		if (Core::IsCli()) {
+			
+			return gethostbyname(php_uname('n')) . ' (CLI)';
+		}
+		
 		foreach ($check as $var) {
 			if (!empty($_SERVER[$var])) {
 				/**
@@ -124,12 +124,12 @@ class Geo extends Library {
 			}
 		}
 		
-		return $_SERVER['REMOTE_ADDR'];
+		return !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : NULL;
 	}
 
 	/**
 	 * Chech if IP address is valid.
-	 *
+	 * 
 	 * @param string $ip        	
 	 * @param bool $checkWan        	
 	 *
@@ -161,7 +161,7 @@ class Geo extends Library {
 
 	/**
 	 * Get the list of countries from the database.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetCountries() {
@@ -189,7 +189,7 @@ class Geo extends Library {
 
 	/**
 	 * Get the list of departments from the databse.
-	 *
+	 * 
 	 * @param string $countryCode        	
 	 * @return array
 	 */
