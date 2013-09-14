@@ -138,7 +138,7 @@ class ControllerApp extends Controller {
 		 * 
 		 * @var string
 		 */
-		$template_name = (FALSE !== $globalTemplate) ? $this->_mTemplatePrefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate);
+		$template_name = (FALSE !== $globalTemplate) ? $template_dir_main . $this->_mTemplatePrefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate);
 		
 		/**
 		 * Set the content tpl var to the parsed content template.
@@ -191,7 +191,7 @@ class ControllerApp extends Controller {
 				
 				$data['strings']['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
 				
-				echo $this->_GetOutput($data, 'error', TRUE);
+				echo $this->GetOutput($data, 'error', TRUE);
 				
 				return FALSE;
 			}
@@ -207,9 +207,9 @@ class ControllerApp extends Controller {
 		
 		return FALSE;
 	}
-	
+
 	public function GetDefaultOutput($title = NULL) {
-		
+
 		$this->Init();
 		
 		$data = $this->Module()->GetData($this->_mRequest);
