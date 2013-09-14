@@ -4,8 +4,8 @@
  *
  * Oups module.
  *
- * @author     Radu Maier <radu@italiamultimedia.com>
- * @copyright  Copyright (c) 2011, Italia Multimedia Srl
+ * @author     Radu Maier <radu@webserv.co>
+ * @copyright  Copyright (c) 2013, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    DefaultApp
  * @subpackage OupsModule
@@ -30,7 +30,7 @@ if (!defined('_WEB')) {
  *
  * Model class for Oups module.
  *
- * @author     Radu Maier <radu@italiamultimedia.com>
+ * @author     Radu Maier <radu@webserv.co>
  * @package    DefaultApp
  * @subpackage OupsModule
  *
