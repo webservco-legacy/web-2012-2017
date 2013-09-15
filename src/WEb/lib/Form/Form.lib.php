@@ -161,99 +161,134 @@ class Form extends Library {
 		 * Iterate form data.
 		 */
 		foreach ($formData as $field => $data) {
-			/**
-			 * Set main data.
-			 * 
-			 * @var array
-			 */
-			$this->_mData[$field] = (!empty($data['content'])) ? $data['content'] : NULL;
 			
-			/**
-			 * Set meta type.
-			 * Defaults to 'text'
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['type'] = (!empty($data['type'])) ? $data['type'] : 'text';
-			
-			/**
-			 * Set meta title.
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['title'] = (!empty($data['title'])) ? $data['title'] : NULL;
-			
-			/**
-			 * Set meta description.
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['description'] = (!empty($data['description'])) ? $data['description'] : NULL;
-			
-			/**
-			 * Set meta required.
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['required'] = (!empty($data['required'])) ? (bool) $data['required'] : FALSE;
-			
-			/**
-			 * Set meta ignore.
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['ignore'] = (!empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
-			
-			/**
-			 * Set meta custom.
-			 * 
-			 * @var array
-			 */
-			$this->_mMeta[$field]['custom'] = (!empty($data['custom'])) ? $data['custom'] : FALSE;
-			
-			/**
-			 * Set options for select fields.
-			 */
-			$this->_mMeta[$field]['options'] = array();
-			
-			if (!empty($data['options']['option']) && is_array($data['options']['option'])) {
+			if (!empty($data['i18n'])) {
 				
-				if ('value' === key($data['options']['option'])) {
-					
-					$data['options']['option'] = array(
-						0 => $data['options']['option']
-					);
-				}
+				$app_langs = Core::I18n()->GetAvailableLangs();
 				
-				foreach ($data['options']['option'] as $option) {
+				foreach ($app_langs as $lang => $locale) {
 					
-					$this->_mMeta[$field]['options'][$option['value']] = $option['name'];
+					$this->_SetItemData("{$field}_{$lang}", $data, $locale);
 				}
+			
+			} else {
+				
+				$this->_SetItemData($field, $data);
+			}
+		}
+		
+		return TRUE;
+	}
+
+	/**
+	 * Set item data.
+	 * 
+	 * @param string $field        	
+	 * @param array $data        	
+	 *
+	 * @return bool
+	 */
+	private function _SetItemData($field, $data, $locale = NULL) {
+
+		/**
+		 * Set main data.
+		 * 
+		 * @var array
+		 */
+		$this->_mData[$field] = (!empty($data['content'])) ? $data['content'] : NULL;
+		
+		/**
+		 * Set meta type.
+		 * Defaults to 'text'
+		 * 
+		 * @var array
+		 */
+		$this->_mMeta[$field]['type'] = (!empty($data['type'])) ? $data['type'] : 'text';
+		
+		if (!empty($data['title'])) {
+			
+			$this->_mMeta[$field]['title'] = !empty($locale) ? "{$data['title']} ({$locale})" : $data['title'];
+		
+		} else {
+			
+			$this->_mMeta[$field]['title'] = NULL;
+		}
+		
+		/**
+		 * Set meta description.
+		 * 
+		 * @var array
+		 */
+		$this->_mMeta[$field]['description'] = (!empty($data['description'])) ? $data['description'] : NULL;
+		
+		/**
+		 * Set meta required.
+		 * 
+		 * @var array
+		 */
+		$this->_mMeta[$field]['required'] = (!empty($data['required'])) ? (bool) $data['required'] : FALSE;
+		
+		/**
+		 * Internationalization.
+		 */
+		$this->_mMeta[$field]['i18n'] = (!empty($locale)) ? TRUE : FALSE; // XXX set lang/locale code?
+		
+		/**
+		 * Set meta ignore.
+		 * 
+		 * @var array
+		 */
+		$this->_mMeta[$field]['ignore'] = (!empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
+		
+		/**
+		 * Set meta custom.
+		 * 
+		 * @var array
+		 */
+		$this->_mMeta[$field]['custom'] = (!empty($data['custom'])) ? $data['custom'] : FALSE;
+		
+		/**
+		 * Set options for select fields.
+		 */
+		$this->_mMeta[$field]['options'] = array();
+		
+		if (!empty($data['options']['option']) && is_array($data['options']['option'])) {
+			
+			if ('value' === key($data['options']['option'])) {
+				
+				$data['options']['option'] = array(
+					0 => $data['options']['option']
+				);
 			}
 			
-			/**
-			 * Check if filters are present.
-			 */
-			if (!empty($data['filters'])) {
-				/**
-				 * Set filters.
-				 * 
-				 * @var array
-				 */
-				$this->_mFilters[$field] = $data['filters'];
+			foreach ($data['options']['option'] as $option) {
+				
+				$this->_mMeta[$field]['options'][$option['value']] = $option['name'];
 			}
-			
+		}
+		
+		/**
+		 * Check if filters are present.
+		 */
+		if (!empty($data['filters'])) {
 			/**
-			 * Check if conditions are present.
+			 * Set filters.
+			 * 
+			 * @var array
 			 */
-			if (!empty($data['conditions'])) {
-				/**
-				 * Set conditions
-				 * 
-				 * @var array
-				 */
-				$this->_mConditions[$field] = $data['conditions'];
-			}
+			$this->_mFilters[$field] = $data['filters'];
+		}
+		
+		/**
+		 * Check if conditions are present.
+		 */
+		if (!empty($data['conditions'])) {
+			/**
+			 * Set conditions
+			 * 
+			 * @var array
+			 */
+			$this->_mConditions[$field] = $data['conditions'];
 		}
 		
 		return TRUE;
