@@ -408,10 +408,34 @@ class String extends Library {
 		$match = "/^.*(?=.*\d)(?=.*[A-z]).*$/";
 		
 		/**
-		 * Check if data is a valid password.
+		 * Check if data is alphanumeric.
 		 * Return result.
 		 */
 		return (preg_match($match, $string)) ? TRUE : FALSE;
+	}
+
+	/**
+	 * Check if a string is numeric.
+	 * 
+	 * @param string $string        	
+	 *
+	 * @return boolean
+	 */
+	public function IsNumeric($string) {
+
+		return is_numeric($string);
+	}
+
+	/**
+	 * Check if string contains an integer.
+	 * 
+	 * @param string $string        	
+	 *
+	 * @return boolean
+	 */
+	public function IsInteger($string) {
+
+		return (ctype_digit($string) || is_int($string));
 	}
 
 	/**
