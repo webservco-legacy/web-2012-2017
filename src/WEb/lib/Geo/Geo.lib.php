@@ -162,15 +162,21 @@ class Geo extends Library {
 	/**
 	 * Get the list of countries from the database.
 	 * 
+	 * @param mixed $status        	
+	 *
 	 * @return array
 	 */
-	public function GetCountries() {
+	public function GetCountries($status = NULL) {
 
 		$data = array();
 		
 		$app_prefix = Core::Config()->Get('app.prefix');
 		
-		$q = "SELECT country_code, country_name FROM {$app_prefix}geo_countries ORDER BY country_name";
+		$q_status = isset($status) ? " AND country_status = '{$status}'" : NULL;
+		
+		$q = "SELECT country_code, country_name
+				FROM {$app_prefix}geo_countries WHERE 1
+				{$q_status} ORDER BY country_name";
 		
 		$rs = Core::Database()->Query($q);
 		
@@ -210,6 +216,40 @@ class Geo extends Library {
 			while ($r = $rs->fetch_assoc()) {
 				
 				$data[$r['department_code']] = $r['department_name'];
+			}
+		}
+		
+		return $data;
+	}
+
+	/**
+	 * Get the list of languages from the database.
+	 * 
+	 * @param mixed $status        	
+	 *
+	 * @return array
+	 */
+	public function GetLanguages($status = NULL) {
+
+		$data = array();
+		
+		$app_prefix = Core::Config()->Get('app.prefix');
+		
+		$q_status = isset($status) ? " AND language_status = '{$status}'" : NULL;
+		
+		$q = "SELECT language_code, language_name
+		FROM {$app_prefix}geo_languages WHERE 1
+		{$q_status} ORDER BY language_name";
+		
+		$rs = Core::Database()->Query($q);
+		
+		$t = $rs->num_rows;
+		
+		if (0 < $t) {
+			
+			while ($r = $rs->fetch_assoc()) {
+				
+				$data[$r['language_code']] = $r['language_name'];
 			}
 		}
 		
