@@ -80,6 +80,8 @@ require_once 'WEb/lib/Date/Date.lib.php';
 
 require_once 'WEb/lib/Geo/Geo.lib.php';
 
+require_once 'WEb/lib/Graphics/Graphics.lib.php';
+
 require_once 'WEb/lib/Form/Form.lib.php';
 
 require_once 'WEb/lib/Captcha/Captcha.lib.php';

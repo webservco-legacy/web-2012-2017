@@ -104,6 +104,13 @@ class Core {
 	 * @var mixed
 	 */
 	protected static $_msGeoObject;
+	
+	/**
+	 * Stores the Graphics object.
+	 * 
+	 * @var mixed
+	 */
+	protected static $_msGraphicsObject;
 
 	/**
 	 * Stores the internationalization object.
@@ -408,6 +415,24 @@ class Core {
 		}
 		
 		return self::$_msGeoObject;
+	}
+	
+	/**
+	 * Method to access the Graphics object from everywhere.
+	 * 
+	 * @return object
+	 */
+	final public static function Graphics() {
+
+		if (NULL == self::$_msGraphicsObject) {
+			/**
+			 *
+			 * @var object
+			 */
+			self::$_msGraphicsObject = Graphics::GetInstance();
+		}
+		
+		return self::$_msGraphicsObject;
 	}
 
 	/**

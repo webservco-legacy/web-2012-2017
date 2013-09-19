@@ -27,6 +27,7 @@
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Session</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Acl</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Geo</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Graphics</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Form</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Captcha</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Mail</directory>
