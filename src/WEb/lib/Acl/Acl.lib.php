@@ -18,8 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB'))
-{
+if (!defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -28,23 +27,21 @@ if (!defined('_WEB'))
 
 /**
  * Acl
- *
  * ACL library.
- *
- * @author     Radu Maier <radu@webserv.co>
- * @package    WEb
+ * 
+ * @author Radu Maier <radu@webserv.co>
+ * @package WEb
  * @subpackage WebAcl
- *
  */
-class Acl extends Library
-{
+class Acl extends Library {
+
 	/**
 	 * ACL tables.
-	 *
+	 * 
 	 * @var array
 	 */
 	protected $_mTable = array();
-	
+
 	/**
 	 * Key prefix (use 'bin.' for binary key identification)
 	 */
@@ -52,15 +49,14 @@ class Acl extends Library
 
 	/**
 	 * Implement GetInstance() method.
-	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
-	 * @param string $className class name to instantiate
-	 *
+	 * 
+	 * @param string $className
+	 *        	class name to instantiate
 	 * @return object
 	 */
-	public static function GetInstance($className = __CLASS__)
-	{
+	public static function GetInstance($className = __CLASS__) {
+
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
@@ -70,11 +66,11 @@ class Acl extends Library
 	private function _Init() {
 
 		if (empty($this->_mTable)) {
-
+			
 			$app_prefix = Core::Config()->Get('app.prefix');
 			
 			$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
-
+			
 			$this->_mTable['rules'] = "{$app_prefix}acl_rules";
 			$this->_mTable['groups'] = "{$app_prefix}acl_groups";
 			$this->_mTable['users'] = "{$app_prefix}acl_users";
@@ -86,127 +82,114 @@ class Acl extends Library
 	public function Check($userId, $aclResource, $aclAsset = NULL) {
 
 		$this->_Init();
-
+		
 		/**
 		 * Initialize result.
-		 *
 		 * We sart with the global deny option.
-		 *
+		 * 
 		 * @var boolean
 		 */
 		$check = FALSE;
-
+		
 		/**
 		 * Check if we have an asset.
 		 */
-		if (!empty($aclAsset))
-		{
+		if (!empty($aclAsset)) {
 			/**
 			 * Check if we have a user rule for the asset.
 			 */
 			$check_user_asset = $this->CheckAcl($userId, $aclResource, 'user', $aclAsset);
-
-			if (FALSE !== $check_user_asset)
-			{
+			
+			if (FALSE !== $check_user_asset) {
 				/**
 				 * We have a result
 				 */
 				return ('ALLOW' == $check_user_asset) ? TRUE : FALSE;
 			}
 		}
-
+		
 		/**
 		 * Check if we have a user rule for the resource.
 		 */
 		$check_user_resource = $this->CheckAcl($userId, $aclResource);
-
-		if (FALSE !== $check_user_resource)
-		{
+		
+		if (FALSE !== $check_user_resource) {
 			/**
 			 * We have a result
 			 */
 			return ('ALLOW' == $check_user_resource) ? TRUE : FALSE;
 		}
-
+		
 		/**
 		 * If we got this far, we have no specific rule for the user.
 		 * So we get the user's relations and search there.
-		 *
+		 * 
 		 * @var array
 		 */
 		$user_relations = $this->GetAclRelations($userId);
-
+		
 		/**
 		 * Make sure we have relations.
 		 */
-		if (!empty($user_relations))
-		{
+		if (!empty($user_relations)) {
 			/**
 			 * Iterate user realtions in search for a matching rule.
 			 */
-			foreach ($user_relations as $dump => $relation_data)
-			{
+			foreach ($user_relations as $dump => $relation_data) {
 				/**
 				 * Check if we have an asset.
 				 */
-				if (!empty($aclAsset))
-				{
+				if (!empty($aclAsset)) {
 					/**
 					 * Check if we have a group rule for the asset.
 					 */
 					$check_group_asset = $this->CheckAcl($relation_data[$this->_mKeyPrefix . 'group_id'], $aclResource, 'group', $aclAsset);
-
-					if (FALSE !== $check_group_asset)
-					{
+					
+					if (FALSE !== $check_group_asset) {
 						/**
 						 * We have a result
 						 */
 						return ('ALLOW' == $check_group_asset) ? TRUE : FALSE;
 					}
 				}
-
+				
 				/**
 				 * Check if we have a group rule for the resource.
 				 */
 				$check_group_resource = $this->CheckAcl($relation_data[$this->_mKeyPrefix . 'group_id'], $aclResource, 'group');
-
-				if (FALSE !== $check_group_resource)
-				{
+				
+				if (FALSE !== $check_group_resource) {
 					/**
 					 * We have a result only if it's positive.
-					 *
 					 * If we have a deny rule, we will go further.
 					 */
-					if ('ALLOW' == $check_group_resource)
-					{
+					if ('ALLOW' == $check_group_resource) {
 						return TRUE;
 					}
 				}
 			}
 		}
-
+		
 		/**
 		 * Check if we have an asset.
 		 */
-		if (!empty($aclAsset))
-		{
+		if (!empty($aclAsset)) {
 			/**
 			 * If we got this far with no result,
 			 * the only chance left is if the user is the owner of the resource.
-			 *
+			 * 
 			 * @var string
 			 */
 			$resource_owner = $this->GetResourceOwner($aclResource, $aclAsset);
-
-			if ($userId == $resource_owner)
-			{
+			
+			if ($userId == $resource_owner) {
 				/**
 				 * We have a result
 				 */
 				return TRUE;
 			}
 		}
-
+		
 		/**
 		 * Return the default result.
 		 */
@@ -215,144 +198,197 @@ class Acl extends Library
 
 	/**
 	 * Checl ACL.
-	 *
 	 * This is the main method.
-	 *
 	 * It performs a single check and returns
 	 * 'DENY', 'ALLOW', or FALSE
-	 *
-	 * @param string $aclRequest
-	 * @param string $aclResource
-	 * @param string $aclType
-	 * @param string $aclAsset
+	 * 
+	 * @param string $aclRequest        	
+	 * @param string $aclResource        	
+	 * @param string $aclType        	
+	 * @param string $aclAsset        	
 	 *
 	 * @return mixed
 	 */
 	public function CheckAcl($aclRequest, $aclResource, $aclType = 'user', $aclAsset = NULL) {
 
 		$this->_Init();
-
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array ('rule_type', $aclType);
-
+		$options['conditions'][] = array(
+			'rule_type',
+			$aclType
+		);
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array ($this->_mKeyPrefix . 'rule_value', $aclRequest);
-
+		$options['conditions'][] = array(
+			$this->_mKeyPrefix . 'rule_value',
+			$aclRequest
+		);
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array ('rule_resource', $aclResource);
-
-		if (!empty($aclAsset))
-		{
+		$options['conditions'][] = array(
+			'rule_resource',
+			$aclResource
+		);
+		
+		if (!empty($aclAsset)) {
 			/**
+			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array ($this->_mKeyPrefix . 'rule_asset', $aclAsset);
+			$options['conditions'][] = array(
+				$this->_mKeyPrefix . 'rule_asset',
+				$aclAsset
+			);
 		}
-
+		
 		/**
+		 *
 		 * @var array
 		 */
 		$options['limit'] = 1;
-
+		
 		/**
+		 *
 		 * @var mixed
 		 */
 		$data = Core::Database()->RetrieveOne('rule_action', $this->_mTable['rules'], $options);
-
-		if (!empty($data))
-		{
+		
+		if (!empty($data)) {
 			return $data['rule_action'];
 		}
-
+		
 		return FALSE;
 	}
 
 	public function GetAclRelations($userId = NULL) {
 
 		$this->_Init();
-
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$values = array($this->_mKeyPrefix . 'group_id', 'group_name' , 'group_level');
-
+		$values = array(
+			$this->_mKeyPrefix . 'group_id',
+			'group_name',
+			'group_level'
+		);
+		
 		/**
+		 *
 		 * @var array
 		 */
 		$options = array();
-
-		if (!empty($userId))
-		{
+		
+		if (!empty($userId)) {
 			/**
+			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array ($this->_mKeyPrefix . 'user_id', $userId);
+			$options['conditions'][] = array(
+				$this->_mKeyPrefix . 'user_id',
+				$userId
+			);
 		}
-
+		
 		/**
+		 *
 		 * @var mixed
 		 */
 		$data = Core::Database()->Retrieve($values, $this->_mTable['relations_list'], $options);
-
+		
 		return $data;
-
+	
 	}
 
 	/**
 	 * Get resource owner
-	 *
-	 * @param string $aclResource
-	 * @param string $aclAsset
+	 * 
+	 * @param string $aclResource        	
+	 * @param string $aclAsset        	
 	 */
 	public function GetResourceOwner($aclResource, $aclAsset) {
 
 		$this->_Init();
-
+		
 		/**
+		 *
 		 * @var array
 		 */
 		$asset = explode('/', $aclResource);
-
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$asset = array_diff($asset, array(''));
-
+		$asset = array_diff($asset, array(
+			''
+		));
+		
 		/**
+		 *
 		 * @var string
 		 */
 		$table = strtolower($asset[0]);
-
+		
 		/**
+		 *
 		 * @var string
 		 */
-		$primary_key = $this->_mKeyPrefix .  Core::Database()->GetPrimaryKey($table);
-
+		$primary_key = $this->_mKeyPrefix . Core::Database()->GetPrimaryKey($table);
+		
 		/**
+		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array ($primary_key, $aclAsset);
-
+		$options['conditions'][] = array(
+			$primary_key,
+			$aclAsset
+		);
+		
 		/**
+		 *
 		 * @var array
 		 */
 		$options['limit'] = 1;
-
-
+		
 		$data = Core::Database()->RetrieveOne($this->_mKeyPrefix . 'owner_id', $table, $options);
-
-		if (empty($data))
-		{
+		
+		if (empty($data)) {
 			return FALSE;
 		}
-
+		
 		return $data[$this->_mKeyPrefix . 'owner_id'];
+	}
+
+	/**
+	 * Check relation (userbelongs to a group)
+	 * 
+	 * @param int $userId        	
+	 * @param int $groupId        	
+	 * @return boolean
+	 */
+	public function CheckAclRelation($userId, $groupId) {
+
+		$this->_Init();
+		
+		$q = "SELECT relation_id FROM {$this->_mTable['relations']} WHERE user_id = '{$userId}' AND group_id = '{$groupId}' LIMIT 1";
+		
+		$rs = Core::Database()->Query($q);
+		
+		$t = $rs->num_rows;
+		
+		return (1 == $t) ? TRUE : FALSE;
 	}
 }
 ?>
