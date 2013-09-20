@@ -161,7 +161,7 @@ class User extends Object {
 			 *
 			 * @var string
 			 */
-			$user_email = $this->GetEmail($user_id);
+			$user_email = $this->GetProperty($user_id, 'user_email');
 			
 			/**
 			 *
@@ -466,38 +466,31 @@ class User extends Object {
 	}
 
 	/**
-	 * Get user email.
+	 * Get user property.
 	 * 
 	 * @param string $userId        	
+	 * @param string $property        	
 	 *
 	 * @return mixed
 	 */
-	public function GetEmail($userId) {
+	public function GetProperty($userId, $property) {
 
 		$this->_Init();
 		
-		/**
-		 *
-		 * @var array
-		 */
 		$options['conditions'][] = array(
 			$this->_mKeyPrefix . 'user_id',
 			$userId
 		);
 		
-		/**
-		 *
-		 * @var array
-		 */
 		$data = Core::Database()->RetrieveOne(array(
-			'user_email'
+			$property
 		), $this->_mTable['list'], $options);
 		
 		if (empty($data)) {
 			return FALSE;
 		}
 		
-		return $data['user_email'];
+		return $data[$property];
 	}
 
 	public function GetFailedLogins($checkType = NULL, $checkAsset = NULL) {
