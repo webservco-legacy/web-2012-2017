@@ -363,6 +363,20 @@ class String extends Library {
 	}
 
 	/**
+	 * Check if string has the minimum word length.
+	 * 
+	 * @param string $string        	
+	 * @param number $length        	
+	 * @return boolean
+	 */
+	public function HasWordsMin($string, $length = 0) {
+
+		$word_count = $this->GetWordCount($string);
+		
+		return $length > $word_count ? FALSE : TRUE;
+	}
+
+	/**
 	 * Check if string has the maximum word length.
 	 * 
 	 * @param string $string        	
