@@ -29,45 +29,41 @@ if (!defined('_WEB')) {
 
 /**
  * Module
- *
  * Module library.
- *
+ * 
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebModule
- *            
  */
 class Module extends Library {
 
 	/**
 	 * App prefix.
-	 *
+	 * 
 	 * @var string
 	 */
 	protected $_mAppPrefix = NULL;
 
 	/**
 	 * Use sessions flag
-	 *
+	 * 
 	 * @var boolean
 	 */
 	protected $_mUseSessions = FALSE;
 
 	/**
 	 * Web app info.
-	 *
+	 * 
 	 * @var array
 	 */
 	protected $_mWebAppInfo = array();
 
 	/**
 	 * Implement GetInstance() method.
-	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
+	 * 
 	 * @param string $className
 	 *        	class name to instantiate
-	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
@@ -80,12 +76,10 @@ class Module extends Library {
 
 	/**
 	 * Load configuration file for current library.
-	 *
 	 * Needs to override the Library method.
-	 *
+	 * 
 	 * @param string $className
 	 *        	name of the class to load configuration for
-	 *        	
 	 * @return bool
 	 */
 	protected function _LoadConfig($className) {
@@ -153,7 +147,7 @@ class Module extends Library {
 
 	/**
 	 * Get current module name.
-	 *
+	 * 
 	 * @param array $request        	
 	 *
 	 * @return string
@@ -165,7 +159,7 @@ class Module extends Library {
 
 	/**
 	 * General information.
-	 *
+	 * 
 	 * @param array $request        	
 	 *
 	 * @return array
@@ -224,6 +218,11 @@ class Module extends Library {
 		$data = array();
 		
 		/**
+		 * Current full URL.
+		 */
+		$data['current'] = Core::Router()->GetCurrentUrl();
+		
+		/**
 		 * App URL.
 		 */
 		$data['www'] = Core::Config()->Get('url.www');
@@ -248,7 +247,7 @@ class Module extends Library {
 
 	/**
 	 * Get default paths.
-	 *
+	 * 
 	 * @return array
 	 */
 	public function GetDefaultPaths() {
@@ -380,7 +379,6 @@ class Module extends Library {
 		
 		/**
 		 * OS Type (android, ios, other).
-		 *
 		 * This does not tell us if it's mobile or PC
 		 */
 		$data['os_type'] = Core::Useragent()->GetOsType();
@@ -392,7 +390,6 @@ class Module extends Library {
 		
 		/**
 		 * Get custom web app version sent from mobile devices.
-		 *
 		 * Custom user agent string must end with "WebApp/VERSION".
 		 */
 		$data['version'] = Core::Useragent()->GetWebAppVersion();
@@ -404,7 +401,6 @@ class Module extends Library {
 		
 		/**
 		 * Web app type.
-		 *
 		 * free/pro/etc
 		 */
 		$data['type'] = !empty($request['query']['app_type']) ? $request['query']['app_type'] : NULL;
@@ -471,7 +467,7 @@ class Module extends Library {
 
 	/**
 	 * Get default output data.
-	 *
+	 * 
 	 * @param array $request        	
 	 *
 	 * @return array
@@ -482,12 +478,9 @@ class Module extends Library {
 		
 		/**
 		 * $data['query']
-		 *
 		 * Request query.
-		 *
 		 * Values:
 		 * array of key/data
-		 *
 		 * Usage:
 		 * Controller: $data['query'][STUFF]
 		 * Template: $query[STUFF]
@@ -496,9 +489,7 @@ class Module extends Library {
 		
 		/**
 		 * $data['info']
-		 *
 		 * General information
-		 *
 		 * Values:
 		 * $data['info']['prefix'] - application prefix
 		 * $data['info']['module'] - current module name
@@ -506,7 +497,6 @@ class Module extends Library {
 		 * $data['info]['path'] - current location path (Item/1/page/3)
 		 * $data['info]['path_pagination'] - current location path without page number (Item/1/)
 		 * $data['info']['url_next'] - next url
-		 *
 		 * Usage:
 		 * Controller: $data['info']['module']
 		 * Template: $info['module']
@@ -515,15 +505,13 @@ class Module extends Library {
 		
 		/**
 		 * $data['url']
-		 *
 		 * Default URLs.
-		 *
 		 * Values:
+		 * $data['url']['current'] (http://www.example.com/location)
 		 * $data['url']['www'] (http://www.example.com)
 		 * $data['url']['skin'] (http://www.example.com/myskin/)
 		 * $data['url']['scripts'] (http://www.example.com/js/)
 		 * $data['url']['media'] (http://www.example.com/media/)
-		 *
 		 * Usage:
 		 * Controller: $data['url']['www']
 		 * Template: $url['www']
@@ -532,13 +520,10 @@ class Module extends Library {
 		
 		/**
 		 * $data['path']
-		 *
 		 * Default paths.
-		 *
 		 * Values:
 		 * $data['path']['app'] (/full/server/path/to/app/dir/)
 		 * $data['path']['www'] (/full/server/path/to/www/dir/)
-		 *
 		 * Usage:
 		 * Controller: $data['path']['www']
 		 * Template: $path['www']
@@ -547,13 +532,10 @@ class Module extends Library {
 		
 		/**
 		 * $data['i18n']
-		 *
 		 * Internationalization.
-		 *
 		 * Values:
 		 * $data['i18n']['lang'] - all language (en, it, etc)
 		 * $data['i18n']['langs'] - array of all available languages - language / locale
-		 *
 		 * Usage:
 		 * Controller: $data['i18n']['lang']
 		 * Template: $i18n['lang']
@@ -562,14 +544,11 @@ class Module extends Library {
 		
 		/**
 		 * $data['strings']
-		 *
 		 * Default messages used in most pages.
-		 *
 		 * Values:
 		 * $data['strings']['title']
 		 * $data['strings']['app_title']
 		 * $data['strings']['no_data']
-		 *
 		 * Usage:
 		 * Controller: $data['strings']['title']
 		 * Template: $strings['title']
@@ -578,16 +557,13 @@ class Module extends Library {
 		
 		/**
 		 * $data['menu'] [OPTIONAL]
-		 *
 		 * Custom menu functionality.
-		 *
 		 * Values:
 		 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['target']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['resource']
-		 *
 		 * Usage:
 		 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']
 		 * Template: $menu['MENU_NODE_FROM_CONFIG']
@@ -602,22 +578,16 @@ class Module extends Library {
 		
 		/**
 		 * $data['timezone'] [OPTIONAL]
-		 *
 		 * Custom timezone functionality.
-		 *
 		 * A custom timezone can be set by adding:
 		 * /timezone/ENCODEDTIMEZONEVALUE
 		 * to the URL
-		 *
 		 * ENCODEDTIMEZONEVALUE is the timezone value encoded with Core::String()->EncodeUrlString
 		 * Example: "RXVyb3BlL1JvbWU." (Europe/Rome)
-		 *
 		 * If session functionality is enabled, the custom timezone value is also stored in the variable:
 		 * $_SESSION['Date']['TimeZone']
-		 *
 		 * Value:
 		 * string representation of custom timezone (Europe/Rome)
-		 *
 		 * Usage:
 		 * Controller: $data['timezone']
 		 * Template: $timezone
@@ -632,9 +602,7 @@ class Module extends Library {
 		
 		/**
 		 * $data['webapp'] [OPTIONAL]
-		 *
 		 * Web app info.
-		 *
 		 * Values:
 		 * $data['webapp']['app_id'] - custom app id (from config)
 		 * $data['webapp']['os_type'] - os type (android, ios, other)
@@ -642,7 +610,6 @@ class Module extends Library {
 		 * $data['webapp']['version'] - custom app version set by_mobile devices
 		 * $data['webapp']['market'] - app market id (0 - none, 1 - google, 2 - samsung, 3 - amazon, 4 - itunes)
 		 * $data['webapp']['type'] - app type (free, pro, etc)
-		 *
 		 * Usage:
 		 * Controller: $data['webapp']['os_type']
 		 * Template: $webapp['os_type']
@@ -657,16 +624,13 @@ class Module extends Library {
 		
 		/**
 		 * $data['user'] [OPTIONAL]
-		 *
 		 * User functionality.
-		 *
 		 * Values (not logged in):
 		 * $data['user']['StatsCurrent']['time']
 		 * $data['user']['StatsCurrent']['ip']
 		 * $data['user']['StatsCurrent']['agent']
 		 * $data['user']['StatsCurrent']['auto']
 		 * $data['user']['InitialVisit']
-		 *
 		 * Values (logged in):
 		 * $data['user']['Id']
 		 * $data['user']['Logged']
@@ -685,7 +649,6 @@ class Module extends Library {
 		 * $data['user']['StatsPrevious']['agent']
 		 * $data['user']['StatsPrevious']['auto']
 		 * $data['user']['InitialVisit']
-		 *
 		 * Usage:
 		 * Controller: $data['user']['Id']
 		 * Template: $user['Id']

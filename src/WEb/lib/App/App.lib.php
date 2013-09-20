@@ -118,7 +118,7 @@ class App extends Library {
 			 * 
 			 * @var array
 			 */
-			$this->_mRequest = Core::Router()->Route();
+			$this->_mRequest = Core::Router()->GetRequest();
 			
 			/**
 			 * Check if we have sessions enabled.
