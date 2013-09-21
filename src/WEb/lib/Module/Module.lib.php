@@ -534,7 +534,7 @@ class Module extends Library {
 		 * $data['i18n']
 		 * Internationalization.
 		 * Values:
-		 * $data['i18n']['lang'] - all language (en, it, etc)
+		 * $data['i18n']['lang'] - 2 letter language code (en, it, etc)
 		 * $data['i18n']['langs'] - array of all available languages - language / locale
 		 * Usage:
 		 * Controller: $data['i18n']['lang']
