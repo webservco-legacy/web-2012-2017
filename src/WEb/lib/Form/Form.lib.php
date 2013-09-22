@@ -231,7 +231,7 @@ class Form extends Library {
 		/**
 		 * Internationalization.
 		 */
-		$this->_mMeta[$field]['i18n'] = (!empty($locale)) ? TRUE : FALSE; // XXX set lang/locale code?
+		$this->_mMeta[$field]['i18n'] = (!empty($locale)) ? TRUE : FALSE;
 		
 		/**
 		 * Set meta ignore.
@@ -555,12 +555,12 @@ class Form extends Library {
 						
 						foreach ($request[$field] as $key => $value) {
 							
-							$this->_mData[$field][$value] = TRUE;
+							$this->_mData[$field][$value] = !empty($key) ? TRUE : FALSE;
 						}
 					
 					} else {
 						
-						$this->_mData[$field] = TRUE;
+						$this->_mData[$field] = !empty($request[$field]) ? TRUE : FALSE;
 					}
 				
 				} else {
@@ -570,6 +570,12 @@ class Form extends Library {
 					 * @var array
 					 */
 					$this->_mData[$field] = $request[$field];
+				}
+			} else {
+				
+				if ('checkbox' == $this->_mMeta[$field]['type']) {
+					
+					$this->_mData[$field] = FALSE;
 				}
 			}
 		}
