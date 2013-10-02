@@ -2,7 +2,7 @@
 /**
  * $Id$
  *
- * SMTP library.
+ * Smtp library.
  *
  * @author     Radu Maier <radu@webserv.co>
  * @copyright  Copyright (c) 2008 - 2012, Radu Maier
@@ -27,7 +27,7 @@ if (!defined('_WEB')) {
 
 /**
  * Smtp
- * SMTP library.
+ * Smtp library.
  * 
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
@@ -41,6 +41,13 @@ class Smtp extends Library {
 	 * @var bool
 	 */
 	protected $_mSsl;
+
+	/**
+	 * Should we use TLS?
+	 * 
+	 * @var bool
+	 */
+	protected $_mTls;
 
 	/**
 	 * Stores server name.
@@ -138,7 +145,13 @@ class Smtp extends Library {
 		 *
 		 * @var bool
 		 */
-		$this->_mSsl = (1 == $config['ssl']) ? TRUE : FALSE;
+		$this->_mSsl = ('ssl' == $config['security']) ? TRUE : FALSE;
+		
+		/**
+		 *
+		 * @var bool
+		 */
+		$this->_mTls = ('tls' == $config['security']) ? TRUE : FALSE;
 		
 		/**
 		 *
@@ -234,13 +247,27 @@ class Smtp extends Library {
 		 * We don't need to check again if it was opened successfully.
 		 */
 		if (empty($this->_mConnection)) {
-			$this->_Connect();
+			
+			if (TRUE !== $this->_Connect()) {
+				
+				return FALSE;
+			}
 		}
 		
 		/**
 		 * Try to say hi to the server.
 		 */
 		if (TRUE !== $this->_Talk("EHLO {$this->_mHost}")) {
+			return FALSE;
+		}
+		
+		if (FALSE !== $this->_mTls) {
+			
+			/**
+			 * XXX TODO implement TLS functionality.
+			 * STARTTLS, stream_socket_enable_crypto, EHLO
+			 */
+			
 			return FALSE;
 		}
 		
@@ -343,7 +370,17 @@ class Smtp extends Library {
 		}
 		
 		if (empty($this->_mServer)) {
-			Core::Log()->Write(__('SMTP Library: Can not connect to server. Empty settings.', 'WEb'), 'error');
+			Core::Log()->Write(__('Smtp Library: Can not connect to server. Empty settings.', 'WEb'), 'error');
+			
+			return FALSE;
+		}
+		
+		if (FALSE !== $this->_mTls) {
+			
+			/**
+			 * XXX TODO implement TLS functionality.
+			 */
+			Core::Log()->Write(__('Smtp Library: TLS functionality not implemented.', 'WEb'), 'error');
 			
 			return FALSE;
 		}
@@ -354,7 +391,7 @@ class Smtp extends Library {
 		 */
 		$conn_prefix = (FALSE !== $this->_mSsl) ? 'ssl://' : NULL;
 		
-		Core::Log()->Write(sprintf(__('SMTP Library: Connecting to server "%s".', 'WEb'), $this->_mServer), 'debug');
+		Core::Log()->Write(sprintf(__('Smtp Library: Connecting to server "%s".', 'WEb'), $this->_mServer), 'debug');
 		
 		/**
 		 *
@@ -368,14 +405,16 @@ class Smtp extends Library {
 		 */
 		$err_str = NULL;
 		
-		$this->_mConnection = fsockopen($conn_prefix . $this->_mServer, $this->_mPort, $err_no, $err_str, $this->_mTimeout);
+		$context = stream_context_create();
+		
+		$this->_mConnection = stream_socket_client("{$conn_prefix}{$this->_mServer}:{$this->_mPort}", $err_no, $err_str, $this->_mTimeout, STREAM_CLIENT_CONNECT, $context);
 		
 		if (empty($this->_mConnection)) {
 			/**
 			 *
 			 * @var string
 			 */
-			$err_msg = sprintf(__('SMTP Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
+			$err_msg = sprintf(__('Smtp Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
 			
 			Core::Log()->Write($err_msg, 'error');
 			
@@ -383,7 +422,7 @@ class Smtp extends Library {
 			 *
 			 * @var string
 			 */
-			$dbg_msg = sprintf(__('SMTP Library: Error returned: %s %s.', 'WEb'), $err_no, $err_str);
+			$dbg_msg = sprintf(__('Smtp Library: Error returned: %s %s.', 'WEb'), $err_no, $err_str);
 			
 			Core::Log()->Write($dbg_msg, 'debug');
 		}
@@ -399,7 +438,7 @@ class Smtp extends Library {
 			 *
 			 * @var string
 			 */
-			$err_msg = sprintf(__('SMTP Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
+			$err_msg = sprintf(__('Smtp Library: Error connecting to server "%s".', 'WEb'), $this->_mServer);
 			
 			Core::Log()->Write($err_msg, 'error');
 			
@@ -429,7 +468,7 @@ class Smtp extends Library {
 		
 		fclose($this->_mConnection);
 		
-		Core::Log()->Write(__('SMTP Library: Closed server connection.', 'WEb'), 'debug');
+		Core::Log()->Write(__('Smtp Library: Closed server connection.', 'WEb'), 'debug');
 		
 		return TRUE;
 	}
@@ -446,7 +485,7 @@ class Smtp extends Library {
 	private function _Talk($command, $logMessage = NULL) {
 
 		if (empty($this->_mConnection)) {
-			Core::Log()->Write(__('SMTP Library: Error communicating to server. No active connection.', 'WEb'), 'error');
+			Core::Log()->Write(__('Smtp Library: Error communicating to server. No active connection.', 'WEb'), 'error');
 			
 			return FALSE;
 		}
@@ -462,12 +501,12 @@ class Smtp extends Library {
 		 */
 		if (is_array($command)) {
 			foreach ($command as $command_line) {
-				Core::Log()->Write(sprintf(__('SMTP Library: Sending "%s".', 'WEb'), $command_line), 'debug');
+				Core::Log()->Write(sprintf(__('Smtp Library: Sending "%s".', 'WEb'), $command_line), 'debug');
 				
 				fwrite($this->_mConnection, $command_line . $this->_mEol);
 			}
 		} else {
-			Core::Log()->Write(sprintf(__('SMTP Library: Sending "%s".', 'WEb'), $log_message), 'debug');
+			Core::Log()->Write(sprintf(__('Smtp Library: Sending "%s".', 'WEb'), $log_message), 'debug');
 			
 			fwrite($this->_mConnection, $command . $this->_mEol);
 		}
@@ -479,7 +518,7 @@ class Smtp extends Library {
 		$code = $this->_GetResponse();
 		
 		if (in_array($code, $this->_mErrorCodes)) {
-			Core::Log()->Write(__('SMTP Library: Got error from server. Aborting transaction.', 'WEb'), 'error');
+			Core::Log()->Write(__('Smtp Library: Got error from server. Aborting transaction.', 'WEb'), 'error');
 			
 			/**
 			 * Close server connection.
@@ -498,7 +537,7 @@ class Smtp extends Library {
 	private function _GetResponse() {
 
 		if (empty($this->_mConnection)) {
-			Core::Log()->Write(__('SMTP Library: Error getting server response. No active connection.', 'WEb'), 'error');
+			Core::Log()->Write(__('Smtp Library: Error getting server response. No active connection.', 'WEb'), 'error');
 			
 			return FALSE;
 		}
@@ -509,22 +548,21 @@ class Smtp extends Library {
 		 */
 		$code = 0;
 		
-		while (FALSE !== ($buffer = fgets($this->_mConnection, 4096))) {
-			Core::Log()->Write(rtrim($buffer, $this->_mEol), 'debug');
+		while (is_resource($this->_mConnection) && !feof($this->_mConnection)) {
 			
-			/**
-			 * Check if we are at the last (or only) line.
-			 */
-			if (substr($buffer, 3, 1) == " ") {
-				/**
-				 *
-				 * @var int
-				 */
+			$buffer = fgets($this->_mConnection, 515);
+			
+			Core::Log()->Write(sprintf(__('Smtp Library: Server response: "%s".', 'WEb'), rtrim($buffer, $this->_mEol)), 'debug');
+			
+			if (substr($buffer, 3, 1) == ' ') {
+				
 				$code = substr($buffer, 0, 3);
 				
 				break;
 			}
 		}
+		
+		Core::Log()->Write(sprintf(__('Smtp Library: Server response code: "%s".', 'WEb'), $code), 'debug');
 		
 		return $code;
 	}

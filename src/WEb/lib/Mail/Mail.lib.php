@@ -562,7 +562,7 @@ class Mail extends Library {
 		 * @var string
 		 */
 		$headers = $this->_GetHeaders();
-
+		
 		/**
 		 *
 		 * @var string
@@ -599,10 +599,7 @@ class Mail extends Library {
 			
 			$this->AddAddress($msgTo, 'to', NULL);
 			
-			$this->Send($msgSubject, $msgBody);
-			
-			return TRUE;
-		
+			return $this->Send($msgSubject, $msgBody);
 		}
 		
 		return FALSE;
