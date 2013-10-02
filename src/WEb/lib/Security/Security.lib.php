@@ -279,7 +279,7 @@ class Security extends Library {
 	 */
 	public function GetSalt($asset, $saltLength = 20) {
 
-		return strrev(substr(sha1($asset), 1, $saltLength));
+		return strrev(substr(sha1(strtolower($asset)), 1, $saltLength));
 	}
 
 	/**
