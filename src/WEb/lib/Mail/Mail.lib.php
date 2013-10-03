@@ -541,7 +541,7 @@ class Mail extends Library {
 				return FALSE;
 			}
 			
-			Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'info');
+			Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'debug');
 			
 			return TRUE;
 		}
@@ -575,7 +575,7 @@ class Mail extends Library {
 			return FALSE;
 		}
 		
-		Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'info');
+		Core::Log()->Write(__('Mail Library: Message sent successfully.', 'WEb'), 'debug');
 		
 		return TRUE;
 	}
