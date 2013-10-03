@@ -63,7 +63,7 @@ class Useragent extends Library {
 			return 'CLI';
 		}
 		
-		return $_SERVER['HTTP_USER_AGENT'];
+		return !empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : NULL;
 	}
 
 	/**
