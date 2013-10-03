@@ -242,16 +242,9 @@ class Smtp extends Library {
 			$this->SetDefaults();
 		}
 		
-		/**
-		 * Check if connection is already open.
-		 * We don't need to check again if it was opened successfully.
-		 */
-		if (empty($this->_mConnection)) {
+		if (TRUE !== $this->_Connect()) {
 			
-			if (TRUE !== $this->_Connect()) {
-				
-				return FALSE;
-			}
+			return FALSE;
 		}
 		
 		/**
@@ -358,10 +351,6 @@ class Smtp extends Library {
 	 */
 	private function _Connect() {
 
-		if (!empty($this->_mConnection)) {
-			return FALSE;
-		}
-		
 		/**
 		 * Check if default data has been set.
 		 */
@@ -409,7 +398,7 @@ class Smtp extends Library {
 		
 		$this->_mConnection = stream_socket_client("{$conn_prefix}{$this->_mServer}:{$this->_mPort}", $err_no, $err_str, $this->_mTimeout, STREAM_CLIENT_CONNECT, $context);
 		
-		if (empty($this->_mConnection)) {
+		if (!$this->_mConnection) {
 			/**
 			 *
 			 * @var string
@@ -425,6 +414,8 @@ class Smtp extends Library {
 			$dbg_msg = sprintf(__('Smtp Library: Error returned: %s %s.', 'WEb'), $err_no, $err_str);
 			
 			Core::Log()->Write($dbg_msg, 'debug');
+			
+			return FALSE;
 		}
 		
 		/**

@@ -239,6 +239,16 @@ class Mail extends Library {
 		 */
 		$this->_mEol = PHP_EOL;
 		
+		$this->_mMailFrom = array();
+		
+		$this->_mMailReplyTo = array();
+		
+		$this->_mMailCc = array();
+		
+		$this->_mMailBcc = array();
+		
+		$this->_mMailTo = array();
+		
 		return TRUE;
 	}
 
@@ -591,6 +601,8 @@ class Mail extends Library {
 	 */
 	public function SendSimple($msgTo, $msgSubject, $msgBody) {
 
+		$this->SetDefaults();
+		
 		$mail_settings = Core::Config()->Get('mail');
 		
 		if (!empty($mail_settings['sender'])) {
