@@ -224,6 +224,7 @@ class ModuleApp extends Module {
 	 * $data['webapp']['version'] - custom app version set by_mobile devices
 	 * $data['webapp']['market'] - app market id (0 - none, 1 - google, 2 - samsung, 3 - amazon, 4 - itunes)
 	 * $data['webapp']['type'] - app type (free, pro, etc)
+	 * $data['webapp']['ie'] - Internet explorer version (0 if other browser).
 	 *
 	 * Usage:
 	 * Controller: $data['webapp']['os_type']
