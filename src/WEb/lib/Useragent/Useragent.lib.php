@@ -336,5 +336,25 @@ class Useragent extends Library {
 		
 		return (!empty($data[2])) ? $data[2] : FALSE;
 	}
+
+	/**
+	 * Get internet explorer version.
+	 * Returns 0 if other browser.
+	 * 
+	 * @param string $userAgent        	
+	 * @return number
+	 */
+	public function GetIeVersion($userAgent = NULL) {
+
+		$user_agent = !empty($userAgent) ? $userAgent : $this->GetUserAgent();
+		
+		$data = array();
+		
+		$pattern = "#MSIE ([0-9]{1,}[\.0-9]{0,})#i";
+		
+		preg_match($pattern, $user_agent, $data);
+		
+		return (!empty($data[1])) ? $data[1] + 0 : 0;
+	}
 }
 ?>
