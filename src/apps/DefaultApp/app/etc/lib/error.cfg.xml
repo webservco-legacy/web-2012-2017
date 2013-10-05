@@ -8,23 +8,25 @@
 		<error>
 			<!-- Show trace info in error log? -->
 			<trace>1</trace>
+			<message><![CDATA[
+			    <!doctype html>
+			    <html>
+			    	<head>
+			    		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+			    		<title>Error</title>
+			    	</head>
+			    	<body>
+			    		<h1>The application made a boo boo.</h1>
+			    	</body>
+			    </html>
+			]]></message>
 		</error>
 	</dev>
 	<!-- Test Environment -->
 	<test>
-		<!-- Error library settings -->
-		<error>
-			<!-- Show trace info in error log? -->
-			<trace>1</trace>
-		</error>
 	</test>
 	<!-- Production Environment -->
 	<prod>
-		<!-- Error library settings -->
-		<error>
-			<!-- Show trace info in error log? -->
-			<trace>1</trace>
-		</error>
 	</prod>
 </config>
 <!-- $Id$ -->
