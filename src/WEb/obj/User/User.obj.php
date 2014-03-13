@@ -838,7 +838,7 @@ class User extends Object {
 		$data = array(
 			$this->_mKeyPrefix . 'user_id' => $user_id,
 			'user_email' => $userEmail,
-			'user_ip' => ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip']),
+			'user_ip' => sprintf("%u", ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip'])),
 			'login_auto' => $login_auto,
 			'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent']
 		);
