@@ -279,6 +279,11 @@ class Module extends Library {
 				
 				if (!empty($menu_data['item'])) {
 					
+					if ('title' === key($menu_data['item'])) {
+						
+						$menu_data['item'] = array(0 => $menu_data['item']);
+					}
+					
 					$menu[$menu_node] = $this->GetMenuItem($url_www, $menu_data['item']);
 				}
 			}
