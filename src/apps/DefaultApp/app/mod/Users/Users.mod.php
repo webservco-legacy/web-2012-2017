@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Module_Users
  * Model class for Users module.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package DefaultApp
  * @subpackage UsersModule
@@ -37,7 +37,7 @@ class Module_Users extends ModuleApp {
 
 	/**
 	 * Handles login functionality.
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function GetLoginForm($nextUrl = NULL) {
@@ -83,7 +83,13 @@ class Module_Users extends ModuleApp {
 				 *
 				 * @var bool
 				 */
-				$result_login = Core::User()->Login($form['data']['email'], $form['data']['password'], (bool) $form['data']['remember']);
+				$remember = isset($form['data']['remember']) ? (bool) $form['data']['remember'] : TRUE;
+				
+				/**
+				 *
+				 * @var bool
+				 */
+				$result_login = Core::User()->Login($form['data']['email'], $form['data']['password'], $remember);
 				
 				if (TRUE !== $result_login) {
 					Core::Captcha()->GetNewToken();
@@ -91,7 +97,6 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/LoginError');
 					
 					exit();
-				
 				} else {
 					/**
 					 * perform any aditional user initialization.
@@ -103,7 +108,6 @@ class Module_Users extends ModuleApp {
 					
 					exit();
 				}
-			
 			} else {
 				Core::Captcha()->GetNewToken();
 				
@@ -188,7 +192,6 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/Account');
 					
 					exit();
-				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -251,7 +254,7 @@ class Module_Users extends ModuleApp {
 	public function InsertCustomData($userId, $formData) {
 
 		$data = array(
-			'user_id_key' => $userId
+				'user_id_key' => $userId 
 		);
 		
 		unset($formData['email']);
@@ -348,7 +351,6 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/PasswordDone');
 					
 					exit();
-				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -426,7 +428,6 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/PasswordDone');
 					
 					exit();
-				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
@@ -447,7 +448,7 @@ class Module_Users extends ModuleApp {
 
 	/**
 	 * Verify if the input password is correct.
-	 * 
+	 *
 	 * @param string $userEmail        	
 	 * @param string $password        	
 	 *
@@ -533,7 +534,6 @@ class Module_Users extends ModuleApp {
 					Core::Router()->Redirect('Users/App/Account');
 					
 					exit();
-				
 				} else {
 					
 					$form['data'] = Core::Form()->GetData();
