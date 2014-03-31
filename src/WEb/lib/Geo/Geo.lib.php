@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Geo
  * Geolocation library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebGeo
@@ -38,7 +38,7 @@ class Geo extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -54,7 +54,7 @@ class Geo extends Library {
 	/**
 	 * Get IP address.
 	 * Uses the $_SERVER superglobal
-	 * 
+	 *
 	 * @return string
 	 */
 	public function GetIp() {
@@ -64,45 +64,45 @@ class Geo extends Library {
 		 * @var array
 		 */
 		$check = array(
-			'CLIENT_IP',
-			'HTTP_CLIENT_IP',
-			
-			'HTTP_X_FORWARDED',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_FORWARDED_FOR_IP',
-			
-			'HTTP_FORWARDED',
-			'HTTP_FORWARDED_FOR',
-			'HTTP_FORWARDED_FOR_IP',
-			
-			'FORWARDED',
-			'FORWARDED_FOR',
-			'FORWARDED_FOR_IP',
-			
-			'X_FORWARDED',
-			'X_FORWARDED_FOR',
-			
-			'HTTP_COMING_FROM',
-			'HTTP_X_COMING_FROM',
-			
-			'VIA',
-			'HTTP_VIA',
-			
-			'HTTP_PC_REMOTE_ADDR',
-			
-			'HTTP_X_IMFORWARDS',
-			
-			'HTTP_PROXY',
-			'HTTP_PROXY_CONNECTION',
-			
-			'HTTP_XPROXY',
-			'HTTP_XROXY_CONNECTION',
-			
-			'HTTP_PRAGMA',
-			'HTTP_XONNECTION',
-			'HTTP_CACHE_INFO',
-			
-			'ZHTTP_CACHE_CONTROL'
+				'CLIENT_IP',
+				'HTTP_CLIENT_IP',
+				
+				'HTTP_X_FORWARDED',
+				'HTTP_X_FORWARDED_FOR',
+				'HTTP_X_FORWARDED_FOR_IP',
+				
+				'HTTP_FORWARDED',
+				'HTTP_FORWARDED_FOR',
+				'HTTP_FORWARDED_FOR_IP',
+				
+				'FORWARDED',
+				'FORWARDED_FOR',
+				'FORWARDED_FOR_IP',
+				
+				'X_FORWARDED',
+				'X_FORWARDED_FOR',
+				
+				'HTTP_COMING_FROM',
+				'HTTP_X_COMING_FROM',
+				
+				'VIA',
+				'HTTP_VIA',
+				
+				'HTTP_PC_REMOTE_ADDR',
+				
+				'HTTP_X_IMFORWARDS',
+				
+				'HTTP_PROXY',
+				'HTTP_PROXY_CONNECTION',
+				
+				'HTTP_XPROXY',
+				'HTTP_XROXY_CONNECTION',
+				
+				'HTTP_PRAGMA',
+				'HTTP_XONNECTION',
+				'HTTP_CACHE_INFO',
+				
+				'ZHTTP_CACHE_CONTROL' 
 		);
 		
 		if (Core::IsCli()) {
@@ -129,7 +129,7 @@ class Geo extends Library {
 
 	/**
 	 * Chech if IP address is valid.
-	 * 
+	 *
 	 * @param string $ip        	
 	 * @param bool $checkWan        	
 	 *
@@ -161,7 +161,7 @@ class Geo extends Library {
 
 	/**
 	 * Get the list of countries from the database.
-	 * 
+	 *
 	 * @param mixed $status        	
 	 *
 	 * @return array
@@ -195,7 +195,7 @@ class Geo extends Library {
 
 	/**
 	 * Get the list of departments from the databse.
-	 * 
+	 *
 	 * @param string $countryCode        	
 	 * @return array
 	 */
@@ -224,7 +224,7 @@ class Geo extends Library {
 
 	/**
 	 * Get the list of languages from the database.
-	 * 
+	 *
 	 * @param mixed $status        	
 	 *
 	 * @return array
@@ -254,6 +254,28 @@ class Geo extends Library {
 		}
 		
 		return $data;
+	}
+
+	public function GetCoordinates($address) {
+
+		$url = 'http://maps.google.com/maps/api/geocode/json?sensor=false&address=' . str_replace(' ', '+', $address);
+		
+		$response = file_get_contents($url);
+		
+		if (!empty($response)) {
+			
+			$json = json_decode($response, TRUE);
+			
+			if (!empty($json['results'][0]['geometry']['location']['lat']) && !empty($json['results'][0]['geometry']['location']['lng'])) {
+				
+				return array(
+						$json['results'][0]['geometry']['location']['lat'],
+						$json['results'][0]['geometry']['location']['lng'] 
+				);
+			}
+		}
+		
+		return FALSE;
 	}
 }
 ?>
