@@ -30,7 +30,7 @@ if (!defined('_WEB')) {
 /**
  * Module
  * Module library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebModule
@@ -39,21 +39,21 @@ class Module extends Library {
 
 	/**
 	 * App prefix.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_mAppPrefix = NULL;
 
 	/**
 	 * Use sessions flag
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $_mUseSessions = FALSE;
 
 	/**
 	 * Web app info.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $_mWebAppInfo = array();
@@ -61,7 +61,7 @@ class Module extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -77,7 +77,7 @@ class Module extends Library {
 	/**
 	 * Load configuration file for current library.
 	 * Needs to override the Library method.
-	 * 
+	 *
 	 * @param string $className
 	 *        	name of the class to load configuration for
 	 * @return bool
@@ -147,7 +147,7 @@ class Module extends Library {
 
 	/**
 	 * Get current module name.
-	 * 
+	 *
 	 * @param array $request        	
 	 *
 	 * @return string
@@ -159,7 +159,7 @@ class Module extends Library {
 
 	/**
 	 * General information.
-	 * 
+	 *
 	 * @param array $request        	
 	 *
 	 * @return array
@@ -247,7 +247,7 @@ class Module extends Library {
 
 	/**
 	 * Get default paths.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function GetDefaultPaths() {
@@ -263,6 +263,11 @@ class Module extends Library {
 		 * App WWW path.
 		 */
 		$data['www'] = Core::Config()->Get('path.www');
+		
+		/**
+		 * Media Path.
+		 */
+		$data['media'] = Core::Config()->Get('path.www') . Core::Config()->Get('dir.app.usr') . '/media/';
 		
 		return $data;
 	}
@@ -281,7 +286,9 @@ class Module extends Library {
 					
 					if ('title' === key($menu_data['item'])) {
 						
-						$menu_data['item'] = array(0 => $menu_data['item']);
+						$menu_data['item'] = array(
+								0 => $menu_data['item'] 
+						);
 					}
 					
 					$menu[$menu_node] = $this->GetMenuItem($url_www, $menu_data['item']);
@@ -334,11 +341,11 @@ class Module extends Library {
 				$target = !empty($menu_item['target']) ? $menu_item['target'] : NULL;
 				
 				$menu[] = array(
-					'title' => $menu_item['title'],
-					'href' => $menu_href,
-					'target' => $target,
-					'submenu' => $submenu,
-					'resource' => $menu_item['resource']
+						'title' => $menu_item['title'],
+						'href' => $menu_href,
+						'target' => $target,
+						'submenu' => $submenu,
+						'resource' => $menu_item['resource'] 
 				);
 			}
 		}
@@ -477,7 +484,7 @@ class Module extends Library {
 
 	/**
 	 * Get default output data.
-	 * 
+	 *
 	 * @param array $request        	
 	 *
 	 * @return array
@@ -534,6 +541,7 @@ class Module extends Library {
 		 * Values:
 		 * $data['path']['app'] (/full/server/path/to/app/dir/)
 		 * $data['path']['www'] (/full/server/path/to/www/dir/)
+		 * $data['path']['media'] (/full/server/path/to/media/dir/)
 		 * Usage:
 		 * Controller: $data['path']['www']
 		 * Template: $path['www']
