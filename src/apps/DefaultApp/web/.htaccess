@@ -13,7 +13,23 @@
 	RewriteEngine On
 	
 	# Change to reflect application web directory path.
-	RewriteBase /~radu/default_app/
+	RewriteBase /
+	
+	# DDoS Protection: Denies any POST request that doesnt have a Content-Length Header
+	RewriteCond %{REQUEST_METHOD} =POST
+	RewriteCond %{HTTP:Content-Length} ^$
+	# only website root: RewriteCond %{REQUEST_URI} ^/$
+	# deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
+	# deny - shield:
+	RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
+
+	# DDoS Protection: Denies any POST request that has 0 Content-Length
+	RewriteCond %{REQUEST_METHOD} =POST
+	RewriteCond %{HTTP:Content-Length} ^0
+	# only website root: RewriteCond %{REQUEST_URI} ^/$
+	# deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
+	# deny - shield:
+	RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
 	
 	# Disable rewriting for existing files and directories.
 	RewriteCond %{REQUEST_FILENAME} !-f
