@@ -223,6 +223,11 @@ class Module extends Library {
 		$data['current'] = Core::Router()->GetCurrentUrl();
 		
 		/**
+		 * Current unrouted URL.
+		 */
+		$data['current_raw'] = Core::Router()->GetCurrentRawUrl();
+		
+		/**
 		 * App URL.
 		 */
 		$data['www'] = Core::Config()->Get('url.www');
