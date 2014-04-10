@@ -565,6 +565,7 @@ class Module extends Library {
 		 * Default messages used in most pages.
 		 * Values:
 		 * $data['strings']['title']
+		 * $data['strings']['description']
 		 * $data['strings']['app_title']
 		 * $data['strings']['no_data']
 		 * Usage:
