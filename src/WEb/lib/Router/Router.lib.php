@@ -369,7 +369,7 @@ class Router extends Library {
 			$url = $url_www;
 		} else {
 			
-			if (Core::String()->StartsWith($newLocation, 'http://') || Core::String()->StartsWith($newLocation, 'https://')) {
+			if (Core::String()->StartsWith('http://', $newLocation) || Core::String()->StartsWith('https://', $newLocation)) {
 				/**
 				 *
 				 * @var string
