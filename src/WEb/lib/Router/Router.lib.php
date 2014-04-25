@@ -777,8 +777,6 @@ class Router extends Library {
 				
 				Core::Log()->Write(__('Router library: Found matching custom route.', 'WEb'), 'debug');
 				
-				// XXX
-				
 				return TRUE;
 			}
 		}
