@@ -170,12 +170,10 @@ class Geo extends Library {
 
 		$data = array();
 		
-		$app_prefix = Core::Config()->Get('app.prefix');
-		
 		$q_status = isset($status) ? " AND country_status = '{$status}'" : NULL;
 		
 		$q = "SELECT country_code, country_name
-				FROM {$app_prefix}geo_countries WHERE 1
+				FROM {$this->_mAppPrefix}geo_countries WHERE 1
 				{$q_status} ORDER BY country_name";
 		
 		$rs = Core::Database()->Query($q);
@@ -193,6 +191,22 @@ class Geo extends Library {
 		return $data;
 	}
 
+	public function GetCountryCode($countryName) {
+
+		$q = "SELECT country_code FROM {$this->_mAppPrefix}geo_countries WHERE country_name = '{$countryName}' LIMIT 1";
+		
+		$rs = Core::Database()->Query($q);
+		
+		if (1 == $rs->num_rows) {
+			
+			$r = $rs->fetch_assoc();
+			
+			return $r['country_code'];
+		}
+		
+		return FALSE;
+	}
+
 	/**
 	 * Get the list of departments from the databse.
 	 *
@@ -203,9 +217,7 @@ class Geo extends Library {
 
 		$data = array();
 		
-		$app_prefix = Core::Config()->Get('app.prefix');
-		
-		$q = "SELECT department_code, department_name FROM {$app_prefix}geo_departments WHERE country_code = '{$countryCode}' ORDER BY department_name";
+		$q = "SELECT department_code, department_name FROM {$this->_mAppPrefix}geo_departments WHERE country_code = '{$countryCode}' ORDER BY department_name";
 		
 		$rs = Core::Database()->Query($q);
 		
@@ -233,12 +245,10 @@ class Geo extends Library {
 
 		$data = array();
 		
-		$app_prefix = Core::Config()->Get('app.prefix');
-		
 		$q_status = isset($status) ? " AND language_status = '{$status}'" : NULL;
 		
 		$q = "SELECT language_code, language_name
-		FROM {$app_prefix}geo_languages WHERE 1
+		FROM {$this->_mAppPrefix}geo_languages WHERE 1
 		{$q_status} ORDER BY language_name";
 		
 		$rs = Core::Database()->Query($q);

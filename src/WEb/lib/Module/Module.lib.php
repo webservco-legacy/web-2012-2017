@@ -38,13 +38,6 @@ if (!defined('_WEB')) {
 class Module extends Library {
 
 	/**
-	 * App prefix.
-	 *
-	 * @var string
-	 */
-	protected $_mAppPrefix = NULL;
-
-	/**
 	 * Use sessions flag
 	 *
 	 * @var boolean
@@ -83,6 +76,11 @@ class Module extends Library {
 	 * @return bool
 	 */
 	protected function _LoadConfig($className) {
+		
+		/**
+		 * App prefix.
+		 */
+		$this->_mAppPrefix = Core::Config()->Get('app.prefix');
 
 		/**
 		 * Add module i18n.
@@ -171,7 +169,7 @@ class Module extends Library {
 		/**
 		 * Application prefix.
 		 */
-		$data['prefix'] = $this->_mAppPrefix = Core::Config()->Get('app.prefix');
+		$data['prefix'] = $this->_mAppPrefix;
 		
 		/**
 		 * Current module name.

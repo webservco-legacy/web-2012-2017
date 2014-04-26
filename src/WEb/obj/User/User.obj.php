@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * User
  * User object.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebObject
@@ -37,7 +37,7 @@ class User extends Object {
 
 	/**
 	 * Object properties.
-	 * 
+	 *
 	 * @var array
 	 */
 	public $mProp = array();
@@ -48,13 +48,11 @@ class User extends Object {
 
 		if (empty($this->_mSet)) {
 			
-			$app_prefix = Core::Config()->Get('app.prefix');
+			$this->_mTable['list'] = "{$this->_mAppPrefix}acl_object_user";
 			
-			$this->_mTable['list'] = "{$app_prefix}acl_object_user";
+			$this->_mTable['store'] = "{$this->_mAppPrefix}acl_users";
 			
-			$this->_mTable['store'] = "{$app_prefix}acl_users";
-			
-			$this->_mTable['logins'] = "{$app_prefix}acl_logins";
+			$this->_mTable['logins'] = "{$this->_mAppPrefix}acl_logins";
 			
 			$this->_mSet = TRUE;
 		}
@@ -62,12 +60,12 @@ class User extends Object {
 		if (empty($this->mProp)) {
 			
 			$this->mProp = array(
-				'list' => array(
-					$this->_mKeyPrefix . 'user_id' => NULL,
-					'user_email' => NULL,
-					'user_nickname' => NULL,
-					'user_status' => NULL
-				)
+					'list' => array(
+							$this->_mKeyPrefix . 'user_id' => NULL,
+							'user_email' => NULL,
+							'user_nickname' => NULL,
+							'user_status' => NULL 
+					) 
 			);
 			
 			$this->mProp['list'] = $this->_AddCustomProps($this->mProp['list']);
@@ -76,7 +74,7 @@ class User extends Object {
 
 	/**
 	 * Initialize the object.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Init() {
@@ -104,21 +102,21 @@ class User extends Object {
 		
 		/**
 		 * Set current stats.
-		 * 
+		 *
 		 * @var array
 		 */
 		$_SESSION[__CLASS__]['StatsCurrent'] = array(
-			'time' => date('Y-m-d H:i:s'),
-			'ip' => Core::Geo()->GetIp(),
-			'agent' => Core::Useragent()->GetUserAgent(),
-			'auto' => FALSE
+				'time' => date('Y-m-d H:i:s'),
+				'ip' => Core::Geo()->GetIp(),
+				'agent' => Core::Useragent()->GetUserAgent(),
+				'auto' => FALSE 
 		);
 		
 		$_SESSION[__CLASS__]['InitialVisit'] = TRUE;
 		
 		/**
 		 * Check returning user.
-		 * 
+		 *
 		 * @var mixed
 		 */
 		$returning_data = Core::Session()->CheckPersistentSession();
@@ -133,14 +131,14 @@ class User extends Object {
 			
 			/**
 			 * Persistent session token.
-			 * 
+			 *
 			 * @var string
 			 */
 			$persistent_token = $returning_data[1];
 			
 			/**
 			 * Timestamp of persistent session expiring date.
-			 * 
+			 *
 			 * @var int
 			 */
 			$persistent_expire = $returning_data[2];
@@ -194,21 +192,21 @@ class User extends Object {
 			
 			/**
 			 * Set updated stats time
-			 * 
+			 *
 			 * @var array
 			 */
 			$_SESSION[__CLASS__]['StatsCurrent']['time'] = $now;
 			
 			/**
 			 * Set persistent flag.
-			 * 
+			 *
 			 * @var bool
 			 */
 			$_SESSION[__CLASS__]['Persistent'] = TRUE;
 			
 			/**
 			 * Set persistent statistic.
-			 * 
+			 *
 			 * @var array
 			 */
 			$_SESSION[__CLASS__]['StatsCurrent']['auto'] = $new_persistent_token;
@@ -218,8 +216,8 @@ class User extends Object {
 			 * @var array
 			 */
 			$options['conditions'][] = array(
-				$this->_mKeyPrefix . 'user_id',
-				$user_id
+					$this->_mKeyPrefix . 'user_id',
+					$user_id 
 			);
 			
 			return $this->_SetUserData($options);
@@ -231,7 +229,7 @@ class User extends Object {
 	/**
 	 * Reload object.
 	 * Useful after user data edit.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function Reload() {
@@ -241,8 +239,8 @@ class User extends Object {
 			unset($_SESSION[__CLASS__]['Prop']);
 			
 			$options['conditions'][] = array(
-				$this->_mKeyPrefix . 'user_id',
-				$_SESSION[__CLASS__]['Id']
+					$this->_mKeyPrefix . 'user_id',
+					$_SESSION[__CLASS__]['Id'] 
 			);
 			
 			return $this->_SetUserData($options);
@@ -258,7 +256,7 @@ class User extends Object {
 
 	/**
 	 * Check if user is logged in.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function IsLogged() {
@@ -268,7 +266,7 @@ class User extends Object {
 
 	/**
 	 * Check if user is logged in and if the session is persistent.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function IsPersistent() {
@@ -283,7 +281,7 @@ class User extends Object {
 	/**
 	 * Check if user is already logged in
 	 * in another session.
-	 * 
+	 *
 	 * @param string $userId        	
 	 *
 	 * @return mixed
@@ -297,13 +295,13 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			$this->_mKeyPrefix . 'user_id',
-			$userId
+				$this->_mKeyPrefix . 'user_id',
+				$userId 
 		);
 		
 		/**
 		 * Get timeout expression
-		 * 
+		 *
 		 * @var string
 		 */
 		$timeout = date('Y-m-d H:i:s', time() - Core::Config()->Get('user.login.time') * 60);
@@ -313,9 +311,9 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			'login_date_add',
-			$timeout,
-			'gte'
+				'login_date_add',
+				$timeout,
+				'gte' 
 		);
 		
 		/**
@@ -323,7 +321,7 @@ class User extends Object {
 		 * @var array
 		 */
 		$data = Core::Database()->RetrieveOne(array(
-			'login_date_add'
+				'login_date_add' 
 		), $this->_mTable['logins'], $options);
 		
 		if (empty($data)) {
@@ -335,7 +333,7 @@ class User extends Object {
 
 	/**
 	 * Login user.
-	 * 
+	 *
 	 * @param string $userEmail        	
 	 * @param string $userPass        	
 	 * @param bool $userRemember        	
@@ -386,7 +384,7 @@ class User extends Object {
 
 	/**
 	 * Logout user.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Logout() {
@@ -396,7 +394,7 @@ class User extends Object {
 		/**
 		 * If multiple persistent sessions per user is activated,
 		 * we will only remove the current persistent session.
-		 * 
+		 *
 		 * @var string
 		 */
 		$persistent_token = (1 == Core::Config()->Get('session.multiple')) ? $_SESSION[__CLASS__]['StatsCurrent']['auto'] : NULL;
@@ -431,12 +429,12 @@ class User extends Object {
 		 * @var array
 		 */
 		$this->mProp = array(
-			'list' => array(
-				$this->_mKeyPrefix . 'user_id' => NULL,
-				'user_email' => NULL,
-				'user_nickname' => NULL,
-				'user_status' => NULL
-			)
+				'list' => array(
+						$this->_mKeyPrefix . 'user_id' => NULL,
+						'user_email' => NULL,
+						'user_nickname' => NULL,
+						'user_status' => NULL 
+				) 
 		);
 		
 		$this->mProp['list'] = $this->_AddCustomProps($this->mProp['list']);
@@ -457,7 +455,7 @@ class User extends Object {
 
 	/**
 	 * Get current user id.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function GetId() {
@@ -467,7 +465,7 @@ class User extends Object {
 
 	/**
 	 * Get user property.
-	 * 
+	 *
 	 * @param string $userId        	
 	 * @param string $property        	
 	 *
@@ -478,12 +476,12 @@ class User extends Object {
 		$this->_Init();
 		
 		$options['conditions'][] = array(
-			$this->_mKeyPrefix . 'user_id',
-			$userId
+				$this->_mKeyPrefix . 'user_id',
+				$userId 
 		);
 		
 		$data = Core::Database()->RetrieveOne(array(
-			$property
+				$property 
 		), $this->_mTable['list'], $options);
 		
 		if (empty($data)) {
@@ -502,8 +500,8 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			$this->_mKeyPrefix . 'user_id',
-			'0'
+				$this->_mKeyPrefix . 'user_id',
+				'0' 
 		);
 		
 		if (!empty($checkType) && !empty($checkAsset)) {
@@ -512,14 +510,14 @@ class User extends Object {
 			 * @var array
 			 */
 			$options['conditions'][] = array(
-				$checkType,
-				$checkAsset
+					$checkType,
+					$checkAsset 
 			);
 		}
 		
 		/**
 		 * Get timeout expression
-		 * 
+		 *
 		 * @var string
 		 */
 		$timeout = date('Y-m-d H:i:s', time() - Core::Config()->Get('user.login.timeout') * 60);
@@ -529,9 +527,9 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			'login_date_add',
-			$timeout,
-			'gte'
+				'login_date_add',
+				$timeout,
+				'gte' 
 		);
 		
 		/**
@@ -545,7 +543,7 @@ class User extends Object {
 
 	/**
 	 * Add custom properties from configuration file.
-	 * 
+	 *
 	 * @param array $propList        	
 	 * @param boolean $values
 	 *        	add names as array values instead of keys
@@ -559,7 +557,7 @@ class User extends Object {
 			
 			if (!is_array($extra_props)) {
 				$extra_props = array(
-					0 => $extra_props
+						0 => $extra_props 
 				);
 			}
 			
@@ -572,7 +570,6 @@ class User extends Object {
 					
 					$propList[$prop] = NULL;
 				}
-			
 			}
 		}
 		
@@ -581,7 +578,7 @@ class User extends Object {
 
 	/**
 	 * Check and login user.
-	 * 
+	 *
 	 * @param string $userEmail        	
 	 * @param string $userPass        	
 	 *
@@ -608,8 +605,8 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			'user_email',
-			$userEmail
+				'user_email',
+				$userEmail 
 		);
 		
 		/**
@@ -617,8 +614,8 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			'user_auth',
-			$user_auth
+				'user_auth',
+				$user_auth 
 		);
 		
 		if (FALSE !== $this->_SetUserData($options)) {
@@ -635,7 +632,7 @@ class User extends Object {
 
 	/**
 	 * Set user details as object properties.
-	 * 
+	 *
 	 * @param array $options        	
 	 *
 	 * @return bool
@@ -647,14 +644,14 @@ class User extends Object {
 		if (!empty($_SESSION[__CLASS__]['Prop'])) {
 			/**
 			 * Set object data.
-			 * 
+			 *
 			 * @var array
 			 */
 			$this->mProp['list'] = array_merge($this->mProp['list'], $_SESSION[__CLASS__]['Prop']);
 			
 			/**
 			 * Set object Id.
-			 * 
+			 *
 			 * @var string
 			 */
 			$this->_mId = $_SESSION[__CLASS__]['Prop'][$this->_mKey];
@@ -670,10 +667,10 @@ class User extends Object {
 		}
 		
 		$fields = array(
-			$this->_mKeyPrefix . 'user_id',
-			'user_email',
-			'user_nickname',
-			'user_status'
+				$this->_mKeyPrefix . 'user_id',
+				'user_email',
+				'user_nickname',
+				'user_status' 
 		);
 		
 		$fields = $this->_AddCustomProps($fields, TRUE);
@@ -686,14 +683,14 @@ class User extends Object {
 		
 		/**
 		 * Set object data.
-		 * 
+		 *
 		 * @var array
 		 */
 		$this->mProp['list'] = array_merge($this->mProp['list'], $data);
 		
 		/**
 		 * Set object Id.
-		 * 
+		 *
 		 * @var string
 		 */
 		$this->_mId = $data[$this->_mKey];
@@ -705,21 +702,21 @@ class User extends Object {
 		
 		/**
 		 * Set logged in flag.
-		 * 
+		 *
 		 * @var bool
 		 */
 		$_SESSION[__CLASS__]['Logged'] = TRUE;
 		
 		/**
 		 * Set persistent flag.
-		 * 
+		 *
 		 * @var bool
 		 */
 		$_SESSION[__CLASS__]['Persistent'] = FALSE;
 		
 		/**
 		 * Set session object data.
-		 * 
+		 *
 		 * @var array
 		 */
 		$_SESSION[__CLASS__]['Prop'] = $this->mProp['list'];
@@ -736,7 +733,7 @@ class User extends Object {
 
 	/**
 	 * Set stats about the previous visit.
-	 * 
+	 *
 	 * @return bool
 	 */
 	private function _SetPreviousStats() {
@@ -748,8 +745,8 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			$this->_mKeyPrefix . 'user_id',
-			$this->_mId
+				$this->_mKeyPrefix . 'user_id',
+				$this->_mId 
 		);
 		
 		/**
@@ -757,9 +754,9 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['conditions'][] = array(
-			'login_date_add',
-			$_SESSION[__CLASS__]['StatsCurrent']['time'],
-			'lt'
+				'login_date_add',
+				$_SESSION[__CLASS__]['StatsCurrent']['time'],
+				'lt' 
 		);
 		
 		/**
@@ -767,8 +764,8 @@ class User extends Object {
 		 * @var array
 		 */
 		$options['order'][] = array(
-			'login_date_add',
-			'desc'
+				'login_date_add',
+				'desc' 
 		);
 		
 		/**
@@ -776,10 +773,10 @@ class User extends Object {
 		 * @var array
 		 */
 		$data = Core::Database()->RetrieveOne(array(
-			'login_auto',
-			'user_ip',
-			'user_agent',
-			'login_date_add'
+				'login_auto',
+				'user_ip',
+				'user_agent',
+				'login_date_add' 
 		), $this->_mTable['logins'], $options);
 		
 		if (empty($data)) {
@@ -797,10 +794,10 @@ class User extends Object {
 		 * @var array
 		 */
 		$_SESSION[__CLASS__]['StatsPrevious'] = array(
-			'time' => $data['login_date_add'],
-			'ip' => long2ip($data['user_ip']),
-			'agent' => $data['user_agent'],
-			'auto' => ('true' == $data['login_auto']) ? TRUE : FALSE
+				'time' => $data['login_date_add'],
+				'ip' => long2ip($data['user_ip']),
+				'agent' => $data['user_agent'],
+				'auto' => ('true' == $data['login_auto']) ? TRUE : FALSE 
 		);
 		
 		return TRUE;
@@ -809,7 +806,7 @@ class User extends Object {
 	/**
 	 * Record login stats.
 	 * If login is failed, the user_id will be 0
-	 * 
+	 *
 	 * @param string $userId        	
 	 * @param string $userEmail        	
 	 *
@@ -836,11 +833,11 @@ class User extends Object {
 		 * @var array
 		 */
 		$data = array(
-			$this->_mKeyPrefix . 'user_id' => $user_id,
-			'user_email' => $userEmail,
-			'user_ip' => sprintf("%u", ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip'])),
-			'login_auto' => $login_auto,
-			'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent']
+				$this->_mKeyPrefix . 'user_id' => $user_id,
+				'user_email' => $userEmail,
+				'user_ip' => sprintf("%u", ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip'])),
+				'login_auto' => $login_auto,
+				'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent'] 
 		);
 		
 		if (!empty($loginDate)) {

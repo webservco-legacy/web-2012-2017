@@ -42,6 +42,13 @@ abstract class Library {
 	 * @var array
 	 */
 	protected static $_msInstance = array();
+	
+	/**
+	 * App prefix.
+	 *
+	 * @var string
+	 */
+	protected $_mAppPrefix = NULL;
 
 	/**
 	 * Get object instance.
@@ -109,6 +116,12 @@ abstract class Library {
 	 * @return bool
 	 */
 	protected function _LoadConfig($className) {
+		
+		/**
+		 * App prefix.
+		 */
+		$this->_mAppPrefix = Core::Config()->Get('app.prefix');
+		
 		/**
 		 * @var string
 		 */

@@ -67,15 +67,13 @@ class Acl extends Library {
 
 		if (empty($this->_mTable)) {
 			
-			$app_prefix = Core::Config()->Get('app.prefix');
-			
 			$this->_mKeyPrefix = (1 == Core::Config()->Get('app.database.binkey')) ? 'bin.' : NULL;
 			
-			$this->_mTable['rules'] = "{$app_prefix}acl_rules";
-			$this->_mTable['groups'] = "{$app_prefix}acl_groups";
-			$this->_mTable['users'] = "{$app_prefix}acl_users";
-			$this->_mTable['relations'] = "{$app_prefix}acl_relations";
-			$this->_mTable['relations_list'] = "{$app_prefix}acl_object_relation";
+			$this->_mTable['rules'] = "{$this->_mAppPrefix}acl_rules";
+			$this->_mTable['groups'] = "{$this->_mAppPrefix}acl_groups";
+			$this->_mTable['users'] = "{$this->_mAppPrefix}acl_users";
+			$this->_mTable['relations'] = "{$this->_mAppPrefix}acl_relations";
+			$this->_mTable['relations_list'] = "{$this->_mAppPrefix}acl_object_relation";
 		}
 	}
 
