@@ -7,7 +7,7 @@
  * All modules extend this library.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2014, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2012, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebModule
@@ -196,6 +196,10 @@ class Module extends Library {
 		if (!empty($request['query'])) {
 			
 			foreach ($request['query'] as $key => $value) {
+				
+				$key = urlencode($key);
+				
+				$value = urlencode($value);
 				
 				$data['path'] .= "{$key}/{$value}/";
 				

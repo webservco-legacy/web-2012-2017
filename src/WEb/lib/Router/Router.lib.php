@@ -5,7 +5,7 @@
  * Router library.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2014, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2012, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebRouter
@@ -36,7 +36,7 @@ if (!defined('_WEB')) {
 class Router extends Library {
 
 	/**
-	 * Stores the raw request.
+	 * Stores the request.
 	 *
 	 * @var string
 	 */
@@ -48,6 +48,13 @@ class Router extends Library {
 	 * @var string
 	 */
 	private $_mRawRequest = NULL;
+
+	/**
+	 * Stores the raw URL as appears in browser.
+	 *
+	 * @var string
+	 */
+	private $_mRawUrl = NULL;
 
 	/**
 	 * Stores the current location.
@@ -138,15 +145,63 @@ class Router extends Library {
 	}
 
 	/**
-	 * Get unrouted Url.
+	 * Get unrouted (raw) Url.
 	 *
 	 * @return string
 	 */
 	public function GetCurrentRawUrl() {
 
-		$url = Core::Config()->Get('url.www');
+		return $this->_mRawUrl;
+	}
+
+	/**
+	 * Get request protocol (http or https).
+	 *
+	 * @return string
+	 */
+	public function GetProtocol() {
+
+		$protocol = 'http';
 		
-		return $url . $this->_mRawRequest;
+		if (isset($_SERVER['HTTPS']) && 'off' != $_SERVER['HTTPS']) {
+			
+			$protocol = 'https';
+		} else if ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')) {
+			
+			$protocol = 'https';
+		}
+		
+		return $protocol;
+	}
+
+	/**
+	 * Get host name.
+	 *
+	 * @return string
+	 */
+	public function GetHost() {
+
+		/**
+		 *
+		 * @var string
+		 */
+		$host = NULL;
+		
+		if (isset($_SERVER['HTTP_HOST']) && ('' != $_SERVER['HTTP_HOST'])) {
+			/**
+			 *
+			 * @var string
+			 */
+			$host = $_SERVER['HTTP_HOST'];
+		} else if (isset($_SERVER['SERVER_NAME']) && ('' != $_SERVER['SERVER_NAME'])) {
+			/**
+			 *
+			 * @var string
+			 */
+			$host = $_SERVER['SERVER_NAME'];
+		}
+		
+		return $host;
 	}
 
 	/**
@@ -158,6 +213,13 @@ class Router extends Library {
 	private function _Route() {
 
 		Core::Log()->Write(__('Router library: Initializing routing.', 'WEb'), 'debug');
+		
+		/**
+		 * Set Raw URL.
+		 *
+		 * @var string
+		 */
+		$this->_mRawUrl = $this->GetProtocol() . '://' . $this->GetHost() . $_SERVER['REQUEST_URI'];
 		
 		/**
 		 * Set request.
@@ -178,10 +240,15 @@ class Router extends Library {
 		 */
 		$this->_ParseCustomRoutes();
 		
-		/**
-		 * Empty get array for security.
-		 */
-		$this->_EmptyGet();
+		$keep_getrequest = Core::Config()->Get('router.keep_getrequest');
+		
+		if (empty($keep_getrequest)) {
+			
+			/**
+			 * Empty _GET/_REQUEST array for security.
+			 */
+			$this->_EmptyGetRequest();
+		}
 		
 		/**
 		 * Get parsed request.
@@ -408,17 +475,10 @@ class Router extends Library {
 		 */
 		$request = NULL;
 		
-		if (isset($_SERVER['PATH_INFO'])) {
-			
-			Core::Log()->Write(__('Router library: Performing PATH_INFO routing.', 'WEb'), 'debug');
-			
-			/**
-			 * Set request.
-			 *
-			 * @var string
-			 */
-			$request = $this->_ProcessRequest($_SERVER['PATH_INFO']);
-		} else if (isset($_SERVER['REQUEST_URI'])) {
+		/**
+		 * This has to be first, in order for URLs containing "/index.php/" to be parsed correctly.
+		 */
+		if (isset($_SERVER['REQUEST_URI'])) {
 			
 			Core::Log()->Write(__('Router library: Performing REQUEST_URI routing.', 'WEb'), 'debug');
 			
@@ -428,6 +488,16 @@ class Router extends Library {
 			 * @var string
 			 */
 			$request = $this->_processRequest($_SERVER['REQUEST_URI']);
+		} else if (isset($_SERVER['PATH_INFO'])) {
+			
+			Core::Log()->Write(__('Router library: Performing PATH_INFO routing.', 'WEb'), 'debug');
+			
+			/**
+			 * Set request.
+			 *
+			 * @var string
+			 */
+			$request = $this->_ProcessRequest($_SERVER['PATH_INFO']);
 		} else if (isset($_SERVER['ORIG_PATH_INFO'])) {
 			
 			Core::Log()->Write(__('Router library: Performing ORIG_PATH_INFO routing.', 'WEb'), 'debug');
@@ -481,9 +551,23 @@ class Router extends Library {
 		if (FALSE !== strpos($firstPart, 'index.php?')) {
 			
 			return $this->_ProcessQueryString();
-		} else if (FALSE !== strpos($firstPart, '?')) {
+		}
+		
+		if (FALSE !== strpos($firstPart, '/index.php/')) {
 			
-			return $this->_ProcessQueryStringMixed();
+			$firstPart = str_replace('/index.php/', '/', $firstPart);
+		}
+		
+		$add_req2 = TRUE;
+		
+		if (FALSE !== strpos($firstPart, '?')) {
+			
+			$add_req2 = FALSE;
+			
+			if ('/' != substr($firstPart, strpos($firstPart, '?') - 1, 1)) {
+				
+				$firstPart = str_replace('?', '/?', $firstPart);
+			}
 		}
 		
 		/**
@@ -500,17 +584,20 @@ class Router extends Library {
 		 */
 		$req2 = '';
 		
-		/**
-		 * Check for QUERY_STRING.
-		 */
-		if (isset($_SERVER['QUERY_STRING']) && ('' != $_SERVER['QUERY_STRING'])) {
+		if ($add_req2) {
+			
 			/**
-			 * Process request.
-			 * Replace '&' with '/'.
-			 *
-			 * @var string
+			 * Check for QUERY_STRING.
 			 */
-			$req2 = $this->_FormatRequest($_SERVER['QUERY_STRING']);
+			if (isset($_SERVER['QUERY_STRING']) && ('' != $_SERVER['QUERY_STRING'])) {
+				/**
+				 * Process request.
+				 * Replace '&' with '/'.
+				 *
+				 * @var string
+				 */
+				$req2 = $this->_FormatRequest($_SERVER['QUERY_STRING']);
+			}
 		}
 		
 		return $this->RemoveFakeExtension($req1 . $req2);
@@ -548,6 +635,12 @@ class Router extends Library {
 		 * @var string
 		 */
 		$request_string = str_replace($unwanted, '', $requestString);
+		
+		/**
+		 *
+		 * @var string
+		 */
+		$request_string = str_replace('?', '', $request_string);
 		
 		/**
 		 *
@@ -604,99 +697,7 @@ class Router extends Library {
 		 *
 		 * @var string
 		 */
-		$server = NULL;
-		
-		if (isset($_SERVER['HTTP_HOST']) && ('' != $_SERVER['HTTP_HOST'])) {
-			/**
-			 *
-			 * @var string
-			 */
-			$server = $_SERVER['HTTP_HOST'];
-		} else if (isset($_SERVER['SERVER_NAME']) && ('' != $_SERVER['SERVER_NAME'])) {
-			/**
-			 *
-			 * @var string
-			 */
-			$server = $_SERVER['SERVER_NAME'];
-		}
-		
-		/**
-		 *
-		 * @var string
-		 */
-		$url = 'http://' . $server . $req_uri;
-		
-		/**
-		 * Redirect to new custom URL.
-		 */
-		return header("Location: " . $url);
-	}
-
-	/**
-	 * Process query string mixed.
-	 * Turn mixed request (/value1/value2/?option1=value1&option2=value2) into internal request (/value1/value2/value3/value4).
-	 * Then do a redirect.
-	 *
-	 * @return mixed.
-	 */
-	private function _ProcessQueryStringMixed() {
-
-		/**
-		 * Init query string.
-		 * It is easier to work with the $_GET so we use it instead of QUERY_STRING.
-		 *
-		 * @var string
-		 */
-		$qs = NULL;
-		
-		foreach ($_GET as $key => $value) {
-			
-			if (empty($value)) {
-				
-				$value = '0';
-			}
-			
-			$qs .= "{$key}/{$value}/";
-		}
-		
-		/**
-		 * Init request uri.
-		 *
-		 * @var string
-		 */
-		$req_uri = str_replace('?' . $_SERVER['QUERY_STRING'], '/' . $qs, $_SERVER['REQUEST_URI']);
-		
-		/**
-		 *
-		 * @var string
-		 */
-		$req_uri = str_replace('//', '/', $req_uri);
-		
-		/**
-		 *
-		 * @var string
-		 */
-		$server = NULL;
-		
-		if (isset($_SERVER['HTTP_HOST']) && ('' != $_SERVER['HTTP_HOST'])) {
-			/**
-			 *
-			 * @var string
-			 */
-			$server = $_SERVER['HTTP_HOST'];
-		} else if (isset($_SERVER['SERVER_NAME']) && ('' != $_SERVER['SERVER_NAME'])) {
-			/**
-			 *
-			 * @var string
-			 */
-			$server = $_SERVER['SERVER_NAME'];
-		}
-		
-		/**
-		 *
-		 * @var string
-		 */
-		$url = 'http://' . $server . $req_uri;
+		$url = $this->GetProtocol() . '://' . $this->GetHost() . $req_uri;
 		
 		/**
 		 * Redirect to new custom URL.
@@ -832,22 +833,31 @@ class Router extends Library {
 	}
 
 	/**
-	 * Empty get array.
+	 * Empty _GET array and corresponding _REQUEST data.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
-	private function _EmptyGet() {
+	private function _EmptyGetRequest() {
 
 		/**
 		 * Check if a request exists.
 		 */
 		if (!empty($_GET)) {
+			
 			/**
-			 * Ignore existing request.
+			 * Remove corresponding _REQUEST data.
+			 */
+			foreach ($_GET as $key => $value) {
+				
+				unset($_REQUEST[$key]);
+			}
+			
+			/**
+			 * Empty _GET array.
 			 */
 			$_GET = array();
 			
-			Core::Log()->Write(__('Router library: Emptying $_GET array.', 'WEb'), 'debug');
+			Core::Log()->Write(__('Router library: Emptying _GET/_REQUEST data.', 'WEb'), 'debug');
 			
 			return TRUE;
 		}

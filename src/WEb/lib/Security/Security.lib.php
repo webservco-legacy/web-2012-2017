@@ -5,7 +5,7 @@
  * Security library.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2014, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2012, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebSecurity
@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Security
  * Security library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebSecurity
@@ -37,14 +37,14 @@ class Security extends Library {
 
 	/**
 	 * Stores total number of GET requests.
-	 * 
+	 *
 	 * @var int
 	 */
 	private $_mNumGet;
 
 	/**
 	 * Stores total number of POST requests.
-	 * 
+	 *
 	 * @var int
 	 */
 	private $_mNumPost;
@@ -52,7 +52,7 @@ class Security extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -67,7 +67,7 @@ class Security extends Library {
 
 	/**
 	 * Sanitize input.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Sanitize() {
@@ -76,19 +76,19 @@ class Security extends Library {
 		
 		/**
 		 * Init GET request number.
-		 * 
+		 *
 		 * @var int
 		 */
 		$this->_mNumGet = 0;
 		
 		/**
 		 * Filter $_GET array.
-		 * 
+		 *
 		 * @var array
 		 */
 		$_GET = array_map(array(
-			$this,
-			'_FilterRequest'
+				$this,
+				'_FilterRequest' 
 		), $_GET);
 		
 		/**
@@ -101,7 +101,7 @@ class Security extends Library {
 		
 		/**
 		 * Init POST request number.
-		 * 
+		 *
 		 * @var int
 		 */
 		$this->_mNumPost = 0;
@@ -114,8 +114,8 @@ class Security extends Library {
 		 * filtering is done as for $_GET.
 		 */
 		$_POST = array_map(array(
-			$this,
-			'_FilterPost'
+				$this,
+				'_FilterPost' 
 		), $_POST);
 		
 		/**
@@ -133,7 +133,7 @@ class Security extends Library {
 
 	/**
 	 * Filter request.
-	 * 
+	 *
 	 * @param string $input
 	 *        	request
 	 * @param boolean $disableTags        	
@@ -143,12 +143,12 @@ class Security extends Library {
 
 		/**
 		 * Filter input.
-		 * 
+		 *
 		 * @var string
 		 */
 		$input = $this->FilterInput($input, $disableTags, TRUE);
 		
-		$this->_mNumGet ++;
+		$this->_mNumGet++;
 		
 		return $input;
 	}
@@ -156,7 +156,7 @@ class Security extends Library {
 	/**
 	 * Filter post data.
 	 * Please note that this method doesn't disable tags.
-	 * 
+	 *
 	 * @param mixed $input
 	 *        	data
 	 * @return mixed
@@ -169,7 +169,7 @@ class Security extends Library {
 				
 				$input[$key] = $this->_FilterPost($value, FALSE, FALSE);
 				
-				$this->_mNumPost ++;
+				$this->_mNumPost++;
 			}
 		} 
 
@@ -177,7 +177,7 @@ class Security extends Library {
 			
 			$input = $this->FilterInput($input, FALSE, FALSE);
 			
-			$this->_mNumPost ++;
+			$this->_mNumPost++;
 		}
 		
 		return $input;
@@ -185,7 +185,7 @@ class Security extends Library {
 
 	/**
 	 * Filter user input.
-	 * 
+	 *
 	 * @param string $input
 	 *        	input string
 	 * @param bool $disableTags
@@ -209,11 +209,11 @@ class Security extends Library {
 		
 		/**
 		 * Some unwanted chars.
-		 * 
+		 *
 		 * @var array
 		 */
 		$unwanted = array(
-			'\\'
+				'\\' 
 		);
 		
 		/**
@@ -221,7 +221,7 @@ class Security extends Library {
 		 * We didn't put these in the RemoveBadChars() method
 		 * because we also want them removed
 		 * if input is used in a database query.
-		 * 
+		 *
 		 * @var string
 		 */
 		$input = str_replace($unwanted, '', $input);
@@ -232,20 +232,13 @@ class Security extends Library {
 		if ((FALSE !== $filterRequest)) {
 			
 			/**
-			 * Prevent spaces to be lost on GET requests
+			 * Decode url string.
 			 */
-			$input = str_replace('+', ' ', $input);
-			
-			/**
-			 * Strip known bad characters.
-			 * 
-			 * @var string
-			 */
-			$input = Core::String()->RemoveBadChars($input);
+			$input = urldecode($input);
 			
 			/**
 			 * Remove tags
-			 * 
+			 *
 			 * @var string.
 			 */
 			$input = Core::String()->StripTags($input);
@@ -257,7 +250,7 @@ class Security extends Library {
 		if (FALSE !== $disableTags) {
 			/**
 			 * Disable tags.
-			 * 
+			 *
 			 * @var string
 			 */
 			$input = Core::String()->DisableTags($input);
@@ -271,7 +264,7 @@ class Security extends Library {
 
 	/**
 	 * Get an assets's security salt.
-	 * 
+	 *
 	 * @param mixed $asset        	
 	 * @param int $saltLength        	
 	 *
@@ -285,7 +278,7 @@ class Security extends Library {
 	/**
 	 * Get an asset's security token.
 	 * If empty asset is provided, a random token is generated.
-	 * 
+	 *
 	 * @param string $salt        	
 	 * @param mixed $asset        	
 	 *
@@ -298,8 +291,6 @@ class Security extends Library {
 		}
 		
 		return $salt . sha1($salt . $asset);
-	
 	}
-
 }
 ?>
