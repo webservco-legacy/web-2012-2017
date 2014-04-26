@@ -2,7 +2,7 @@
 
 <refentry id="{@id}">
   <refnamediv>
-    <refname>SandboxApp</refname>
+    <refname>DefaultApp</refname>
     <refpurpose>Package Description</refpurpose>
   </refnamediv>
   <refsynopsisdiv>

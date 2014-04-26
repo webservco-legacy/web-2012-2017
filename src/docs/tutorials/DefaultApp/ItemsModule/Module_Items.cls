@@ -2,8 +2,8 @@
 
 <refentry id="{@id}">
 	<refnamediv>
-		<refname>Module_Helloworld</refname>
-		<refpurpose>Hello World Module</refpurpose>
+		<refname>Module_Items</refname>
+		<refpurpose>Items Module</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 		<author>
