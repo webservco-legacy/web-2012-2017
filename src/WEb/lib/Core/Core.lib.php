@@ -174,6 +174,13 @@ class Core {
 	 * @var mixed
 	 */
 	protected static $_msUseragentObject;
+	
+	/**
+	 * Stores the FacebookApi object.
+	 * 
+	 * @var mixed
+	 */
+	protected static $_msFacebookApiObject;
 
 	/**
 	 * Stores the User object.
@@ -595,6 +602,24 @@ class Core {
 		}
 		
 		return self::$_msUseragentObject;
+	}
+	
+	/**
+	 * Method to access the FacebookApi object from everywhere.
+	 * 
+	 * @return object
+	 */
+	final public static function FacebookApi() {
+
+		if (NULL == self::$_msFacebookApiObject) {
+			/**
+			 *
+			 * @var object
+			 */
+			self::$_msFacebookApiObject = FacebookApi::GetInstance();
+		}
+		
+		return self::$_msFacebookApiObject;
 	}
 
 	/**
