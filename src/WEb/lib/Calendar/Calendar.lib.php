@@ -7,7 +7,7 @@
  * Credits: http://cool-php-tutorials.blogspot.hu/2012/01/better-php-calendar-class.html
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2012, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2014, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebCalendar

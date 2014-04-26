@@ -5,7 +5,7 @@
  * Users module.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2013, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2014, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    DefaultApp
  * @subpackage UsersModule
