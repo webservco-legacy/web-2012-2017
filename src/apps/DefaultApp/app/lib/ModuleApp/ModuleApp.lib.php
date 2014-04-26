@@ -81,6 +81,8 @@ class ModuleApp extends Module {
 		
 		$data['title'] = $data['title_app'] = __(Core::Config()->Get('app.title'), 'App');
 		
+		$data['description'] = __(Core::Config()->Get('app.description'), 'App');
+		
 		$data['no_data'] = __('No data to display', 'App');
 		
 		return $data;
@@ -147,6 +149,7 @@ class ModuleApp extends Module {
 	 * Values:
 	 * $data['path']['app'] (/full/server/path/to/app/dir/)
 	 * $data['path']['www'] (/full/server/path/to/www/dir/)
+	 * $data['path']['media'] (/full/server/path/to/media/dir/)
 	 *
 	 * Usage:
 	 * Controller: $data['path']['www']
@@ -170,6 +173,7 @@ class ModuleApp extends Module {
 	 *
 	 * Values:
 	 * $data['strings']['title']
+	 * $data['strings']['description']
 	 * $data['strings']['app_title']
 	 * $data['strings']['no_data']
 	 *
@@ -291,6 +295,8 @@ class ModuleApp extends Module {
 		$data['url']['next_string'] = !empty($data['query']['next']) ? "/next/{$data['query']['next']}" : NULL;
 		
 		$data['url']['items_admin'] = !empty($data['info']['url_next']) ? "{$data['url']['www']}{$data['info']['url_next']}" : "{$data['url']['www']}Items/Admin/Items";
+		
+		$data['facebook']['meta'] = Core::FacebookApi()->GetDefaultMeta($data);
 		
 		return $data;
 	}

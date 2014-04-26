@@ -4,12 +4,6 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- Users module settings -->
-		<items>
-		    <pagination>
-		        <items>3</items>
-		    </pagination>
-		</items>
 	</dev>
 	<!-- Test Environment -->
 	<test>

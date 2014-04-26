@@ -16,7 +16,6 @@
  * @access     public
  * @filesource
  */
-
 if (!defined('_WEB')) {
 	exit();
 }
@@ -24,7 +23,7 @@ if (!defined('_WEB')) {
 /**
  * Controller_Content_App
  * App Controller for Content module.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package DefaultApp
  * @subpackage ContentModule
@@ -54,7 +53,7 @@ class Controller_Content_App extends ControllerApp {
 		/**
 		 * Debug using the log instead of output in browser (useful for live apps).
 		 */
-		Core::Log()->Debug('Debugging $data', $data, 'info');
+		Core::Log()->Debug('Debugging $data', $data, 'debug');
 		
 		echo $this->GetOutput($data);
 		

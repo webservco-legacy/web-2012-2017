@@ -4,10 +4,18 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- Application settings -->
+		
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
+	    <!-- Application settings -->
 		<app>
-		    <id>28</id>
-			<title>Default app</title>
+		    <id></id>
+			<title><![CDATA[ Default App ]]></title>
+			<description>Default WEb App</description>
 			<prefix>app_</prefix>
 		</app>
 		<options>
@@ -57,9 +65,9 @@
 					<resource>Admin</resource>
 				</item>
 				<item>
-					<title>Italia Multimedia</title>
+					<title>WebServ</title>
 					<link></link>
-					<url>http://www.italiamultimedia.com</url>
+					<url>http://www.webserv.co</url>
 					<target>_blank</target>
 					<resource></resource>
 				</item>
@@ -113,12 +121,6 @@
 		<date>
 			<timezone>Europe/Budapest</timezone>
 		</date>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
 	</prod>
 </config>
 <!-- $Id$ -->

@@ -5,12 +5,12 @@
 	<!-- Development Environment -->
 	<dev>
 		<path>
-			<core>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/WEb/</core>
-			<app>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/app/</app>
-			<www>/home/radu/Documents/Projects/Eclipse/ws_WEb/src/apps/DefaultApp/web/</www>
+			<core>/usr/share/php/WEb7/</core>
+			<app>/var/www/default.webserv.co/private/app/</app>
+			<www>/var/www/default.webserv.co/web/</www>
 		</path>
 		<url>
-			<www>http://192.168.1.80/~radu/default_app/</www>
+			<www>http://default.webserv.co/</www>
 		</url>
 	</dev>
 	<!-- Test Environment -->
@@ -19,12 +19,12 @@
 	<!-- Production Environment -->
 	<prod>
 		<path>
-			<core>/var/www/app.italiamultimedia.com/libs/WEb7/</core>
-			<app>/var/www/app.italiamultimedia.com/web/default_app/app/</app>
-			<www>/var/www/app.italiamultimedia.com/web/default_app/</www>
+			<core>/usr/share/php/WEb7/</core>
+			<app>/var/www/default.webserv.co/private/app/</app>
+			<www>/var/www/default.webserv.co/web/</www>
 		</path>
 		<url>
-			<www>http://app.italiamultimedia.com/default_app/</www>
+			<www>http://default.webserv.co/</www>
 		</url>
 	</prod>
 </config>

@@ -4,6 +4,13 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
+
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
 		<!-- Users module settings -->
 		<users>
 			<form>
@@ -11,7 +18,8 @@
 					<email>
 						<type>text</type>
 						<title>Email</title>
-						<description>Email address asociated with your account</description>
+						<description>Email address asociated with your account
+						</description>
 						<required>1</required>
 						<filters>StripTags</filters>
 						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
@@ -45,6 +53,14 @@
 					</send>
 				</login>
 				<register>
+					<nickname>
+						<type>text</type>
+						<title>Nickname</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+					</nickname>
 					<name_first>
 						<type>text</type>
 						<title>Name</title>
@@ -96,7 +112,6 @@
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 						<content></content>
 					</city>
-
 					<department>
 						<type>select</type>
 						<title>State</title>
@@ -143,7 +158,8 @@
 						<description></description>
 						<required>1</required>
 						<filters>StripTags</filters>
-						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]</conditions>
+						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
+						</conditions>
 					</email>
 					<password>
 						<type>password</type>
@@ -177,7 +193,8 @@
 					<email>
 						<type>text</type>
 						<title>Email</title>
-						<description>Email address asociated with your account</description>
+						<description>Email address asociated with your account
+						</description>
 						<required>1</required>
 						<filters>StripTags</filters>
 						<conditions>IsValidEmail|HasLengthMin[4]|HasLengthMax[90]
@@ -212,12 +229,6 @@
 				</changepassword>
 			</form>
 		</users>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
 	</prod>
 
 </config>

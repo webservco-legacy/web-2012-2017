@@ -41,7 +41,7 @@ class Controller_Items_App extends ControllerApp {
 		 * Custom functionality below this line.
 		 */
 		
-		$data['strings']['title'] = __('Items');
+		$data['strings']['title'] = $data['facebook']['meta']['og']['title'] = __('Items');
 		
 		$this->Module()->SetCondition('i18n_locale', Core::I18n()->GetLocale());
 		
@@ -74,7 +74,7 @@ class Controller_Items_App extends ControllerApp {
 		
 		if (!empty($data['item']['item_title'])) {
 			
-			$data['strings']['title'] = $data['item']['item_title'];
+			$data['strings']['title'] = $data['facebook']['meta']['og']['title'] = $data['item']['item_title'];
 		}
 		
 		echo $this->GetOutput($data);

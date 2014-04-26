@@ -3,7 +3,7 @@
 		<article>
 		
 		<?php if (!empty($user['Logged'])) { ?>
-				<strong><?php echo $user['Prop']['user_name_first']; ?></strong> <a href="<?php echo $url['www']; ?>Users/App/Logout" title="<?php echo __('Logout'); ?>"><?php echo __('Logout'); ?></a>
+				<strong><?php echo $user['Prop']['user_nickname']; ?></strong> <a href="<?php echo $url['www']; ?>Users/App/Logout" title="<?php echo __('Logout'); ?>"><?php echo __('Logout'); ?></a>
 		<?php } else { ?>
 				<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
 		<?php } ?>
@@ -14,7 +14,7 @@
 			
 		<nav>
 		<?php
-		if (!empty($menu['web'])) {
+if (!empty($menu['web'])) {
 			
 			echo "<ul>\n";
 			
@@ -24,7 +24,7 @@
 				
 				if (!empty($menu_item['resource'])) {
 					
-					if (0 === strpos($info['location'], $menu_item['resource']) || (empty($info['location']) && '/' == $menu_item['resource'])) {
+					if (Core::String()->StartsWith($menu_item['resource'], $info['location']) || (empty($info['location']) && '/' == $menu_item['resource'])) {
 						$a_class = ' class="active"';	
 					}
 				}

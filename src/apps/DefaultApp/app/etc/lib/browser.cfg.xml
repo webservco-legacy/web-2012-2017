@@ -10,11 +10,11 @@
 	</test>
 	<!-- Production Environment -->
 	<prod>
-	    <!-- Browser Library settings -->
-	    <browser>
-	        <agent></agent>
-	        <referer></referer>
-	        <encoding>x-compress; x-zip</encoding>
+		<!-- Browser Library settings -->
+		<browser>
+			<agent></agent>
+			<referer></referer>
+			<encoding>x-compress; x-zip</encoding>
 		</browser>
 	</prod>
 </config>

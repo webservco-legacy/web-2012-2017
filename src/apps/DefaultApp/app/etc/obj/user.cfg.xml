@@ -14,6 +14,7 @@
 				<attempts>10</attempts>
 			</login>
 			<props>
+				<item>user_nickname</item>
 				<item>user_name_first</item>
 				<item>user_name_last</item>
 				<item>user_company</item>

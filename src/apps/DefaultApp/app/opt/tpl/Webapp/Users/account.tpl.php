@@ -2,7 +2,7 @@
 		
 <?php if (!empty($user['Logged'])) { ?>
 
-		<p><?php echo __('Welcome'); ?> <strong><?php echo $user['Prop']['user_name_first']; ?></strong>!</p>
+		<p><?php echo __('Welcome'); ?> <strong><?php echo $user['Prop']['user_nickname']; ?></strong>!</p>
 		
 		<p class="clearfix">
 			<a href="<?php echo $url['www']; ?>Users/App/ChangePassword" title="<?php echo __('Change password'); ?>"><?php echo __('Change password'); ?></a>

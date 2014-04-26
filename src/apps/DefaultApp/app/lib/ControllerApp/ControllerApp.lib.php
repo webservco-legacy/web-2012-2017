@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * ControllerApp
  * Application controller library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package DefaultApp
  * @subpackage ControllerApp
@@ -37,7 +37,7 @@ class ControllerApp extends Controller {
 
 	/**
 	 * Controller initialization.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Init() {
@@ -90,7 +90,7 @@ class ControllerApp extends Controller {
 
 	/**
 	 * Get output.
-	 * 
+	 *
 	 * @param array $contentData        	
 	 * @param string $customTemplate        	
 	 * @param boolean $globalTemplate
@@ -104,7 +104,7 @@ class ControllerApp extends Controller {
 
 		/**
 		 * Local data.
-		 * 
+		 *
 		 * @var array
 		 */
 		$local_data = array();
@@ -126,7 +126,7 @@ class ControllerApp extends Controller {
 			
 			/**
 			 * Set the extra tpl var to the parsed content template.
-			 * 
+			 *
 			 * @var array
 			 */
 			
@@ -135,21 +135,21 @@ class ControllerApp extends Controller {
 		
 		/**
 		 * Get secondary template name.
-		 * 
+		 *
 		 * @var string
 		 */
 		$template_name = (FALSE !== $globalTemplate) ? $template_dir_main . $this->_mTemplatePrefix . $customTemplate : $this->Output()->GetSubTemplate($this->_mRequest, $customTemplate);
 		
 		/**
 		 * Set the content tpl var to the parsed content template.
-		 * 
+		 *
 		 * @var array
 		 */
 		$local_data['tpl_content'] = $this->Output()->Out($template_name, $contentData);
 		
 		/**
 		 * Get all data.
-		 * 
+		 *
 		 * @var array
 		 */
 		$data = array_merge($local_data, $contentData);
@@ -186,7 +186,6 @@ class ControllerApp extends Controller {
 			if (Core::Acl()->Check($data['user']['Id'], $data['info']['location'])) {
 				
 				return TRUE;
-			
 			} else {
 				
 				$data['strings']['message'] = __('Error') . ': ' . __('You don\'t have permission to access this resource.');
@@ -195,7 +194,6 @@ class ControllerApp extends Controller {
 				
 				return FALSE;
 			}
-		
 		} else {
 			
 			$next = Core::String()->EncodeUrlString($data['info']['location']);

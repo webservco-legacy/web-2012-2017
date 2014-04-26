@@ -5,7 +5,7 @@
  * Users module.
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2014, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    DefaultApp
  * @subpackage UsersModule
@@ -147,13 +147,6 @@ class Module_Users extends ModuleApp {
 		
 		Core::Form()->SetData($form_config);
 		
-		$departments = Core::Geo()->GetDepartments('IT');
-		
-		if (!empty($departments)) {
-			
-			Core::Form()->SetMeta('department', 'options', $departments);
-		}
-		
 		$countries = Core::Geo()->GetCountries();
 		
 		if (!empty($countries)) {
@@ -178,6 +171,13 @@ class Module_Users extends ModuleApp {
 				if ($email_exists) {
 					
 					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['email']['title']);
+				}
+				
+				$nickname_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_nickname', $form['data']['nickname']);
+				
+				if ($nickname_exists) {
+					
+					$form['errors']['nickname'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['nickname']['title']);
 				}
 				
 				if ($form['data']['password'] != $form['data']['password_confirm']) {
@@ -501,11 +501,6 @@ class Module_Users extends ModuleApp {
 		
 		$departments = Core::Geo()->GetDepartments('IT');
 		
-		if (!empty($departments)) {
-			
-			Core::Form()->SetMeta('department', 'options', $departments);
-		}
-		
 		$countries = Core::Geo()->GetCountries();
 		
 		if (!empty($countries)) {
@@ -584,7 +579,7 @@ class Module_Users extends ModuleApp {
 		FROM {$this->_mAppPrefix}acl_object_user
 		WHERE 1
 		{$q_conditions}
-		ORDER BY user_name_last, user_name_first
+		ORDER BY user_nickname
 		{$q_limit}";
 		
 		$rs = Core::Database()->Query($q);

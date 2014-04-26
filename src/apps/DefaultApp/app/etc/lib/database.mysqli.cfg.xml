@@ -4,16 +4,6 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- Database configuration -->
-		<database>
-			<host>localhost</host>
-			<port>3306</port>
-			<user>im</user>
-			<password>im</password>
-			<database>im_app_default</database>
-			<!-- Fix GROUP_CONCAT limit? -->
-			<fix_gc>1</fix_gc>
-		</database>
 	</dev>
 	<!-- Test Environment -->
 	<test>
@@ -24,9 +14,9 @@
 		<database>
 			<host>localhost</host>
 			<port>3306</port>
-			<user>c1_a_default</user>
+			<user>c1_default_usr</user>
 			<password>REDACTED</password>
-			<database>@ppDb@#%imimim0</database>
+			<database>c1_default</database>
 			<!-- Fix GROUP_CONCAT limit? -->
 			<fix_gc>1</fix_gc>
 		</database>

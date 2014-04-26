@@ -5,23 +5,6 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- SMTP Settings -->
-		<smtp>
-			<!-- Enable SSL? -->
-			<ssl>1</ssl>
-			<!-- SMTP Server hostname ( defaults to localhost ) -->
-			<server>smtp.gmail.com</server>
-			<!-- SMTP Server Port ( defaults to 25) -->
-			<port>465</port>
-			<!-- SMTP connection timeout (defaults to 45) -->
-			<timeout>45</timeout>
-			<!-- SMTP user name (blank for no authentication) -->
-			<user>user@example.com</user>
-			<!-- SMTP password (blank for no authentication) -->
-			<password>REDACTED</password>
-			<!-- Application hostname -->
-			<host>app.italiamultimedia.com</host>
-		</smtp>
 	</dev>
 	<!-- Test Environment -->
 	<test>
@@ -31,11 +14,11 @@
 		<!-- SMTP Settings -->
 		<smtp>
 			<!-- Enable SSL? -->
-			<ssl>0</ssl>
+			<ssl>1</ssl>
 			<!-- SMTP Server hostname ( defaults to localhost ) -->
-			<server>localhost</server>
+			<server>mail.webserv.co</server>
 			<!-- SMTP Server Port ( defaults to 25) -->
-			<port>25</port>
+			<port>587</port>
 			<!-- SMTP connection timeout (defaults to 45) -->
 			<timeout>45</timeout>
 			<!-- SMTP user name (blank for no authentication) -->
@@ -43,7 +26,7 @@
 			<!-- SMTP password (blank for no authentication) -->
 			<password></password>
 			<!-- Application hostname -->
-			<host>italiamultimedia.com</host>
+			<host>webserv.co</host>
 		</smtp>
 	</prod>
 </config>

@@ -4,35 +4,9 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- Output library settings -->
-		<output>
-			<skin>Webapp</skin>
-			<template>layout</template>
-			<templates_extra>
-				<item>header</item>
-				<item>left</item>
-				<item>right</item>
-				<item>footer</item>
-				<item>scripts</item>
-			</templates_extra>
-			<extension>.tpl.php</extension>
-		</output>
 	</dev>
 	<!-- Test Environment -->
 	<test>
-		<!-- Output library settings -->
-		<output>
-			<skin>Webapp</skin>
-			<template>layout</template>
-			<templates_extra>
-				<item>header</item>
-				<item>left</item>
-				<item>right</item>
-				<item>footer</item>
-				<item>scripts</item>
-			</templates_extra>
-			<extension>.tpl.php</extension>
-		</output>
 	</test>
 	<!-- Production Environment -->
 	<prod>

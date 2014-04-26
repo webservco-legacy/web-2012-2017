@@ -7,7 +7,7 @@
  * Module: Users
  *
  * @author     Radu Maier <radu@webserv.co>
- * @copyright  Copyright (c) 2008 - 2014, Radu Maier
+ * @copyright  Copyright (c) 2008 - 2013, Radu Maier
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    DefaultApp
  * @subpackage UsersModule
@@ -16,7 +16,6 @@
  * @access     public
  * @filesource
  */
-
 if (!defined('_WEB')) {
 	exit();
 }
@@ -24,7 +23,7 @@ if (!defined('_WEB')) {
 /**
  * Controller_Users_App
  * App Controller for Users module.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package DefaultApp
  * @subpackage UsersModule
@@ -33,7 +32,7 @@ class Controller_Users_App extends ControllerApp {
 
 	/**
 	 * Account.
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function Account() {
@@ -51,7 +50,6 @@ class Controller_Users_App extends ControllerApp {
 		if (!empty($data['user']['Logged'])) {
 			
 			$template = 'account';
-		
 		} else {
 			
 			$data['strings']['title'] = __('Login');
@@ -81,7 +79,6 @@ class Controller_Users_App extends ControllerApp {
 		if (!empty($data['user']['Logged'])) {
 			
 			$template = 'account';
-		
 		} else {
 			
 			$data['form'] = $this->Module()->GetRegisterForm();
@@ -109,7 +106,6 @@ class Controller_Users_App extends ControllerApp {
 		if (!empty($data['user']['Logged'])) {
 			
 			$template = 'account';
-		
 		} else {
 			
 			$data['form'] = $this->Module()->GetResetPasswordForm();
@@ -137,7 +133,6 @@ class Controller_Users_App extends ControllerApp {
 		if (empty($data['user']['Logged'])) {
 			
 			$template = 'account';
-		
 		} else {
 			
 			$data['form'] = $this->Module()->GetChangePasswordForm($data['user']['Id'], $data['user']['Prop']['user_email']);
@@ -182,7 +177,6 @@ class Controller_Users_App extends ControllerApp {
 		if (empty($data['user']['Logged'])) {
 			
 			$template = 'account';
-		
 		} else {
 			
 			$data['form'] = $this->Module()->GetEditForm($data['user']['Id'], $data['user']['Prop']);
@@ -197,7 +191,7 @@ class Controller_Users_App extends ControllerApp {
 
 	/**
 	 * Login error.
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function LoginError() {
@@ -219,7 +213,7 @@ class Controller_Users_App extends ControllerApp {
 
 	/**
 	 * Logout.
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function Logout() {
@@ -227,7 +221,6 @@ class Controller_Users_App extends ControllerApp {
 		/**
 		 * No initialization or data needed.
 		 */
-		
 		Core::User()->Logout();
 		
 		Core::Router()->Redirect('Users/App/LogoutDone');
@@ -252,7 +245,7 @@ class Controller_Users_App extends ControllerApp {
 
 	/**
 	 * Display captcha image.
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function Captcha() {
@@ -269,6 +262,66 @@ class Controller_Users_App extends ControllerApp {
 		echo Core::Captcha()->GetImage();
 		
 		return TRUE;
+	}
+
+	public function Facebook() {
+
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		$data['facebook']['user_id'] = Core::FacebookApi()->GetUserId();
+		$data['facebook']['errors'] = array();
+		
+		if (!empty($data['query']['error']) && !empty($data['query']['error_description'])) {
+			
+			$data['facebook']['errors'][$data['query']['error']] = $data['query']['error_description'];
+		}
+		
+		if (!empty($data['facebook']['user_id'])) {
+			
+			try {
+				
+				$data['facebook']['logout_url'] = Core::FacebookApi()->GetLogoutUrl("{$data['url']['www']}Users/App/FacebookLogout/");
+				
+				$data['facebook']['profile'] = Core::FacebookApi()->GetProfile();
+			} catch (FacebookApiException $e) {
+				
+				$data['facebook']['login_url'] = Core::FacebookApi()->GetLoginUrl("{$data['url']['www']}Users/App/Facebook/");
+				
+				$data['facebook']['errors'][$e->getType()] = $e->getMessage();
+			}
+		} else {
+			
+			$data['facebook']['login_url'] = Core::FacebookApi()->GetLoginUrl("{$data['url']['www']}Users/App/Facebook/");
+		}
+		
+		echo '<pre>'; // XXX
+		print_r($_SESSION);
+		echo '<hr />';
+		print_r($_GET);
+		echo '<hr />';
+		print_r($_REQUEST);
+		echo '<hr />';
+		print_r($data);
+		return; // XXX
+		
+		echo $this->GetOutput($data);
+		
+		return TRUE;
+	}
+
+	public function FacebookLogout() {
+
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		Core::FacebookApi()->Logout();
+		
+		Core::Router()->Redirect('Users/App/Facebook');
+		
+		exit();
 	}
 }
 ?>
