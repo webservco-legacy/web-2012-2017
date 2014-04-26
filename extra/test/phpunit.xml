@@ -35,6 +35,7 @@
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Iceget</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Smtp</directory>
 	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/Useragent</directory>
+	        <directory suffix=".lib.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/lib/FacebookApi</directory>
 	    </testsuite>
 	    <testsuite name="WEb Objects">
 	    	<directory suffix=".obj.php">/home/radu/Documents/Projects/Eclipse/ws_WEb/extra/test/cases/WEb/obj/User</directory>

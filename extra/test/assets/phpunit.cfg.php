@@ -96,6 +96,8 @@ require_once 'WEb/lib/Smtp/Smtp.lib.php';
 
 require_once 'WEb/lib/Useragent/Useragent.lib.php';
 
+require_once 'WEb/lib/FacebookApi/FacebookApi.lib.php';
+
 require_once 'WEb/obj/User/User.obj.php';
 
 /**
