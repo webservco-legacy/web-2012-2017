@@ -4,7 +4,15 @@
 	
 		<p class="strong ko"><?php echo $strings['error_message']; ?></p>
 		
-<?php } else if (!empty($form)) { ?>
+		<?php if (!empty($_SESSION['FacebookApi']['logout_url'])) { ?>
+		<p>
+		<a class="button" href="<?php echo $_SESSION['FacebookApi']['logout_url']; ?>" title="<?php echo __('Facebook logout'); ?>"><?php echo __('Facebook Logout'); ?></a>
+		</p>
+		<?php } ?>
+		
+<?php }
+
+if (!empty($form)) { ?>
 		
 		<form class="login" enctype="multipart/form-data" method="post" action="" autocomplete="off">
 		
@@ -38,13 +46,18 @@
 <?php } ?>
 
 		<p class="clearfix">
+			<?php echo __('or'); ?>
+			<br />
+			<a class="button" href="<?php echo $url['www']; ?>Users/App/FacebookLogin" title="<?php echo __('Facebook login'); ?>"><?php echo __('Facebook Login'); ?></a>
+		</p>
+
+		<p class="clearfix">
 			<?php echo __('Did you forget your password?'); ?>
 			<br />
 			<a href="<?php echo $url['www']; ?>Users/App/ResetPassword" title="<?php echo __('Reset password'); ?>"><?php echo __('Reset password'); ?></a>
 		</p>
 		
 		<p class="clearfix">
-			<br />
 			<?php echo __('Other options'); ?>:
 			<br />
 			<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>

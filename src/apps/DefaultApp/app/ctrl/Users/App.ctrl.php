@@ -70,23 +70,21 @@ class Controller_Users_App extends ControllerApp {
 		
 		$data = $this->Module()->GetData($this->_mRequest);
 		
-		/**
-		 * Custom functionality below this line.
-		 */
-		
-		$data['strings']['title'] = __('Register');
-		
 		if (!empty($data['user']['Logged'])) {
 			
-			$template = 'account';
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
 		} else {
 			
-			$data['form'] = $this->Module()->GetRegisterForm();
+			$data['strings']['title'] = __('Register');
 			
-			$template = 'register';
+			$data['strings']['description'] = __('Please fill this data in order to complete the registration.');
+			
+			$data['form'] = $this->Module()->GetRegisterForm();
 		}
 		
-		echo $this->GetOutput($data, $template);
+		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
@@ -105,15 +103,15 @@ class Controller_Users_App extends ControllerApp {
 		
 		if (!empty($data['user']['Logged'])) {
 			
-			$template = 'account';
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
 		} else {
 			
 			$data['form'] = $this->Module()->GetResetPasswordForm();
-			
-			$template = 'reset_password';
 		}
 		
-		echo $this->GetOutput($data, $template);
+		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
@@ -132,15 +130,22 @@ class Controller_Users_App extends ControllerApp {
 		
 		if (empty($data['user']['Logged'])) {
 			
-			$template = 'account';
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
 		} else {
 			
-			$data['form'] = $this->Module()->GetChangePasswordForm($data['user']['Id'], $data['user']['Prop']['user_email']);
+			if (!empty($data['user']['Prop']['user_social_id'])) {
+				
+				Core::Router()->Redirect('Users/App/Account');
+				
+				exit();
+			}
 			
-			$template = 'change_password';
+			$data['form'] = $this->Module()->GetChangePasswordForm($data['user']['Id'], $data['user']['Prop']['user_email']);
 		}
 		
-		echo $this->GetOutput($data, $template);
+		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
@@ -157,7 +162,7 @@ class Controller_Users_App extends ControllerApp {
 		
 		$data['strings']['title'] = __('Change password');
 		
-		echo $this->GetOutput($data, 'password_done');
+		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
@@ -176,15 +181,15 @@ class Controller_Users_App extends ControllerApp {
 		
 		if (empty($data['user']['Logged'])) {
 			
-			$template = 'account';
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
 		} else {
 			
 			$data['form'] = $this->Module()->GetEditForm($data['user']['Id'], $data['user']['Prop']);
-			
-			$template = 'edit';
 		}
 		
-		echo $this->GetOutput($data, $template);
+		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
@@ -218,9 +223,17 @@ class Controller_Users_App extends ControllerApp {
 	 */
 	public function Logout() {
 
-		/**
-		 * No initialization or data needed.
-		 */
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		if (!empty($_SESSION['FacebookApi']['logout_url'])) {
+			
+			Core::Router()->Redirect("{$_SESSION['FacebookApi']['logout_url']}");
+			
+			exit();
+		}
+		
 		Core::User()->Logout();
 		
 		Core::Router()->Redirect('Users/App/LogoutDone');
@@ -270,7 +283,8 @@ class Controller_Users_App extends ControllerApp {
 		
 		$data = $this->Module()->GetData($this->_mRequest);
 		
-		$data['facebook']['user_id'] = Core::FacebookApi()->GetUserId();
+		$_SESSION['FacebookApi']['user_id'] = Core::FacebookApi()->GetUserId();
+		
 		$data['facebook']['errors'] = array();
 		
 		if (!empty($data['query']['error']) && !empty($data['query']['error_description'])) {
@@ -278,11 +292,11 @@ class Controller_Users_App extends ControllerApp {
 			$data['facebook']['errors'][$data['query']['error']] = $data['query']['error_description'];
 		}
 		
-		if (!empty($data['facebook']['user_id'])) {
+		if (!empty($_SESSION['FacebookApi']['user_id'])) {
 			
 			try {
 				
-				$data['facebook']['logout_url'] = Core::FacebookApi()->GetLogoutUrl("{$data['url']['www']}Users/App/FacebookLogout/");
+				$_SESSION['FacebookApi']['logout_url'] = Core::FacebookApi()->GetLogoutUrl("{$data['url']['www']}Users/App/FacebookLogout/");
 				
 				$data['facebook']['profile'] = Core::FacebookApi()->GetProfile();
 			} catch (FacebookApiException $e) {
@@ -296,32 +310,164 @@ class Controller_Users_App extends ControllerApp {
 			$data['facebook']['login_url'] = Core::FacebookApi()->GetLoginUrl("{$data['url']['www']}Users/App/Facebook/");
 		}
 		
-		echo '<pre>'; // XXX
-		print_r($_SESSION);
-		echo '<hr />';
-		print_r($_GET);
-		echo '<hr />';
-		print_r($_REQUEST);
-		echo '<hr />';
-		print_r($data);
+		// echo '<pre>';
+		// print_r($_SESSION);
+		// echo '<hr />';
+		// print_r($data['facebook']);
 		return; // XXX
+	}
+
+	public function FacebookLogin() {
+
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		if (!empty($data['user']['Logged'])) {
+			
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
+		}
+		
+		$_SESSION['FacebookApi']['user_id'] = Core::FacebookApi()->GetUserId();
+		
+		$data['facebook']['errors'] = array();
+		
+		if (!empty($data['query']['error']) && !empty($data['query']['error_description'])) {
+			
+			$data['facebook']['errors'][$data['query']['error']] = $data['query']['error_description'];
+		}
+		
+		if (!empty($_SESSION['FacebookApi']['user_id'])) {
+			
+			try {
+				
+				$_SESSION['FacebookApi']['logout_url'] = Core::FacebookApi()->GetLogoutUrl("{$data['url']['www']}Users/App/FacebookLogout/");
+				
+				$data['facebook']['profile'] = Core::FacebookApi()->GetProfile();
+				
+				$_SESSION['FacebookApi']['data']['main'] = array(
+						'id' => $data['facebook']['profile']['id'],
+						'email' => $data['facebook']['profile']['email'] 
+				);
+				
+				if (!empty($data['facebook']['profile']['location']['name'])) {
+					
+					$location = explode(',', $data['facebook']['profile']['location']['name']);
+					
+					if (!empty($location[0])) {
+						
+						$_SESSION['FacebookApi']['data']['form']['city'] = trim($location[0]);
+					}
+					
+					if (!empty($location[1])) {
+						
+						$_SESSION['FacebookApi']['data']['form']['country_code'] = Core::Geo()->GetCountryCode(trim($location[1]));
+					}
+				}
+				
+				$_SESSION['FacebookApi']['data']['custom'] = array(
+						'name_first' => $data['facebook']['profile']['first_name'],
+						'name_last' => $data['facebook']['profile']['last_name'] 
+				);
+				
+				$this->Module()->DoFacebookLogin();
+				
+				return;
+			} catch (FacebookApiException $e) {
+				
+				$data['facebook']['login_title'] = __('Please log in again');
+				
+				$data['facebook']['login_url'] = Core::FacebookApi()->GetLoginUrl("{$data['url']['www']}Users/App/FacebookLogin/");
+				
+				$data['facebook']['errors'][$e->getType()] = $e->getMessage();
+			}
+		} else {
+			
+			$data['facebook']['login_title'] = __('Facebook login');
+			
+			$data['facebook']['login_url'] = Core::FacebookApi()->GetLoginUrl("{$data['url']['www']}Users/App/FacebookLogin/");
+			
+			if (empty($data['facebook']['errors'])) {
+				
+				Core::Router()->Redirect($data['facebook']['login_url']);
+				
+				exit();
+			}
+		}
 		
 		echo $this->GetOutput($data);
 		
 		return TRUE;
 	}
 
-	public function FacebookLogout() {
+	public function FacebookRegister() {
 
 		$this->Init();
 		
 		$data = $this->Module()->GetData($this->_mRequest);
 		
+		if (!empty($data['user']['Logged'])) {
+			
+			Core::Router()->Redirect('Users/App/Account');
+			
+			exit();
+		}
+		
+		if (empty($_SESSION['FacebookApi']['user_id'])) {
+			
+			Core::Router()->Redirect('Users/App/FacebookLogin');
+			
+			exit();
+		}
+		
+		$data['strings']['title'] = __('Facebook Register');
+		
+		$data['strings']['description'] = __('Please fill this data in order to complete the registration.');
+		
+		$data['form'] = $this->Module()->GetRegisterFacebookForm();
+		
+		$data['is_social_registration'] = TRUE;
+		
+		$template = 'register';
+		
+		echo $this->GetOutput($data, $template);
+		
+		return TRUE;
+	}
+
+	public function FacebookLogout() {
+
 		Core::FacebookApi()->Logout();
 		
-		Core::Router()->Redirect('Users/App/Facebook');
+		Core::Router()->Redirect('Users/App/Logout');
 		
 		exit();
+	}
+
+	/**
+	 * Login error.
+	 *
+	 * @return mixed
+	 */
+	public function FacebookRegisterError() {
+
+		$this->Init();
+		
+		$data = $this->Module()->GetData($this->_mRequest);
+		
+		//Core::FacebookApi()->Logout();
+		
+		$data['strings']['title'] = __('Login error');
+		
+		$data['strings']['error_message'] = __('Login error') . ': ' . __('This email is already registered. Please use the options to "Login" or "Reset password".');
+		
+		$data['form'] = $this->Module()->GetLoginForm();
+		
+		//echo '<pre>'; print_r($_SESSION); exit();
+		
+		echo $this->GetOutput($data, 'login');
 	}
 }
 ?>

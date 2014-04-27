@@ -61,13 +61,13 @@ table {
 }
 
 html,button,input,select,textarea {
+	font-size: 1em;
 	background: #eee;
 	color: #777;
 	font-family: Verdana, Geneva, sans-serif;
 }
 
 body {
-	font-size: 1em;
 	line-height: 1.7;
 }
 
@@ -237,6 +237,10 @@ table.items th, table.items td {
 
 #pagination a:hover {
 	border-bottom: 1px dotted #777;
+}
+
+p {
+	padding: 5px 0 5px 0;
 }
 
 /* CREDITS START */

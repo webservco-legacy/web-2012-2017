@@ -5,28 +5,6 @@
 <config>
 	<!-- Development Environment -->
 	<dev>
-		<!-- User object settings -->
-		<user>
-			<login>
-				<!-- Failed logins timeout (minutes) -->
-				<timeout>5</timeout>
-				<!-- Maximum failed login attempts permitted -->
-				<attempts>10</attempts>
-			</login>
-			<props>
-				<item>user_nickname</item>
-				<item>user_name_first</item>
-				<item>user_name_last</item>
-				<item>user_company</item>
-				<item>user_address</item>
-				<item>user_zip</item>
-				<item>user_city</item>
-				<item>user_department</item>
-				<item>user_country</item>
-				<item>user_phone</item>
-				<item>user_description</item>
-			</props>
-		</user>
 	</dev>
 	<!-- Test Environment -->
 	<test></test>
@@ -41,6 +19,9 @@
 				<attempts>10</attempts>
 			</login>
 			<props>
+			    <item>user_social_id</item>
+			    <item>user_social_type</item>
+			    <item>user_nickname</item>
 				<item>user_name_first</item>
 				<item>user_name_last</item>
 				<item>user_company</item>

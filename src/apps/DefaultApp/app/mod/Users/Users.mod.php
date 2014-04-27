@@ -173,11 +173,14 @@ class Module_Users extends ModuleApp {
 					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['email']['title']);
 				}
 				
-				$nickname_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_nickname', $form['data']['nickname']);
-				
-				if ($nickname_exists) {
+				if (isset($form['meta']['nickname'])) {
 					
-					$form['errors']['nickname'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['nickname']['title']);
+					$nickname_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_nickname', $form['data']['nickname']);
+					
+					if ($nickname_exists) {
+						
+						$form['errors']['nickname'][] = sprintf(Core::Config()->Get('form.error.alreadyregistered.text'), $form['meta']['nickname']['title']);
+					}
 				}
 				
 				if ($form['data']['password'] != $form['data']['password_confirm']) {
@@ -267,6 +270,11 @@ class Module_Users extends ModuleApp {
 			$data["user_{$key}"] = $value;
 		}
 		
+		if (!isset($data['user_description'])) {
+			
+			$data['user_description'] = NULL;
+		}
+		
 		$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (";
 		$qc .= implode(', ', array_keys($data));
 		$qc .= ") VALUES (";
@@ -328,6 +336,22 @@ class Module_Users extends ModuleApp {
 					$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.notregistered.text'), $form['meta']['email']['title']);
 				}
 				
+				$q = "SELECT user_social_id FROM {$this->_mAppPrefix}acl_users WHERE user_email = '{$form['data']['email']}' LIMIT 1";
+				
+				$rs = Core::Database()->Query($q);
+				
+				$t = $rs->num_rows;
+				
+				if (1 == $rs->num_rows) {
+					
+					$r = $rs->fetch_assoc();
+					
+					if (!empty($r['user_social_id'])) {
+						
+						$form['errors']['email'][] = sprintf(Core::Config()->Get('form.error.notlocaluser.text'), $form['meta']['email']['title']);
+					}
+				}
+				
 				if (empty($form['errors'])) {
 					
 					$new_pass = rand(11111, 32767);
@@ -345,6 +369,9 @@ class Module_Users extends ModuleApp {
 					$mail_subject = "{$app_name}: Password reset";
 					
 					$mail_message = "{$app_name} password reset.<br />You new password is <b>{$new_pass}</b>";
+					
+					var_dump($mail_message);
+					exit();
 					
 					Core::Mail()->SendSimple($form['data']['email'], $mail_subject, $mail_message);
 					
@@ -579,7 +606,7 @@ class Module_Users extends ModuleApp {
 		FROM {$this->_mAppPrefix}acl_object_user
 		WHERE 1
 		{$q_conditions}
-		ORDER BY user_nickname
+		ORDER BY user_name_first
 		{$q_limit}";
 		
 		$rs = Core::Database()->Query($q);
@@ -600,6 +627,215 @@ class Module_Users extends ModuleApp {
 		}
 		
 		return $data;
+	}
+
+	public function DoFacebookLogin($nextUrl = NULL) {
+
+		if (empty($_SESSION['FacebookApi']['data']['main']['id']) || empty($_SESSION['FacebookApi']['data']['main']['email'])) {
+			
+			return FALSE;
+		}
+		
+		$result_login = Core::User()->Login($_SESSION['FacebookApi']['data']['main']['email'], NULL, TRUE, array(
+				'id' => $_SESSION['FacebookApi']['data']['main']['id'],
+				'type' => 'facebook' 
+		));
+		
+		if (TRUE !== $result_login) {
+			
+			Core::Router()->Redirect('Users/App/FacebookRegister/');
+			
+			exit();
+		} else {
+			
+			/**
+			 * perform any aditional user initialization.
+			 */
+			
+			$redirect = !empty($nextUrl) ? $nextUrl : 'Users/App/Account/';
+			
+			Core::Router()->Redirect($redirect);
+			
+			exit();
+		}
+	}
+
+	public function GetRegisterFacebookForm() {
+
+		if (empty($_SESSION['FacebookApi']['data']['main']['id']) || empty($_SESSION['FacebookApi']['data']['main']['email'])) {
+			
+			return FALSE;
+		}
+		
+		Core::Form()->SetMethod('post');
+		
+		$form_config = Core::Config()->Get('users.form.register_facebook');
+		
+		if (empty($form_config)) {
+			
+			return FALSE;
+		}
+		
+		if (!empty($_SESSION['FacebookApi']['data']['form'])) {
+			
+			foreach ($_SESSION['FacebookApi']['data']['form'] as $key => $value) {
+				
+				if (isset($form_config[$key])) {
+					
+					$form_config[$key]['content'] = $value;
+				}
+			}
+		}
+		
+		Core::Form()->SetData($form_config);
+		
+		$countries = Core::Geo()->GetCountries();
+		
+		if (!empty($countries)) {
+			
+			Core::Form()->SetMeta('country', 'options', $countries);
+		}
+		
+		$form['meta'] = Core::Form()->GetMeta();
+		
+		$form['errors'] = array();
+		
+		if (!empty($_POST)) {
+			
+			$result_validation = Core::Form()->Validate();
+			
+			if (FALSE !== $result_validation) {
+				
+				$form['data'] = Core::Form()->GetEscapedFilteredData();
+				
+				$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $_SESSION['FacebookApi']['data']['main']['email']);
+				
+				if ($email_exists) {
+					
+					Core::Router()->Redirect('FacebookRegisterError');
+					
+					exit();
+				}
+				
+				if (empty($form['errors'])) {
+					
+					$user_id = $this->RegisterFacebookUser($form['data'], $_SESSION['FacebookApi']['data']);
+					
+					Core::Router()->Redirect('Users/App/Account');
+					
+					exit();
+				} else {
+					
+					$form['data'] = Core::Form()->GetData();
+				}
+			} else {
+				
+				$form['data'] = Core::Form()->GetData();
+				
+				$form['errors'] = Core::Form()->GetErrors();
+			}
+		} else {
+			
+			$email_exists = Core::Database()->ValueExists("{$this->_mAppPrefix}acl_users", 'user_email', $_SESSION['FacebookApi']['data']['main']['email']);
+			
+			if ($email_exists) {
+				
+				Core::Router()->Redirect('Users/App/FacebookRegisterError');
+				
+				exit();
+			}
+			
+			$form['data'] = Core::Form()->GetData();
+		}
+		
+		return $form;
+	}
+
+	public function RegisterFacebookUser($formData, $facebookData) {
+
+		$q = "INSERT INTO {$this->_mAppPrefix}acl_users (user_social_id, user_social_type, user_email, user_auth, owner_id, user_date_add) VALUES
+		('{$facebookData['main']['id']}', 'facebook', '{$facebookData['main']['email']}', '', 1, NOW())";
+		
+		Core::Database()->Query($q);
+		
+		$user_id = Core::Database()->GetInsertId();
+		
+		if (empty($user_id)) {
+			
+			/**
+			 * Registration error.
+			 */
+			
+			echo 'Registration error, please try again later.';
+			
+			exit();
+		}
+		
+		if (!$this->InsertCustomFacebookData($user_id, $formData, $facebookData)) {
+			
+			/**
+			 * Registration error.
+			 */
+			
+			echo 'Registration custom error, please try again later.';
+			
+			exit();
+		}
+		
+		$result_login = Core::User()->Login($facebookData['main']['email'], NULL, TRUE, array(
+				'id' => $facebookData['main']['id'],
+				'type' => 'facebook' 
+		));
+		
+		if (TRUE !== $result_login) {
+			/**
+			 * Autologin error.
+			 */
+			
+			echo 'Autologin error, please try again later.';
+			
+			exit();
+		}
+		
+		return $user_id;
+	}
+
+	public function InsertCustomFacebookData($userId, $formData, $facebookData) {
+
+		$data = array(
+				'user_id_key' => $userId 
+		);
+		
+		unset($formData['send']);
+		
+		if (!empty($formData)) {
+			
+			foreach ($formData as $key => $value) {
+				
+				$data["user_{$key}"] = $value;
+			}
+		}
+		
+		if (!empty($facebookData['custom'])) {
+			
+			foreach ($facebookData['custom'] as $key => $value) {
+				
+				$data["user_{$key}"] = $value;
+			}
+		}
+		
+		if (!isset($data['user_description'])) {
+			
+			$data['user_description'] = NULL;
+		}
+		
+		$qc = "INSERT INTO {$this->_mAppPrefix}acl_users_custom (";
+		$qc .= implode(', ', array_keys($data));
+		$qc .= ") VALUES (";
+		$qc .= "'" . implode("', '", array_values($data)) . "'";
+		$qc .= ")";
+		
+		return Core::Database()->Query($qc) ? TRUE : FALSE;
 	}
 }
 ?>

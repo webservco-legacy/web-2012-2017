@@ -16,15 +16,15 @@
 			<!-- Enable SSL? -->
 			<ssl>1</ssl>
 			<!-- SMTP Server hostname ( defaults to localhost ) -->
-			<server>mail.webserv.co</server>
+			<server>smtp.gmail.com</server>
 			<!-- SMTP Server Port ( defaults to 25) -->
-			<port>587</port>
+			<port>465</port>
 			<!-- SMTP connection timeout (defaults to 45) -->
 			<timeout>45</timeout>
 			<!-- SMTP user name (blank for no authentication) -->
-			<user></user>
+			<user>user@example.com</user>
 			<!-- SMTP password (blank for no authentication) -->
-			<password></password>
+			<password>REDACTED</password>
 			<!-- Application hostname -->
 			<host>webserv.co</host>
 		</smtp>

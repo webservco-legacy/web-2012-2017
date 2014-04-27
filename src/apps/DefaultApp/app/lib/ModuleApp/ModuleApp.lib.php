@@ -251,7 +251,6 @@ class ModuleApp extends Module {
 	 * $data['user']['Persistent']
 	 * $data['user']['Prop']['user_id']
 	 * $data['user']['Prop']['user_email']
-	 * $data['user']['Prop']['user_nickname']
 	 * $data['user']['Prop']['user_status']
 	 * + custom user properties
 	 * $data['user']['StatsCurrent']['time']

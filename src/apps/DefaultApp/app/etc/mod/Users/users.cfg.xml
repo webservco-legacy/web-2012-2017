@@ -57,7 +57,7 @@
 						<type>text</type>
 						<title>Nickname</title>
 						<description></description>
-						<required>1</required>
+						<required></required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 					</nickname>
@@ -89,7 +89,7 @@
 						<type>text</type>
 						<title>Address</title>
 						<description></description>
-						<required>1</required>
+						<required></required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 						<content></content>
@@ -98,7 +98,7 @@
 						<type>text</type>
 						<title>Zip</title>
 						<description></description>
-						<required>1</required>
+						<required></required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[3]|HasLengthMax[10]</conditions>
 						<content></content>
@@ -116,7 +116,7 @@
 						<type>select</type>
 						<title>State</title>
 						<description></description>
-						<required>1</required>
+						<required></required>
 						<filters></filters>
 						<conditions></conditions>
 						<content>MI</content>
@@ -142,13 +142,13 @@
 						<required>1</required>
 						<filters></filters>
 						<conditions></conditions>
-						<content>IT</content>
+						<content></content>
 					</country>
 					<phone>
 						<type>text</type>
 						<title>Phone</title>
 						<description></description>
-						<required>1</required>
+						<required></required>
 						<filters>StripTags|RemoveBadChars</filters>
 						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
 					</phone>
@@ -189,6 +189,31 @@
 						<content>Register</content>
 					</send>
 				</register>
+				<register_facebook>
+					<city>
+						<type>text</type>
+						<title>City</title>
+						<description></description>
+						<required>1</required>
+						<filters>StripTags|RemoveBadChars</filters>
+						<conditions>HasLengthMin[4]|HasLengthMax[90]</conditions>
+						<content></content>
+					</city>
+					<country>
+						<type>select</type>
+						<title>Country</title>
+						<description></description>
+						<required>1</required>
+						<filters></filters>
+						<conditions></conditions>
+						<content></content>
+					</country>
+					<send>
+						<type>submit</type>
+						<title></title>
+						<content>Complete registration</content>
+					</send>
+				</register_facebook>
 				<resetpassword>
 					<email>
 						<type>text</type>

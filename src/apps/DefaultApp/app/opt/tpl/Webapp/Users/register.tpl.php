@@ -1,14 +1,39 @@
 <article>
 
-<?php if (!empty($error_message)) { ?>
+<?php
+if (empty($is_social_registration)) {
+
+	echo '<p class="clearfix">';
+
+	?>
+	<a class="button" href="<?php echo $url['www']; ?>Users/App/FacebookLogin" title="<?php echo __('Facebook login'); ?>"><?php echo __('Facebook login'); ?></a>
+	<?php
+	
+	echo '</p>';
+}
+
+echo '<p class="clearfix">';
+echo $strings['description'];
+echo '</p>';
+
+
+if (!empty($form['errors']['_result'])) {
+		
+	echo "<p class=\"form_error ko\">";
+		
+	foreach ($form['errors']['_result'] as $error_msg) {
+
+		echo "{$error_msg}<br />";
+	}
+		
+	echo "</p>";
+} else if (!empty($error_message)) { ?>
 			
 	<p class="strong ko"><?php echo $error_message; ?></p>
 		
 <?php } else if (!empty($form)) { ?>
 			
 	<?php
-	//echo '<pre>'; print_r($form); echo '</pre>'; //XXX 
-	
 	
 	echo '<form enctype="multipart/form-data" method="post" action="" autocomplete="off">';
 				
@@ -115,11 +140,14 @@
 	echo "</form>";
 	?>				
 			
+	
+	<?php if (empty($is_social_registration)) { ?>
 	<p>
 	<?php echo __('Already have an account?'); ?>
 	<br />
 	<a href="<?php echo $url['www']; ?>Users/App/Account" title="<?php echo __('Login'); ?>"><?php echo __('Login'); ?></a>
 	</p>
+	<?php } ?>
 		
 <?php } else { ?>
 				
