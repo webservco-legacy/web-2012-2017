@@ -76,12 +76,12 @@ class Module extends Library {
 	 * @return bool
 	 */
 	protected function _LoadConfig($className) {
-		
+
 		/**
 		 * App prefix.
 		 */
 		$this->_mAppPrefix = Core::Config()->Get('app.prefix');
-
+		
 		/**
 		 * Add module i18n.
 		 */
@@ -664,7 +664,6 @@ class Module extends Library {
 		 * $data['user']['Persistent']
 		 * $data['user']['Prop']['user_id']
 		 * $data['user']['Prop']['user_email']
-		 * $data['user']['Prop']['user_nickname']
 		 * $data['user']['Prop']['user_status']
 		 * + custom user properties
 		 * $data['user']['StatsCurrent']['time']

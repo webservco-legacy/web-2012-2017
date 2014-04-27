@@ -140,6 +140,8 @@ class FacebookApi extends Library {
 		
 		$this->_mFacebook->destroySession();
 		
+		unset($_SESSION['FacebookApi']);
+		
 		return TRUE;
 	}
 
@@ -159,10 +161,10 @@ class FacebookApi extends Library {
 
 	/**
 	 * @TODO check
-	 * 
-	 * @param string $path
-	 * @param string $message
-	 * @return mixed|boolean
+	 *
+	 * @param string $path        	
+	 * @param string $message        	
+	 * @return mixed boolean
 	 */
 	public function PostPhoto($path, $message) {
 

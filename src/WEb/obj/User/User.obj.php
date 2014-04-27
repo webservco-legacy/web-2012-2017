@@ -63,7 +63,6 @@ class User extends Object {
 					'list' => array(
 							$this->_mKeyPrefix . 'user_id' => NULL,
 							'user_email' => NULL,
-							'user_nickname' => NULL,
 							'user_status' => NULL 
 					) 
 			);
@@ -340,7 +339,7 @@ class User extends Object {
 	 *
 	 * @return bool
 	 */
-	public function Login($userEmail, $userPass, $userRemember = FALSE) {
+	public function Login($userEmail, $userPass, $userRemember = FALSE, $userSocial = array()) {
 
 		$this->_Init();
 		
@@ -352,7 +351,7 @@ class User extends Object {
 		 *
 		 * @var bool
 		 */
-		$login = $this->_LoginUser($userEmail, $userPass);
+		$login = $this->_LoginUser($userEmail, $userPass, $userSocial);
 		
 		$this->_RecordLogin($this->_mId, $userEmail);
 		
@@ -432,7 +431,6 @@ class User extends Object {
 				'list' => array(
 						$this->_mKeyPrefix . 'user_id' => NULL,
 						'user_email' => NULL,
-						'user_nickname' => NULL,
 						'user_status' => NULL 
 				) 
 		);
@@ -584,39 +582,51 @@ class User extends Object {
 	 *
 	 * @return bool
 	 */
-	private function _LoginUser($userEmail, $userPass) {
+	private function _LoginUser($userEmail, $userPass, $userSocial = array()) {
 
 		$this->_Init();
 		
-		/**
-		 *
-		 * @var string
-		 */
-		$user_salt = Core::Security()->GetSalt($userEmail);
-		
-		/**
-		 *
-		 * @var string
-		 */
-		$user_auth = Core::Security()->GetToken($user_salt, $userPass);
-		
-		/**
-		 *
-		 * @var array
-		 */
-		$options['conditions'][] = array(
-				'user_email',
-				$userEmail 
-		);
-		
-		/**
-		 *
-		 * @var array
-		 */
-		$options['conditions'][] = array(
-				'user_auth',
-				$user_auth 
-		);
+		if (!empty($userSocial)) {
+			
+			$options['conditions'] = array(
+					array(
+							'user_email',
+							$userEmail 
+					),
+					array(
+							'user_social_type',
+							$userSocial['type'] 
+					),
+					array(
+							'user_social_id',
+							$userSocial['id'] 
+					) 
+			);
+		} else {
+			
+			/**
+			 *
+			 * @var string
+			 */
+			$user_salt = Core::Security()->GetSalt($userEmail);
+			
+			/**
+			 *
+			 * @var string
+			 */
+			$user_auth = Core::Security()->GetToken($user_salt, $userPass);
+			
+			$options['conditions'] = array(
+					array(
+							'user_email',
+							$userEmail 
+					),
+					array(
+							'user_auth',
+							$user_auth 
+					) 
+			);
+		}
 		
 		if (FALSE !== $this->_SetUserData($options)) {
 			/**
@@ -669,7 +679,6 @@ class User extends Object {
 		$fields = array(
 				$this->_mKeyPrefix . 'user_id',
 				'user_email',
-				'user_nickname',
 				'user_status' 
 		);
 		

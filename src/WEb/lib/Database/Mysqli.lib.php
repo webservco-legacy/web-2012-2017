@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Database_Mysqli
  * MySQL Improved database library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebDatabase
@@ -37,38 +37,38 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Stores the mysqli database statement.
-	 * 
+	 *
 	 * @var mixed
 	 */
 	protected $_mDbStmt;
 
 	/**
 	 * Comparison operators.
-	 * 
+	 *
 	 * @var array
 	 */
 	private $_mCompOperators = array(
-		'eq' => '=',
-		'not' => '!=',
-		'lt' => '<',
-		'gt' => '>',
-		'lte' => '<=',
-		'gte' => '>='
+			'eq' => '=',
+			'not' => '!=',
+			'lt' => '<',
+			'gt' => '>',
+			'lte' => '<=',
+			'gte' => '>=' 
 	);
 
 	/**
 	 * Order by.
-	 * 
+	 *
 	 * @var array
 	 */
 	private $_mOrderBy = array(
-		'asc' => 'ASC',
-		'desc' => 'DESC'
+			'asc' => 'ASC',
+			'desc' => 'DESC' 
 	);
 
 	/**
 	 * Setup database connection.
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function _GetLink() {
@@ -80,14 +80,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set MySQL default port if we have no custom port in configuration settings.
-		 * 
+		 *
 		 * @var string
 		 */
 		$db_port = ('' != $this->_mDbPort) ? $this->_mDbPort : '3306';
 		
 		/**
 		 * Set database link identifier.
-		 * 
+		 *
 		 * @var resource
 		 */
 		$db_link = new mysqli($this->_mDbHost, $this->_mDbUser, $this->_mDbPassword, $this->_mDbDatabase, $db_port);
@@ -106,7 +106,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set database link identifier.
-		 * 
+		 *
 		 * @var resource
 		 */
 		$this->_mDbLink = $db_link;
@@ -136,7 +136,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Disconnect()
 	 */
 	public function Disconnect() {
@@ -146,7 +146,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::EscapeString()
 	 */
 	public function EscapeString($string) {
@@ -161,7 +161,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetVersion()
 	 */
 	public function GetVersion() {
@@ -199,7 +199,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GenerateId()
 	 */
 	public function GenerateId() {
@@ -231,7 +231,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetPrimaryKey()
 	 */
 	public function GetPrimaryKey($table) {
@@ -276,7 +276,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Create()
 	 */
 	public function Create($data, $table) {
@@ -380,7 +380,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Retrieve()
 	 */
 	public function Retrieve($data, $table, $options = array()) {
@@ -392,11 +392,11 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Needed for result binding.
-		 * 
+		 *
 		 * @var array
 		 */
 		$data = (!is_array($data)) ? array(
-			$data
+				$data 
 		) : $data;
 		
 		/**
@@ -408,14 +408,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 		foreach ($data as $id => $field) {
 			/**
 			 * Split the column name by the cast operator.
-			 * 
+			 *
 			 * @var array
 			 */
 			$raw_field = explode(':', $field);
 			
 			/**
 			 * Set column name
-			 * 
+			 *
 			 * @var string
 			 */
 			$col = $raw_field[0];
@@ -434,14 +434,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 			if (!empty($raw_field[1])) {
 				/**
 				 * Set column name for the query.
-				 * 
+				 *
 				 * @var string
 				 */
 				$col = "{$col} AS {$raw_field[1]}";
 				
 				/**
 				 * Set field name for the result.
-				 * 
+				 *
 				 * @var string
 				 */
 				$data[$id] = $raw_field[1];
@@ -462,21 +462,21 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set default condition query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_conditions = $this->_PrepareConditionsString($options);
 		
 		/**
 		 * Set default order query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_order = $this->_PrepareOrderString($options);
 		
 		/**
 		 * Set default limit query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_limit = $this->_PrepareLimitString($options);
@@ -518,7 +518,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Reset hack
-		 * 
+		 *
 		 * @var array
 		 */
 		$data = array();
@@ -535,13 +535,13 @@ class Database_Mysqli extends Database implements Interface_Database {
 		 * Set field names to use in result.
 		 */
 		call_user_func_array(array(
-			$this->_mDbStmt,
-			'bind_result'
+				$this->_mDbStmt,
+				'bind_result' 
 		), $this->_ArrayValuesAsRefference($parameters));
 		
 		/**
 		 * Init empty result.
-		 * 
+		 *
 		 * @var array
 		 */
 		$results = array();
@@ -578,7 +578,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Update()
 	 */
 	public function Update($data, $table, $options = array()) {
@@ -590,7 +590,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set default values query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_data = NULL;
@@ -642,14 +642,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set default condition query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_conditions = $this->_PrepareConditionsString($options);
 		
 		/**
 		 * Set default limit query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_limit = $this->_PrepareLimitString($options);
@@ -680,7 +680,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Delete()
 	 */
 	public function Delete($table, $options = array()) {
@@ -692,21 +692,21 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set default condition query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_conditions = $this->_PrepareConditionsString($options);
 		
 		/**
 		 * Set default order query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_order = $this->_PrepareOrderString($options);
 		
 		/**
 		 * Set default limit query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_limit = $this->_PrepareLimitString($options);
@@ -741,7 +741,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::RetrieveOne()
 	 */
 	public function RetrieveOne($data, $table, $options = array()) {
@@ -753,14 +753,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Make sure the limit isset.
-		 * 
+		 *
 		 * @var array
 		 */
 		$options['limit'] = 1;
 		
 		/**
 		 * Get result.
-		 * 
+		 *
 		 * @var array
 		 */
 		$result = $this->Retrieve($data, $table, $options);
@@ -770,7 +770,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Count()
 	 */
 	public function Count($data, $table, $options = array()) {
@@ -788,7 +788,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Get result.
-		 * 
+		 *
 		 * @var array
 		 */
 		$result = $this->Retrieve($data, $table, $options);
@@ -798,7 +798,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::Increment()
 	 */
 	public function Increment($field, $table, $options = array()) {
@@ -810,14 +810,14 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		/**
 		 * Set default condition query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_conditions = $this->_PrepareConditionsString($options);
 		
 		/**
 		 * Set default limit query fill.
-		 * 
+		 *
 		 * @var string
 		 */
 		$qf_limit = $this->_PrepareLimitString($options);
@@ -848,7 +848,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetNext()
 	 */
 	public function GetNext($field, $table, $options = array()) {
@@ -870,7 +870,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetMax()
 	 */
 	public function GetMax($field, $table, $options = array()) {
@@ -892,25 +892,24 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::ValueExists()
 	 */
 	public function ValueExists($table, $field, $value) {
 
 		$options['conditions'][] = array(
-			$field,
-			$value
+				$field,
+				$value 
 		);
 		
 		$result = $this->RetrieveOne($field, $table, $options);
 		
 		return !empty($result[$field]) ? TRUE : FALSE;
-	
 	}
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetInsertId()
 	 */
 	public function GetInsertId() {
@@ -922,7 +921,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * (non-PHPdoc)
-	 * 
+	 *
 	 * @see Interface_Database::GetAffectedRows()
 	 */
 	public function GetAffectedRows() {
@@ -934,7 +933,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * PHP 5.3 fix call_user_func_array + mysqli bind_param
-	 * 
+	 *
 	 * @author http://ca.php.net/manual/en/mysqli-stmt.bind-param.php#96770
 	 * @param array $data        	
 	 *
@@ -964,7 +963,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Prepare conditions query filler.
-	 * 
+	 *
 	 * @param array $options        	
 	 *
 	 * @return string
@@ -1093,7 +1092,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Prepare order query filler.
-	 * 
+	 *
 	 * @param array $options        	
 	 *
 	 * @return string
@@ -1197,7 +1196,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Prepare limit query filler.
-	 * 
+	 *
 	 * @param array $options        	
 	 *
 	 * @return string
@@ -1240,7 +1239,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Check if field is binary.
-	 * 
+	 *
 	 * @param string $field        	
 	 *
 	 * @return boolen
@@ -1252,7 +1251,7 @@ class Database_Mysqli extends Database implements Interface_Database {
 
 	/**
 	 * Parse binary field.
-	 * 
+	 *
 	 * @param string $field        	
 	 * @param boolean $retrieve        	
 	 *
@@ -1268,6 +1267,5 @@ class Database_Mysqli extends Database implements Interface_Database {
 		
 		return ($retrieve) ? "HEX({$field})" : $field;
 	}
-
 }
 ?>
