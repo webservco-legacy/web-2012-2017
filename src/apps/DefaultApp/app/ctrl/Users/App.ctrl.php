@@ -446,26 +446,17 @@ class Controller_Users_App extends ControllerApp {
 		exit();
 	}
 
-	/**
-	 * Login error.
-	 *
-	 * @return mixed
-	 */
 	public function FacebookRegisterError() {
 
 		$this->Init();
 		
 		$data = $this->Module()->GetData($this->_mRequest);
 		
-		//Core::FacebookApi()->Logout();
-		
 		$data['strings']['title'] = __('Login error');
 		
 		$data['strings']['error_message'] = __('Login error') . ': ' . __('This email is already registered. Please use the options to "Login" or "Reset password".');
 		
 		$data['form'] = $this->Module()->GetLoginForm();
-		
-		//echo '<pre>'; print_r($_SESSION); exit();
 		
 		echo $this->GetOutput($data, 'login');
 	}
