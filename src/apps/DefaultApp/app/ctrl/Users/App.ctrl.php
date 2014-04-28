@@ -363,7 +363,7 @@ class Controller_Users_App extends ControllerApp {
 					
 					if (!empty($location[1])) {
 						
-						$_SESSION['FacebookApi']['data']['form']['country_code'] = Core::Geo()->GetCountryCode(trim($location[1]));
+						$_SESSION['FacebookApi']['data']['form']['country'] = Core::Geo()->GetCountryCode(trim($location[1]));
 					}
 				}
 				
