@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Configuration -->
+<config>
+	<!-- Development Environment -->
+	<dev>
+	</dev>
+	<!-- Test Environment -->
+	<test>
+	</test>
+	<!-- Production Environment -->
+	<prod>
+	    <!-- Captcha library settings -->
+		<graphics>
+		    <thumbnail>
+		        <default>
+		            <!-- 1 gif, 2 jpeg, 3 png -->
+		            <type>2</type>
+		            <size>56</size>
+		            <!-- attempt to fix orientation for jpeg files -->
+		            <fix_orientation>1</fix_orientation>
+		        </default>
+		    </thumbnail>
+		</graphics>
+	</prod>
+</config>
+<!-- $Id$ -->

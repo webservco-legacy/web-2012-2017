@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Graphics
  * Graphics library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebGraphics
@@ -37,7 +37,7 @@ class Graphics extends Library {
 
 	/**
 	 * Library properties.
-	 * 
+	 *
 	 * @var array
 	 */
 	private $_mProp = array();
@@ -45,7 +45,7 @@ class Graphics extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -125,6 +125,73 @@ class Graphics extends Library {
 				
 				$raw = imagecreatefromjpeg($image_path);
 				
+				if (!empty($this->_mProp['fix_orientation'])) {
+					
+					if (function_exists('exif_read_data')) {
+						
+						$exif_data = exif_read_data($image_path);
+						
+						if (!empty($exif_data)) {
+							
+							if (!empty($exif_data['Orientation'])) {
+								
+								$rotate = NULL;
+								
+								switch ($exif_data['Orientation']) {
+									
+									case 3 :
+										$rotate = 180;
+										break;
+									
+									case 6 :
+										$rotate = -90;
+										$image_height_new = $image_width;
+										$image_width_new = $image_height;
+										break;
+									
+									case 8 :
+										$rotate = 90;
+										$image_height_new = $image_width;
+										$image_width_new = $image_height;
+										break;
+									
+									default :
+										break;
+								}
+								
+								if (!empty($rotate)) {
+									
+									Core::Log()->Write(sprintf(__('Graphics Library: [fix_orientation] rotating by %s degrees.', 'WEb'), $rotate), 'debug');
+									
+									$raw = imagerotate($raw, $rotate, 0);
+									
+									if (!empty($image_width_new) && !empty($image_height_new)) {
+										
+										$image_width = $image_width_new;
+										$image_height = $image_height_new;
+									}
+								} else {
+									
+									Core::Log()->Write(__('Graphics Library: [fix_orientation] no rotation needed.', 'WEb'), 'debug');
+								}
+							} else {
+								
+								Core::Log()->Write(__('Graphics Library: [fix_orientation] no EXIF Orientation data found.', 'WEb'), 'debug');
+							}
+						} else {
+							
+							Core::Log()->Write(__('Graphics Library: [fix_orientation] no EXIF data found.', 'WEb'), 'debug');
+						}
+					} else {
+						
+						Core::Log()->Write(__('Graphics Library: [fix_orientation] EXIF library not available.', 'WEb'), 'debug');
+					}
+					
+					//
+				}
+				
+				// XXX
+				
 				break;
 			
 			case 3 :
@@ -203,6 +270,8 @@ class Graphics extends Library {
 		
 		$this->_mProp['thumbnail_type'] = !empty($settings['type']) ? $settings['type'] : 3;
 		
+		$this->_mProp['fix_orientation'] = !empty($settings['fix_orientation']) ? TRUE : FALSE;
+		
 		if (empty($this->_mProp['image_dir'])) {
 			
 			trigger_error(__('Graphics library: Image directory is required.', 'WEb'));
@@ -231,30 +300,28 @@ class Graphics extends Library {
 		} /**
 		 * Check source dimensions - is portrait?
 		 */
-		else 
-			if ($imageWidth < $imageHeight) {
-				/**
-				 * Set thumbnail width.
-				 */
-				$this->_mProp['thumbnail_width'] = ($imageWidth * $this->_mProp['thumbnail_size']) / $imageHeight;
-				/**
-				 * Set thumbnail height.
-				 */
-				$this->_mProp['thumbnail_height'] = $this->_mProp['thumbnail_size'];
-			} /**
-			 * Check source dimensions - is square?
+		else if ($imageWidth < $imageHeight) {
+			/**
+			 * Set thumbnail width.
 			 */
-			else 
-				if ($imageWidth == $imageHeight) {
-					/**
-					 * Set thumbnail width.
-					 */
-					$this->_mProp['thumbnail_width'] = $this->_mProp['thumbnail_size'];
-					/**
-					 * Set thumbnail height.
-					 */
-					$this->_mProp['thumbnail_height'] = $this->_mProp['thumbnail_size'];
-				}
+			$this->_mProp['thumbnail_width'] = ($imageWidth * $this->_mProp['thumbnail_size']) / $imageHeight;
+			/**
+			 * Set thumbnail height.
+			 */
+			$this->_mProp['thumbnail_height'] = $this->_mProp['thumbnail_size'];
+		} /**
+		 * Check source dimensions - is square?
+		 */
+		else if ($imageWidth == $imageHeight) {
+			/**
+			 * Set thumbnail width.
+			 */
+			$this->_mProp['thumbnail_width'] = $this->_mProp['thumbnail_size'];
+			/**
+			 * Set thumbnail height.
+			 */
+			$this->_mProp['thumbnail_height'] = $this->_mProp['thumbnail_size'];
+		}
 		
 		return TRUE;
 	}
