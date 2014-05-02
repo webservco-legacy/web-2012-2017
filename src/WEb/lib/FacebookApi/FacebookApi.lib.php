@@ -65,7 +65,7 @@ class FacebookApi extends Library {
 						'app_id' => $this->GetAppId() 
 				),
 				'og' => array(
-						'type' => 'site', // site, article
+						'type' => 'article',
 						'title' => $data['strings']['title'],
 						'site_name' => $data['strings']['title_app'],
 						'url' => $data['url']['current'],
