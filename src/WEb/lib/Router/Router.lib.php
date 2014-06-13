@@ -105,6 +105,11 @@ class Router extends Library {
 	 */
 	public function GetRequest() {
 
+		if (Core::IsCli()) {
+			
+			return NULL;
+		}
+		
 		if (empty($this->_mRequest)) {
 			
 			$this->_mRequest = $this->_Route();
