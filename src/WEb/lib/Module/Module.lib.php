@@ -184,12 +184,12 @@ class Module extends Library {
 		/**
 		 * Location path.
 		 */
-		$data['path'] = "/";
+		$data['path'] = NULL;
 		
 		/**
 		 * Location path without page number.
 		 */
-		$data['path_pagination'] = "/";
+		$data['path_pagination'] = NULL;
 		
 		if (!empty($request['query'])) {
 			
@@ -199,10 +199,10 @@ class Module extends Library {
 				
 				$value = urlencode($value);
 				
-				$data['path'] .= "{$key}/{$value}/";
+				$data['path'] .= "/{$key}/{$value}";
 				
 				if ('page' != $key) {
-					$data['path_pagination'] .= "{$key}/{$value}/";
+					$data['path_pagination'] .= "/{$key}/{$value}";
 				}
 			}
 		}
