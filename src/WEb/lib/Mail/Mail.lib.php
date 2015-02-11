@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -28,7 +28,7 @@ if (!defined('_WEB')) {
 /**
  * Mail
  * Mail library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebMail
@@ -37,105 +37,105 @@ class Mail extends Library {
 
 	/**
 	 * Stores mail content type.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_mContentType;
 
 	/**
 	 * Stores mail encoding.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_mEncoding;
 
 	/**
 	 * Stores mail charset.
-	 * 
+	 *
 	 * @var unknown_type
 	 */
 	protected $_mCharset;
 
 	/**
 	 * Should we use sender envelope?
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $_mEnvelope;
 
 	/**
 	 * Should we use SMTP?
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $_mSmtp;
 
 	/**
 	 * Stores mail sender.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mMailFrom = array();
+	protected $_mMailFrom = array ();
 
 	/**
 	 * Stores mail reply-to.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mMailReplyTo = array();
+	protected $_mMailReplyTo = array ();
 
 	/**
 	 * Stores mail recipients.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mMailTo = array();
+	protected $_mMailTo = array ();
 
 	/**
 	 * Stores mail cc recipients.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mMailCc = array();
+	protected $_mMailCc = array ();
 
 	/**
 	 * Stores mail bcc recipients.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mMailBcc = array();
+	protected $_mMailBcc = array ();
 
 	/**
 	 * Stores mail attachments.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mAttachments = array();
+	protected $_mAttachments = array ();
 
 	/**
 	 * Known attachment types.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mAttachKnown = array();
+	protected $_mAttachKnown = array ();
 
 	/**
 	 * Allowed attachemnt types.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mAttachAllowed = array();
+	protected $_mAttachAllowed = array ();
 
 	/**
 	 * Stores mail headers.
-	 * 
+	 *
 	 * @var array
 	 */
-	protected $_mHeaders = array();
+	protected $_mHeaders = array ();
 
 	/**
 	 * Stores mail line ending.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_mEol;
@@ -143,7 +143,7 @@ class Mail extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -158,7 +158,7 @@ class Mail extends Library {
 
 	/**
 	 * Set default data.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function SetDefaults() {
@@ -173,19 +173,19 @@ class Mail extends Library {
 		 *
 		 * @var string
 		 */
-		$this->_mContentType = !empty($config['content_type']) ? $config['content_type'] : 'plain';
+		$this->_mContentType = ! empty($config['content_type']) ? $config['content_type'] : 'plain';
 		
 		/**
 		 *
 		 * @var string
 		 */
-		$this->_mEncoding = !empty($config['encoding']) ? $config['encoding'] : '7bit';
+		$this->_mEncoding = ! empty($config['encoding']) ? $config['encoding'] : '7bit';
 		
 		/**
 		 *
 		 * @var string
 		 */
-		$this->_mCharset = !empty($config['charset']) ? $config['charset'] : 'utf-8';
+		$this->_mCharset = ! empty($config['charset']) ? $config['charset'] : 'utf-8';
 		
 		/**
 		 *
@@ -203,7 +203,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mAttachKnown = array(
+		$this->_mAttachKnown = array (
 			'bin' => 'application/octet-stream',
 			'gif' => 'image/gif',
 			'jpg' => 'image/jpeg',
@@ -224,7 +224,7 @@ class Mail extends Library {
 			'ppt' => 'application/vnd.ms-powerpoint',
 			'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'doc' => 'application/msword',
-			'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+			'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
 		);
 		
 		/**
@@ -239,22 +239,22 @@ class Mail extends Library {
 		 */
 		$this->_mEol = PHP_EOL;
 		
-		$this->_mMailFrom = array();
+		$this->_mMailFrom = array ();
 		
-		$this->_mMailReplyTo = array();
+		$this->_mMailReplyTo = array ();
 		
-		$this->_mMailCc = array();
+		$this->_mMailCc = array ();
 		
-		$this->_mMailBcc = array();
+		$this->_mMailBcc = array ();
 		
-		$this->_mMailTo = array();
+		$this->_mMailTo = array ();
 		
 		return TRUE;
 	}
 
 	/**
 	 * Add an email address.
-	 * 
+	 *
 	 * @param string $addEmail        	
 	 * @param string $addType        	
 	 * @param string $addName        	
@@ -291,11 +291,11 @@ class Mail extends Library {
 			case 'from' :
 				/**
 				 * There can be only one...
-				 * 
+				 *
 				 * @var array
 				 */
-				$this->_mMailFrom = array(
-					$addEmail => $addName
+				$this->_mMailFrom = array (
+					$addEmail => $addName 
 				);
 				
 				break;
@@ -303,11 +303,11 @@ class Mail extends Library {
 			case 'replyto' :
 				/**
 				 * There can be only one...
-				 * 
+				 *
 				 * @var array
 				 */
-				$this->_mMailReplyTo = array(
-					$addEmail => $addName
+				$this->_mMailReplyTo = array (
+					$addEmail => $addName 
 				);
 				
 				break;
@@ -346,7 +346,7 @@ class Mail extends Library {
 
 	/**
 	 * Add attachment.
-	 * 
+	 *
 	 * @param string $attachPath        	
 	 * @param string $attachType        	
 	 * @param string $attachName        	
@@ -359,7 +359,7 @@ class Mail extends Library {
 			$this->SetDefaults();
 		}
 		
-		if (!is_readable($attachPath)) {
+		if (! is_readable($attachPath)) {
 			/**
 			 *
 			 * @var string
@@ -375,12 +375,12 @@ class Mail extends Library {
 		 *
 		 * @var string
 		 */
-		$attach_type = (!empty($attachType)) ? $attachType : 'bin';
+		$attach_type = (! empty($attachType)) ? $attachType : 'bin';
 		
 		/**
 		 * Check if attachment type is allowed.
 		 */
-		if (!in_array($attach_type, $this->_mAttachAllowed)) {
+		if (! in_array($attach_type, $this->_mAttachAllowed)) {
 			/**
 			 *
 			 * @var string
@@ -395,7 +395,7 @@ class Mail extends Library {
 		/**
 		 * Check if attachment type is known.
 		 */
-		if (!array_key_exists($attach_type, $this->_mAttachKnown)) {
+		if (! array_key_exists($attach_type, $this->_mAttachKnown)) {
 			/**
 			 *
 			 * @var string
@@ -411,15 +411,15 @@ class Mail extends Library {
 		 *
 		 * @var string
 		 */
-		$attach_name = (!empty($attachName)) ? $attachName : basename($attachPath);
+		$attach_name = (! empty($attachName)) ? $attachName : basename($attachPath);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$this->_mAttachments[$attachPath] = array(
+		$this->_mAttachments[$attachPath] = array (
 			$attach_type,
-			$attach_name
+			$attach_name 
 		);
 		
 		/**
@@ -435,7 +435,7 @@ class Mail extends Library {
 
 	/**
 	 * Add header.
-	 * 
+	 *
 	 * @param string $headerName        	
 	 * @param string $headerValue        	
 	 *
@@ -458,7 +458,7 @@ class Mail extends Library {
 
 	/**
 	 * Sent email after setting all data.
-	 * 
+	 *
 	 * @param string $msgSubject        	
 	 * @param string $msgBody        	
 	 *
@@ -507,7 +507,7 @@ class Mail extends Library {
 		/**
 		 * Check if we have Cc.
 		 */
-		if (!empty($this->_mMailCc)) {
+		if (! empty($this->_mMailCc)) {
 			/**
 			 * We don't need the value, just make sure the header is set.
 			 */
@@ -517,7 +517,7 @@ class Mail extends Library {
 		/**
 		 * Check if we have Bcc.
 		 */
-		if (!empty($this->_mMailBcc)) {
+		if (! empty($this->_mMailBcc)) {
 			/**
 			 * We don't need the value, just make sure the header is set.
 			 */
@@ -592,22 +592,33 @@ class Mail extends Library {
 
 	/**
 	 * Simple mail sending in one go.
-	 * 
+	 *
 	 * @param string $msgTo        	
 	 * @param string $msgSubject        	
 	 * @param string $msgBody        	
 	 *
 	 * @return boolean
 	 */
-	public function SendSimple($msgTo, $msgSubject, $msgBody) {
+	public function SendSimple($msgTo, $msgSubject, $msgBody, $senderAddress = NULL, $senderName = NULL) {
 
 		$this->SetDefaults();
 		
-		$mail_settings = Core::Config()->Get('mail');
-		
-		if (!empty($mail_settings['sender'])) {
+		if (! empty($senderAddress)) {
 			
-			$this->AddAddress($mail_settings['sender']['address'], 'from', $mail_settings['sender']['name']);
+			$sender_address = $senderAddress;
+			$sender_name = $senderName;
+		} else {
+			
+			$mail_settings = Core::Config()->Get('mail');
+			
+			$sender_address = $mail_settings['sender']['address'];
+			
+			$sender_name = $mail_settings['sender']['name'];
+		}
+		
+		if (! empty($mail_settings['sender'])) {
+			
+			$this->AddAddress($sender_address, 'from', $sender_name);
 			
 			$this->AddAddress($msgTo, 'to', NULL);
 			
@@ -619,7 +630,7 @@ class Mail extends Library {
 
 	/**
 	 * Check addresses before sending mail.
-	 * 
+	 *
 	 * @return bool
 	 */
 	private function _CheckAddreses() {
@@ -682,7 +693,7 @@ class Mail extends Library {
 	/**
 	 * Get address list formatted for mail.
 	 * Also sents corresponding headers.
-	 * 
+	 *
 	 * @param string $addType        	
 	 *
 	 * @return string
@@ -771,14 +782,14 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$data = array();
+		$data = array ();
 		
 		foreach ($address_data as $to => $name) {
 			/**
 			 *
 			 * @var array
 			 */
-			$data[] = (!empty($name)) ? "{$name} <{$to}>" : $to;
+			$data[] = (! empty($name)) ? "{$name} <{$to}>" : $to;
 		}
 		
 		/**
@@ -798,7 +809,7 @@ class Mail extends Library {
 	/**
 	 * Format and return mail message body.
 	 * Also sets appropriate header.
-	 * 
+	 *
 	 * @param string $msgBody        	
 	 *
 	 * @return string
@@ -820,7 +831,7 @@ class Mail extends Library {
 		/**
 		 * Check if we have attachments.
 		 */
-		if (!empty($this->_mAttachments)) {
+		if (! empty($this->_mAttachments)) {
 			/**
 			 *
 			 * @var string
@@ -875,7 +886,7 @@ class Mail extends Library {
 
 	/**
 	 * Get all headers as string
-	 * 
+	 *
 	 * @return string
 	 */
 	private function _GetHeaders() {
@@ -888,7 +899,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$headers = array();
+		$headers = array ();
 		
 		foreach ($this->_mHeaders as $header_name => $header_value) {
 			/**
