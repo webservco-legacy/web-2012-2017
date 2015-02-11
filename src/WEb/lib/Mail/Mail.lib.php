@@ -71,6 +71,13 @@ class Mail extends Library {
 	protected $_mSmtp;
 
 	/**
+	 * Should we add the Date header?
+	 *
+	 * @var array
+	 */
+	protected $_mDateHeader;
+
+	/**
 	 * Stores mail sender.
 	 *
 	 * @var array
@@ -198,6 +205,12 @@ class Mail extends Library {
 		 * @var string
 		 */
 		$this->_mSmtp = (1 == $config['smtp']) ? TRUE : FALSE;
+		
+		/**
+		 *
+		 * @var string
+		 */
+		$this->_mDateHeader = ! empty($config['date_header']) ? TRUE : FALSE;
 		
 		/**
 		 *
@@ -528,6 +541,14 @@ class Mail extends Library {
 		 * Add application fingerprint.
 		 */
 		$this->AddHeader('X-Mailer', 'WEb Application Framework (http://web.webserv.co)');
+		
+		/**
+		 * Check if we should add the Date header.
+		 */
+		if (FALSE !== $this->_mDateHeader) {
+			
+			$this->AddHeader('Date', date('r'));
+		}
 		
 		/**
 		 *

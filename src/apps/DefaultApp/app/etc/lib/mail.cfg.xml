@@ -21,6 +21,8 @@
 			<charset>utf-8</charset>
 			<!-- Use envelope from? -->
 			<envelope>0</envelope>
+			<!-- Add date header? -->
+			<date_header>1</date_header>
 			<!-- Default email sender -->
 			<sender>
 				<address>radu@webserv.co</address>
