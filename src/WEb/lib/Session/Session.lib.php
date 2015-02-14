@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -42,14 +42,14 @@ class Session extends Library {
 	 *
 	 * @var array
 	 */
-	private $_mProp = array();
+	private $_mProp = array ();
 
 	/**
 	 * Library tables.
 	 *
 	 * @var array
 	 */
-	protected $_mTable = array();
+	protected $_mTable = array ();
 
 	/**
 	 * Key prefix (use 'bin.' for binary key identification)
@@ -93,13 +93,13 @@ class Session extends Library {
 
 		$this->_Init();
 		
-		$this->_mProp = array(
-				'expire' => Core::Config()->Get('session.expire'),
-				'lifetime' => Core::Config()->Get('session.lifetime'),
-				'path' => Core::Config()->Get('session.path'),
-				'domain' => Core::Config()->Get('session.domain'),
-				'secure' => (1 == Core::Config()->Get('session.secure')) ? TRUE : FALSE,
-				'httponly' => (1 == Core::Config()->Get('session.httponly')) ? TRUE : FALSE 
+		$this->_mProp = array (
+			'expire' => Core::Config()->Get('session.expire'),
+			'lifetime' => Core::Config()->Get('session.lifetime'),
+			'path' => Core::Config()->Get('session.path'),
+			'domain' => Core::Config()->Get('session.domain'),
+			'secure' => (1 == Core::Config()->Get('session.secure')) ? TRUE : FALSE,
+			'httponly' => (1 == Core::Config()->Get('session.httponly')) ? TRUE : FALSE 
 		);
 		
 		/**
@@ -138,6 +138,14 @@ class Session extends Library {
 		 * Make sure garbage collector visits us.
 		 */
 		ini_set('session.gc_probability', 1);
+		
+		$lifetime_days = $this->_mProp['lifetime'];
+		
+		$expire = time() + 60 * 60 * 24 * $lifetime_days;
+		
+		session_set_cookie_params($expire, $this->_mProp['path'], $this->_mProp['domain'], $this->_mProp['secure'], $this->_mProp['httponly']);
+		
+		session_name('WEb7');
 		
 		/**
 		 * Start session.
@@ -228,28 +236,28 @@ class Session extends Library {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array(
-				'persistent_token',
-				$cookie_value[0] 
+		$options['conditions'][] = array (
+			'persistent_token',
+			$cookie_value[0] 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array(
-				'persistent_expire',
-				date('Y-m-d H:i:s'),
-				'gt' 
+		$options['conditions'][] = array (
+			'persistent_expire',
+			date('Y-m-d H:i:s'),
+			'gt' 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$persistence_data = Core::Database()->RetrieveOne(array(
-				$this->_mKeyPrefix . 'user_id',
-				'persistent_expire' 
+		$persistence_data = Core::Database()->RetrieveOne(array (
+			$this->_mKeyPrefix . 'user_id',
+			'persistent_expire' 
 		), $this->_mTable['persistent'], $options);
 		
 		if (empty($persistence_data)) {
@@ -272,10 +280,10 @@ class Session extends Library {
 			return FALSE;
 		}
 		
-		return array(
-				$user_id,
-				$cookie_value[0],
-				strtotime($persistence_data['persistent_expire']) 
+		return array (
+			$user_id,
+			$cookie_value[0],
+			strtotime($persistence_data['persistent_expire']) 
 		);
 	}
 
@@ -319,10 +327,10 @@ class Session extends Library {
 		 *
 		 * @var array
 		 */
-		$data = array(
-				$this->_mKeyPrefix . 'user_id' => $userId,
-				'persistent_token' => $persistentToken,
-				'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire) 
+		$data = array (
+			$this->_mKeyPrefix . 'user_id' => $userId,
+			'persistent_token' => $persistentToken,
+			'persistent_expire' => date('Y-m-d H:i:s', $persistentExpire) 
 		);
 		
 		if (FALSE !== Core::Database()->Create($data, $this->_mTable['persistent'])) {
@@ -377,27 +385,27 @@ class Session extends Library {
 		 *
 		 * @var array
 		 */
-		$options = array();
+		$options = array ();
 		
-		if (!empty($userId)) {
+		if (! empty($userId)) {
 			/**
 			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array(
-					$this->_mKeyPrefix . 'user_id',
-					$userId 
+			$options['conditions'][] = array (
+				$this->_mKeyPrefix . 'user_id',
+				$userId 
 			);
 		}
 		
-		if (!empty($persistentToken)) {
+		if (! empty($persistentToken)) {
 			/**
 			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array(
-					'persistent_token',
-					$persistentToken 
+			$options['conditions'][] = array (
+				'persistent_token',
+				$persistentToken 
 			);
 		}
 		
@@ -406,16 +414,16 @@ class Session extends Library {
 			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array(
-					'persistent_expire',
-					date('Y-m-d H:i:s'),
-					'lt' 
+			$options['conditions'][] = array (
+				'persistent_expire',
+				date('Y-m-d H:i:s'),
+				'lt' 
 			);
 		}
 		
 		Core::Database()->Delete($this->_mTable['persistent'], $options);
 		
-		if (!empty($persistentToken)) {
+		if (! empty($persistentToken)) {
 			/**
 			 * Remove persistence cookie.
 			 */
