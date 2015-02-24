@@ -17,7 +17,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -66,6 +66,15 @@ class Form extends Library {
 	 * @var string
 	 */
 	private $_mMeta = array ();
+
+	/**
+	 * Form data for JavaScript click/blur functionality.
+	 *
+	 * Key is item id, value is text to show/hide.
+	 *
+	 * @var array
+	 */
+	private $_mClickBLur = array ();
 
 	/**
 	 * Form filters.
@@ -127,7 +136,10 @@ class Form extends Library {
 		/**
 		 * Checkif we have a valid method.s
 		 */
-		if (!in_array($method, array ('post','get' ))) {
+		if (! in_array($method, array (
+			'post',
+			'get' 
+		))) {
 			return FALSE;
 		}
 		
@@ -159,7 +171,7 @@ class Form extends Library {
 		 */
 		foreach ($formData as $field => $data) {
 			
-			if (!empty($data ['i18n'])) {
+			if (! empty($data['i18n'])) {
 				
 				$app_langs = Core::I18n()->GetAvailableLangs();
 				
@@ -191,7 +203,7 @@ class Form extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mData [$field] = (!empty($data ['content'])) ? $data ['content'] : NULL;
+		$this->_mData[$field] = (! empty($data['content'])) ? $data['content'] : NULL;
 		
 		/**
 		 * Set meta type.
@@ -199,14 +211,14 @@ class Form extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mMeta [$field] ['type'] = (!empty($data ['type'])) ? $data ['type'] : 'text';
+		$this->_mMeta[$field]['type'] = (! empty($data['type'])) ? $data['type'] : 'text';
 		
-		if (!empty($data ['title'])) {
+		if (! empty($data['title'])) {
 			
-			$this->_mMeta [$field] ['title'] = !empty($locale) ? "{$data['title']} ({$locale})" : $data ['title'];
+			$this->_mMeta[$field]['title'] = ! empty($locale) ? "{$data['title']} ({$locale})" : $data['title'];
 		} else {
 			
-			$this->_mMeta [$field] ['title'] = NULL;
+			$this->_mMeta[$field]['title'] = NULL;
 		}
 		
 		/**
@@ -214,74 +226,84 @@ class Form extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mMeta [$field] ['description'] = (!empty($data ['description'])) ? $data ['description'] : NULL;
+		$this->_mMeta[$field]['description'] = (! empty($data['description'])) ? $data['description'] : NULL;
 		
 		/**
 		 * Set meta required.
 		 *
 		 * @var array
 		 */
-		$this->_mMeta [$field] ['required'] = (!empty($data ['required'])) ? (bool) $data ['required'] : FALSE;
+		$this->_mMeta[$field]['required'] = (! empty($data['required'])) ? (bool) $data['required'] : FALSE;
 		
 		/**
 		 * Internationalization.
 		 */
-		$this->_mMeta [$field] ['i18n'] = (!empty($locale)) ? TRUE : FALSE;
+		$this->_mMeta[$field]['i18n'] = (! empty($locale)) ? TRUE : FALSE;
 		
 		/**
 		 * Set meta ignore.
 		 *
 		 * @var array
 		 */
-		$this->_mMeta [$field] ['ignore'] = (!empty($data ['ignore'])) ? (bool) $data ['ignore'] : FALSE;
+		$this->_mMeta[$field]['ignore'] = (! empty($data['ignore'])) ? (bool) $data['ignore'] : FALSE;
 		
 		/**
 		 * Set meta custom.
 		 *
 		 * @var array
 		 */
-		$this->_mMeta [$field] ['custom'] = (!empty($data ['custom'])) ? $data ['custom'] : FALSE;
+		$this->_mMeta[$field]['custom'] = (! empty($data['custom'])) ? $data['custom'] : FALSE;
 		
 		/**
 		 * Set options for select fields.
 		 */
-		$this->_mMeta [$field] ['options'] = array ();
+		$this->_mMeta[$field]['options'] = array ();
 		
-		if (!empty($data ['options'] ['option']) && is_array($data ['options'] ['option'])) {
+		if (! empty($data['options']['option']) && is_array($data['options']['option'])) {
 			
-			if ('value' === key($data ['options'] ['option'])) {
+			if ('value' === key($data['options']['option'])) {
 				
-				$data ['options'] ['option'] = array (0 => $data ['options'] ['option'] );
+				$data['options']['option'] = array (
+					0 => $data['options']['option'] 
+				);
 			}
 			
-			foreach ($data ['options'] ['option'] as $option) {
+			foreach ($data['options']['option'] as $option) {
 				
-				$this->_mMeta [$field] ['options'] [$option ['value']] = $option ['name'];
+				$this->_mMeta[$field]['options'][$option['value']] = $option['name'];
 			}
 		}
 		
 		/**
 		 * Check if filters are present.
 		 */
-		if (!empty($data ['filters'])) {
+		if (! empty($data['filters'])) {
 			/**
 			 * Set filters.
 			 *
 			 * @var array
 			 */
-			$this->_mFilters [$field] = $data ['filters'];
+			$this->_mFilters[$field] = $data['filters'];
 		}
 		
 		/**
 		 * Check if conditions are present.
 		 */
-		if (!empty($data ['conditions'])) {
+		if (! empty($data['conditions'])) {
 			/**
 			 * Set conditions
 			 *
 			 * @var array
 			 */
-			$this->_mConditions [$field] = $data ['conditions'];
+			$this->_mConditions[$field] = $data['conditions'];
+		}
+		
+		/**
+		 * ClickBlur data.
+		 */
+		if (! empty($data['clickblur']) && ! empty($data['content'])) {
+			
+			$this->_mClickBLur[$field] = $data['content'];
 		}
 		
 		return TRUE;
@@ -298,7 +320,7 @@ class Form extends Library {
 	 */
 	public function SetMeta($field, $type, $data) {
 
-		$this->_mMeta [$field] [$type] = $data;
+		$this->_mMeta[$field][$type] = $data;
 		
 		return TRUE;
 	}
@@ -311,6 +333,16 @@ class Form extends Library {
 	public function GetMeta() {
 
 		return $this->_mMeta;
+	}
+
+	/**
+	 * Get form click/blur data.
+	 *
+	 * @return array
+	 */
+	public function GetClickBlur() {
+
+		return $this->_mClickBLur;
 	}
 
 	/**
@@ -348,11 +380,17 @@ class Form extends Library {
 				
 				foreach ($data as $key => $value) {
 					
-					$escaped_filtered_data [$field] [$key] = Core::Database()->EscapeString($value);
+					$escaped_filtered_data[$field][$key] = Core::Database()->EscapeString($value);
 				}
 			} else {
 				
-				$escaped_filtered_data [$field] = Core::Database()->EscapeString($data);
+				if (! empty($this->_mClickBLur[$field]) && $this->_mClickBLur[$field] == $data) { // XXX
+					
+					$escaped_filtered_data[$field] = NULL;
+				} else {
+					
+					$escaped_filtered_data[$field] = Core::Database()->EscapeString($data);
+				}
 			}
 		}
 		
@@ -385,10 +423,16 @@ class Form extends Library {
 		 * Iterate filtered form data.
 		 */
 		foreach ($this->_mDataFiltered as $field => $data) {
+			
+			if (! empty($this->_mClickBLur[$field]) && $this->_mClickBLur[$field] == $data) { // XXX
+				
+				$data = NULL;
+			}
+			
 			/**
 			 * Check if field is required.
 			 */
-			if (!empty($this->_mMeta [$field] ['required']) && FALSE !== $this->_mMeta [$field] ['required']) {
+			if (! empty($this->_mMeta[$field]['required']) && FALSE !== $this->_mMeta[$field]['required']) {
 				/**
 				 * Check for empty data.
 				 */
@@ -397,20 +441,22 @@ class Form extends Library {
 					 *
 					 * @var array
 					 */
-					$this->_mErrors [$field] [] = sprintf(Core::Config()->Get('form.error.required.text'), $this->_mMeta [$field] ['title']);
+					$this->_mErrors[$field][] = sprintf(Core::Config()->Get('form.error.required.text'), $this->_mMeta[$field]['title']);
 				}
 			}
 			
 			/**
 			 * Check if we have conditions for current field.
 			 */
-			if (!empty($this->_mConditions [$field]) && !empty($data)) {
+			if (! empty($this->_mConditions[$field]) && ! empty($data)) {
 				/**
 				 * Get conditions.
 				 *
 				 * @var array
 				 */
-				$conditions = array_diff(explode('|', $this->_mConditions [$field]), array ('' ));
+				$conditions = array_diff(explode('|', $this->_mConditions[$field]), array (
+					'' 
+				));
 				
 				/**
 				 * Iterate conditions.
@@ -436,13 +482,13 @@ class Form extends Library {
 						 *
 						 * @var string
 						 */
-						$condition_function = $match [1];
+						$condition_function = $match[1];
 						
 						/**
 						 *
 						 * @var string
 						 */
-						$condition_parameter = $match [2];
+						$condition_parameter = $match[2];
 					}
 					
 					/**
@@ -469,12 +515,12 @@ class Form extends Library {
 							 */
 							$error_message = Core::Config()->Get("form.error.{$condition_index}.text");
 							
-							if (!empty($error_message)) {
+							if (! empty($error_message)) {
 								/**
 								 *
 								 * @var array
 								 */
-								$this->_mErrors [$field] [] = sprintf($error_message, $this->_mMeta [$field] ['title'], $condition_parameter);
+								$this->_mErrors[$field][] = sprintf($error_message, $this->_mMeta[$field]['title'], $condition_parameter);
 								
 								/**
 								 *
@@ -482,20 +528,20 @@ class Form extends Library {
 								 */
 								$error_message_description = Core::Config()->Get("form.error.{$condition_index}.description");
 								
-								if (!empty($error_message_description)) {
+								if (! empty($error_message_description)) {
 									
 									/**
 									 *
 									 * @var array
 									 */
-									$this->_mErrors [$field] [] = sprintf($error_message_description, $condition_parameter);
+									$this->_mErrors[$field][] = sprintf($error_message_description, $condition_parameter);
 								}
 							} else {
 								/**
 								 *
 								 * @var array
 								 */
-								$this->_mErrors [$field] [] = sprintf(Core::Config()->Get("form.error.default.text"), $this->_mMeta [$field] ['title']);
+								$this->_mErrors[$field][] = sprintf(Core::Config()->Get("form.error.default.text"), $this->_mMeta[$field]['title']);
 							}
 						}
 					} else {
@@ -537,33 +583,29 @@ class Form extends Library {
 			/**
 			 * Check if we have request.
 			 */
-			if (isset($request [$field])) {
+			if (isset($request[$field])) {
 				
-				if ('checkbox' == $this->_mMeta [$field] ['type']) {
+				if ('checkbox' == $this->_mMeta[$field]['type']) {
 					
-					if (is_array($request [$field])) {
+					if (is_array($request[$field])) {
 						
-						foreach ($request [$field] as $key => $value) {
+						foreach ($request[$field] as $key => $value) {
 							
-							$this->_mData [$field] [$value] = TRUE;
+							$this->_mData[$field][$value] = TRUE;
 						}
 					} else {
 						
-						$this->_mData [$field] = !empty($request [$field]) ? TRUE : FALSE;
+						$this->_mData[$field] = ! empty($request[$field]) ? TRUE : FALSE;
 					}
 				} else {
-					/**
-					 * Set form data.
-					 *
-					 * @var array
-					 */
-					$this->_mData [$field] = $request [$field];
+					
+					$this->_mData[$field] = $request[$field];
 				}
 			} else {
 				
-				if ('checkbox' == $this->_mMeta [$field] ['type']) {
+				if ('checkbox' == $this->_mMeta[$field]['type']) {
 					
-					$this->_mData [$field] = FALSE;
+					$this->_mData[$field] = FALSE;
 				}
 			}
 		}
@@ -582,13 +624,15 @@ class Form extends Library {
 		 * Iterate form data
 		 */
 		foreach ($this->_mData as $field => $data) {
-			if (!empty($this->_mFilters [$field])) {
+			if (! empty($this->_mFilters[$field])) {
 				/**
 				 * Get filters.
 				 *
 				 * @var array
 				 */
-				$filters = array_diff(explode('|', $this->_mFilters [$field]), array ('' ));
+				$filters = array_diff(explode('|', $this->_mFilters[$field]), array (
+					'' 
+				));
 				
 				/**
 				 * Iterate filters
@@ -603,7 +647,7 @@ class Form extends Library {
 						 *
 						 * @var array
 						 */
-						$this->_mDataFiltered [$field] = ${$filter}($data);
+						$this->_mDataFiltered[$field] = ${$filter}($data);
 					} /**
 					 * Check if filter is a string method
 					 */
@@ -613,7 +657,10 @@ class Form extends Library {
 						 *
 						 * @var array
 						 */
-						$this->_mDataFiltered [$field] = call_user_func(array (Core::String(),$filter ), $data);
+						$this->_mDataFiltered[$field] = call_user_func(array (
+							Core::String(),
+							$filter 
+						), $data);
 					} else {
 						/**
 						 *
@@ -629,14 +676,14 @@ class Form extends Library {
 				/**
 				 * If field is set to ignore we don't add it to the filtered array.
 				 */
-				if ($this->_mMeta [$field] ['ignore']) {
+				if ($this->_mMeta[$field]['ignore']) {
 				} else {
 					/**
 					 * No filters are present, set the data as is.
 					 *
 					 * @var array
 					 */
-					$this->_mDataFiltered [$field] = $data;
+					$this->_mDataFiltered[$field] = $data;
 				}
 			}
 		}
