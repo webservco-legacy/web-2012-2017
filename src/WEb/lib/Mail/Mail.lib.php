@@ -494,6 +494,12 @@ class Mail extends Library {
 		 */
 		$this->AddHeader('MIME-Version', '1.0');
 		
+		$this->AddHeader('Content-Transfer-Encoding', '8bit');
+		
+		mb_internal_encoding('UTF-8');
+		
+		$msg_subject = mb_encode_mimeheader($msgSubject, 'UTF-8', 'B', "\n");
+		
 		/**
 		 *
 		 * @var string
@@ -566,7 +572,7 @@ class Mail extends Library {
 			 */
 			$msg_recipients = array_merge($this->_mMailTo, $this->_mMailCc, $this->_mMailBcc);
 			
-			if (TRUE !== Core::Smtp()->Send($msg_recipients, $msg_from_address, $msgSubject, $msg_body, $this->_mHeaders)) {
+			if (TRUE !== Core::Smtp()->Send($msg_recipients, $msg_from_address, $msg_subject, $msg_body, $this->_mHeaders)) {
 				Core::Log()->Write(__('Mail Library: Error sending message.', 'WEb'), 'error');
 				
 				return FALSE;
@@ -600,7 +606,7 @@ class Mail extends Library {
 		 */
 		$envelope = (FALSE !== $this->_mEnvelope) ? "-r {$msg_from_address}" : NULL;
 		
-		if (TRUE !== mail($msg_to, $msgSubject, $msg_body, $headers, $envelope)) {
+		if (TRUE !== mail($msg_to, $msg_subject, $msg_body, $headers, $envelope)) {
 			Core::Log()->Write(__('Mail Library: Error sending message.', 'WEb'), 'error');
 			
 			return FALSE;
