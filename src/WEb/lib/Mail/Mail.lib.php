@@ -183,10 +183,11 @@ class Mail extends Library {
 		$this->_mContentType = ! empty($config['content_type']) ? $config['content_type'] : 'plain';
 		
 		/**
+		 * Configuration is ignored and we use base64 as default.
 		 *
 		 * @var string
 		 */
-		$this->_mEncoding = ! empty($config['encoding']) ? $config['encoding'] : '7bit';
+		$this->_mEncoding = 'base64';
 		
 		/**
 		 *
@@ -489,12 +490,7 @@ class Mail extends Library {
 			return FALSE;
 		}
 		
-		/**
-		 * Add MIME header.
-		 */
 		$this->AddHeader('MIME-Version', '1.0');
-		
-		$this->AddHeader('Content-Transfer-Encoding', '8bit');
 		
 		mb_internal_encoding('UTF-8');
 		
@@ -812,11 +808,16 @@ class Mail extends Library {
 		$data = array ();
 		
 		foreach ($address_data as $to => $name) {
-			/**
-			 *
-			 * @var array
-			 */
-			$data[] = (! empty($name)) ? "{$name} <{$to}>" : $to;
+			
+			if (! empty($name)) {
+				
+				mb_internal_encoding('UTF-8');
+				
+				$data[] = mb_encode_mimeheader($name, 'UTF-8', 'B') . "<{$to}>";
+			} else {
+				
+				$data[] = $to;
+			}
 		}
 		
 		/**
@@ -843,6 +844,8 @@ class Mail extends Library {
 	 */
 	private function _GetMessageBody($msgBody) {
 
+		$message_boundary = sha1(uniqid());
+		
 		/**
 		 *
 		 * @var string
@@ -855,25 +858,30 @@ class Mail extends Library {
 		 */
 		$msg_suf = ('html' == $this->_mContentType) ? "{$this->_mEol}</body></html>" : NULL;
 		
+		if (! empty($this->_mAttachments)) {
+			
+			$this->AddHeader('Content-type', "multipart/mixed; boundary=\"{$message_boundary}\"");
+		} else {
+			
+			$this->AddHeader('Content-type', "multipart/alternative; boundary=\"{$message_boundary}\"");
+		}
+		
+		$msg_body = NULL;
+		$msg_body .= "--{$message_boundary}{$this->_mEol}";
+		$msg_body .= "Content-type:text/{$this->_mContentType}; charset={$this->_mCharset}{$this->_mEol}";
+		$msg_body .= "Content-Transfer-Encoding: {$this->_mEncoding}{$this->_mEol}{$this->_mEol}";
+		$msg_body .= rtrim(chunk_split(base64_encode("{$msg_pre}{$msgBody}{$msg_suf}"))) . "{$this->_mEol}{$this->_mEol}"; // XXX
+		                                                                                                                   // $msg_body_encoded .= "--{$message_boundary}--{$this->_mEol}";
+		
 		/**
 		 * Check if we have attachments.
 		 */
 		if (! empty($this->_mAttachments)) {
-			/**
-			 *
-			 * @var string
-			 */
-			$attach_boundary = md5(date('r', time()));
 			
-			$this->AddHeader('Content-type', "multipart/mixed; boundary=\"{$attach_boundary}\"");
-			
-			/**
-			 *
-			 * @var string
-			 */
-			$msg_body = "{$this->_mEol}This is a multi-part message in MIME format.{$this->_mEol}" . "--{$attach_boundary}{$this->_mEol}" . "Content-type:text/{$this->_mContentType}; charset={$this->_mCharset}{$this->_mEol}" . "Content-Transfer-Encoding: {$this->_mEncoding}{$this->_mEol}{$this->_mEol}" . "{$msg_pre}{$msgBody}{$msg_suf}{$this->_mEol}{$this->_mEol}";
+			$msg_body = "{$this->_mEol}This is a multi-part message in MIME format.{$this->_mEol}{$msg_body}";
 			
 			foreach ($this->_mAttachments as $attach_path => $attach_info) {
+				
 				/**
 				 *
 				 * @var mixed
@@ -890,23 +898,20 @@ class Mail extends Library {
 				 *
 				 * @var string
 				 */
-				$msg_body .= "--{$attach_boundary}{$this->_mEol}" . "Content-Type: {$attach_info[0]}; name=\"{$attach_info[1]}\"{$this->_mEol}" . "Content-Transfer-Encoding: base64{$this->_mEol}" . "Content-Disposition: attachment; filename=\"{$attach_info[1]}\"{$this->_mEol}{$this->_mEol}" . "{$attach_data}{$this->_mEol}{$this->_mEol}";
+				$msg_body .= "--{$message_boundary}{$this->_mEol}";
+				$msg_body .= "Content-Type: {$attach_info[0]}; name=\"{$attach_info[1]}\"{$this->_mEol}";
+				$msg_body .= "Content-Transfer-Encoding: {$this->_mEncoding}{$this->_mEol}";
+				$msg_body .= "Content-Disposition: attachment; filename=\"{$attach_info[1]}\"{$this->_mEol}{$this->_mEol}";
+				$msg_body .= "{$attach_data}{$this->_mEol}{$this->_mEol}";
 			}
-			
-			/**
-			 *
-			 * @var string
-			 */
-			$msg_body .= "--{$attach_boundary}--";
-		} else {
-			$this->AddHeader('Content-type', "text/{$this->_mContentType}; charset={$this->_mCharset}");
-			
-			/**
-			 *
-			 * @var string
-			 */
-			$msg_body = $msg_pre . $msgBody . $msg_suf;
+		
+		/**
+		 *
+		 * @var string
+		 */
 		}
+		
+		$msg_body .= "--{$message_boundary}--";
 		
 		return $msg_body;
 	}
