@@ -82,63 +82,63 @@ class Mail extends Library {
 	 *
 	 * @var array
 	 */
-	protected $_mMailFrom = array ();
+	protected $_mMailFrom = array();
 
 	/**
 	 * Stores mail reply-to.
 	 *
 	 * @var array
 	 */
-	protected $_mMailReplyTo = array ();
+	protected $_mMailReplyTo = array();
 
 	/**
 	 * Stores mail recipients.
 	 *
 	 * @var array
 	 */
-	protected $_mMailTo = array ();
+	protected $_mMailTo = array();
 
 	/**
 	 * Stores mail cc recipients.
 	 *
 	 * @var array
 	 */
-	protected $_mMailCc = array ();
+	protected $_mMailCc = array();
 
 	/**
 	 * Stores mail bcc recipients.
 	 *
 	 * @var array
 	 */
-	protected $_mMailBcc = array ();
+	protected $_mMailBcc = array();
 
 	/**
 	 * Stores mail attachments.
 	 *
 	 * @var array
 	 */
-	protected $_mAttachments = array ();
+	protected $_mAttachments = array();
 
 	/**
 	 * Known attachment types.
 	 *
 	 * @var array
 	 */
-	protected $_mAttachKnown = array ();
+	protected $_mAttachKnown = array();
 
 	/**
 	 * Allowed attachemnt types.
 	 *
 	 * @var array
 	 */
-	protected $_mAttachAllowed = array ();
+	protected $_mAttachAllowed = array();
 
 	/**
 	 * Stores mail headers.
 	 *
 	 * @var array
 	 */
-	protected $_mHeaders = array ();
+	protected $_mHeaders = array();
 
 	/**
 	 * Stores mail line ending.
@@ -164,7 +164,7 @@ class Mail extends Library {
 	}
 
 	/**
-	 * Set default data.
+	 * Set default data (resets any existing data).
 	 *
 	 * @return bool
 	 */
@@ -217,7 +217,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mAttachKnown = array (
+		$this->_mAttachKnown = array(
 			'bin' => 'application/octet-stream',
 			'gif' => 'image/gif',
 			'jpg' => 'image/jpeg',
@@ -253,15 +253,19 @@ class Mail extends Library {
 		 */
 		$this->_mEol = PHP_EOL;
 		
-		$this->_mMailFrom = array ();
+		$this->_mMailFrom = array();
 		
-		$this->_mMailReplyTo = array ();
+		$this->_mMailReplyTo = array();
 		
-		$this->_mMailCc = array ();
+		$this->_mMailCc = array();
 		
-		$this->_mMailBcc = array ();
+		$this->_mMailBcc = array();
 		
-		$this->_mMailTo = array ();
+		$this->_mMailTo = array();
+		
+		$this->_mHeaders = array();
+		
+		$this->_mAttachments = array();
 		
 		return TRUE;
 	}
@@ -308,7 +312,7 @@ class Mail extends Library {
 				 *
 				 * @var array
 				 */
-				$this->_mMailFrom = array (
+				$this->_mMailFrom = array(
 					$addEmail => $addName 
 				);
 				
@@ -320,7 +324,7 @@ class Mail extends Library {
 				 *
 				 * @var array
 				 */
-				$this->_mMailReplyTo = array (
+				$this->_mMailReplyTo = array(
 					$addEmail => $addName 
 				);
 				
@@ -431,7 +435,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$this->_mAttachments[$attachPath] = array (
+		$this->_mAttachments[$attachPath] = array(
 			$attach_type,
 			$attach_name 
 		);
@@ -805,7 +809,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$data = array ();
+		$data = array();
 		
 		foreach ($address_data as $to => $name) {
 			
@@ -931,7 +935,7 @@ class Mail extends Library {
 		 *
 		 * @var array
 		 */
-		$headers = array ();
+		$headers = array();
 		
 		foreach ($this->_mHeaders as $header_name => $header_value) {
 			/**
