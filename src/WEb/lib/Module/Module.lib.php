@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Module.lib.php 196 2015-06-08 12:16:03Z radu $
  *
  * Module library.
  *
@@ -11,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebModule
- * @version    $Revision$
+ * @version    $Revision: 196 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -588,7 +588,7 @@ class Module extends Library {
 		 * $data['menu'][MENU_NODE_FROM _CONFIG]['title']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['href']
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['target']
-		 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array withmenu data)
+		 * $data['menu'][MENU_NODE_FROM_CONFIG]['submenu'] (another array with menu data)
 		 * $data['menu'][MENU_NODE_FROM_CONFIG]['resource']
 		 * Usage:
 		 * Controller: $data['menu']['MENU_NODE_FROM_CONFIG']

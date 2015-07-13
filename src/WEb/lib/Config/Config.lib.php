@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Config.lib.php 203 2015-07-13 08:44:17Z radu $
  *
  * Engine configuration library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebConfig
- * @version    $Revision$
+ * @version    $Revision: 203 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -30,18 +30,20 @@ if (!defined('_WEB')) {
  *
  * Configuration library.
  *
- * @author     Radu Maier <radu@webserv.co>
- * @package    WEb
+ * @author Radu Maier <radu@webserv.co>
+ * @package WEb
  * @subpackage WebConfig
- *
+ *            
  */
 class Config extends Library {
+
 	/**
 	 * Stores configuration options.
 	 *
 	 * @var array
 	 */
-	private $_mConfig = array('dev' => array(), 'test' => array(), 'prod' => array());
+	private $_mConfig = array('dev' => array(),'test' => array(),'prod' => array() 
+	);
 
 	/**
 	 * Configuration environment.
@@ -80,11 +82,13 @@ class Config extends Library {
 	 *
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
 	 *
-	 * @param string $className class name to instantiate
-	 *
+	 * @param string $className
+	 *        	class name to instantiate
+	 *        	
 	 * @return object
 	 */
 	public static function GetInstance($className = __CLASS__) {
+
 		/**
 		 * Call parent method with current class name as parameter.
 		 */
@@ -95,26 +99,29 @@ class Config extends Library {
 	 * Load main configuration settings.
 	 */
 	public function Init() {
+
 		/**
+		 *
 		 * @var string
 		 */
 		$path_core = $this->Get('path.core');
-
+		
 		/**
+		 *
 		 * @var string
 		 */
 		$path_app = $this->Get('path.app');
-
+		
 		/**
 		 * Set core directories.
 		 */
 		$this->Set($path_core . 'etc/dir.cfg.xml');
-
+		
 		/**
 		 * Set application directories.
 		 */
 		$this->Set($path_app . 'etc/dir.cfg.xml');
-
+		
 		return TRUE;
 	}
 
@@ -124,38 +131,44 @@ class Config extends Library {
 	 * @return bool
 	 */
 	public function SetI18nKeys() {
+
 		/**
+		 *
 		 * @var string
 		 */
 		$keys = $this->Get('i18n.keys');
-
+		
 		if (FALSE !== $keys) {
 			/**
+			 *
 			 * @var array
 			 */
 			$this->_mI18nKeys = explode(',', $keys);
 		}
-
+		
 		/**
+		 *
 		 * @var string
 		 */
 		$keys_app = $this->Get('i18n.keys_app');
-
+		
 		if (FALSE !== $keys_app) {
 			/**
+			 *
 			 * @var array
 			 */
 			$this->_mI18nKeysApp = explode(',', $keys_app);
 		}
-
+		
 		return TRUE;
 	}
 
 	/**
 	 * Set configuration environment.
 	 *
-	 * @param string $cfgEnv new environment
-	 *
+	 * @param string $cfgEnv
+	 *        	new environment
+	 *        	
 	 * @return boolean
 	 */
 	public function SetEnv($cfgEnv = NULL) {
@@ -163,20 +176,20 @@ class Config extends Library {
 		/**
 		 * Check for valid environment.
 		 */
-		if (!array_key_exists($cfgEnv, $this->_mConfig)) {
+		if (! array_key_exists($cfgEnv, $this->_mConfig)) {
 			/**
 			 * Stop.
 			 */
 			return FALSE;
 		}
-
+		
 		/**
 		 * Set new configuration environment.
 		 *
 		 * @var string
 		 */
 		$this->_mConfigEnv = $cfgEnv;
-
+		
 		/**
 		 * Return result.
 		 */
@@ -189,6 +202,7 @@ class Config extends Library {
 	 * @return string
 	 */
 	public function GetEnv() {
+
 		/**
 		 * Return the current configuration environment.
 		 */
@@ -199,24 +213,28 @@ class Config extends Library {
 	 * Store configuration setting(s)
 	 *
 	 * @tutorial WEb/ImConfig/Config.cls#SetMethod
-	 *
-	 * @param mixed $cfgData configuration data to store
-	 * @param mixed $cfgSetting configuration setting used to store the value
-	 * @param mixed $cfgEnv configuration environment
-	 *
+	 *          
+	 * @param mixed $cfgData
+	 *        	configuration data to store
+	 * @param mixed $cfgSetting
+	 *        	configuration setting used to store the value
+	 * @param mixed $cfgEnv
+	 *        	configuration environment
+	 *        	
 	 * @return mixed
 	 */
 	public function Set($cfgData = NULL, $cfgSetting = NULL, $cfgEnv = NULL) {
+
 		/**
 		 * Check if data is not set, or is an empty array (no such file).
 		 */
-		if (!$cfgData || empty($cfgData)) {
+		if (! $cfgData || empty($cfgData)) {
 			/**
 			 * No point to continue.
 			 */
 			return FALSE;
 		}
-
+		
 		/**
 		 * If we have an environment request we use it.
 		 * Otherwise we use the current environment.
@@ -224,7 +242,7 @@ class Config extends Library {
 		 * @var string
 		 */
 		$cfg_env = ($cfgEnv) ? $cfgEnv : $this->_mConfigEnv;
-
+		
 		/**
 		 * Check if the setting parameter is set.
 		 */
@@ -233,13 +251,12 @@ class Config extends Library {
 			 * Simply set the setting to the value.
 			 */
 			$this->_mConfig[$cfg_env][$cfgSetting] = $cfgData;
-
+			
 			/**
 			 * Return result.
 			 */
 			return TRUE;
-		}
-		/**
+		} /**
 		 * No setting parameter is set,
 		 * so we must process the data.
 		 */
@@ -250,7 +267,7 @@ class Config extends Library {
 			 * @var array
 			 */
 			$cfg_data = array();
-
+			
 			/**
 			 * Assume data is an array with settings and values.
 			 */
@@ -259,8 +276,7 @@ class Config extends Library {
 				 * Add configuration data to configuration array.
 				 */
 				return $this->Add($cfgData);
-			}
-			/**
+			} /**
 			 * Otherwise data must be an object or a file path (string.)
 			 */
 			else {
@@ -271,13 +287,13 @@ class Config extends Library {
 				 */
 				$cfg_data = $this->Process($cfgData);
 			}
-
+			
 			/**
 			 * Call the method again using the data array.
 			 */
 			return $this->Set($cfg_data);
 		}
-
+		
 		/**
 		 * If we got here we have no valid data to store.
 		 */
@@ -289,18 +305,19 @@ class Config extends Library {
 	 *
 	 * Returns an array from an xml object or path to an xml file.
 	 *
-	 * @param mixed $cfgData
+	 * @param mixed $cfgData        	
 	 *
 	 * @return array
 	 */
 	public function Process($cfgData) {
+
 		/**
 		 * Init processed config data.
 		 *
 		 * @var array
 		 */
 		$cfg_data = array();
-
+		
 		/**
 		 * Assume data is a valid configuration object.
 		 */
@@ -311,8 +328,7 @@ class Config extends Library {
 			 * @var array
 			 */
 			$cfg_data = $this->_ParseConfigObject($cfgData);
-		}
-		/**
+		} /**
 		 * Assume data is a string containing the path to a configuration file.
 		 */
 		else if (is_string($cfgData)) {
@@ -323,7 +339,7 @@ class Config extends Library {
 			 */
 			$cfg_data = $this->_ParseConfigFile($cfgData);
 		}
-
+		
 		return $cfg_data;
 	}
 
@@ -331,20 +347,23 @@ class Config extends Library {
 	 * Add data to the configuration array.
 	 *
 	 * Note: main function for storing configuration data is Set()
+	 * 
 	 * @see Config::Set()
 	 *
-	 * @param array $cfgData configuration data
-	 *
+	 * @param array $cfgData
+	 *        	configuration data
+	 *        	
 	 * @return mixed
 	 */
 	public function Add($cfgData) {
+
 		/**
 		 * Add configuration data to the main configuration array.
 		 *
 		 * @var array
 		 */
 		$this->_mConfig = $this->_AddConfigData($this->_mConfig, $cfgData);
-
+		
 		/**
 		 * Return result.
 		 */
@@ -355,14 +374,37 @@ class Config extends Library {
 	 * Retrieve configuration setting(s).
 	 *
 	 * @tutorial WEb/ImConfig/Config.cls#GetMethod
-	 *
-	 * @param mixed $cfgSetting configuration setting to retrieve
-	 * @param mixed $cfgEnv configuration environment
-	 * @param mixed $cfgArray configuration array to retrieve setting from
-	 *
+	 *          
+	 * @param mixed $cfgSetting
+	 *        	configuration setting to retrieve
+	 * @param mixed $cfgEnv
+	 *        	configuration environment
+	 * @param mixed $cfgArray
+	 *        	configuration array to retrieve setting from
+	 *        	
 	 * @return mixed
 	 */
 	public function Get($cfgSetting = NULL, $cfgEnv = NULL, $cfgArray = NULL) {
+
+		if (!empty($_SERVER['HTTP_HOST'])) {
+
+			if (empty($cfgArray) && 'url.www' == $cfgSetting) {
+					
+				$aliases = $this->Get('url.aliases');
+					
+				if (! empty($aliases['item'])) {
+			
+					foreach ($aliases['item'] as $alias) {
+							
+						if (Core::String()->Contains($_SERVER['HTTP_HOST'], $alias)) {
+			
+							return $alias;
+						}
+					}
+				}
+			}
+		}
+		
 		/**
 		 * Set configuration environment.
 		 *
@@ -372,7 +414,7 @@ class Config extends Library {
 		 * @var string
 		 */
 		$cfg_env = ($cfgEnv) ? $cfgEnv : $this->_mConfigEnv;
-
+		
 		/**
 		 * Configuration array holds the data we want to retrieve.
 		 *
@@ -382,25 +424,26 @@ class Config extends Library {
 		 * @var mixed
 		 */
 		$cfg_array = ($cfgArray) ? $cfgArray : $this->_mConfig[$cfg_env];
-
+		
 		/**
 		 * Check if request setting is an empty array.
 		 * Additional $cfgArray check is required in order
 		 * not to break recursivity.
 		 */
-		if (!$cfgArray && is_array($cfgSetting) && empty($cfgSetting)) {
+		if (! $cfgArray && is_array($cfgSetting) && empty($cfgSetting)) {
 			/**
 			 * Stop.
 			 */
 			return FALSE;
 		}
-
+		
 		/**
 		 * Check if request setting is missing or configuration array is
-		 * actually a string. In bot cases the result we are interested in
+		 * actually a string.
+		 * In both cases the result we are interested in
 		 * is the actual configuration array variable.
 		 */
-		if (!$cfgSetting || !is_array($cfg_array)) {
+		if (! $cfgSetting || ! is_array($cfg_array)) {
 			/**
 			 * If the configuration array is not really an array, it means the
 			 * recursion has gone too deep and the configuration array variable
@@ -410,14 +453,14 @@ class Config extends Library {
 			 *
 			 * Return value only if not empty.
 			 */
-			return !empty($cfg_array) ? $cfg_array : FALSE;
+			
+			return ! empty($cfg_array) ? $cfg_array : FALSE;
 		}
-
+		
 		/**
 		 * If requested setting is an array
 		 * (resulted by processing a special string)
 		 * we process it recursively until we have a simple string.
-		 *
 		 */
 		if (is_array($cfgSetting)) {
 			/**
@@ -431,20 +474,20 @@ class Config extends Library {
 				 * @var mixed
 				 */
 				$key = array_shift($cfgSetting);
-
+				
 				/**
 				 * Go down one element in the configuration array,
 				 * and call the method again, with the remaining request.
 				 */
 				return $this->Get($cfgSetting, $cfg_env, $cfg_array[$key]);
 			}
-
+			
 			/**
 			 * The requested setting doesn't exist in our configuration array.
 			 */
 			return FALSE;
 		}
-
+		
 		/**
 		 * Requested setting must be a string.
 		 * Check if it is a special string.
@@ -456,13 +499,13 @@ class Config extends Library {
 			 * @var array
 			 */
 			$cfg_setting = explode($this->_mConfigDelimiter, $cfgSetting);
-
+			
 			/**
 			 * Call the method again, this time using an array.
 			 */
 			return $this->Get($cfg_setting, $cfg_env, $cfg_array);
 		}
-
+		
 		/**
 		 * Requested setting must be a simple string.
 		 * Check if setting exists in array and return the result.
@@ -474,9 +517,9 @@ class Config extends Library {
 			/**
 			 * Return requested value but only if it is not empty.
 			 */
-			return !empty($cfg_array[$cfgSetting]) ? $cfg_array[$cfgSetting] : FALSE;
+			return ! empty($cfg_array[$cfgSetting]) ? $cfg_array[$cfgSetting] : FALSE;
 		}
-
+		
 		/**
 		 * If we got this far, we have no valid input.
 		 */
@@ -486,35 +529,37 @@ class Config extends Library {
 	/**
 	 * Parse configuration file.
 	 *
-	 * @param string $cfgPath full path to configuration file
-	 *
+	 * @param string $cfgPath
+	 *        	full path to configuration file
+	 *        	
 	 * @return array
 	 */
 	private function _ParseConfigFile($cfgPath) {
+
 		/**
 		 * Init configuration array.
 		 *
 		 * @var array
 		 */
 		$cfg = array();
-
+		
 		/**
 		 * Check if we have access to the file.
 		 */
 		if (is_readable($cfgPath)) {
-
+			
 			/**
 			 * Disable libxml errors and allow user to fetch error information.
 			 */
 			libxml_use_internal_errors(TRUE);
-
+			
 			/**
 			 * Load data in file into an object.
 			 *
 			 * @var object
 			 */
 			$cfg_object = simplexml_load_file($cfgPath, 'SimpleXMLElement', LIBXML_NOCDATA);
-
+			
 			/**
 			 * Check if we have a valid XML object.
 			 */
@@ -532,7 +577,7 @@ class Config extends Library {
 				}
 			}
 		}
-
+		
 		/**
 		 * Return the configuration array.
 		 */
@@ -542,9 +587,11 @@ class Config extends Library {
 	/**
 	 * Parse configuration object.
 	 *
-	 * @param mixed $cfgData configuration data
+	 * @param mixed $cfgData
+	 *        	configuration data
 	 */
 	private function _ParseConfigObject($cfgData) {
+
 		/**
 		 * Check if input is an object.
 		 */
@@ -553,7 +600,7 @@ class Config extends Library {
 			 * Remove comments.
 			 */
 			unset($cfgData->comment);
-
+			
 			/**
 			 * Transform object into an array.
 			 *
@@ -561,7 +608,7 @@ class Config extends Library {
 			 */
 			$cfgData = get_object_vars($cfgData);
 		}
-
+		
 		/**
 		 * Check is input is an array.
 		 */
@@ -586,7 +633,7 @@ class Config extends Library {
 						$cfgData[$i18n_key] = __($cfgData[$i18n_key]);
 					}
 				}
-
+				
 				/**
 				 * Iterate through i18n application keys.
 				 */
@@ -604,20 +651,21 @@ class Config extends Library {
 					}
 				}
 			}
-
+			
 			/**
 			 * Iterate through it as it may contain further objects.
 			 */
-			return array_map(array($this, __FUNCTION__), $cfgData);
+			return array_map(array($this,__FUNCTION__ 
+			), $cfgData);
 		}
-
+		
 		/**
 		 * Trim values in the configuration array.
 		 *
 		 * @var array
 		 */
 		$cfgData = $this->_TrimConfigData($cfgData);
-
+		
 		/**
 		 * Return parsed object.
 		 */
@@ -627,14 +675,17 @@ class Config extends Library {
 	/**
 	 * Trim values in the configuration array.
 	 *
-	 * @param mixed $cfgData configuration data
+	 * @param mixed $cfgData
+	 *        	configuration data
 	 */
 	private function _TrimConfigData($cfgData) {
+
 		/**
 		 * If data is not an array, trim it.
 		 * Otherwise call the method recursively.
 		 */
-		return (is_array($cfgData)) ? array_map(array($this, __FUNCTION__), $cfgData) : trim($cfgData);
+		return (is_array($cfgData)) ? array_map(array($this,__FUNCTION__ 
+		), $cfgData) : trim($cfgData);
 	}
 
 	/**
@@ -642,12 +693,16 @@ class Config extends Library {
 	 *
 	 * Made a separate method from Add()
 	 * in order to benefit from recursivity.
+	 * 
 	 * @see Config::Add()
 	 *
-	 * @param array $cfgArray main configuration array
-	 * @param array $cfgData configuration data to add
+	 * @param array $cfgArray
+	 *        	main configuration array
+	 * @param array $cfgData
+	 *        	configuration data to add
 	 */
 	private function _AddConfigData($cfgArray, $cfgData) {
+
 		/**
 		 * Only proceed if both parameters are arrays.
 		 */
@@ -669,8 +724,7 @@ class Config extends Library {
 					 * @var array
 					 */
 					$cfgArray[$cfg_setting] = $this->_AddConfigData($cfgArray[$cfg_setting], $cfg_value);
-				}
-				/**
+				} /**
 				 * Configuration value is a simple string,
 				 */
 				else {
@@ -683,13 +737,12 @@ class Config extends Library {
 				}
 			}
 		}
-
+		
 		/**
 		 * At this point all processing is complete,
 		 * so we just return the main configuration array.
 		 */
 		return $cfgArray;
 	}
-
 }
 ?>

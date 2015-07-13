@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: User.obj.php 198 2015-07-07 16:04:06Z radu $
  *
  * User object.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebObject
- * @version    $Revision$
+ * @version    $Revision: 198 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -40,7 +40,7 @@ class User extends Object {
 	 *
 	 * @var array
 	 */
-	public $mProp = array ();
+	public $mProp = array();
 
 	protected $_mSet;
 
@@ -59,12 +59,8 @@ class User extends Object {
 		
 		if (empty($this->mProp)) {
 			
-			$this->mProp = array (
-				'list' => array (
-					$this->_mKeyPrefix . 'user_id' => NULL,
-					'user_email' => NULL,
-					'user_status' => NULL 
-				) 
+			$this->mProp = array('list' => array($this->_mKeyPrefix . 'user_id' => NULL,'user_email' => NULL,'user_status' => NULL 
+			) 
 			);
 			
 			$this->mProp['list'] = $this->_AddCustomProps($this->mProp['list']);
@@ -104,10 +100,7 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$_SESSION[__CLASS__]['StatsCurrent'] = array (
-			'time' => date('Y-m-d H:i:s'),
-			'ip' => Core::Geo()->GetIp(),
-			'agent' => Core::Useragent()->GetUserAgent(),
+		$_SESSION[__CLASS__]['StatsCurrent'] = array('time' => date('Y-m-d H:i:s'),'ip' => Core::Geo()->GetIp(),'agent' => Core::Useragent()->GetUserAgent(),
 			'auto' => FALSE 
 		);
 		
@@ -214,9 +207,7 @@ class User extends Object {
 			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array (
-				$this->_mKeyPrefix . 'user_id',
-				$user_id 
+			$options['conditions'][] = array($this->_mKeyPrefix . 'user_id',$user_id 
 			);
 			
 			return $this->_SetUserData($options);
@@ -237,9 +228,7 @@ class User extends Object {
 			
 			unset($_SESSION[__CLASS__]['Prop']);
 			
-			$options['conditions'][] = array (
-				$this->_mKeyPrefix . 'user_id',
-				$_SESSION[__CLASS__]['Id'] 
+			$options['conditions'][] = array($this->_mKeyPrefix . 'user_id',$_SESSION[__CLASS__]['Id'] 
 			);
 			
 			return $this->_SetUserData($options);
@@ -293,9 +282,7 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			$this->_mKeyPrefix . 'user_id',
-			$userId 
+		$options['conditions'][] = array($this->_mKeyPrefix . 'user_id',$userId 
 		);
 		
 		/**
@@ -309,18 +296,14 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			'login_date_add',
-			$timeout,
-			'gte' 
+		$options['conditions'][] = array('login_date_add',$timeout,'gte' 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne(array (
-			'login_date_add' 
+		$data = Core::Database()->RetrieveOne(array('login_date_add' 
 		), $this->_mTable['logins'], $options);
 		
 		if (empty($data)) {
@@ -365,7 +348,7 @@ class User extends Object {
 			$login = $this->_LoginUser($userEmail, $userPass, $userSocial);
 		}
 		
-		$this->_RecordLogin($this->_mId, $userEmail);
+		$this->_RecordLogin($this->_mId, $userEmail, NULL, $userSocial);
 		
 		if (TRUE !== $login) {
 			return FALSE;
@@ -418,7 +401,7 @@ class User extends Object {
 		/**
 		 * Re-initialize session array.
 		 */
-		$_SESSION = array ();
+		$_SESSION = array();
 		
 		/**
 		 * Destroy current session.
@@ -439,12 +422,8 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$this->mProp = array (
-			'list' => array (
-				$this->_mKeyPrefix . 'user_id' => NULL,
-				'user_email' => NULL,
-				'user_status' => NULL 
-			) 
+		$this->mProp = array('list' => array($this->_mKeyPrefix . 'user_id' => NULL,'user_email' => NULL,'user_status' => NULL 
+		) 
 		);
 		
 		$this->mProp['list'] = $this->_AddCustomProps($this->mProp['list']);
@@ -485,13 +464,10 @@ class User extends Object {
 
 		$this->_Init();
 		
-		$options['conditions'][] = array (
-			$this->_mKeyPrefix . 'user_id',
-			$userId 
+		$options['conditions'][] = array($this->_mKeyPrefix . 'user_id',$userId 
 		);
 		
-		$data = Core::Database()->RetrieveOne(array (
-			$property 
+		$data = Core::Database()->RetrieveOne(array($property 
 		), $this->_mTable['list'], $options);
 		
 		if (empty($data)) {
@@ -509,9 +485,7 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			$this->_mKeyPrefix . 'user_id',
-			'0' 
+		$options['conditions'][] = array($this->_mKeyPrefix . 'user_id','0' 
 		);
 		
 		if (! empty($checkType) && ! empty($checkAsset)) {
@@ -519,9 +493,7 @@ class User extends Object {
 			 *
 			 * @var array
 			 */
-			$options['conditions'][] = array (
-				$checkType,
-				$checkAsset 
+			$options['conditions'][] = array($checkType,$checkAsset 
 			);
 		}
 		
@@ -536,10 +508,7 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			'login_date_add',
-			$timeout,
-			'gte' 
+		$options['conditions'][] = array('login_date_add',$timeout,'gte' 
 		);
 		
 		/**
@@ -566,8 +535,7 @@ class User extends Object {
 		if (! empty($extra_props)) {
 			
 			if (! is_array($extra_props)) {
-				$extra_props = array (
-					0 => $extra_props 
+				$extra_props = array(0 => $extra_props 
 				);
 			}
 			
@@ -595,15 +563,8 @@ class User extends Object {
 
 		$this->_Init();
 		
-		$options['conditions'] = array (
-			array (
-				'user_email',
-				$userEmail 
-			),
-			array (
-				'user_social_type',
-				'none' 
-			) 
+		$options['conditions'] = array(array('user_email',$userEmail
+		)
 		);
 		
 		if (FALSE !== $this->_SetUserData($options)) {
@@ -632,19 +593,8 @@ class User extends Object {
 		
 		if (! empty($userSocial)) {
 			
-			$options['conditions'] = array (
-				array (
-					'user_email',
-					$userEmail 
-				),
-				array (
-					'user_social_type',
-					$userSocial['type'] 
-				),
-				array (
-					'user_social_id',
-					$userSocial['id'] 
-				) 
+			$options['conditions'] = array(array('user_email',$userEmail 
+			) 
 			);
 		} else {
 			
@@ -660,15 +610,9 @@ class User extends Object {
 			 */
 			$user_auth = Core::Security()->GetToken($user_salt, $userPass);
 			
-			$options['conditions'] = array (
-				array (
-					'user_email',
-					$userEmail 
-				),
-				array (
-					'user_auth',
-					$user_auth 
-				) 
+			$options['conditions'] = array(array('user_email',$userEmail 
+			),array('user_auth',$user_auth 
+			) 
 			);
 		}
 		
@@ -720,10 +664,7 @@ class User extends Object {
 			return FALSE;
 		}
 		
-		$fields = array (
-			$this->_mKeyPrefix . 'user_id',
-			'user_email',
-			'user_status' 
+		$fields = array($this->_mKeyPrefix . 'user_id','user_email','user_status' 
 		);
 		
 		$fields = $this->_AddCustomProps($fields, TRUE);
@@ -797,39 +738,28 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			$this->_mKeyPrefix . 'user_id',
-			$this->_mId 
+		$options['conditions'][] = array($this->_mKeyPrefix . 'user_id',$this->_mId 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$options['conditions'][] = array (
-			'login_date_add',
-			$_SESSION[__CLASS__]['StatsCurrent']['time'],
-			'lt' 
+		$options['conditions'][] = array('login_date_add',$_SESSION[__CLASS__]['StatsCurrent']['time'],'lt' 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$options['order'][] = array (
-			'login_date_add',
-			'desc' 
+		$options['order'][] = array('login_date_add','desc' 
 		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$data = Core::Database()->RetrieveOne(array (
-			'login_auto',
-			'user_ip',
-			'user_agent',
-			'login_date_add' 
+		$data = Core::Database()->RetrieveOne(array('login_auto','user_ip','user_agent','login_date_add' 
 		), $this->_mTable['logins'], $options);
 		
 		if (empty($data)) {
@@ -837,7 +767,7 @@ class User extends Object {
 			 *
 			 * @var array
 			 */
-			$_SESSION[__CLASS__]['StatsPrevious'] = array ();
+			$_SESSION[__CLASS__]['StatsPrevious'] = array();
 			
 			return FALSE;
 		}
@@ -846,10 +776,7 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$_SESSION[__CLASS__]['StatsPrevious'] = array (
-			'time' => $data['login_date_add'],
-			'ip' => long2ip($data['user_ip']),
-			'agent' => $data['user_agent'],
+		$_SESSION[__CLASS__]['StatsPrevious'] = array('time' => $data['login_date_add'],'ip' => long2ip($data['user_ip']),'agent' => $data['user_agent'],
 			'auto' => ('true' == $data['login_auto']) ? TRUE : FALSE 
 		);
 		
@@ -865,7 +792,7 @@ class User extends Object {
 	 *
 	 * @return bool
 	 */
-	private function _RecordLogin($userId, $userEmail = NULL, $loginDate = NULL) {
+	private function _RecordLogin($userId, $userEmail = NULL, $loginDate = NULL, $userSocial = array()) {
 
 		$this->_Init();
 		
@@ -885,11 +812,8 @@ class User extends Object {
 		 *
 		 * @var array
 		 */
-		$data = array (
-			$this->_mKeyPrefix . 'user_id' => $user_id,
-			'user_email' => $userEmail,
-			'user_ip' => sprintf("%u", ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip'])),
-			'login_auto' => $login_auto,
+		$data = array($this->_mKeyPrefix . 'user_id' => $user_id,'user_email' => $userEmail,
+			'user_ip' => sprintf("%u", ip2long($_SESSION[__CLASS__]['StatsCurrent']['ip'])),'login_auto' => $login_auto,
 			'user_agent' => $_SESSION[__CLASS__]['StatsCurrent']['agent'] 
 		);
 		
@@ -899,6 +823,11 @@ class User extends Object {
 			 * @var array
 			 */
 			$data['login_date_add'] = $loginDate;
+		}
+		
+		if (! empty($userSocial['type'])) {
+			
+			$data['user_social_type'] = $userSocial['type'];
 		}
 		
 		if (FALSE !== Core::Database()->Create($data, $this->_mTable['logins'])) {

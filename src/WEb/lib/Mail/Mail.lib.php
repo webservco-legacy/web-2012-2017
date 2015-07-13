@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Mail.lib.php 197 2015-07-03 15:16:14Z radu $
  *
  * Mail library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebMail
- * @version    $Revision$
+ * @version    $Revision: 197 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -643,7 +643,7 @@ class Mail extends Library {
 			$sender_name = $mail_settings['sender']['name'];
 		}
 		
-		if (! empty($mail_settings['sender'])) {
+		if (! empty($sender_address)) {
 			
 			$this->AddAddress($sender_address, 'from', $sender_name);
 			

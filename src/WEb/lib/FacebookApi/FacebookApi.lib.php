@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: FacebookApi.lib.php 194 2015-03-25 14:45:43Z radu $
  *
  * Facebook API library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebFacebookApi
- * @version    $Revision$
+ * @version    $Revision: 194 $
  * @since      Version 7
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -61,24 +61,24 @@ class FacebookApi extends Library {
 	public function GetDefaultMeta($data) {
 
 		return array(
-				'fb' => array(
-						'app_id' => $this->GetAppId() 
-				),
-				'og' => array(
-						'type' => 'article',
-						'title' => $data['strings']['title'],
-						'site_name' => $data['strings']['title_app'],
-						'url' => $data['url']['current'],
-						'description' => Core::Config()->Get('app.description'),
-						'image' => "{$data['url']['www']}apple-touch-icon.png",
-						'locale' => $data['i18n']['langs'][$data['i18n']['lang']] 
-				) 
+			'fb' => array(
+				'app_id' => $this->GetAppId() 
+			),
+			'og' => array(
+				'type' => 'article',
+				'title' => $data['strings']['title'],
+				'site_name' => $data['strings']['title_app'],
+				'url' => $data['url']['current'],
+				'description' => Core::Config()->Get('app.description'),
+				'image' => "{$data['url']['www']}apple-touch-icon.png",
+				'locale' => $data['i18n']['langs'][$data['i18n']['lang']] 
+			) 
 		);
 	}
 
 	private function _InitApi() {
 
-		if (!empty($this->_mFacebook)) {
+		if (! empty($this->_mFacebook)) {
 			
 			return FALSE;
 		}
@@ -95,9 +95,9 @@ class FacebookApi extends Library {
 		require "{$path_app}{$config['path_sdk']}facebook.php";
 		
 		$this->_mFacebook = new Facebook(array(
-				'appId' => $config['appid'],
-				'secret' => $config['secret'],
-				'allowSignedRequest' => FALSE 
+			'appId' => $config['appid'],
+			'secret' => $config['secret'],
+			'allowSignedRequest' => FALSE 
 		));
 		
 		if (empty($this->_mFacebook)) {
@@ -120,8 +120,8 @@ class FacebookApi extends Library {
 		$scope = Core::Config()->Get('facebookapi.scope');
 		
 		return $this->_mFacebook->getLoginUrl(array(
-				'scope' => $scope,
-				'redirect_uri' => $redirectUri 
+			'scope' => $scope,
+			'redirect_uri' => $redirectUri 
 		));
 	}
 
@@ -130,7 +130,7 @@ class FacebookApi extends Library {
 		$this->_InitApi();
 		
 		return $this->_mFacebook->getLogoutUrl(array(
-				'next' => $nextUrl 
+			'next' => $nextUrl 
 		));
 	}
 
@@ -151,7 +151,7 @@ class FacebookApi extends Library {
 		
 		$user_id = $this->GetUserId();
 		
-		if (!empty($user_id)) {
+		if (! empty($user_id)) {
 			
 			return $this->_mFacebook->api('/me');
 		}
@@ -172,7 +172,7 @@ class FacebookApi extends Library {
 		
 		$user_id = $this->GetUserId();
 		
-		if (!empty($user_id)) {
+		if (! empty($user_id)) {
 			
 			Core::Log()->Write(__('FacebookApi Library: Posting photo.', 'App'), 'debug');
 			
@@ -181,13 +181,13 @@ class FacebookApi extends Library {
 				$this->_mFacebook->setFileUploadSupport(true);
 				
 				$response = $this->_mFacebook->api('/me/photos/', 'post', array(
-						'message' => $message,
-						'source' => "@{$path}" 
+					'message' => $message,
+					'source' => "@{$path}" 
 				));
 				
 				Core::Log()->Write(print_r($response, TRUE), 'debug');
 				
-				if (!empty($response['post_id'])) {
+				if (! empty($response['post_id'])) {
 					
 					Core::Log()->Write(__('FacebookApi Library: Posting photo - success.', 'App'), 'debug');
 					
@@ -200,6 +200,46 @@ class FacebookApi extends Library {
 		}
 		
 		return FALSE;
+	}
+
+	public function ScrapeUrl($url) {
+
+		$fields = array(
+			'id' => urlencode($url),
+			'scrape' => true 
+		);
+		
+		$fields_string = NULL;
+		
+		foreach ($fields as $key => $value) {
+			
+			$fields_string .= "{$key}={$value}&";
+		}
+		
+		rtrim($fields_string, '&');
+		
+		$curl = curl_init();
+		
+		curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com');
+		
+		curl_setopt($curl, CURLOPT_POST, TRUE);
+		
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
+		
+		$result = curl_exec($curl);
+		
+		if ($result === FALSE) {
+			
+			$error_message = curl_error($curl);
+			
+			trigger_error(__('FacebookApi Library: FacebookScrape cURL error', 'App') . " - {$error_message}");
+			
+			exit();
+		}
+		
+		curl_close($curl);
+		
+		return $result;
 	}
 }
 ?>
