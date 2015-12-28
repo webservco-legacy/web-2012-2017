@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Config.lib.php 203 2015-07-13 08:44:17Z radu $
+ * $Id: Config.lib.php 204 2015-12-18 17:12:37Z radu $
  *
  * Engine configuration library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebConfig
- * @version    $Revision: 203 $
+ * @version    $Revision: 204 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -454,7 +454,7 @@ class Config extends Library {
 			 * Return value only if not empty.
 			 */
 			
-			return ! empty($cfg_array) ? $cfg_array : FALSE;
+			return isset($cfg_array) ? $cfg_array : FALSE;
 		}
 		
 		/**
@@ -517,7 +517,7 @@ class Config extends Library {
 			/**
 			 * Return requested value but only if it is not empty.
 			 */
-			return ! empty($cfg_array[$cfgSetting]) ? $cfg_array[$cfgSetting] : FALSE;
+			return isset($cfg_array[$cfgSetting]) ? $cfg_array[$cfgSetting] : FALSE;
 		}
 		
 		/**

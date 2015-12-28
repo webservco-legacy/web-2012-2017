@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: FacebookApi.lib.php 194 2015-03-25 14:45:43Z radu $
+ * $Id: FacebookApi.lib.php 207 2015-12-28 08:37:03Z radu $
  *
  * Facebook API library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebFacebookApi
- * @version    $Revision: 194 $
+ * @version    $Revision: 207 $
  * @since      Version 7
  * @access     public
  * @filesource
@@ -71,7 +71,7 @@ class FacebookApi extends Library {
 				'url' => $data['url']['current'],
 				'description' => Core::Config()->Get('app.description'),
 				'image' => "{$data['url']['www']}apple-touch-icon.png",
-				'locale' => $data['i18n']['langs'][$data['i18n']['lang']] 
+				'locale' => $data['i18n']['langs'][$data['i18n']['lang']]['locale'], 
 			) 
 		);
 	}

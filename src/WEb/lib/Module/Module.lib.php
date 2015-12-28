@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Module.lib.php 196 2015-06-08 12:16:03Z radu $
+ * $Id: Module.lib.php 205 2015-12-21 16:59:01Z radu $
  *
  * Module library.
  *
@@ -11,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebModule
- * @version    $Revision: 196 $
+ * @version    $Revision: 205 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -457,14 +457,14 @@ class Module extends Library {
 		
 		if (!empty($newLang) && array_key_exists($newLang, $app_langs)) {
 			
-			Core::I18n()->SetLocale($app_langs[$newLang]);
+			Core::I18n()->SetLocale($app_langs[$newLang]['locale']);
 			
 			if ($this->_mUseSessions && !empty($_SESSION['I18n'])) {
 				
 				$_SESSION['I18n']['Chosen'] = TRUE;
 			}
 			
-			if (!empty($redirect)) {
+			if (isset($redirect)) {
 				
 				Core::Router()->Redirect($redirect);
 				
