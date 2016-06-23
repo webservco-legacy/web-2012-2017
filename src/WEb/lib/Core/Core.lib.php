@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Core.lib.php 204 2015-12-18 17:12:37Z radu $
+ * $Id: Core.lib.php 211 2016-01-21 13:39:25Z radu $
  *
  * Engine core library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebCore
- * @version    $Revision: 204 $
+ * @version    $Revision: 211 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -49,6 +49,13 @@ class Core
      * @var mixed
      */
     protected static $_msAppObject;
+    
+    /**
+     * Stores the arrays object.
+     *
+     * @var mixed
+     */
+    protected static $_msArraysObject;
 
     /**
      * Stores the Browser object.
@@ -231,6 +238,24 @@ class Core
         }
         
         return self::$_msAppObject;
+    }
+
+    /**
+     * Method to access the Arrays object from everywhere.
+     *
+     * @return object
+     */
+    final public static function Arrays()
+    {
+        if (NULL == self::$_msArraysObject) {
+            /**
+             *
+             * @var object
+             */
+            self::$_msArraysObject = Arrays::GetInstance();
+        }
+        
+        return self::$_msArraysObject;
     }
 
     /**
@@ -966,6 +991,8 @@ class Core
          */
         $parts = explode('_', $libraryName);
         
+        $library_name = end($parts);
+        
         if (array_key_exists(1, $parts)) {
             
             switch ($parts[0]) {
@@ -976,9 +1003,6 @@ class Core
                     
                     break;
                 default:
-                    
-                    $library_name = end($parts);
-                    
                     break;
             }
         }

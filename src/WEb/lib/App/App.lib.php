@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: App.lib.php 218 2016-04-19 09:43:06Z radu $
  *
  * Application library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebApp
- * @version    $Revision$
+ * @version    $Revision: 218 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -28,16 +28,16 @@ if (!defined('_WEB')) {
 /**
  * App
  * Application library.
- * 
+ *
  * @author Radu Maier <radu@webserv.co>
  * @package WEb
  * @subpackage WebApp
  */
 class App extends Library {
-
+	
 	/**
 	 * Stores the request array.
-	 * 
+	 *
 	 * @var array
 	 */
 	private $_mRequest;
@@ -45,7 +45,7 @@ class App extends Library {
 	/**
 	 * Implement GetInstance() method.
 	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 * 
+	 *
 	 * @param string $className
 	 *        	class name to instantiate
 	 * @return object
@@ -60,7 +60,7 @@ class App extends Library {
 
 	/**
 	 * Boot application.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Boot() {
@@ -108,17 +108,19 @@ class App extends Library {
 		try {
 			/**
 			 * Sanitize requests.
-			 * 
+			 *
 			 * @var array
 			 */
 			Core::Security()->Sanitize();
 			
 			/**
 			 * Perform routing.
-			 * 
+			 *
 			 * @var array
 			 */
 			$this->_mRequest = Core::Router()->GetRequest();
+			
+			Core::Log()->Write(sprintf(__('Application: Current URL: %s', 'WEb'), Core::Router()->GetCurrentUrl()), 'debug');
 			
 			/**
 			 * Check if we have sessions enabled.
@@ -177,7 +179,7 @@ class App extends Library {
 
 	/**
 	 * Run application.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Run() {
@@ -191,12 +193,16 @@ class App extends Library {
 			 */
 			$module_name = $this->_mRequest['module'];
 			
-			if (!class_exists($module_name)) {
+			if (! class_exists($module_name)) {
 				/**
 				 *
 				 * @var string
 				 */
 				$module_msg = sprintf(__('Application: Module "%s" not found.', 'WEb'), $module_name);
+				
+				Core::Log()->Write(sprintf(__('Application: Current URL: %s', 'WEb'), Core::Router()->GetCurrentUrl()), 'info');
+				
+				Core::Log()->Write(sprintf(__('Application: Referer: %s', 'WEb'), Core::Router()->GetReferer()), 'info');
 				
 				/**
 				 * Show 404 message
@@ -207,12 +213,12 @@ class App extends Library {
 			/**
 			 * PHP < 5.3 compatibility.
 			 * $module_object = $module_name::GetInstance($module_name);
-			 * 
+			 *
 			 * @var object
 			 */
 			$module_object = call_user_func(array(
-				$module_name,
-				'GetInstance'
+					$module_name,
+					'GetInstance'
 			), $module_name);
 			
 			/**
@@ -221,12 +227,16 @@ class App extends Library {
 			 */
 			$ctrl_name = $this->_mRequest['controller'];
 			
-			if (!class_exists($ctrl_name)) {
+			if (! class_exists($ctrl_name)) {
 				/**
 				 *
 				 * @var string
 				 */
 				$ctrl_msg = sprintf(__('Application: Controller "%s" not found.', 'WEb'), $ctrl_name);
+				
+				Core::Log()->Write(sprintf(__('Application: Current URL: %s', 'WEb'), Core::Router()->GetCurrentUrl()), 'info');
+				
+				Core::Log()->Write(sprintf(__('Application: Referer: %s', 'WEb'), Core::Router()->GetReferer()), 'info');
 				
 				/**
 				 * Show 404 message
@@ -237,12 +247,12 @@ class App extends Library {
 			/**
 			 * PHP < 5.3 compatibility.
 			 * $ctrl_object = $ctrl_name::GetInstance($ctrl_name);
-			 * 
+			 *
 			 * @var object
 			 */
 			$ctrl_object = call_user_func(array(
-				$ctrl_name,
-				'GetInstance'
+					$ctrl_name,
+					'GetInstance'
 			), $ctrl_name);
 			
 			/**
@@ -259,7 +269,7 @@ class App extends Library {
 			/**
 			 * Extra security measure.
 			 * Make sure the called action is actually an output action from the controller and not another controller method.
-			 * 
+			 *
 			 * @var object
 			 */
 			$f = new ReflectionClass($ctrl_object);
@@ -278,19 +288,23 @@ class App extends Library {
 					 *
 					 * @var string
 					 */
-					$action_methods[] = ucfirst(strtolower($m->name));
+					$action_methods[] = $m->name;
 				}
 			}
 			
-			if (!in_array($action_name, $action_methods) || !is_callable(array(
-				$ctrl_object,
-				$action_name
+			if (! in_array($action_name, $action_methods) || ! is_callable(array(
+					$ctrl_object,
+					$action_name
 			))) {
 				/**
 				 *
 				 * @var string
 				 */
 				$action_msg = sprintf(__('Application: Action "%s" not found.', 'WEb'), $action_name);
+				
+				Core::Log()->Write(sprintf(__('Application: Current URL: %s', 'WEb'), Core::Router()->GetCurrentUrl()), 'info');
+				
+				Core::Log()->Write(sprintf(__('Application: Referer: %s', 'WEb'), Core::Router()->GetReferer()), 'info');
 				
 				/**
 				 * Show 404 message
@@ -307,8 +321,8 @@ class App extends Library {
 			Core::Log()->Write($dispatch_msg, 'debug');
 			
 			return call_user_func(array(
-				$ctrl_object,
-				$action_name
+					$ctrl_object,
+					$action_name
 			));
 		} catch (ErrorException $e) {
 			Core::Error()->Report($e);
@@ -319,7 +333,7 @@ class App extends Library {
 
 	/**
 	 * Shutdown application.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function Shutdown() {
@@ -338,7 +352,7 @@ class App extends Library {
 
 	/**
 	 * Get request.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function GetRequest() {
@@ -348,14 +362,14 @@ class App extends Library {
 
 	/**
 	 * Initialize application logging.
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function _InitLog() {
 
 		/**
 		 * Get log file path.
-		 * 
+		 *
 		 * @var string
 		 */
 		$log_path = Core::Config()->Get('path.app') . Core::Config()->Get('dir.app.var') . '/log/';
@@ -382,7 +396,7 @@ class App extends Library {
 
 	/**
 	 * Stop application and display error message.
-	 * 
+	 *
 	 * @param string $errorMessage
 	 *        	error message
 	 * @param string $errorController
@@ -405,12 +419,12 @@ class App extends Library {
 		/**
 		 * PHP < 5.3 compatibility.
 		 * $ctrl_object = $ctrl_name::GetInstance($ctrl_name);
-		 * 
+		 *
 		 * @var object
 		 */
 		$ctrl_object = call_user_func(array(
-			$ctrl_name,
-			'GetInstance'
+				$ctrl_name,
+				'GetInstance'
 		), $ctrl_name);
 		
 		/**
@@ -420,10 +434,9 @@ class App extends Library {
 		$action_name = 'Oups' . $errorType;
 		
 		return call_user_func(array(
-			$ctrl_object,
-			$action_name
+				$ctrl_object,
+				$action_name
 		));
 	}
-
 }
 ?>

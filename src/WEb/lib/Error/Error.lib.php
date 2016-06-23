@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Error.lib.php 219 2016-05-18 14:42:52Z radu $
  *
  * Error handling and reporting library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebError
- * @version    $Revision$
+ * @version    $Revision: 219 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -58,7 +58,10 @@ class Error extends Library {
 	 */
 	public function Load() {
 
-		set_error_handler(array (Error::GetInstance(),'Handle' ));
+		set_error_handler(array(
+				Error::GetInstance(),
+				'Handle'
+		));
 		
 		Core::Log()->Write(__('Error library: Registering as error handler.', 'WEb'), 'debug');
 		
@@ -104,54 +107,79 @@ class Error extends Library {
 		 *
 		 * @var array
 		 */
-		$err = array ('code' => $errObject->GetCode(),'severity' => $errObject->GetSeverity(),'message' => $errObject->GetMessage(),'file' => $errObject->GetFile(),'line' => $errObject->GetLine(),'trace' => $errObject->GetTraceAsString() );
+		$err = array(
+				'code' => $errObject->GetCode(),
+				'severity' => $errObject instanceof ErrorException ? $errObject->GetSeverity() : NULL,
+				'message' => $errObject->GetMessage(),
+				'file' => $errObject->GetFile(),
+				'line' => $errObject->GetLine(),
+				'trace' => $errObject->GetTraceAsString()
+		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$msg = array ();
+		$msg = array();
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$msg [] = array (__('The application made a boo boo:', 'WEb'),'info' );
+		$msg[] = array(
+				__('The application made a boo boo:', 'WEb'),
+				'info'
+		);
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$msg [] = array ($err ['message'],'error' );
+		$msg[] = array(
+				$err['message'],
+				'error'
+		);
 		
 		/**
 		 * Severity 512 is reserved for sensitive operations,
 		 * so we show no information apart from the actual message.
 		 */
-		if (512 != $err ['severity']) {
+		if (512 != $err['severity']) {
 			/**
 			 *
 			 * @var array
 			 */
-			$msg [] = array (sprintf(__('Code: %s', 'WEb'), $err ['code']),'debug' );
+			$msg[] = array(
+					sprintf(__('Code: %s', 'WEb'), $err['code']),
+					'debug'
+			);
 			
 			/**
 			 *
 			 * @var array
 			 */
-			$msg [] = array (sprintf(__('Severity: %s', 'WEb'), $err ['severity']),'debug' );
+			$msg[] = array(
+					sprintf(__('Severity: %s', 'WEb'), $err['severity']),
+					'debug'
+			);
 			
 			/**
 			 *
 			 * @var array
 			 */
-			$msg [] = array (sprintf(__('File: %s', 'WEb'), $err ['file']),'error' );
+			$msg[] = array(
+					sprintf(__('File: %s', 'WEb'), $err['file']),
+					'error'
+			);
 			
 			/**
 			 *
 			 * @var array
 			 */
-			$msg [] = array (sprintf(__('Line: %s', 'WEb'), $err ['line']),'error' );
+			$msg[] = array(
+					sprintf(__('Line: %s', 'WEb'), $err['line']),
+					'error'
+			);
 			
 			/**
 			 * Check if trace is enabled.
@@ -161,7 +189,10 @@ class Error extends Library {
 				 *
 				 * @var array
 				 */
-				$msg [] = array (__('Trace:', 'WEb') . PHP_EOL . $err ['trace'],'debug' );
+				$msg[] = array(
+						__('Trace:', 'WEb') . PHP_EOL . $err['trace'],
+						'debug'
+				);
 			}
 		}
 		
@@ -169,7 +200,10 @@ class Error extends Library {
 		 *
 		 * @var array
 		 */
-		$msg [] = array ('Execution stopped.','info' );
+		$msg[] = array(
+				'Execution stopped.',
+				'info'
+		);
 		
 		/**
 		 * Iterate messages
@@ -178,7 +212,7 @@ class Error extends Library {
 			/**
 			 * Write messages to log.
 			 */
-			Core::Log()->Write($msg_data [0], $msg_data [1]);
+			Core::Log()->Write($msg_data[0], $msg_data[1]);
 		}
 		
 		/**
@@ -203,12 +237,12 @@ class Error extends Library {
 		
 		$custom_message = Core::Config()->Get('error.message');
 		
-		if (!empty($custom_message)) {
+		if (! empty($custom_message)) {
 			
 			echo $custom_message;
 		} else {
 			
-			echo '<!doctype html><html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>' . __('Error', 'WEb') . '</title></head><body><h1>' . __('The application made a boo boo.', 'WEb') . '</h1><p>' . __('But there is no reason to panic.', 'WEb') . ' ' . __('The person responsible has been notified.', 'WEb') . '</p><p>' . __('Please come back later.', 'WEb') . '</p><hr><address>' . sprintf(__('The friendly server at %s.', 'WEb'), $_SERVER ['SERVER_NAME']) . '</address></body></html>';
+			echo '<!doctype html><html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>' . __('Error', 'WEb') . '</title></head><body><h1>' . __('The application made a boo boo.', 'WEb') . '</h1><p>' . __('But there is no reason to panic.', 'WEb') . ' ' . __('The person responsible has been notified.', 'WEb') . '</p><p>' . __('Please come back later.', 'WEb') . '</p><hr><address>' . sprintf(__('The friendly server at %s.', 'WEb'), $_SERVER['SERVER_NAME']) . '</address></body></html>';
 		}
 		
 		exit();

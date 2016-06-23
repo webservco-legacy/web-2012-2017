@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Config.lib.php 204 2015-12-18 17:12:37Z radu $
+ * $Id: Config.lib.php 217 2016-03-25 14:33:00Z radu $
  *
  * Engine configuration library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebConfig
- * @version    $Revision: 204 $
+ * @version    $Revision: 217 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -36,15 +36,18 @@ if (! defined('_WEB')) {
  *            
  */
 class Config extends Library {
-
+	
 	/**
 	 * Stores configuration options.
 	 *
 	 * @var array
 	 */
-	private $_mConfig = array('dev' => array(),'test' => array(),'prod' => array() 
+	private $_mConfig = array(
+			'dev' => array(),
+			'test' => array(),
+			'prod' => array()
 	);
-
+	
 	/**
 	 * Configuration environment.
 	 *
@@ -53,7 +56,7 @@ class Config extends Library {
 	 * @var string
 	 */
 	private $_mConfigEnv = 'dev';
-
+	
 	/**
 	 * Configuration string delimiter.
 	 *
@@ -62,14 +65,14 @@ class Config extends Library {
 	 * @var string
 	 */
 	private $_mConfigDelimiter = '.';
-
+	
 	/**
 	 * I18n keywords.
 	 *
 	 * @var array
 	 */
 	private $_mI18nKeys = array();
-
+	
 	/**
 	 * I18n keywords specific to application.
 	 *
@@ -347,7 +350,7 @@ class Config extends Library {
 	 * Add data to the configuration array.
 	 *
 	 * Note: main function for storing configuration data is Set()
-	 * 
+	 *
 	 * @see Config::Set()
 	 *
 	 * @param array $cfgData
@@ -386,19 +389,29 @@ class Config extends Library {
 	 */
 	public function Get($cfgSetting = NULL, $cfgEnv = NULL, $cfgArray = NULL) {
 
-		if (!empty($_SERVER['HTTP_HOST'])) {
-
+		if (! empty($_SERVER['HTTP_HOST'])) {
+			
 			if (empty($cfgArray) && 'url.www' == $cfgSetting) {
-					
+				
 				$aliases = $this->Get('url.aliases');
-					
+				
 				if (! empty($aliases['item'])) {
-			
+					
+					if (! is_array($aliases['item']))
+						$aliases['item'] = array(
+								0 => $aliases['item']
+						);
+					
 					foreach ($aliases['item'] as $alias) {
-							
+						
 						if (Core::String()->Contains($_SERVER['HTTP_HOST'], $alias)) {
-			
-							return $alias;
+							
+							$protocol = Core::Router()->GetProtocol();
+							
+							if (Core::String()->StartsWith("{$protocol}:", $alias)) {
+								
+								return $alias;
+							}
 						}
 					}
 				}
@@ -655,7 +668,9 @@ class Config extends Library {
 			/**
 			 * Iterate through it as it may contain further objects.
 			 */
-			return array_map(array($this,__FUNCTION__ 
+			return array_map(array(
+					$this,
+					__FUNCTION__
 			), $cfgData);
 		}
 		
@@ -684,7 +699,9 @@ class Config extends Library {
 		 * If data is not an array, trim it.
 		 * Otherwise call the method recursively.
 		 */
-		return (is_array($cfgData)) ? array_map(array($this,__FUNCTION__ 
+		return (is_array($cfgData)) ? array_map(array(
+				$this,
+				__FUNCTION__
 		), $cfgData) : trim($cfgData);
 	}
 
@@ -693,7 +710,7 @@ class Config extends Library {
 	 *
 	 * Made a separate method from Add()
 	 * in order to benefit from recursivity.
-	 * 
+	 *
 	 * @see Config::Add()
 	 *
 	 * @param array $cfgArray

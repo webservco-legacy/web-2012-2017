@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Graphics.lib.php 213 2016-03-04 16:09:07Z radu $
  *
  * Graphics library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebGraphics
- * @version    $Revision$
+ * @version    $Revision: 213 $
  * @since      Version 7
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -34,7 +34,7 @@ if (!defined('_WEB')) {
  * @subpackage WebGraphics
  */
 class Graphics extends Library {
-
+	
 	/**
 	 * Library properties.
 	 *
@@ -98,13 +98,13 @@ class Graphics extends Library {
 		return $this->CreateThumbnail($writeFile);
 	}
 
-	public function CreateThumbnail($writeFile = TRUE) {
+	public function CreateThumbnail($writeFile = TRUE, $size = NULL, $type = NULL, $fixOrientation = NULL) {
 
-		$this->_SetThumbnailSettings();
+		$this->_SetThumbnailSettings($size, $type, $fixOrientation);
 		
 		$image_path = "{$this->_mProp['image_dir']}{$this->_mProp['image_name']}";
 		
-		if (!is_readable($image_path)) {
+		if (! is_readable($image_path)) {
 			
 			trigger_error(__('Graphics library: Source image not found.', 'WEb'));
 		}
@@ -125,15 +125,15 @@ class Graphics extends Library {
 				
 				$raw = imagecreatefromjpeg($image_path);
 				
-				if (!empty($this->_mProp['fix_orientation'])) {
+				if (! empty($this->_mProp['fix_orientation'])) {
 					
 					if (function_exists('exif_read_data')) {
 						
 						$exif_data = exif_read_data($image_path);
 						
-						if (!empty($exif_data)) {
+						if (! empty($exif_data)) {
 							
-							if (!empty($exif_data['Orientation'])) {
+							if (! empty($exif_data['Orientation'])) {
 								
 								$rotate = NULL;
 								
@@ -144,7 +144,7 @@ class Graphics extends Library {
 										break;
 									
 									case 6 :
-										$rotate = -90;
+										$rotate = - 90;
 										$image_height_new = $image_width;
 										$image_width_new = $image_height;
 										break;
@@ -159,13 +159,13 @@ class Graphics extends Library {
 										break;
 								}
 								
-								if (!empty($rotate)) {
+								if (! empty($rotate)) {
 									
 									Core::Log()->Write(sprintf(__('Graphics Library: [fix_orientation] rotating by %s degrees.', 'WEb'), $rotate), 'debug');
 									
 									$raw = imagerotate($raw, $rotate, 0);
 									
-									if (!empty($image_width_new) && !empty($image_height_new)) {
+									if (! empty($image_width_new) && ! empty($image_height_new)) {
 										
 										$image_width = $image_width_new;
 										$image_height = $image_height_new;
@@ -186,11 +186,7 @@ class Graphics extends Library {
 						
 						Core::Log()->Write(__('Graphics Library: [fix_orientation] EXIF library not available.', 'WEb'), 'debug');
 					}
-					
-					//
 				}
-				
-				// XXX
 				
 				break;
 			
@@ -249,9 +245,9 @@ class Graphics extends Library {
 			return $imageData;
 		}
 		
-		$thumbnail_name = !empty($this->_mProp['thumbnail_name']) ? $this->_mProp['thumbnail_name'] : pathinfo($image_path, PATHINFO_FILENAME);
+		$thumbnail_name = ! empty($this->_mProp['thumbnail_name']) ? $this->_mProp['thumbnail_name'] : pathinfo($image_path, PATHINFO_FILENAME);
 		
-		$thumbnail_dir = !empty($this->_mProp['thumbnail_dir']) ? $this->_mProp['thumbnail_dir'] : $this->_mProp['image_dir'];
+		$thumbnail_dir = ! empty($this->_mProp['thumbnail_dir']) ? $this->_mProp['thumbnail_dir'] : $this->_mProp['image_dir'];
 		
 		$thumbnail_file_name = "{$thumbnail_name}{$extension}";
 		
@@ -260,17 +256,29 @@ class Graphics extends Library {
 		return $thumbnail_file_name;
 	}
 
-	private function _SetThumbnailSettings() {
+	private function _SetThumbnailSettings($size, $type, $fixOrientation) {
 
-		$thumbnailConfigType = !empty($this->_mProp['thumbnail_config_type']) ? $this->_mProp['thumbnail_config_type'] : 'default';
+		$thumbnailConfigType = ! empty($this->_mProp['thumbnail_config_type']) ? $this->_mProp['thumbnail_config_type'] : 'default';
 		
 		$settings = Core::Config()->Get("graphics.thumbnail.{$thumbnailConfigType}");
 		
-		$this->_mProp['thumbnail_size'] = !empty($settings['size']) ? $settings['size'] : 100;
+		$this->_mProp['thumbnail_size'] = ! empty($settings['size']) ? $settings['size'] : 96;
 		
-		$this->_mProp['thumbnail_type'] = !empty($settings['type']) ? $settings['type'] : 3;
+		$this->_mProp['thumbnail_type'] = ! empty($settings['type']) ? $settings['type'] : 2;
 		
-		$this->_mProp['fix_orientation'] = !empty($settings['fix_orientation']) ? TRUE : FALSE;
+		$this->_mProp['fix_orientation'] = ! empty($settings['fix_orientation']) ? TRUE : FALSE;
+		
+		if (! empty($size)) {
+			$this->_mProp['thumbnail_size'] = $size;
+		}
+		
+		if (! empty($type)) {
+			$this->_mProp['thumbnail_type'] = $type;
+		}
+		
+		if (isset($fixOrientation)) {
+			$this->_mProp['fix_orientation'] = $fixOrientation;
+		}
 		
 		if (empty($this->_mProp['image_dir'])) {
 			

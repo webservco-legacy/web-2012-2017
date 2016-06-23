@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Router.lib.php 218 2016-04-19 09:43:06Z radu $
  *
  * Router library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebRouter
- * @version    $Revision$
+ * @version    $Revision: 218 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -18,7 +18,7 @@
 /**
  * Security check.
  */
-if (!defined('_WEB')) {
+if (! defined('_WEB')) {
 	/**
 	 * Stop script execution.
 	 */
@@ -34,28 +34,28 @@ if (!defined('_WEB')) {
  * @subpackage WebRouter
  */
 class Router extends Library {
-
+	
 	/**
 	 * Stores the request.
 	 *
 	 * @var string
 	 */
 	private $_mRequest = NULL;
-
+	
 	/**
 	 * Stores the raw request.
 	 *
 	 * @var string
 	 */
 	private $_mRawRequest = NULL;
-
+	
 	/**
 	 * Stores the raw URL as appears in browser.
 	 *
 	 * @var string
 	 */
 	private $_mRawUrl = NULL;
-
+	
 	/**
 	 * Stores the current location.
 	 * Useful for redirects.
@@ -66,14 +66,14 @@ class Router extends Library {
 	 * @var string
 	 */
 	private $_mLocation = NULL;
-
+	
 	/**
 	 * Stores default route.
 	 *
 	 * @var string
 	 */
 	private $_mDefaultRoute = NULL;
-
+	
 	/**
 	 * Stores custom routes.
 	 *
@@ -150,6 +150,16 @@ class Router extends Library {
 	}
 
 	/**
+	 * Get referer.
+	 *
+	 * @return string
+	 */
+	public function GetReferer() {
+
+		return ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : NULL;
+	}
+
+	/**
 	 * Get unrouted (raw) Url.
 	 *
 	 * @return string
@@ -171,7 +181,7 @@ class Router extends Library {
 		if (isset($_SERVER['HTTPS']) && 'off' != $_SERVER['HTTPS']) {
 			
 			$protocol = 'https';
-		} else if ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')) {
+		} else if ((! empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') || (! empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')) {
 			
 			$protocol = 'https';
 		}
@@ -299,7 +309,7 @@ class Router extends Library {
 		 * @var array
 		 */
 		$raw_query = array_diff($raw_query, array(
-				'' 
+				''
 		));
 		
 		if (FALSE !== $returnNumeric) {
@@ -366,7 +376,7 @@ class Router extends Library {
 		 */
 		$extension = Core::Config()->Get('seo.extension');
 		
-		if (!empty($extension)) {
+		if (! empty($extension)) {
 			
 			if (is_array($extension)) {
 				
@@ -810,7 +820,7 @@ class Router extends Library {
 		
 		if ('name' === key($routes)) {
 			$routes = array(
-					0 => $routes 
+					0 => $routes
 			);
 		}
 		
@@ -847,7 +857,7 @@ class Router extends Library {
 		/**
 		 * Check if a request exists.
 		 */
-		if (!empty($_GET)) {
+		if (! empty($_GET)) {
 			
 			/**
 			 * Remove corresponding _REQUEST data.
@@ -886,7 +896,7 @@ class Router extends Library {
 				'module',
 				'controller',
 				'action',
-				'query' 
+				'query'
 		);
 		
 		/**
@@ -924,28 +934,28 @@ class Router extends Library {
 		 *
 		 * @var string
 		 */
-		$request['module'] = (!empty($request['module'])) ? Core::Security()->FilterInput($request['module'], TRUE, TRUE) : Core::Config()->Get('router.default.module');
+		$request['module'] = (! empty($request['module'])) ? Core::Security()->FilterInput($request['module'], TRUE, TRUE) : Core::Config()->Get('router.default.module');
 		
 		/**
 		 * If controller is empty, set it to default.
 		 *
 		 * @var string
 		 */
-		$request['controller'] = (!empty($request['controller'])) ? Core::Security()->FilterInput($request['controller'], TRUE, TRUE) : Core::Config()->Get('router.default.controller');
+		$request['controller'] = (! empty($request['controller'])) ? Core::Security()->FilterInput($request['controller'], TRUE, TRUE) : Core::Config()->Get('router.default.controller');
 		
 		/**
 		 * If action is empty, set it to default.
 		 *
 		 * @var string
 		 */
-		$request['action'] = (!empty($request['action'])) ? Core::Security()->FilterInput($request['action'], TRUE, TRUE) : Core::Config()->Get('router.default.action');
+		$request['action'] = (! empty($request['action'])) ? Core::Security()->FilterInput($request['action'], TRUE, TRUE) : Core::Config()->Get('router.default.action');
 		
 		/**
 		 * If query is not empty, filter it.
 		 *
 		 * @var string
 		 */
-		$request['query'] = (!empty($request['query'])) ? Core::Security()->FilterInput($request['query'], TRUE, TRUE) : '';
+		$request['query'] = (! empty($request['query'])) ? Core::Security()->FilterInput($request['query'], TRUE, TRUE) : '';
 		
 		/**
 		 * Set final location.
@@ -966,7 +976,8 @@ class Router extends Library {
 		 *
 		 * @var string
 		 */
-		$module = ucfirst(strtolower($request['module']));
+		// $module = ucfirst(strtolower($request['module'])); //XXX
+		$module = $request['module'];
 		
 		/**
 		 *
@@ -978,7 +989,8 @@ class Router extends Library {
 		 *
 		 * @var string
 		 */
-		$controller = ucfirst(strtolower($request['controller']));
+		// $controller = ucfirst(strtolower($request['controller'])); //XXX
+		$controller = $request['controller'];
 		
 		/**
 		 *
@@ -990,13 +1002,14 @@ class Router extends Library {
 		 *
 		 * @var string
 		 */
-		$request['action'] = ucfirst(strtolower($request['action']));
+		// $request['action'] = ucfirst(strtolower($request['action'])); //XXX
+		$request['action'] = $request['action'];
 		
 		/**
 		 *
 		 * @var array
 		 */
-		$request['query'] = (!empty($request['query'])) ? $this->ParseRequestQuery($request['query']) : array();
+		$request['query'] = (! empty($request['query'])) ? $this->ParseRequestQuery($request['query']) : array();
 		
 		Core::Log()->Write(__('Router library: Request formatting done.', 'WEb'), 'debug');
 		

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Module.lib.php 205 2015-12-21 16:59:01Z radu $
+ * $Id: Module.lib.php 210 2016-01-18 09:13:22Z radu $
  *
  * Module library.
  *
@@ -11,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebModule
- * @version    $Revision: 205 $
+ * @version    $Revision: 210 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -102,7 +102,10 @@ class Module extends Library {
 		 *
 		 * @var string
 		 */
-		$module_name = array_key_exists(1, $parts) ? strtolower($parts[1]) : $parts[0];
+		//$module_name = array_key_exists(1, $parts) ? strtolower($parts[1]) : $parts[0]; //XXX
+		$module_name = array_key_exists(1, $parts) ? $parts[1] : $parts[0];
+		
+		$module_file = strtolower($module_name) . '.cfg.xml';
 		
 		/**
 		 *
@@ -114,7 +117,8 @@ class Module extends Library {
 		 *
 		 * @var string
 		 */
-		$cfg_file = $path_app . 'etc/' . Core::Config()->Get('dir.app.mod') . '/' . ucfirst($module_name) . '/' . $module_name . '.cfg.xml';
+		//$cfg_file = $path_app . 'etc/' . Core::Config()->Get('dir.app.mod') . '/' . ucfirst($module_name) . '/' . $module_name . '.cfg.xml'; //XXX
+		$cfg_file = $path_app . 'etc/' . Core::Config()->Get('dir.app.mod') . '/' . $module_name . '/' . $module_file;
 		
 		if (!is_readable($cfg_file)) {
 			if (function_exists('__')) {
@@ -122,7 +126,7 @@ class Module extends Library {
 				 *
 				 * @var string
 				 */
-				$config_msg = sprintf(__('%s module: Skipping configuration file "%s" (not found).', 'WEb'), $className, $module_name);
+				$config_msg = sprintf(__('%s module: Skipping configuration file "%s" (not found).', 'WEb'), $className, $module_file);
 				
 				Core::Log()->Write($config_msg, 'debug');
 			}
@@ -135,7 +139,7 @@ class Module extends Library {
 			 *
 			 * @var string
 			 */
-			$config_msg = sprintf(__('%s module: Loading configuration file "%s".', 'WEb'), $className, $module_name);
+			$config_msg = sprintf(__('%s module: Loading configuration file "%s".', 'WEb'), $className, $module_file);
 			
 			Core::Log()->Write($config_msg, 'debug');
 		}

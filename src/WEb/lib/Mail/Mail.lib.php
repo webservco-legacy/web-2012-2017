@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Mail.lib.php 197 2015-07-03 15:16:14Z radu $
+ * $Id: Mail.lib.php 208 2016-01-12 07:44:19Z radu $
  *
  * Mail library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebMail
- * @version    $Revision: 197 $
+ * @version    $Revision: 208 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -34,112 +34,112 @@ if (! defined('_WEB')) {
  * @subpackage WebMail
  */
 class Mail extends Library {
-
+	
 	/**
 	 * Stores mail content type.
 	 *
 	 * @var string
 	 */
 	protected $_mContentType;
-
+	
 	/**
 	 * Stores mail encoding.
 	 *
 	 * @var string
 	 */
 	protected $_mEncoding;
-
+	
 	/**
 	 * Stores mail charset.
 	 *
 	 * @var unknown_type
 	 */
 	protected $_mCharset;
-
+	
 	/**
 	 * Should we use sender envelope?
 	 *
 	 * @var bool
 	 */
 	protected $_mEnvelope;
-
+	
 	/**
 	 * Should we use SMTP?
 	 *
 	 * @var array
 	 */
 	protected $_mSmtp;
-
+	
 	/**
 	 * Should we add the Date header?
 	 *
 	 * @var array
 	 */
 	protected $_mDateHeader;
-
+	
 	/**
 	 * Stores mail sender.
 	 *
 	 * @var array
 	 */
 	protected $_mMailFrom = array();
-
+	
 	/**
 	 * Stores mail reply-to.
 	 *
 	 * @var array
 	 */
 	protected $_mMailReplyTo = array();
-
+	
 	/**
 	 * Stores mail recipients.
 	 *
 	 * @var array
 	 */
 	protected $_mMailTo = array();
-
+	
 	/**
 	 * Stores mail cc recipients.
 	 *
 	 * @var array
 	 */
 	protected $_mMailCc = array();
-
+	
 	/**
 	 * Stores mail bcc recipients.
 	 *
 	 * @var array
 	 */
 	protected $_mMailBcc = array();
-
+	
 	/**
 	 * Stores mail attachments.
 	 *
 	 * @var array
 	 */
 	protected $_mAttachments = array();
-
+	
 	/**
 	 * Known attachment types.
 	 *
 	 * @var array
 	 */
 	protected $_mAttachKnown = array();
-
+	
 	/**
 	 * Allowed attachemnt types.
 	 *
 	 * @var array
 	 */
 	protected $_mAttachAllowed = array();
-
+	
 	/**
 	 * Stores mail headers.
 	 *
 	 * @var array
 	 */
 	protected $_mHeaders = array();
-
+	
 	/**
 	 * Stores mail line ending.
 	 *
@@ -218,27 +218,27 @@ class Mail extends Library {
 		 * @var array
 		 */
 		$this->_mAttachKnown = array(
-			'bin' => 'application/octet-stream',
-			'gif' => 'image/gif',
-			'jpg' => 'image/jpeg',
-			'png' => 'image/png',
-			'zip' => 'application/zip',
-			'gzip' => 'application/x-gzip',
-			'text' => 'text/plain',
-			'html' => 'text/html',
-			'xml' => 'text/xml',
-			'xhtml' => 'application/xhtml+xml',
-			'pdf' => 'application/pdf',
-			'odt' => 'application/vnd.oasis.opendocument.text',
-			'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-			'odp' => 'application/vnd.oasis.opendocument.presentation',
-			'odg' => 'application/vnd.oasis.opendocument.graphics',
-			'xls' => 'application/vnd.ms-excel',
-			'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-			'ppt' => 'application/vnd.ms-powerpoint',
-			'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-			'doc' => 'application/msword',
-			'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+				'bin' => 'application/octet-stream',
+				'gif' => 'image/gif',
+				'jpg' => 'image/jpeg',
+				'png' => 'image/png',
+				'zip' => 'application/zip',
+				'gzip' => 'application/x-gzip',
+				'text' => 'text/plain',
+				'html' => 'text/html',
+				'xml' => 'text/xml',
+				'xhtml' => 'application/xhtml+xml',
+				'pdf' => 'application/pdf',
+				'odt' => 'application/vnd.oasis.opendocument.text',
+				'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+				'odp' => 'application/vnd.oasis.opendocument.presentation',
+				'odg' => 'application/vnd.oasis.opendocument.graphics',
+				'xls' => 'application/vnd.ms-excel',
+				'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+				'ppt' => 'application/vnd.ms-powerpoint',
+				'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+				'doc' => 'application/msword',
+				'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 		);
 		
 		/**
@@ -313,7 +313,7 @@ class Mail extends Library {
 				 * @var array
 				 */
 				$this->_mMailFrom = array(
-					$addEmail => $addName 
+						$addEmail => $addName
 				);
 				
 				break;
@@ -325,7 +325,7 @@ class Mail extends Library {
 				 * @var array
 				 */
 				$this->_mMailReplyTo = array(
-					$addEmail => $addName 
+						$addEmail => $addName
 				);
 				
 				break;
@@ -436,8 +436,8 @@ class Mail extends Library {
 		 * @var array
 		 */
 		$this->_mAttachments[$attachPath] = array(
-			$attach_type,
-			$attach_name 
+				$attach_type,
+				$attach_name
 		);
 		
 		/**
@@ -626,33 +626,35 @@ class Mail extends Library {
 	 *
 	 * @return boolean
 	 */
-	public function SendSimple($msgTo, $msgSubject, $msgBody, $senderAddress = NULL, $senderName = NULL) {
+	public function SendSimple($msgTo = NULL, $msgSubject, $msgBody, $fromAddress = NULL, $fromName = NULL) {
 
 		$this->SetDefaults();
 		
-		if (! empty($senderAddress)) {
+		$mail_settings = Core::Config()->Get('mail');
+		
+		$from_address = $mail_settings['sender']['address'];
+		
+		$from_name = $mail_settings['sender']['name'];
+		
+		if (empty($msgTo)) {
 			
-			$sender_address = $senderAddress;
-			$sender_name = $senderName;
-		} else {
-			
-			$mail_settings = Core::Config()->Get('mail');
-			
-			$sender_address = $mail_settings['sender']['address'];
-			
-			$sender_name = $mail_settings['sender']['name'];
+			$msgTo = $mail_settings['recipient']['address'];
 		}
 		
-		if (! empty($sender_address)) {
+		if (! empty($fromAddress)) {
 			
-			$this->AddAddress($sender_address, 'from', $sender_name);
+			$from_name = $fromName;
 			
-			$this->AddAddress($msgTo, 'to', NULL);
+			$replyto_address = $fromAddress;
 			
-			return $this->Send($msgSubject, $msgBody);
+			$this->AddAddress($fromAddress, 'replyto', $fromName);
 		}
 		
-		return FALSE;
+		$this->AddAddress($from_address, 'from', $from_name);
+		
+		$this->AddAddress($msgTo, 'to', NULL);
+		
+		return $this->Send($msgSubject, $msgBody);
 	}
 
 	/**
@@ -671,7 +673,7 @@ class Mail extends Library {
 			 *
 			 * @var array
 			 */
-			$recipient = Core::Config()->Get('recipient');
+			$recipient = Core::Config()->Get('mail.recipient');
 			
 			if (empty($recipient['address'])) {
 				Core::Log()->Write(__('Mail Library: Error sending mail. You have to set at least one recipient.', 'WEb'), 'error');
@@ -690,7 +692,7 @@ class Mail extends Library {
 			 *
 			 * @var array
 			 */
-			$sender = Core::Config()->Get('sender');
+			$sender = Core::Config()->Get('mail.sender');
 			
 			if (empty($sender['address'])) {
 				Core::Log()->Write(__('Mail Library: Error sending mail. You have to set sender.', 'WEb'), 'error');
@@ -699,9 +701,9 @@ class Mail extends Library {
 			}
 			
 			/**
-			 * Add default recipient.
+			 * Add default sender.
 			 */
-			$this->AddAddress($recipient['address'], 'from', $recipient['name']);
+			$this->AddAddress($sender['address'], 'from', $sender['name']);
 		}
 		
 		if (empty($this->_mMailReplyTo)) {

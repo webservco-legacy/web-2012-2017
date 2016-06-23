@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: User.obj.php 198 2015-07-07 16:04:06Z radu $
+ * $Id: User.obj.php 221 2016-06-23 12:37:33Z radu $
  *
  * User object.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebObject
- * @version    $Revision: 198 $
+ * @version    $Revision: 221 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -348,7 +348,9 @@ class User extends Object {
 			$login = $this->_LoginUser($userEmail, $userPass, $userSocial);
 		}
 		
-		$this->_RecordLogin($this->_mId, $userEmail, NULL, $userSocial);
+		$now = date('Y-m-d H:i:s');
+		
+		$this->_RecordLogin($this->_mId, $userEmail, $now, $userSocial);
 		
 		if (TRUE !== $login) {
 			return FALSE;

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: I18n.lib.php 205 2015-12-21 16:59:01Z radu $
+ * $Id: I18n.lib.php 220 2016-05-19 14:50:17Z radu $
  *
  * Internationalization library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebI18n
- * @version    $Revision: 205 $
+ * @version    $Revision: 220 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -140,13 +140,13 @@ class I18n extends Library
         
         /**
          * Rumored to allow using a locale regardless on server locale setup.
+         * putenv("LANGUAGE=" . $this->_mLocale);
          */
-        putenv("LANGUAGE=" . $this->_mLocale);
         
         /**
          * Rumored to be needed on Win.
+         * putenv("LANG=" . $this->_mLocale);
          */
-        putenv("LANG=" . $this->_mLocale);
         
         /**
          * Use as below instead of
