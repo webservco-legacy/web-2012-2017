@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Log.lib.php 226 2017-01-07 11:51:55Z radu $
  *
  * Logging library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebLog
- * @version    $Revision$
+ * @version    $Revision: 226 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -302,16 +302,17 @@ class Log extends Library {
 	 * @param string $logMessage
 	 * @param mixed $logData
 	 * @param string $logLevel
+	 * @param string $logType
 	 *
 	 * @return boolean
 	 */
-	public function Debug($logMessage, $logData, $logLevel = 'debug') {
+	public function Debug($logMessage, $logData, $logLevel = 'debug', $logType = NULL) {
 
-		$this->Write($logMessage, $logLevel);
+		$this->Write($logMessage, $logLevel, $logType);
 
 		if (!empty($logData)) {
 
-			$this->Write(var_export($logData, TRUE), $logLevel);
+			$this->Write(var_export($logData, TRUE), $logLevel, $logType);
 		}
 
 		return TRUE;

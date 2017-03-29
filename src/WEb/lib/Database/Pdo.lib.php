@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Pdo.lib.php 222 2016-10-24 09:26:09Z radu $
  *
  * PHP Data Objects library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebDatabase
- * @version    $Revision$
+ * @version    $Revision: 222 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -122,9 +122,9 @@ class Database_Pdo extends Database implements Interface_Database {
 	/**
 	 * (non-PHPdoc)
 	 * 
-	 * @see Interface_Database::EscapeString()
+	 * @see Interface_Database::Escape()
 	 */
-	public function EscapeString($string) {
+	public function Escape($string) {
 
 		/**
 		 * Open database connection if not already opened.
@@ -132,6 +132,17 @@ class Database_Pdo extends Database implements Interface_Database {
 		$this->Connect();
 		
 		return $this->_mDbLink->quote($string);
+	}
+	
+	/**
+     * (non-PHPdoc)
+     *
+     * @see Interface_Database::Escape()
+     * @deprecated
+     */
+	public function EscapeString($string) {
+
+		return $this->Escape($string);
 	}
 
 	/**

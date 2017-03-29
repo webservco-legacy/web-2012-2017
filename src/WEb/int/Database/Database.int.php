@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Database.int.php 222 2016-10-24 09:26:09Z radu $
  *
  * Database interface.
  *
@@ -11,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebDatabase
- * @version    $Revision$
+ * @version    $Revision: 222 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -47,11 +47,13 @@ interface Interface_Database {
 	/**
 	 * Escape a string for use in a database query.
 	 * 
+	 * Deprecates EscapeString();
+	 * 
 	 * @param string $string        	
 	 *
 	 * @return string
 	 */
-	public function EscapeString($string);
+	public function Escape($string);
 
 	/**
 	 * Get DBMS Version number.

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Security.lib.php 230 2017-03-28 08:58:16Z radu $
  *
  * Security library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebSecurity
- * @version    $Revision$
+ * @version    $Revision: 230 $
  * @since      Version 1
  * @access     public
  * @filesource
@@ -72,40 +72,40 @@ class Security extends Library {
 	 */
 	public function Sanitize() {
 
-		Core::Log()->Write(__('Security library: Initializing input sanitization.', 'WEb'), 'debug');
-		
+		Core::Log() -> Write(__('Security library: Initializing input sanitization.', 'WEb'), 'debug');
+
 		/**
 		 * Init GET request number.
 		 *
 		 * @var int
 		 */
-		$this->_mNumGet = 0;
-		
+		$this -> _mNumGet = 0;
+
 		/**
 		 * Filter $_GET array.
 		 *
 		 * @var array
 		 */
 		$_GET = array_map(array(
-				$this,
-				'_FilterRequest' 
+			$this,
+			'_FilterRequest'
 		), $_GET);
-		
+
 		/**
 		 *
 		 * @var string
 		 */
-		$get_message = sprintf(___('Security library: %s GET request sanitized.', 'Security library: %s GET requests sanitized.', $this->_mNumGet, 'WEb'), $this->_mNumGet);
-		
-		Core::Log()->Write($get_message, 'debug');
-		
+		$get_message = sprintf(___('Security library: %s GET request sanitized.', 'Security library: %s GET requests sanitized.', $this -> _mNumGet, 'WEb'), $this -> _mNumGet);
+
+		Core::Log() -> Write($get_message, 'debug');
+
 		/**
 		 * Init POST request number.
 		 *
 		 * @var int
 		 */
-		$this->_mNumPost = 0;
-		
+		$this -> _mNumPost = 0;
+
 		/**
 		 * Filter $_POST array.
 		 * IMPORTANT: Tags are not disabled nor removed.
@@ -114,20 +114,20 @@ class Security extends Library {
 		 * filtering is done as for $_GET.
 		 */
 		$_POST = array_map(array(
-				$this,
-				'_FilterPost' 
+			$this,
+			'_FilterPost'
 		), $_POST);
-		
+
 		/**
 		 *
 		 * @var string
 		 */
-		$post_message = sprintf(___('Security library: %s POST request sanitized.', 'Security library: %s POST requests sanitized.', $this->_mNumPost, 'WEb'), $this->_mNumPost);
-		
-		Core::Log()->Write($post_message, 'debug');
-		
-		Core::Log()->Write(__('Security library: Sanitize complete.', 'WEb'), 'debug');
-		
+		$post_message = sprintf(___('Security library: %s POST request sanitized.', 'Security library: %s POST requests sanitized.', $this -> _mNumPost, 'WEb'), $this -> _mNumPost);
+
+		Core::Log() -> Write($post_message, 'debug');
+
+		Core::Log() -> Write(__('Security library: Sanitize complete.', 'WEb'), 'debug');
+
 		return TRUE;
 	}
 
@@ -136,7 +136,7 @@ class Security extends Library {
 	 *
 	 * @param string $input
 	 *        	request
-	 * @param boolean $disableTags        	
+	 * @param boolean $disableTags
 	 * @return string
 	 */
 	private function _FilterRequest($input, $disableTags = TRUE) {
@@ -146,10 +146,10 @@ class Security extends Library {
 		 *
 		 * @var string
 		 */
-		$input = $this->FilterInput($input, $disableTags, TRUE);
-		
-		$this->_mNumGet++;
-		
+		$input = $this -> FilterInput($input, $disableTags, TRUE);
+
+		$this -> _mNumGet++;
+
 		return $input;
 	}
 
@@ -164,22 +164,20 @@ class Security extends Library {
 	private function _FilterPost($input) {
 
 		if (is_array($input)) {
-			
-			foreach ($input as $key => $value) {
-				
-				$input[$key] = $this->_FilterPost($value, FALSE, FALSE);
-				
-				$this->_mNumPost++;
-			}
-		} 
 
-		else {
-			
-			$input = $this->FilterInput($input, FALSE, FALSE);
-			
-			$this->_mNumPost++;
+			foreach ($input as $key => $value) {
+
+				$input[$key] = $this -> _FilterPost($value, FALSE, FALSE);
+
+				$this -> _mNumPost++;
+			}
+		} else {
+
+			$input = $this -> FilterInput($input, FALSE, FALSE);
+
+			$this -> _mNumPost++;
 		}
-		
+
 		return $input;
 	}
 
@@ -206,16 +204,14 @@ class Security extends Library {
 			 */
 			$input = stripslashes($input);
 		}
-		
+
 		/**
 		 * Some unwanted chars.
 		 *
 		 * @var array
 		 */
-		$unwanted = array(
-				'\\' 
-		);
-		
+		$unwanted = array('\\');
+
 		/**
 		 * Remove unwanted chars.
 		 * We didn't put these in the RemoveBadChars() method
@@ -225,25 +221,30 @@ class Security extends Library {
 		 * @var string
 		 */
 		$input = str_replace($unwanted, '', $input);
-		
+
 		/**
 		 * Check if the method is used to filter $_GET request.
 		 */
 		if ((FALSE !== $filterRequest)) {
-			
+
 			/**
 			 * Decode url string.
 			 */
 			$input = urldecode($input);
-			
+
 			/**
-			 * Remove tags
+			 * Remove _GET request bad chars.
+			 */
+			$input = Core::String() -> RemoveRequestBadChars($input);
+
+			/**
+			 * Strip tags
 			 *
 			 * @var string.
 			 */
-			$input = Core::String()->StripTags($input);
+			$input = Core::String() -> StripTags($input);
 		}
-		
+
 		/**
 		 * Check if we should also block tags.
 		 */
@@ -253,9 +254,9 @@ class Security extends Library {
 			 *
 			 * @var string
 			 */
-			$input = Core::String()->DisableTags($input);
+			$input = Core::String() -> DisableTags($input);
 		}
-		
+
 		/**
 		 * Return result.
 		 */
@@ -265,8 +266,8 @@ class Security extends Library {
 	/**
 	 * Get an assets's security salt.
 	 *
-	 * @param mixed $asset        	
-	 * @param int $saltLength        	
+	 * @param mixed $asset
+	 * @param int $saltLength
 	 *
 	 * @return string
 	 */
@@ -279,8 +280,8 @@ class Security extends Library {
 	 * Get an asset's security token.
 	 * If empty asset is provided, a random token is generated.
 	 *
-	 * @param string $salt        	
-	 * @param mixed $asset        	
+	 * @param string $salt
+	 * @param mixed $asset
 	 *
 	 * @return string
 	 */
@@ -289,8 +290,9 @@ class Security extends Library {
 		if (empty($asset)) {
 			$asset = uniqid(rand(), true);
 		}
-		
+
 		return $salt . sha1($salt . $asset);
 	}
+
 }
 ?>

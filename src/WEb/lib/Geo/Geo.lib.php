@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id$
+ * $Id: Geo.lib.php 227 2017-03-28 07:40:37Z radu $
  *
  * Geolocation library.
  *
@@ -9,7 +9,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @package    WEb
  * @subpackage WebGeo
- * @version    $Revision$
+ * @version    $Revision: 227 $
  * @since      Version 5
  * @access     public
  * @filesource
@@ -266,9 +266,14 @@ class Geo extends Library {
 		return $data;
 	}
 
-	public function GetCoordinates($address) {
+	public function GetCoordinates($address, $apiKey = NULL) {
 
-		$url = 'http://maps.google.com/maps/api/geocode/json?sensor=false&address=' . str_replace(' ', '+', $address);
+		$url = 'https://maps.google.com/maps/api/geocode/json?sensor=false&address=' . str_replace(' ', '+', $address);
+		
+		if (!empty($apiKey)) {
+			
+			$url .= "&key={$apiKey}";
+		}
 		
 		$response = file_get_contents($url);
 		
