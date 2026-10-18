@@ -25,7 +25,7 @@ function check_user
 {
     clear
     if [ "$(id -u)" == "0" ]; then
-    	dialog --title "${P_NAME} Error!"\
+        dialog --title "${P_NAME} Error!"\
         --msgbox "\n Don't run ${P_NAME} as root!" \
         10 40
         exit_error "Don't run as root!"

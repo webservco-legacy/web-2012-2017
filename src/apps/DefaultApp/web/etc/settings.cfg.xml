@@ -2,30 +2,30 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<path>
-			<core>/usr/share/php/WEb7/</core>
-			<app>/var/www/default.webserv.co/private/app/</app>
-			<www>/var/www/default.webserv.co/web/</www>
-		</path>
-		<url>
-			<www>http://default.webserv.co/</www>
-		</url>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<path>
-			<core>/usr/share/php/WEb7/</core>
-			<app>/var/www/default.webserv.co/private/app/</app>
-			<www>/var/www/default.webserv.co/web/</www>
-		</path>
-		<url>
-			<www>http://default.webserv.co/</www>
-		</url>
-	</prod>
+    <!-- Development Environment -->
+    <dev>
+        <path>
+            <core>/usr/share/php/WEb7/</core>
+            <app>/var/www/default.webserv.co/private/app/</app>
+            <www>/var/www/default.webserv.co/web/</www>
+        </path>
+        <url>
+            <www>http://default.webserv.co/</www>
+        </url>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <path>
+            <core>/usr/share/php/WEb7/</core>
+            <app>/var/www/default.webserv.co/private/app/</app>
+            <www>/var/www/default.webserv.co/web/</www>
+        </path>
+        <url>
+            <www>http://default.webserv.co/</www>
+        </url>
+    </prod>
 </config>
 <!-- $Id$ -->

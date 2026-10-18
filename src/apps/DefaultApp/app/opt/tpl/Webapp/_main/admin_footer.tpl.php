@@ -1,3 +1,3 @@
 <footer>
-	{admin footer}
+    {admin footer}
 </footer>

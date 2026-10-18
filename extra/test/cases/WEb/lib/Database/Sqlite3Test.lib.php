@@ -25,27 +25,27 @@
  */
 class Database_Sqlite3Test extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Database_Sqlite3::GetInstance('Database_Sqlite3');
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Database_Sqlite3::GetInstance('Database_Sqlite3');
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Database_Sqlite3::GetInstance('Database_Sqlite3'));
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Database_Sqlite3::GetInstance('Database_Sqlite3'));
+    }
 }
 ?>

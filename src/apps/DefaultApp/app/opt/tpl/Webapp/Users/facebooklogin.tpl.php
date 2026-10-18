@@ -2,12 +2,12 @@
 echo '<article>';
 
 if (!empty($facebook['errors'])) {
-	
-	echo '<p class="strong ko">';
-	foreach ($facebook['errors'] as $key => $value) {
-		echo "{$value}<br />";
-	}
-	echo '</p>';
+    
+    echo '<p class="strong ko">';
+    foreach ($facebook['errors'] as $key => $value) {
+        echo "{$value}<br />";
+    }
+    echo '</p>';
 }
 
 echo '<p class="clearfix">';

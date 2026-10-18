@@ -3,30 +3,30 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- SMTP Settings -->
-		<smtp>
-			<!-- Enable SSL? -->
-			<ssl>1</ssl>
-			<!-- SMTP Server hostname ( defaults to localhost ) -->
-			<server>smtp.gmail.com</server>
-			<!-- SMTP Server Port ( defaults to 25) -->
-			<port>465</port>
-			<!-- SMTP connection timeout (defaults to 45) -->
-			<timeout>45</timeout>
-			<!-- SMTP user name (blank for no authentication) -->
-			<user>user@example.com</user>
-			<!-- SMTP password (blank for no authentication) -->
-			<password>REDACTED</password>
-			<!-- Application hostname -->
-			<host>webserv.co</host>
-		</smtp>
-	</prod>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- SMTP Settings -->
+        <smtp>
+            <!-- Enable SSL? -->
+            <ssl>1</ssl>
+            <!-- SMTP Server hostname ( defaults to localhost ) -->
+            <server>smtp.gmail.com</server>
+            <!-- SMTP Server Port ( defaults to 25) -->
+            <port>465</port>
+            <!-- SMTP connection timeout (defaults to 45) -->
+            <timeout>45</timeout>
+            <!-- SMTP user name (blank for no authentication) -->
+            <user>user@example.com</user>
+            <!-- SMTP password (blank for no authentication) -->
+            <password>REDACTED</password>
+            <!-- Application hostname -->
+            <host>webserv.co</host>
+        </smtp>
+    </prod>
 </config>

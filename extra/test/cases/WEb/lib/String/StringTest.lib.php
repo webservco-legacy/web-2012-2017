@@ -25,43 +25,43 @@
  */
 class StringTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = String::GetInstance();
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = String::GetInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', String::GetInstance());
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', String::GetInstance());
+    }
 
-	/**
-	 * @test
-	 */
-	public function EndsWithRetrunsTrueOnSuccess()
-	{
-		$this->AssertTrue($this->_mObject->EndsWith('Dolor', 'LoremIpsumDolor'));
-	}
+    /**
+     * @test
+     */
+    public function EndsWithRetrunsTrueOnSuccess()
+    {
+        $this->AssertTrue($this->_mObject->EndsWith('Dolor', 'LoremIpsumDolor'));
+    }
 
-	/**
-	 * @test
-	 */
-	public function EndsWithRetrunsFalseOnFailuer()
-	{
-		$this->AssertFalse($this->_mObject->EndsWith('Dolor', 'LoremIpsum'));
-	}
+    /**
+     * @test
+     */
+    public function EndsWithRetrunsFalseOnFailuer()
+    {
+        $this->AssertFalse($this->_mObject->EndsWith('Dolor', 'LoremIpsum'));
+    }
 }
 ?>

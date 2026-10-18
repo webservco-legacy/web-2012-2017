@@ -2,73 +2,73 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
 
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- Form library settings -->
-		<form>
-			<!-- Form error messages -->
-			<error>
-				<required>
-					<text>The field "%s" is required.</text>
-				</required>
-				<default>
-					<text>There is an error regarding the field "%s".</text>
-				</default>
-				<haslengthmin>
-					<text>The field "%s" is too short.</text>
-					<description>The field must contain at least %s chars.</description>
-				</haslengthmin>
-				<haslengthmax>
-					<text>The field "%s" is too long.</text>
-					<description>The field must contain at most %s chars.</description>
-				</haslengthmax>
-				<haswordsmin>
-					<text>The field "%s" is too short.</text>
-					<description>The field must contain at least %s words.</description>
-				</haswordsmin>
-				<haswordsmax>
-					<text>The field "%s" is too long.</text>
-					<description>The field must contain at most %s words.</description>
-				</haswordsmax>
-				<equals>
-					<text>The field "%s" doesn't mach the specified item.</text>
-				</equals>
-				<isalphanumeric>
-					<text>The field "%s" must contain both letters and numbers.</text>
-				</isalphanumeric>
-				<isvalidemail>
-					<text>The field "%s" is not a valid email address.</text>
-				</isvalidemail>
-				<matchescaptcha>
-					<text>The field "%s" doesn't mach the specified item.</text>
-				</matchescaptcha>
-				<alreadyregistered>
-					<text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
-				</alreadyregistered>
-				<notregistered>
-					<text>"%s" is not registered, please make sure you enter the correct address.</text>
-				</notregistered>
-				<passwordwrong>
-					<text>Password is incorrect.</text>
-				</passwordwrong>
-				<passwordsame>
-					<text>The new password is the same as the old one.</text>
-				</passwordsame>
-				<passworddifferent>
-					<text>The passwords are not the same.</text>
-				</passworddifferent>
-				<notlocaluser>
-					<text>Not a local account. Please log in with your external provider (Facebook, Twitter, etc).</text>
-				</notlocaluser>
-			</error>
-		</form>
-	</prod>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Form library settings -->
+        <form>
+            <!-- Form error messages -->
+            <error>
+                <required>
+                    <text>The field "%s" is required.</text>
+                </required>
+                <default>
+                    <text>There is an error regarding the field "%s".</text>
+                </default>
+                <haslengthmin>
+                    <text>The field "%s" is too short.</text>
+                    <description>The field must contain at least %s chars.</description>
+                </haslengthmin>
+                <haslengthmax>
+                    <text>The field "%s" is too long.</text>
+                    <description>The field must contain at most %s chars.</description>
+                </haslengthmax>
+                <haswordsmin>
+                    <text>The field "%s" is too short.</text>
+                    <description>The field must contain at least %s words.</description>
+                </haswordsmin>
+                <haswordsmax>
+                    <text>The field "%s" is too long.</text>
+                    <description>The field must contain at most %s words.</description>
+                </haswordsmax>
+                <equals>
+                    <text>The field "%s" doesn't mach the specified item.</text>
+                </equals>
+                <isalphanumeric>
+                    <text>The field "%s" must contain both letters and numbers.</text>
+                </isalphanumeric>
+                <isvalidemail>
+                    <text>The field "%s" is not a valid email address.</text>
+                </isvalidemail>
+                <matchescaptcha>
+                    <text>The field "%s" doesn't mach the specified item.</text>
+                </matchescaptcha>
+                <alreadyregistered>
+                    <text>"%s" is already registered, please choose another, or use the options to "Login" or "Reset password".</text>
+                </alreadyregistered>
+                <notregistered>
+                    <text>"%s" is not registered, please make sure you enter the correct address.</text>
+                </notregistered>
+                <passwordwrong>
+                    <text>Password is incorrect.</text>
+                </passwordwrong>
+                <passwordsame>
+                    <text>The new password is the same as the old one.</text>
+                </passwordsame>
+                <passworddifferent>
+                    <text>The passwords are not the same.</text>
+                </passworddifferent>
+                <notlocaluser>
+                    <text>Not a local account. Please log in with your external provider (Facebook, Twitter, etc).</text>
+                </notlocaluser>
+            </error>
+        </form>
+    </prod>
 </config>
 <!-- $Id$ -->

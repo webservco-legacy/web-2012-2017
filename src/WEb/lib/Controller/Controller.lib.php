@@ -21,10 +21,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -38,144 +38,144 @@ if (!defined('_WEB')) {
  *
  */
 class Controller extends Library {
-	/**
-	 * Stores the module object.
-	 *
-	 * @var mixed
-	 */
-	protected $_mModuleObject;
+    /**
+     * Stores the module object.
+     *
+     * @var mixed
+     */
+    protected $_mModuleObject;
 
-	/**
-	 * Stores the Output object.
-	 *
-	 * @var mixed
-	 */
-	protected $_mOutputObject;
+    /**
+     * Stores the Output object.
+     *
+     * @var mixed
+     */
+    protected $_mOutputObject;
 
-	/**
-	 * Stores the request array.
-	 *
-	 * @var array
-	 */
-	protected $_mRequest;
+    /**
+     * Stores the request array.
+     *
+     * @var array
+     */
+    protected $_mRequest;
 
-	/**
-	 * Use sessions flag
-	 *
-	 * @var boolean
-	 */
-	protected $_mUseSessions = FALSE;
+    /**
+     * Use sessions flag
+     *
+     * @var boolean
+     */
+    protected $_mUseSessions = FALSE;
 
-	/**
-	 * Template prefix used in output.
-	 *
-	 * @var string
-	 */
-	protected $_mTemplatePrefix = NULL;
+    /**
+     * Template prefix used in output.
+     *
+     * @var string
+     */
+    protected $_mTemplatePrefix = NULL;
 
-	/**
-	 * Implement GetInstance() method.
-	 *
-	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
-	 * @param string $className class name to instantiate
-	 *
-	 * @return object
-	 */
-	public static function GetInstance($className = __CLASS__) {
-		/**
-		 * Call parent method with current class name as parameter.
-		 */
-		return parent::_GetInstance($className);
-	}
+    /**
+     * Implement GetInstance() method.
+     *
+     * This is required for PHP < 5.3 compatibility (no late static binding)
+     *
+     * @param string $className class name to instantiate
+     *
+     * @return object
+     */
+    public static function GetInstance($className = __CLASS__) {
+        /**
+         * Call parent method with current class name as parameter.
+         */
+        return parent::_GetInstance($className);
+    }
 
-	/**
-	 * Set the request array.
-	 *
-	 * @param array $request
-	 *
-	 * @return bool
-	 */
-	final public function SetRequest($request) {
-		$this->_mRequest = $request;
+    /**
+     * Set the request array.
+     *
+     * @param array $request
+     *
+     * @return bool
+     */
+    final public function SetRequest($request) {
+        $this->_mRequest = $request;
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
-	/**
-	 * Method to access the module object.
-	 *
-	 * @return object
-	 */
-	final public function Module() {
-		if (NULL == $this->_mModuleObject) {
-			/**
-			 * @var string
-			 */
-			$ctrl_name = get_class($this);
+    /**
+     * Method to access the module object.
+     *
+     * @return object
+     */
+    final public function Module() {
+        if (NULL == $this->_mModuleObject) {
+            /**
+             * @var string
+             */
+            $ctrl_name = get_class($this);
 
-			/**
-			 * @var array
-			*/
-			$ctrl_parts = explode('_', $ctrl_name);
+            /**
+             * @var array
+            */
+            $ctrl_parts = explode('_', $ctrl_name);
 
-			/**
-			 * @var string
-			*/
-			$module_name = 'Module_' . $ctrl_parts[1];
+            /**
+             * @var string
+            */
+            $module_name = 'Module_' . $ctrl_parts[1];
 
-			/**
-			 * PHP < 5.3 compatibility.
-			 * $this->_mModuleObject = $module_name::GetInstance($module_name);
-			 *
-			 * @var object
-			 */
-			$this->_mModuleObject = call_user_func(array($module_name, 'GetInstance'), $module_name);
+            /**
+             * PHP < 5.3 compatibility.
+             * $this->_mModuleObject = $module_name::GetInstance($module_name);
+             *
+             * @var object
+             */
+            $this->_mModuleObject = call_user_func(array($module_name, 'GetInstance'), $module_name);
 
-			$module_msg = sprintf(__('Controller library: Module "%s" loading.', 'WEb'), $ctrl_parts[1]);
+            $module_msg = sprintf(__('Controller library: Module "%s" loading.', 'WEb'), $ctrl_parts[1]);
 
-			Core::Log()->Write($module_msg, 'debug');
-		}
+            Core::Log()->Write($module_msg, 'debug');
+        }
 
-		return $this->_mModuleObject;
-	}
+        return $this->_mModuleObject;
+    }
 
-	/**
-	 * Method to access the Output object.
-	 *
-	 * @return object
-	 */
-	final public function Output() {
-		if (NULL == $this->_mOutputObject) {
-			/**
-			 * @var string
-			 */
-			$engine = Core::Config()->Get('output.engine');
+    /**
+     * Method to access the Output object.
+     *
+     * @return object
+     */
+    final public function Output() {
+        if (NULL == $this->_mOutputObject) {
+            /**
+             * @var string
+             */
+            $engine = Core::Config()->Get('output.engine');
 
-			/**
-			 * @var string
-			*/
-			$engine = (FALSE !== $engine) ? $engine : 'WEb';
+            /**
+             * @var string
+            */
+            $engine = (FALSE !== $engine) ? $engine : 'WEb';
 
-			/**
-			 * @var string
-			 */
-			$engine_class = 'Output_' . ucfirst(strtolower($engine));
+            /**
+             * @var string
+             */
+            $engine_class = 'Output_' . ucfirst(strtolower($engine));
 
-			/**
-			 * PHP < 5.3 compatibility.
-			 * $this->_mOutputObject = $engine_class::GetInstance($engine_class);
-			 *
-			 * @var object
-			*/
-			$this->_mOutputObject = call_user_func(array($engine_class, 'GetInstance'), $engine_class);
+            /**
+             * PHP < 5.3 compatibility.
+             * $this->_mOutputObject = $engine_class::GetInstance($engine_class);
+             *
+             * @var object
+            */
+            $this->_mOutputObject = call_user_func(array($engine_class, 'GetInstance'), $engine_class);
 
-			$out_msg = sprintf(__('Controller library: Output library "%s" loading.', 'WEb'), $engine);
+            $out_msg = sprintf(__('Controller library: Output library "%s" loading.', 'WEb'), $engine);
 
-			Core::Log()->Write($out_msg, 'debug');
-		}
+            Core::Log()->Write($out_msg, 'debug');
+        }
 
-		return $this->_mOutputObject;
-	}
+        return $this->_mOutputObject;
+    }
 
 }

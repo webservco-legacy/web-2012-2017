@@ -2,22 +2,22 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- Log library settings -->
-		<log>
-			<!-- debug, info, notice, warning, error, crit, alert, emerg -->
-			<level>info</level>
-			<extension>.log</extension>
-			<dateformat>Y-m-d H:i:s:u</dateformat>
-			<reset>0</reset>
-		</log>
-	</prod>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Log library settings -->
+        <log>
+            <!-- debug, info, notice, warning, error, crit, alert, emerg -->
+            <level>info</level>
+            <extension>.log</extension>
+            <dateformat>Y-m-d H:i:s:u</dateformat>
+            <reset>0</reset>
+        </log>
+    </prod>
 </config>
 <!-- $Id$ -->

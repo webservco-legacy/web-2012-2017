@@ -19,10 +19,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -35,171 +35,171 @@ if (!defined('_WEB')) {
  */
 class FacebookApi extends Library {
 
-	private $_mFacebook = NULL;
+    private $_mFacebook = NULL;
 
-	/**
-	 * Implement GetInstance() method.
-	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
-	 * @param string $className
-	 *        	class name to instantiate
-	 * @return object
-	 */
-	public static function GetInstance($className = __CLASS__) {
+    /**
+     * Implement GetInstance() method.
+     * This is required for PHP < 5.3 compatibility (no late static binding)
+     *
+     * @param string $className
+     *        	class name to instantiate
+     * @return object
+     */
+    public static function GetInstance($className = __CLASS__) {
 
-		/**
-		 * Call parent method with current class name as parameter.
-		 */
-		return parent::_GetInstance($className);
-	}
+        /**
+         * Call parent method with current class name as parameter.
+         */
+        return parent::_GetInstance($className);
+    }
 
-	public function GetAppId() {
+    public function GetAppId() {
 
-		return Core::Config()->Get('facebookapi.appid');
-	}
+        return Core::Config()->Get('facebookapi.appid');
+    }
 
-	public function GetDefaultMeta($data) {
+    public function GetDefaultMeta($data) {
 
-		return array(
-				'fb' => array(
-						'app_id' => $this->GetAppId() 
-				),
-				'og' => array(
-						'type' => 'article',
-						'title' => $data['strings']['title'],
-						'site_name' => $data['strings']['title_app'],
-						'url' => $data['url']['current'],
-						'description' => Core::Config()->Get('app.description'),
-						'image' => "{$data['url']['www']}apple-touch-icon.png",
-						'locale' => $data['i18n']['langs'][$data['i18n']['lang']] 
-				) 
-		);
-	}
+        return array(
+                'fb' => array(
+                        'app_id' => $this->GetAppId() 
+                ),
+                'og' => array(
+                        'type' => 'article',
+                        'title' => $data['strings']['title'],
+                        'site_name' => $data['strings']['title_app'],
+                        'url' => $data['url']['current'],
+                        'description' => Core::Config()->Get('app.description'),
+                        'image' => "{$data['url']['www']}apple-touch-icon.png",
+                        'locale' => $data['i18n']['langs'][$data['i18n']['lang']] 
+                ) 
+        );
+    }
 
-	private function _InitApi() {
+    private function _InitApi() {
 
-		if (!empty($this->_mFacebook)) {
-			
-			return FALSE;
-		}
-		
-		$path_app = Core::Config()->Get('path.app');
-		
-		$config = Core::Config()->Get('facebookapi');
-		
-		if (empty($config['appid']) || empty($config['secret'])) {
-			
-			trigger_error(__('FacebookApi Library: Initialization error - missing credentials', 'App'));
-		}
-		
-		require "{$path_app}{$config['path_sdk']}facebook.php";
-		
-		$this->_mFacebook = new Facebook(array(
-				'appId' => $config['appid'],
-				'secret' => $config['secret'],
-				'allowSignedRequest' => FALSE 
-		));
-		
-		if (empty($this->_mFacebook)) {
-			
-			trigger_error(__('FacebookApi Library: Initialization error.', 'App'));
-		}
-	}
+        if (!empty($this->_mFacebook)) {
+            
+            return FALSE;
+        }
+        
+        $path_app = Core::Config()->Get('path.app');
+        
+        $config = Core::Config()->Get('facebookapi');
+        
+        if (empty($config['appid']) || empty($config['secret'])) {
+            
+            trigger_error(__('FacebookApi Library: Initialization error - missing credentials', 'App'));
+        }
+        
+        require "{$path_app}{$config['path_sdk']}facebook.php";
+        
+        $this->_mFacebook = new Facebook(array(
+                'appId' => $config['appid'],
+                'secret' => $config['secret'],
+                'allowSignedRequest' => FALSE 
+        ));
+        
+        if (empty($this->_mFacebook)) {
+            
+            trigger_error(__('FacebookApi Library: Initialization error.', 'App'));
+        }
+    }
 
-	public function GetUserId() {
+    public function GetUserId() {
 
-		$this->_InitApi();
-		
-		return $this->_mFacebook->getUser();
-	}
+        $this->_InitApi();
+        
+        return $this->_mFacebook->getUser();
+    }
 
-	public function GetLoginUrl($redirectUri) {
+    public function GetLoginUrl($redirectUri) {
 
-		$this->_InitApi();
-		
-		$scope = Core::Config()->Get('facebookapi.scope');
-		
-		return $this->_mFacebook->getLoginUrl(array(
-				'scope' => $scope,
-				'redirect_uri' => $redirectUri 
-		));
-	}
+        $this->_InitApi();
+        
+        $scope = Core::Config()->Get('facebookapi.scope');
+        
+        return $this->_mFacebook->getLoginUrl(array(
+                'scope' => $scope,
+                'redirect_uri' => $redirectUri 
+        ));
+    }
 
-	public function GetLogoutUrl($nextUrl = NULL) {
+    public function GetLogoutUrl($nextUrl = NULL) {
 
-		$this->_InitApi();
-		
-		return $this->_mFacebook->getLogoutUrl(array(
-				'next' => $nextUrl 
-		));
-	}
+        $this->_InitApi();
+        
+        return $this->_mFacebook->getLogoutUrl(array(
+                'next' => $nextUrl 
+        ));
+    }
 
-	public function Logout() {
+    public function Logout() {
 
-		$this->_InitApi();
-		
-		$this->_mFacebook->destroySession();
-		
-		unset($_SESSION['FacebookApi']);
-		
-		return TRUE;
-	}
+        $this->_InitApi();
+        
+        $this->_mFacebook->destroySession();
+        
+        unset($_SESSION['FacebookApi']);
+        
+        return TRUE;
+    }
 
-	public function GetProfile() {
+    public function GetProfile() {
 
-		$this->_InitApi();
-		
-		$user_id = $this->GetUserId();
-		
-		if (!empty($user_id)) {
-			
-			return $this->_mFacebook->api('/me');
-		}
-		
-		return FALSE;
-	}
+        $this->_InitApi();
+        
+        $user_id = $this->GetUserId();
+        
+        if (!empty($user_id)) {
+            
+            return $this->_mFacebook->api('/me');
+        }
+        
+        return FALSE;
+    }
 
-	/**
-	 * @TODO check
-	 *
-	 * @param string $path        	
-	 * @param string $message        	
-	 * @return mixed boolean
-	 */
-	public function PostPhoto($path, $message) {
+    /**
+     * @TODO check
+     *
+     * @param string $path        	
+     * @param string $message        	
+     * @return mixed boolean
+     */
+    public function PostPhoto($path, $message) {
 
-		$this->_InitApi();
-		
-		$user_id = $this->GetUserId();
-		
-		if (!empty($user_id)) {
-			
-			Core::Log()->Write(__('FacebookApi Library: Posting photo.', 'App'), 'debug');
-			
-			try {
-				
-				$this->_mFacebook->setFileUploadSupport(true);
-				
-				$response = $this->_mFacebook->api('/me/photos/', 'post', array(
-						'message' => $message,
-						'source' => "@{$path}" 
-				));
-				
-				Core::Log()->Write(print_r($response, TRUE), 'debug');
-				
-				if (!empty($response['post_id'])) {
-					
-					Core::Log()->Write(__('FacebookApi Library: Posting photo - success.', 'App'), 'debug');
-					
-					return $response['post_id'];
-				}
-			} catch (FacebookApiException $e) {
-				
-				Core::Log()->Write($e->Getmessage(), 'error');
-			}
-		}
-		
-		return FALSE;
-	}
+        $this->_InitApi();
+        
+        $user_id = $this->GetUserId();
+        
+        if (!empty($user_id)) {
+            
+            Core::Log()->Write(__('FacebookApi Library: Posting photo.', 'App'), 'debug');
+            
+            try {
+                
+                $this->_mFacebook->setFileUploadSupport(true);
+                
+                $response = $this->_mFacebook->api('/me/photos/', 'post', array(
+                        'message' => $message,
+                        'source' => "@{$path}" 
+                ));
+                
+                Core::Log()->Write(print_r($response, TRUE), 'debug');
+                
+                if (!empty($response['post_id'])) {
+                    
+                    Core::Log()->Write(__('FacebookApi Library: Posting photo - success.', 'App'), 'debug');
+                    
+                    return $response['post_id'];
+                }
+            } catch (FacebookApiException $e) {
+                
+                Core::Log()->Write($e->Getmessage(), 'error');
+            }
+        }
+        
+        return FALSE;
+    }
 }
 ?>

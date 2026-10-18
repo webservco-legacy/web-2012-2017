@@ -2,52 +2,52 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
 
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- Default configuration -->
-		<router>
-			<!-- set to 1 to prevent clearing _GET and _REQUEST arrays -->
-			<!-- needed for Facebook API -->
-			<keep_getrequest>1</keep_getrequest>
-			<default>
-				<module>Content</module>
-				<controller>App</controller>
-				<action>Home</action>
-			</default>
-		</router>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Default configuration -->
+        <router>
+            <!-- set to 1 to prevent clearing _GET and _REQUEST arrays -->
+            <!-- needed for Facebook API -->
+            <keep_getrequest>1</keep_getrequest>
+            <default>
+                <module>Content</module>
+                <controller>App</controller>
+                <action>Home</action>
+            </default>
+        </router>
 
-		<!-- SEO settings -->
-		<seo>
-			<full>1</full>
-			<extension>.html</extension>
-			<extension>.htm</extension>
-			<extension>.appcache</extension>
-		</seo>
+        <!-- SEO settings -->
+        <seo>
+            <full>1</full>
+            <extension>.html</extension>
+            <extension>.htm</extension>
+            <extension>.appcache</extension>
+        </seo>
 
-		<!-- Custom routes configuration -->
-		<route>
-			<!-- "index" is the default route. It doesn't have to be the fist one. -->
-			<name>index</name>
-			<value>Content/App/Home</value>
-		</route>
+        <!-- Custom routes configuration -->
+        <route>
+            <!-- "index" is the default route. It doesn't have to be the fist one. -->
+            <name>index</name>
+            <value>Content/App/Home</value>
+        </route>
 
-		<route>
-			<name>captcha.png</name>
-			<value>Users/App/Captcha</value>
-		</route>
+        <route>
+            <name>captcha.png</name>
+            <value>Users/App/Captcha</value>
+        </route>
 
-		<route>
-			<name>debug/({num})/({any})</name>
-			<value>Content/App/Debug/param1/$1/param2/$2</value>
-		</route>
+        <route>
+            <name>debug/({num})/({any})</name>
+            <value>Content/App/Debug/param1/$1/param2/$2</value>
+        </route>
 
-	</prod>
+    </prod>
 </config>
 <!-- $Id$ -->
