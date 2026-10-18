@@ -19,10 +19,10 @@
  * Check if basic configuration files are accessible.
  */
 if (!is_readable('./etc/settings.cfg.xml') || !is_readable('./etc/.env')) {
-	/**
-	 * Trigger fatal error.
-	 */
-	die('<html><!-- Fatal: Configuration file is missing. --></html>');
+    /**
+     * Trigger fatal error.
+     */
+    die('<html><!-- Fatal: Configuration file is missing. --></html>');
 }
 
 /**
@@ -49,10 +49,10 @@ define('_WEB', TRUE);
  * Check if PHP version is less than 5.3
 */
 if (FALSE != version_compare(PHP_VERSION, '5.3.0', '<')) {
-	/**
-	 * Load compatibility library.
-	 */
-	require $cfg['path_core'] . 'lib/Core/CoreUtils.lib.php';
+    /**
+     * Load compatibility library.
+     */
+    require $cfg['path_core'] . 'lib/Core/CoreUtils.lib.php';
 }
 
 /**

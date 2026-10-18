@@ -25,27 +25,27 @@
  */
 class FacebookApiTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = FacebookApi::GetInstance();
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = FacebookApi::GetInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', FacebookApi::GetInstance());
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', FacebookApi::GetInstance());
+    }
 }
 ?>

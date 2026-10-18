@@ -22,10 +22,10 @@
  */
 if (!defined('_WEB'))
 {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 
@@ -41,33 +41,33 @@ if (!defined('_WEB'))
  */
 class Calendar extends Library
 {
-	/**
-	 * Library properties.
-	 *
-	 * @var array
-	 */
-	private $_mProp = array();
+    /**
+     * Library properties.
+     *
+     * @var array
+     */
+    private $_mProp = array();
 
-	/**
-	 * Implement GetInstance() method.
-	 *
-	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
-	 * @param string $className class name to instantiate
-	 *
-	 * @return object
-	 */
-	public static function GetInstance($className = __CLASS__)
-	{
-		/**
-		 * Call parent method with current class name as parameter.
-		 */
-		return parent::_GetInstance($className);
-	}
-	
-	public function GetWeekCount($month, $year) {
-		
-		// every month has at least 4 weeks
+    /**
+     * Implement GetInstance() method.
+     *
+     * This is required for PHP < 5.3 compatibility (no late static binding)
+     *
+     * @param string $className class name to instantiate
+     *
+     * @return object
+     */
+    public static function GetInstance($className = __CLASS__)
+    {
+        /**
+         * Call parent method with current class name as parameter.
+         */
+        return parent::_GetInstance($className);
+    }
+    
+    public function GetWeekCount($month, $year) {
+        
+        // every month has at least 4 weeks
         $num_weeks=4;
     
         // finding where it starts
@@ -88,20 +88,20 @@ class Calendar extends Library
         if( ($numdays - $fw_days) > 28 ) $num_weeks++;
          // that's it!
         return $num_weeks;
-	}
-	
-	public function GetFirstDay($month, $year) {
-		
-		$first_day= date("w", mktime(2, 0, 0, $month, 1, $year));
+    }
+    
+    public function GetFirstDay($month, $year) {
+        
+        $first_day= date("w", mktime(2, 0, 0, $month, 1, $year));
         
         if($first_day==0) $first_day=7; # convert Sunday
         
         return $first_day;
-	}
-	
-	public function GetDays($month, $year, $week, $num_weeks = 0) {
-		
-		$days=array();
+    }
+    
+    public function GetDays($month, $year, $week, $num_weeks = 0) {
+        
+        $days=array();
 
         // this is just to avoid calling num_weeks every time 
         // when you loop through the weeks        
@@ -144,33 +144,33 @@ class Calendar extends Library
         for($i=($numdays-$orphans)+1;$i<=$numdays;$i++) $days[]=$i;
         for($i=0;$i<$empty;$i++) $days[]=0;
         return $days;
-	}
-	
-	public function GetNextMonth($month, $year) {
-		
-		$date = mktime(0, 0, 0, $month+1, 1,  $year);
-		
-		return array(date('m', $date), date('Y', $date));
-	}
-	
-	public function GetPreviousMonth($month, $year) {
-		
-		$date = mktime(0, 0, 0, $month-1, 1,  $year);
-		
-		return array(date('m', $date), date('Y', $date));
-	}
-	
-	public function GetCalendar($month, $year) {
-		
-		$calendar = array();
-		
-		$weekCount = $this->GetWeekCount($month, $year);
-		
-		for ($i = 1; $i <= $weekCount; $i++) {
-			$calendar[$i] = $this->GetDays($month, $year, $i, $weekCount);
-		}
-		
-		return $calendar;
-	}
+    }
+    
+    public function GetNextMonth($month, $year) {
+        
+        $date = mktime(0, 0, 0, $month+1, 1,  $year);
+        
+        return array(date('m', $date), date('Y', $date));
+    }
+    
+    public function GetPreviousMonth($month, $year) {
+        
+        $date = mktime(0, 0, 0, $month-1, 1,  $year);
+        
+        return array(date('m', $date), date('Y', $date));
+    }
+    
+    public function GetCalendar($month, $year) {
+        
+        $calendar = array();
+        
+        $weekCount = $this->GetWeekCount($month, $year);
+        
+        for ($i = 1; $i <= $weekCount; $i++) {
+            $calendar[$i] = $this->GetDays($month, $year, $i, $weekCount);
+        }
+        
+        return $calendar;
+    }
 }
 ?>

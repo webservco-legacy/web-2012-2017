@@ -1,3 +1,3 @@
 <aside id="right">
-	{right}
+    {right}
 </aside>

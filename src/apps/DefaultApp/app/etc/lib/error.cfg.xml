@@ -2,31 +2,31 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
-	    <!-- Error library settings -->
-		<error>
-			<!-- Show trace info in error log? -->
-			<trace>1</trace>
-			<message><![CDATA[
-			    <!doctype html>
-			    <html>
-			    	<head>
-			    		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-			    		<title>Error / Îi ceva bai</title>
-			    	</head>
-			    	<body>
-			    		<h1>The application made a boo boo.</h1>
-			    	</body>
-			    </html>
-			]]></message>
-		</error>
-	</prod>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Error library settings -->
+        <error>
+            <!-- Show trace info in error log? -->
+            <trace>1</trace>
+            <message><![CDATA[
+                <!doctype html>
+                <html>
+                    <head>
+                        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+                        <title>Error / Îi ceva bai</title>
+                    </head>
+                    <body>
+                        <h1>The application made a boo boo.</h1>
+                    </body>
+                </html>
+            ]]></message>
+        </error>
+    </prod>
 </config>
 <!-- $Id$ -->

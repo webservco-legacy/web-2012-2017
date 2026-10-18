@@ -2,41 +2,41 @@
 
 # Disable directory browsing.
 <IfModule mod_autoindex.c>
-	Options -Indexes
+    Options -Indexes
 </IfModule>
 
 # Check if rewrite engine is available.
 <IfModule mod_rewrite.c>
 
-	# Enable URL rewriting
-	Options +FollowSymlinks
-	RewriteEngine On
-	
-	# Change to reflect application web directory path.
-	RewriteBase /
-	
-	# DDoS Protection: Denies any POST request that doesnt have a Content-Length Header
-	RewriteCond %{REQUEST_METHOD} =POST
-	RewriteCond %{HTTP:Content-Length} ^$
-	# only website root: RewriteCond %{REQUEST_URI} ^/$
-	# deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
-	# deny - shield:
-	RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
+    # Enable URL rewriting
+    Options +FollowSymlinks
+    RewriteEngine On
+    
+    # Change to reflect application web directory path.
+    RewriteBase /
+    
+    # DDoS Protection: Denies any POST request that doesnt have a Content-Length Header
+    RewriteCond %{REQUEST_METHOD} =POST
+    RewriteCond %{HTTP:Content-Length} ^$
+    # only website root: RewriteCond %{REQUEST_URI} ^/$
+    # deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
+    # deny - shield:
+    RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
 
-	# DDoS Protection: Denies any POST request that has 0 Content-Length
-	RewriteCond %{REQUEST_METHOD} =POST
-	RewriteCond %{HTTP:Content-Length} ^0
-	# only website root: RewriteCond %{REQUEST_URI} ^/$
-	# deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
-	# deny - shield:
-	RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
-	
-	# Disable rewriting for existing files and directories.
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
+    # DDoS Protection: Denies any POST request that has 0 Content-Length
+    RewriteCond %{REQUEST_METHOD} =POST
+    RewriteCond %{HTTP:Content-Length} ^0
+    # only website root: RewriteCond %{REQUEST_URI} ^/$
+    # deny - 403: RewriteRule ^(.*)$ - [F,NS,L]
+    # deny - shield:
+    RewriteRule ^(.*)$ http://%{REMOTE_ADDR}/$1 [R,L]
+    
+    # Disable rewriting for existing files and directories.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
 
-	# Enable single point of access (index.php)
-	RewriteRule (.*) index.php [PT,L]
+    # Enable single point of access (index.php)
+    RewriteRule (.*) index.php [PT,L]
 
 </IfModule>
 
@@ -55,18 +55,18 @@
 # *.log			log file
 # *.tmp			temporary files
 <FilesMatch "\.(env|cfg.xml|int.php|lib.php|mod.php|ctrl.php|ext.php|mo|po|tpl|tpl.php|log|tmp)$">
-	Order allow,deny
-	Deny from all
-	Satisfy All
+    Order allow,deny
+    Deny from all
+    Satisfy All
 </FilesMatch>
 
 # Prevent direct access to some files.
 # sess_*		- session files
 # temp_*		- temporary files
 <FilesMatch "^(sess_|temp_)">
-	Order allow,deny
-	Deny from all
-	Satisfy All
+    Order allow,deny
+    Deny from all
+    Satisfy All
 </FilesMatch>
 
 # Prevent web access to .htaccess files.
@@ -91,7 +91,7 @@ AddType text/cache-manifest .appcache
 # your site: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.5.
 
 <IfModule mod_headers.c>
-	Header set Cache-Control "no-transform"
+    Header set Cache-Control "no-transform"
 </IfModule>
 
 # Use UTF-8 encoding for anything served as `text/html` or `text/plain`.

@@ -19,10 +19,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -36,8 +36,8 @@ if (!defined('_WEB')) {
  *
  */
 class CoreCompat {
-	/**
-	 * Put compatibility methods here.
-	 */
+    /**
+     * Put compatibility methods here.
+     */
 }
 ?>

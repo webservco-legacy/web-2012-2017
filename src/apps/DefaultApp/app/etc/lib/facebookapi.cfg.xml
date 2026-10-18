@@ -2,24 +2,24 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
+    <!-- Development Environment -->
+    <dev>
 
-	</dev>
-	<!-- Test Environment -->
-	<test>
+    </dev>
+    <!-- Test Environment -->
+    <test>
 
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- Facebook API library settings -->
-		<facebookapi>
-			<path_sdk>opt/facebook-php-sdk/v323/</path_sdk>
-			<appid>1415423112054950</appid>
-			<secret>REDACTED</secret>
-			<!-- https://developers.facebook.com/docs/facebook-login/permissions -->
-			<scope>email,basic_info,user_location</scope>
-		</facebookapi>
-	</prod>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Facebook API library settings -->
+        <facebookapi>
+            <path_sdk>opt/facebook-php-sdk/v323/</path_sdk>
+            <appid>1415423112054950</appid>
+            <secret>REDACTED</secret>
+            <!-- https://developers.facebook.com/docs/facebook-login/permissions -->
+            <scope>email,basic_info,user_location</scope>
+        </facebookapi>
+    </prod>
 </config>
 <!-- $Id$ -->

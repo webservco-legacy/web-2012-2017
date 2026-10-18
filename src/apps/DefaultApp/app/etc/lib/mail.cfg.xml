@@ -3,44 +3,44 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-	</test>
-	<!-- Production Environment -->
-	<prod>
-		<!-- Mail library settings -->
-		<mail>
-			<!-- Content-Type ( plain, html ) -->
-			<content_type>html</content_type>
-			<!-- Encoding ( 7bit, 8bit, binary, base64, quoted-printable ) -->
-			<encoding>7bit</encoding>
-			<!-- Charset ( utf-8, iso-8859-1, etc ) -->
-			<charset>utf-8</charset>
-			<!-- Use envelope from? -->
-			<envelope>0</envelope>
-			<!-- Add date header? -->
-			<date_header>1</date_header>
-			<!-- Default email sender -->
-			<sender>
-				<address>radu@webserv.co</address>
-				<name>Radu Maier</name>
-			</sender>
-			<!-- Default email recipient -->
-			<recipient>
-				<address>radu@webserv.co</address>
-				<name>Radu Maier</name>
-			</recipient>
-			<bcc>
-				<address>radu@webserv.co</address>
-				<name>Radu Maier</name>
-			</bcc>
-			<!-- Use SMTP to send mail? -->
-			<smtp>0</smtp>
-			<!-- Allowed attachment types -->
-			<attach>gif,jpg,png,zip,text,pdf</attach>
-		</mail>
-	</prod>
+    <!-- Development Environment -->
+    <dev>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+    </test>
+    <!-- Production Environment -->
+    <prod>
+        <!-- Mail library settings -->
+        <mail>
+            <!-- Content-Type ( plain, html ) -->
+            <content_type>html</content_type>
+            <!-- Encoding ( 7bit, 8bit, binary, base64, quoted-printable ) -->
+            <encoding>7bit</encoding>
+            <!-- Charset ( utf-8, iso-8859-1, etc ) -->
+            <charset>utf-8</charset>
+            <!-- Use envelope from? -->
+            <envelope>0</envelope>
+            <!-- Add date header? -->
+            <date_header>1</date_header>
+            <!-- Default email sender -->
+            <sender>
+                <address>radu@webserv.co</address>
+                <name>Radu Maier</name>
+            </sender>
+            <!-- Default email recipient -->
+            <recipient>
+                <address>radu@webserv.co</address>
+                <name>Radu Maier</name>
+            </recipient>
+            <bcc>
+                <address>radu@webserv.co</address>
+                <name>Radu Maier</name>
+            </bcc>
+            <!-- Use SMTP to send mail? -->
+            <smtp>0</smtp>
+            <!-- Allowed attachment types -->
+            <attach>gif,jpg,png,zip,text,pdf</attach>
+        </mail>
+    </prod>
 </config>

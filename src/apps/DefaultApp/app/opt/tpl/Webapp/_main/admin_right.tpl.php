@@ -1,3 +1,3 @@
 <aside id="right">
-	{admin right}
+    {admin right}
 </aside>

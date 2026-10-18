@@ -264,9 +264,9 @@ class Database_Mysqli extends Database implements Interface_Database
          * @var string
          */
         $query = "SELECT COLUMN_NAME AS primary_key FROM INFORMATION_SCHEMA.STATISTICS
-		WHERE INDEX_NAME='PRIMARY'
-		AND INDEX_SCHEMA='{$this->_mDbDatabase}'
-		AND TABLE_NAME='{$table}'";
+        WHERE INDEX_NAME='PRIMARY'
+        AND INDEX_SCHEMA='{$this->_mDbDatabase}'
+        AND TABLE_NAME='{$table}'";
         
         /**
          *

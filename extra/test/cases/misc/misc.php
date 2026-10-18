@@ -25,12 +25,12 @@
  */
 class MiscTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * @test
-	 */
-	public function PassingTest()
-	{
-		$this->assertTrue(TRUE);
-	}
+    /**
+     * @test
+     */
+    public function PassingTest()
+    {
+        $this->assertTrue(TRUE);
+    }
 }
 ?>

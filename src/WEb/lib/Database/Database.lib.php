@@ -21,10 +21,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -38,117 +38,117 @@ if (!defined('_WEB')) {
  *
  */
 class Database extends Library {
-	/**
-	 * Stores the database link identifier.
-	 *
-	 * @var mixed
-	 */
-	protected $_mDbLink;
+    /**
+     * Stores the database link identifier.
+     *
+     * @var mixed
+     */
+    protected $_mDbLink;
 
-	/**
-	 * Database host.
-	 *
-	 * @var string
-	 */
-	protected $_mDbHost;
+    /**
+     * Database host.
+     *
+     * @var string
+     */
+    protected $_mDbHost;
 
-	/**
-	 * Database port.
-	 *
-	 * @var string
-	 */
-	protected $_mDbPort;
+    /**
+     * Database port.
+     *
+     * @var string
+     */
+    protected $_mDbPort;
 
-	/**
-	 * Database user.
-	 *
-	 * @var string
-	 */
-	protected $_mDbUser;
+    /**
+     * Database user.
+     *
+     * @var string
+     */
+    protected $_mDbUser;
 
-	/**
-	 * Database password.
-	 *
-	 * @var string
-	 */
-	protected $_mDbPassword;
+    /**
+     * Database password.
+     *
+     * @var string
+     */
+    protected $_mDbPassword;
 
-	/**
-	 * Database name.
-	 *
-	 * @var string
-	 */
-	protected $_mDbDatabase;
+    /**
+     * Database name.
+     *
+     * @var string
+     */
+    protected $_mDbDatabase;
 
-	/**
-	 * Implement GetInstance() method.
-	 *
-	 * This is required for PHP < 5.3 compatibility (no late static binding)
-	 *
-	 * @param string $className class name to instantiate
-	 *
-	 * @return object
-	 */
-	public static function GetInstance($className = __CLASS__) {
-		/**
-		 * Call parent method with current class name as parameter.
-		 */
-		return parent::_GetInstance($className);
-	}
+    /**
+     * Implement GetInstance() method.
+     *
+     * This is required for PHP < 5.3 compatibility (no late static binding)
+     *
+     * @param string $className class name to instantiate
+     *
+     * @return object
+     */
+    public static function GetInstance($className = __CLASS__) {
+        /**
+         * Call parent method with current class name as parameter.
+         */
+        return parent::_GetInstance($className);
+    }
 
-	/**
-	 * Set configuration data.
-	 *
-	 * @return bool
-	 */
-	protected function _SetData() {
-		/**
-		 * @var array
-		 */
-		$data = Core::Config()->Get('database');
+    /**
+     * Set configuration data.
+     *
+     * @return bool
+     */
+    protected function _SetData() {
+        /**
+         * @var array
+         */
+        $data = Core::Config()->Get('database');
 
-		/**
-		 * @var string
-		 */
-		$this->_mDbHost = $data['host'];
+        /**
+         * @var string
+         */
+        $this->_mDbHost = $data['host'];
 
-		/**
-		 * @var string
-		 */
-		$this->_mDbPort = $data['port'];
+        /**
+         * @var string
+         */
+        $this->_mDbPort = $data['port'];
 
-		/**
-		 * @var string
-		 */
-		$this->_mDbUser = $data['user'];
+        /**
+         * @var string
+         */
+        $this->_mDbUser = $data['user'];
 
-		/**
-		 * @var string
-		 */
-		$this->_mDbPassword = $data['password'];
+        /**
+         * @var string
+         */
+        $this->_mDbPassword = $data['password'];
 
-		/**
-		 * @var string
-		 */
-		$this->_mDbDatabase = $data['database'];
+        /**
+         * @var string
+         */
+        $this->_mDbDatabase = $data['database'];
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
-	/**
-	 * Check if database connection is already opened.
-	 *
-	 * Open it if necessary.
-	 *
-	 * @return bool
-	 */
-	public function Connect() {
-		if (NULL == $this->_mDbLink) {
-			return $this->_GetLink();
-		}
+    /**
+     * Check if database connection is already opened.
+     *
+     * Open it if necessary.
+     *
+     * @return bool
+     */
+    public function Connect() {
+        if (NULL == $this->_mDbLink) {
+            return $this->_GetLink();
+        }
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
 }
 ?>
