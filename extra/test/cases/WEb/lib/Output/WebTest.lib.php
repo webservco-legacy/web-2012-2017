@@ -25,27 +25,27 @@
  */
 class Output_WebTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Output_Web::GetInstance('Output_Web');
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Output_Web::GetInstance('Output_Web');
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Output_Web::GetInstance('Output_Web'));
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Output_Web::GetInstance('Output_Web'));
+    }
 }
 ?>

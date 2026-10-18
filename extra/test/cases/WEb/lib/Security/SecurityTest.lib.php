@@ -25,27 +25,27 @@
  */
 class SecurityTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Security::GetInstance();
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Security::GetInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Security::GetInstance());
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Security::GetInstance());
+    }
 }
 ?>

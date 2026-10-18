@@ -3,42 +3,42 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Default configuration -->
-		<router>
-			<default>
-				<module>Lorem</module>
-				<controller>Ipsum</controller>
-				<action>Dolor</action>
-			</default>
-		</router>
-		<!-- SEO settings -->
-		<seo>
-			<full>1</full>
-			<extension>.html</extension>
-		</seo>
-		<!-- Custom routes configuration -->
-		<route>
-			<!-- "index" is the default route. It doesn't have to be the fist one. -->
-			<name>index</name>
-			<value>Helloworld/Hello/World</value>
-		</route>
-		<route>
-			<name>Helloworld</name>
-			<value>Helloworld/Hello/World</value>
-		</route>
-		<route>
-			<name>module/({num})</name>
-			<value>module/controller/action/id/$1</value>
-		</route>
-		<route>
-			<name>module/view/({any})</name>
-			<value>module/controller/action/view/$1</value>
-		</route>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Default configuration -->
+        <router>
+            <default>
+                <module>Lorem</module>
+                <controller>Ipsum</controller>
+                <action>Dolor</action>
+            </default>
+        </router>
+        <!-- SEO settings -->
+        <seo>
+            <full>1</full>
+            <extension>.html</extension>
+        </seo>
+        <!-- Custom routes configuration -->
+        <route>
+            <!-- "index" is the default route. It doesn't have to be the fist one. -->
+            <name>index</name>
+            <value>Helloworld/Hello/World</value>
+        </route>
+        <route>
+            <name>Helloworld</name>
+            <value>Helloworld/Hello/World</value>
+        </route>
+        <route>
+            <name>module/({num})</name>
+            <value>module/controller/action/id/$1</value>
+        </route>
+        <route>
+            <name>module/view/({any})</name>
+            <value>module/controller/action/view/$1</value>
+        </route>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

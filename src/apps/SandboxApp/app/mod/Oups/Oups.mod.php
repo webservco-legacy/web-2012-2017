@@ -20,10 +20,10 @@
  */
 if (!defined('_WEB'))
 {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**

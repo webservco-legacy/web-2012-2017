@@ -3,44 +3,44 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Environment -->
-	<env>dev</env>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Main Paths. All paths must have trailing slash. -->
-		<path>
-			<!-- Full path to engine directory. Defaults to "./WEb/". -->
-			<core>
-				/home/radu/Documents/workspace/wsWEb/src/WEb/
-			</core>
-			<!-- Full path to application directory. Defaults to "./". -->
-			<app>
-				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/app/
-			</app>
-			<!-- Full path to application web accessible directory. Defaults to "./". -->
-			<www>
-				/home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/
-			</www>
-		</path>
-		<url>
-			<!-- Application URL. Defaults to current hostname. -->
-			<app>
-				http://web.dev/
-			</app>
-		</url>
-	</dev>
-	<!-- Test Environment -->
-	<test>
-		<setting1>
-			value1
-		</setting1>
-		<setting2>
-			value2
-		</setting2>
-		<setting3>
-			value3
-		</setting3>
-	</test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Environment -->
+    <env>dev</env>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Main Paths. All paths must have trailing slash. -->
+        <path>
+            <!-- Full path to engine directory. Defaults to "./WEb/". -->
+            <core>
+                /home/radu/Documents/workspace/wsWEb/src/WEb/
+            </core>
+            <!-- Full path to application directory. Defaults to "./". -->
+            <app>
+                /home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/app/
+            </app>
+            <!-- Full path to application web accessible directory. Defaults to "./". -->
+            <www>
+                /home/radu/Documents/workspace/wsWEb/src/apps/SandboxApp/web/
+            </www>
+        </path>
+        <url>
+            <!-- Application URL. Defaults to current hostname. -->
+            <app>
+                http://web.dev/
+            </app>
+        </url>
+    </dev>
+    <!-- Test Environment -->
+    <test>
+        <setting1>
+            value1
+        </setting1>
+        <setting2>
+            value2
+        </setting2>
+        <setting3>
+            value3
+        </setting3>
+    </test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

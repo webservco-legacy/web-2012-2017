@@ -6,19 +6,19 @@ Options -Indexes
 # Check if rewrite engine is available.
 <IfModule mod_rewrite.c>
 
-	# Enable URL rewriting
-	Options +FollowSymlinks
-	RewriteEngine On
-	
-	# Change to reflect application web directory path.
-	RewriteBase /
-	
-	# Disable rewriting for existing files and directories.
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
+    # Enable URL rewriting
+    Options +FollowSymlinks
+    RewriteEngine On
+    
+    # Change to reflect application web directory path.
+    RewriteBase /
+    
+    # Disable rewriting for existing files and directories.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
 
-	# Enable single point of access (index.php)
-	RewriteRule (.*) index.php [PT,L]
+    # Enable single point of access (index.php)
+    RewriteRule (.*) index.php [PT,L]
 
 </IfModule>
 
@@ -36,18 +36,18 @@ Options -Indexes
 # *.log			log file
 # *.tmp			temporary files
 <FilesMatch "\.(cfg.xml|int.php|lib.php|mod.php|ctrl.php|ext.php|mo|po|tpl|tpl.php|log|tmp)$">
-	Order allow,deny
-	Deny from all
-	Satisfy All
+    Order allow,deny
+    Deny from all
+    Satisfy All
 </FilesMatch>
 
 # Prevent direct access to some files.
 # sess_*		- session files
 # temp_*		- temporary files
 <FilesMatch "^(sess_|temp_)">
-	Order allow,deny
-	Deny from all
-	Satisfy All
+    Order allow,deny
+    Deny from all
+    Satisfy All
 </FilesMatch>
 
 # Prevent web access to .htaccess files.

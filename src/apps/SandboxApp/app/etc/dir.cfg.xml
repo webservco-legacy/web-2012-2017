@@ -3,25 +3,25 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<dir>
-			<app>
-				<ctrl>ctrl</ctrl>
-				<i18n>i18n</i18n>
-				<mod>mod</mod>
-				<obj>obj</obj>
-				<opt>opt</opt>
-				<tpl>tpl</tpl>
-				<var>var</var>
-				<tmp>tmp</tmp>
-				<usr>usr</usr>
-				<skins>skins</skins>
-			</app>
-		</dir>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <dir>
+            <app>
+                <ctrl>ctrl</ctrl>
+                <i18n>i18n</i18n>
+                <mod>mod</mod>
+                <obj>obj</obj>
+                <opt>opt</opt>
+                <tpl>tpl</tpl>
+                <var>var</var>
+                <tmp>tmp</tmp>
+                <usr>usr</usr>
+                <skins>skins</skins>
+            </app>
+        </dir>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

@@ -20,10 +20,10 @@
  */
 if (!defined('_WEB'))
 {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -38,10 +38,10 @@ if (!defined('_WEB'))
  */
 class Module_Helloworld extends Module
 {
-	public function Hello()
-	{
-		return __('Hello');
-	}
+    public function Hello()
+    {
+        return __('Hello');
+    }
 
 }
 ?>

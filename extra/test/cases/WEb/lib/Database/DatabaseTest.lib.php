@@ -25,27 +25,27 @@
  */
 class DatabaseTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Database::GetInstance();
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Database::GetInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Database::GetInstance());
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Database::GetInstance());
+    }
 }
 ?>

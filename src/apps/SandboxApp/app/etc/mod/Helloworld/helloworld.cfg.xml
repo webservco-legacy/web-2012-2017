@@ -3,15 +3,15 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Helloworld module settings -->
-		<helloworld>
-			<setting>value</setting>
-		</helloworld>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Helloworld module settings -->
+        <helloworld>
+            <setting>value</setting>
+        </helloworld>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

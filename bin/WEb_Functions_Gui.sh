@@ -24,20 +24,20 @@ function p_footer
 
 function show_gui
 {
-	while [ 0 ]; do
-		dialog --title "${P_NAME}" --menu \
-		"Hello $P_USER!" \
-		18 60 7 \
-		"s" "Server Management >>" \
-		"d" "WEb Documentation >>" \
-		"t" "WEb Unit Tests >>" \
-		"h" "Help" \
-		"a" "About" \
-		"x" "Exit" \
-		2> "/tmp/${P_NAME}"
-		if [ $? = 1 ]; then
-			exit_ok
-		fi
-		handle_menu
-	done;
+    while [ 0 ]; do
+        dialog --title "${P_NAME}" --menu \
+        "Hello $P_USER!" \
+        18 60 7 \
+        "s" "Server Management >>" \
+        "d" "WEb Documentation >>" \
+        "t" "WEb Unit Tests >>" \
+        "h" "Help" \
+        "a" "About" \
+        "x" "Exit" \
+        2> "/tmp/${P_NAME}"
+        if [ $? = 1 ]; then
+            exit_ok
+        fi
+        handle_menu
+    done;
 }

@@ -25,27 +25,27 @@
  */
 class Output_SmartyTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Output_Smarty::GetInstance('Output_Smarty');
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Output_Smarty::GetInstance('Output_Smarty');
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Output_Smarty::GetInstance('Output_Smarty'));
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Output_Smarty::GetInstance('Output_Smarty'));
+    }
 }
 ?>

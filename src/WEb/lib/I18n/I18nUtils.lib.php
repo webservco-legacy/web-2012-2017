@@ -19,10 +19,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -34,7 +34,7 @@ if (!defined('_WEB')) {
  * @return string
  */
 function __($msg, $domain = NULL) {
-	return ($domain) ? dgettext($domain, $msg) : gettext($msg);
+    return ($domain) ? dgettext($domain, $msg) : gettext($msg);
 }
 
 /**
@@ -46,6 +46,6 @@ function __($msg, $domain = NULL) {
  * @param string $domain
  */
 function ___($msgSingular, $msgPlural, $msgNumber, $domain) {
-	return ($domain) ? dngettext($domain, $msgSingular, $msgPlural, $msgNumber) : ngettext($msgSingular, $msgPlural, $msgNumber);
+    return ($domain) ? dngettext($domain, $msgSingular, $msgPlural, $msgNumber) : ngettext($msgSingular, $msgPlural, $msgNumber);
 }
 ?>

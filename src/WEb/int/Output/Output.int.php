@@ -21,10 +21,10 @@
  * Security check.
  */
 if (!defined('_WEB')) {
-	/**
-	 * Stop script execution.
-	 */
-	exit();
+    /**
+     * Stop script execution.
+     */
+    exit();
 }
 
 /**
@@ -38,21 +38,21 @@ if (!defined('_WEB')) {
  *
  */
 interface Interface_Output {
-	/**
-	 * Load output engine object.
-	 *
-	 * @return bool
-	 */
-	public function Init();
+    /**
+     * Load output engine object.
+     *
+     * @return bool
+     */
+    public function Init();
 
-	/**
-	 * Output method.
-	 *
-	 * @param string $outTemplate
-	 * @param bool $outDisplay
-	 *
-	 * @return mixed
-	 */
-	public function Render($outTemplate = NULL, $outDisplay = FALSE);
+    /**
+     * Output method.
+     *
+     * @param string $outTemplate
+     * @param bool $outDisplay
+     *
+     * @return mixed
+     */
+    public function Render($outTemplate = NULL, $outDisplay = FALSE);
 }
 ?>

@@ -20,10 +20,10 @@
  */
 if (!is_readable('./etc/settings.cfg.xml'))
 {
-	/**
-	 * Trigger fatal error.
-	 */
-	die('Fatal: Configuration file is missing.');
+    /**
+     * Trigger fatal error.
+     */
+    die('Fatal: Configuration file is missing.');
 }
 
 /**
@@ -51,10 +51,10 @@ define('_WEB', TRUE);
  */
 if (FALSE != version_compare(PHP_VERSION, '5.3.0', '<'))
 {
-	/**
-	 * Load compatibility library.
-	 */
-	require $cfg['path_core'] . 'lib/Core/CoreUtils.lib.php';
+    /**
+     * Load compatibility library.
+     */
+    require $cfg['path_core'] . 'lib/Core/CoreUtils.lib.php';
 }
 
 /**

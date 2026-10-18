@@ -3,21 +3,21 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- User object settings -->
-		<user>
-			<login>
-				<!-- Failed logins timeout (minutes) -->
-				<timeout>5</timeout>
-				<!-- Maximum failed login attempts permitted -->
-				<attempts>10</attempts>
-			</login>
-			
-		</user>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- User object settings -->
+        <user>
+            <login>
+                <!-- Failed logins timeout (minutes) -->
+                <timeout>5</timeout>
+                <!-- Maximum failed login attempts permitted -->
+                <attempts>10</attempts>
+            </login>
+            
+        </user>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

@@ -3,23 +3,23 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Output library settings -->
-		<output>
-			<skin>WEb_PHPTAL</skin>
-			<template>layout</template>
-			<extension>.xhtml</extension>
-			<phptal>
-				<path>/home/radu/www/libs/</path>
-				<dir>PHPTAL/PHPTAL-1.2.1</dir>
-				<file>PHPTAL.php</file>
-				<class>PHPTAL</class>
-			</phptal>
-		</output>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Output library settings -->
+        <output>
+            <skin>WEb_PHPTAL</skin>
+            <template>layout</template>
+            <extension>.xhtml</extension>
+            <phptal>
+                <path>/home/radu/www/libs/</path>
+                <dir>PHPTAL/PHPTAL-1.2.1</dir>
+                <file>PHPTAL.php</file>
+                <class>PHPTAL</class>
+            </phptal>
+        </output>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

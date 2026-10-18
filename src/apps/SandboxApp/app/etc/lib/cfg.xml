@@ -3,18 +3,18 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Log library settings -->
-		<log>
-			<level>debug</level>
-			<extension>.log</extension>
-			<dateformat>Y-m-d H:i:s:u</dateformat>
-			<reset>0</reset>
-		</log>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Log library settings -->
+        <log>
+            <level>debug</level>
+            <extension>.log</extension>
+            <dateformat>Y-m-d H:i:s:u</dateformat>
+            <reset>0</reset>
+        </log>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

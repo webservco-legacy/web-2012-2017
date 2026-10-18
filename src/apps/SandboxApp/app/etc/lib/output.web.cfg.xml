@@ -3,17 +3,17 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Output library settings -->
-		<output>
-			<skin>WEb</skin>
-			<template>layout</template>
-			<extension>.tpl.php</extension>
-		</output>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Output library settings -->
+        <output>
+            <skin>WEb</skin>
+            <template>layout</template>
+            <extension>.tpl.php</extension>
+        </output>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

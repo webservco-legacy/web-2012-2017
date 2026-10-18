@@ -25,27 +25,27 @@
  */
 class UserTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Core::Get('Object_User');
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Core::Get('Object_User');
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetReturnsObject()
-	{
-		$this->assertInternalType('object', Core::Get('Object_User'));
-	}
+    /**
+     * @test
+     */
+    public function GetReturnsObject()
+    {
+        $this->assertInternalType('object', Core::Get('Object_User'));
+    }
 }
 ?>

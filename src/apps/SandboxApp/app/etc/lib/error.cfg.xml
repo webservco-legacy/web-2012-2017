@@ -3,16 +3,16 @@
 
 <!-- Configuration -->
 <config>
-	<!-- Development Environment -->
-	<dev>
-		<!-- Error library settings -->
-		<error>
-			<!-- Show trace info in error log? -->
-			<trace>1</trace>
-		</error>
-	</dev>
-	<!-- Test Environment -->
-	<test></test>
-	<!-- Production Environment -->
-	<prod></prod>
+    <!-- Development Environment -->
+    <dev>
+        <!-- Error library settings -->
+        <error>
+            <!-- Show trace info in error log? -->
+            <trace>1</trace>
+        </error>
+    </dev>
+    <!-- Test Environment -->
+    <test></test>
+    <!-- Production Environment -->
+    <prod></prod>
 </config>

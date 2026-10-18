@@ -25,35 +25,35 @@
  */
 class RouterTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Router::GetInstance();
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Router::GetInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Router::GetInstance());
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Router::GetInstance());
+    }
 
-	/**
-	 * @test
-	 */
-	public function RemoveFakeExtensionWorks()
-	{
-		$this->assertEquals('lorem_ipsum', $this->_mObject->RemoveFakeExtension('lorem_ipsum.html'));
-	}
+    /**
+     * @test
+     */
+    public function RemoveFakeExtensionWorks()
+    {
+        $this->assertEquals('lorem_ipsum', $this->_mObject->RemoveFakeExtension('lorem_ipsum.html'));
+    }
 }
 ?>

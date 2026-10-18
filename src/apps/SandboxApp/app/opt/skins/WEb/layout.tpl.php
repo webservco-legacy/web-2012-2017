@@ -15,13 +15,13 @@
 
 <head>
 
-	<title><?php echo $title; ?></title>
+    <title><?php echo $title; ?></title>
 
 </head>
 
 <body id="web-dev">
 
-	<h1><?php echo $title; ?></h1>
+    <h1><?php echo $title; ?></h1>
 
 </body>
 

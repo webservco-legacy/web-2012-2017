@@ -25,27 +25,27 @@
  */
 class Database_PostgresqlTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * Stores class object.
-	 *
-	 * @var mixed
-	 */
-	private $_mObject;
+    /**
+     * Stores class object.
+     *
+     * @var mixed
+     */
+    private $_mObject;
 
-	/**
-	 * Construct
-	 */
-	public function setUp()
-	{
-		$this->_mObject = Database_Postgresql::GetInstance('Database_Postgresql');
-	}
+    /**
+     * Construct
+     */
+    public function setUp()
+    {
+        $this->_mObject = Database_Postgresql::GetInstance('Database_Postgresql');
+    }
 
-	/**
-	 * @test
-	 */
-	public function GetInstanceReturnsObject()
-	{
-		$this->assertInternalType('object', Database_Postgresql::GetInstance('Database_Postgresql'));
-	}
+    /**
+     * @test
+     */
+    public function GetInstanceReturnsObject()
+    {
+        $this->assertInternalType('object', Database_Postgresql::GetInstance('Database_Postgresql'));
+    }
 }
 ?>
